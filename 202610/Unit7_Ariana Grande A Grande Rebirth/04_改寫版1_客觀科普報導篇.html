@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>改寫版一：客觀科普報導篇｜Unit 7 Ariana Grande: A Grand(e) Rebirth</title>
+  <style>
+    :root {
+      --bg: #f4f7fb; --card: #ffffff; --ink: #1e293b; --muted: #64748b; --border: #e2e8f0;
+      --blue: #0284c7; --blue-bg: #e0f2fe; --blue-border: #bae6fd;
+      --orange: #ea580c; --orange-bg: #fff7ed; --orange-border: #fed7aa;
+      --green: #059669; --green-bg: #ecfdf5; --green-border: #a7f3d0;
+      --purple: #7c3aed; --purple-bg: #f5f3ff; --purple-border: #ddd6fe;
+      --red: #dc2626; --red-bg: #fef2f2; --yellow-hl: #fef08a;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.75; padding-bottom: 4rem; }
+    .hero { background: linear-gradient(135deg, #0f172a 0%, #0369a1 60%, #0284c7 100%); color: #fff; padding: 2.4rem 1.5rem 2rem; text-align: center; }
+    .hero-badges { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .pill { background: rgba(255,255,255,0.2); padding: 0.25rem 0.85rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
+    .pill.gold { background: #38bdf8; color: #0f172a; }
+    .hero h1 { margin: 0.2rem 0; font-size: clamp(1.5rem, 3.8vw, 2.2rem); font-weight: 900; }
+    .hero h2 { margin: 0.3rem 0 0; font-size: 1.12rem; font-weight: 500; color: #bae6fd; }
+    .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0.6rem 1rem; display: flex; justify-content: center; gap: 0.45rem; flex-wrap: wrap; box-shadow: 0 4px 12px rgba(15,23,42,0.05); }
+    .nav-btn { border: 1px solid var(--border); background: #fff; color: var(--ink); padding: 0.42rem 0.85rem; border-radius: 999px; font-size: 0.86rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: all 0.18s; }
+    .nav-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .nav-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .container { max-width: 1040px; margin: 0 auto; padding: 1.5rem 1rem; }
+    .section-title { display: flex; align-items: center; gap: 0.6rem; font-size: 1.35rem; font-weight: 900; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--blue); }
+    .card, .reader-card { background: var(--card); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(15,23,42,0.04); }
+    .infographic-img { width: 100%; border-radius: 14px; border: 2px solid var(--border); margin-bottom: 1.2rem; display: block; }
+    .storyboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .story-panel { border-radius: 14px; padding: 1.1rem; border: 2px solid transparent; }
+    .story-panel.p1 { background: var(--blue-bg); border-color: var(--blue-border); }
+    .story-panel.p2 { background: var(--orange-bg); border-color: var(--orange-border); }
+    .story-panel.p3 { background: var(--purple-bg); border-color: var(--purple-border); }
+    .story-panel.p4 { background: var(--green-bg); border-color: var(--green-border); }
+    .panel-step { font-size: 0.78rem; font-weight: 800; padding: 0.15rem 0.55rem; border-radius: 6px; display: inline-block; margin-bottom: 0.4rem; background: rgba(255,255,255,0.85); }
+    .panel-icon { font-size: 1.8rem; float: right; }
+    .story-panel h4 { margin: 0.2rem 0 0.4rem; font-size: 1.05rem; font-weight: 800; }
+    .story-panel p { margin: 0; font-size: 0.88rem; color: #334155; }
+    .eng-tag { display: inline-block; margin-top: 0.5rem; background: #fff; padding: 0.2rem 0.55rem; border-radius: 6px; font-family: monospace; font-size: 0.82rem; font-weight: 700; color: var(--blue); }
+    .reader-header, .control-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; background: #f8fafc; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 1.2rem; border: 1px solid var(--border); }
+    .toggle-btn { border: 1px solid var(--border); background: #fff; padding: 0.4rem 0.85rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+    .toggle-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .reader-para { margin-bottom: 1.2rem; padding: 1rem 1.2rem; border-radius: 12px; background: #fafcff; border: 1px solid #e2e8f0; }
+    .reader-en { font-size: var(--reader-font-size, 1.14rem); line-height: 1.85; color: #0f172a; font-weight: 500; }
+    .reader-zh { margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px dashed #cbd5e1; color: #475569; font-size: 0.98rem; }
+    body.hide-reader-zh .reader-zh, body.hide-zh .sent-zh { display: none; }
+    .sent-card { border: 2px solid var(--border); border-radius: 16px; padding: 1.2rem; margin-bottom: 1.1rem; background: #fff; }
+    .sent-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; }
+    .sent-num { background: var(--blue-bg); color: var(--blue); font-weight: 900; font-size: 0.85rem; padding: 0.2rem 0.6rem; border-radius: 8px; flex-shrink: 0; }
+    .sent-en { font-size: 1.15rem; font-weight: 600; color: #0f172a; flex: 1; }
+    .sent-zh { margin-top: 0.4rem; font-size: 0.96rem; color: #475569; padding-left: 0.5rem; border-left: 3px solid #cbd5e1; }
+    .key-term { background: var(--yellow-hl); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #9a3412; }
+    .gram-term { background: var(--purple-bg); border-bottom: 2px solid var(--purple); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #5b21b6; }
+    body.cloze-mode .key-term, body.cloze-mode .gram-term { background: #cbd5e1; color: transparent; border-color: transparent; cursor: pointer; user-select: none; }
+    body.cloze-mode .key-term:hover { background: var(--yellow-hl); color: #9a3412; }
+    body.cloze-mode .gram-term:hover { background: var(--purple-bg); color: #5b21b6; }
+    .audio-btn { border: none; background: var(--blue-bg); color: var(--blue); padding: 0.35rem 0.65rem; border-radius: 999px; font-size: 0.82rem; font-weight: 800; cursor: pointer; flex-shrink: 0; }
+    .chunk-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.85rem 0; }
+    .chunk { border-radius: 10px; padding: 0.4rem 0.7rem; font-size: 0.88rem; display: flex; flex-direction: column; border: 1px solid transparent; }
+    .chunk .c-role { font-size: 0.7rem; font-weight: 800; opacity: 0.85; }
+    .chunk .c-en { font-weight: 800; }
+    .chunk .c-zh { font-size: 0.78rem; }
+    .chunk.s { background: #fff1f2; border-color: #fecdd3; color: #be123c; }
+    .chunk.v { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .chunk.o { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .chunk.c { background: #f5f3ff; border-color: #ddd6fe; color: #6d28d9; }
+    .chunk.m { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+    .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.8rem; margin-top: 0.6rem; }
+    .insight-box { border-radius: 10px; padding: 0.8rem 1rem; font-size: 0.9rem; }
+    .insight-box.grammar { background: #f8fafc; border-left: 4px solid var(--blue); }
+    .insight-box.trans { background: #fffbeb; border-left: 4px solid var(--orange); }
+    .insight-title { font-weight: 800; margin-bottom: 0.3rem; }
+    .cloze-passage-box { background: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 14px; padding: 1.2rem; margin-bottom: 1.2rem; line-height: 1.85; }
+    .cloze-blank { background: #fff; border: 2px solid var(--blue); color: var(--blue); font-weight: 900; padding: 0.1rem 0.55rem; border-radius: 6px; }
+    .q-block { padding: 1rem; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1rem; }
+    .quiz-btn { display: block; width: 100%; text-align: left; padding: 0.72rem 1rem; margin: 0.4rem 0; border: 2px solid var(--border); border-radius: 10px; background: #fff; font-size: 0.94rem; font-weight: 600; cursor: pointer; }
+    .quiz-btn:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
+    .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
+    .quiz-exp { display: none; margin-top: 0.45rem; padding: 0.7rem 1rem; border-radius: 10px; background: var(--green-bg); color: #065f46; font-size: 0.88rem; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badges">
+      <span class="pill gold">進階改寫版一｜📰 客觀科普報導文體</span>
+      <span class="pill">UNIT 7 同義換句話說特訓</span>
+    </div>
+    <h1>How Role-Playing Heals Burnout: Ariana Grande's Artistic Renewal</h1>
+    <h2>角色扮演如何療癒職業倦怠：亞莉安娜的藝術重生（客觀報導視角・100% 涵蓋必考字彙與文法）</h2>
+  </header>
+
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../../index.html">⬅️ 返回總覽</a>
+    <a class="nav-btn" href="./03_互動圖文學習講義.html">📖 原版主講義</a>
+    <a class="nav-btn primary" href="./04_改寫版1_客觀科普報導篇.html">📰 1. 科普報導</a>
+    <a class="nav-btn" href="./05_改寫版2_第二人稱代入篇.html">💬 2. 第二人稱</a>
+    <a class="nav-btn" href="./06_改寫版3_高中生故事記敘篇.html">🧑‍🎓 3. 高中生故事</a>
+    <a class="nav-btn" href="./07_改寫版4_正反論證議論文篇.html">⚖️ 4. 正反議論文</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- SECTION 1: STORYBOARD -->
+    <div class="section-title">🎬 一、四格圖解大意 (4-Panel Visual Storyboard)</div>
+    <div class="card">
+      <img src="./03_AI_視覺圖解講義.jpg" alt="Unit 7 Infographic" class="infographic-img" />
+      <div class="storyboard">
+        <div class="story-panel p1">
+          <span class="panel-icon">📊</span>
+          <span class="panel-step">起 · 早期演藝軌跡</span>
+          <h4>1. 首專熱賣與單曲人氣爆發</h4>
+          <p>20 歲推出首張商業暢銷專輯《Yours Truly》，隨後單曲〈Problem〉帶動全球人氣急速攀升。</p>
+          <span class="eng-tag">popularity / strength to strength</span>
+        </div>
+        <div class="story-panel p2">
+          <span class="panel-icon">⚡</span>
+          <span class="panel-step">承 · 創傷心理學衝擊</span>
+          <h4>2. 2017 三重悲劇與職業倦怠</h4>
+          <p>曼徹斯特體育館炸彈恐攻、摯友離世與解除婚約使她深受重創，2022 年甚至認真考慮永遠退出樂壇。</p>
+          <span class="eng-tag">was left shaken / considered quitting</span>
+        </div>
+        <div class="story-panel p3">
+          <span class="panel-icon">🎭</span>
+          <span class="panel-step">轉 · 戲劇角色感染效應</span>
+          <h4>3. 好女巫 Glinda 的自信移轉</h4>
+          <p>拍攝《魔法壞女巫》時，角色 Glinda 的高度自信潛移默化感染了她，意外拯救了她的音樂生涯。</p>
+          <span class="eng-tag">may have ended up / rub off on</span>
+        </div>
+        <div class="story-panel p4">
+          <span class="panel-icon">🌟</span>
+          <span class="panel-step">合 · 自主創作新紀元</span>
+          <h4>4. 拋下巡演壓力、推出大膽新作</h4>
+          <p>她拋下疲憊的長途巡演與媒體活動，將重心轉向創作，接連推出《eternal sunshine》與大膽新作《petal》。</p>
+          <span class="eng-tag">leave behind / bold & daring era</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: FULL TEXT IMMERSIVE READING -->
+    <div class="section-title">📖 二、完整課文沉浸閱讀（客觀科普報導改寫版・約 175 字）</div>
+    <div class="reader-card">
+      <div class="reader-header">
+        <div style="font-weight:800;font-size:0.95rem;">📰 文體特色：以客觀娛樂與心理報導視角，剖析流行巨星如何從創傷與倦怠中重塑職涯</div>
+        <div>
+          <button class="toggle-btn" id="btn-full-audio" onclick="toggleFullAudio()">🔊 全篇連續朗讀</button>
+          <button class="toggle-btn active" id="btn-reader-zh" onclick="toggleReaderZh()">👁️ 顯示中文對照</button>
+          <button class="toggle-btn" onclick="changeFontSize(1)">A+</button>
+          <button class="toggle-btn" onclick="changeFontSize(-1)">A-</button>
+        </div>
+      </div>
+
+      <div class="reader-para">
+        <div class="reader-en">
+          With her latest album <em>petal</em> released during a major world tour, <span class="key-term">award</span>-winning pop star Ariana Grande appears <span class="key-term">unstoppable</span>. Beginning her career at age 20 with <em>Yours Truly</em> and the hit single “Problem,” her <span class="key-term">popularity</span> soared. However, just as her career was <span class="gram-term">going from strength to strength</span>, <span class="key-term">tragedy</span> struck three times in 2017: an attacker <span class="gram-term">set</span> a <span class="key-term">bomb</span> <span class="gram-term">off</span> at a Manchester <span class="key-term">stadium</span>, a close friend passed away, and her <span class="key-term">engagement</span> <span class="gram-term">came to a sudden end</span>. Grande <span class="gram-term">was left deeply shaken</span>, and although she seemed to <span class="key-term">bounce</span> back, she recently <span class="key-term">admitted</span> that she <span class="gram-term">considered</span> <span class="key-term">quitting</span> music <span class="gram-term">for good</span> in 2022.
+        </div>
+        <div class="reader-zh">
+          隨著最新專輯《petal》在大型世界巡演期間發行，獲獎無數的流行巨星亞莉安娜看來勢不可擋。她 20 歲以《Yours Truly》和暢銷單曲〈Problem〉展開職涯，人氣急速飆升。然而，正當她的事業蒸蒸日上時，悲劇在 2017 年接連發生了三次：攻擊者在曼徹斯特體育館引爆炸彈、摯友離世，以及婚約突然告終。亞莉安娜因而深受震驚打擊，儘管表面看似振作，她最近坦承曾在 2022 年考慮永遠退出樂壇。
+        </div>
+      </div>
+
+      <div class="reader-para" style="margin-bottom:0;">
+        <div class="reader-en">
+          <span class="key-term">Ironically</span>, portraying the confident good <span class="key-term">witch</span> Glinda in the film <em>Wicked</em> <span class="gram-term">may have ended up</span> saving her musical passion. The character's self-assurance began to <span class="gram-term">rub off on</span> Grande, inspiring a <span class="key-term">bold</span> shift: she decided to <span class="gram-term">leave behind</span> exhausting tours and <span class="gram-term">press events</span> to make the <span class="key-term">creative</span> process her primary <span class="key-term">focus</span> <span class="gram-term">on her own terms</span>. This renewal produced the chart-topping <em>eternal sunshine</em> (2024) and <em>petal</em>, a <span class="key-term">daring</span> new work that <span class="key-term">delights</span> fans in her vibrant new musical <span class="key-term">era</span>.
+        </div>
+        <div class="reader-zh">
+          諷刺的是，在電影《魔法壞女巫》中飾演自信的好女巫葛琳達，最終可能拯救了她的音樂熱情。該角色的自信開始感染了亞莉安娜，啟發了一項大膽轉變：她決定拋下累人的巡演與媒體活動，按照自己的步調將創作過程作為首要重心。這場重生孕育了冠軍專輯《eternal sunshine》（2024）以及《petal》，一部在她充滿活力的全新音樂時代中令樂迷欣喜的大膽創新之作。
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: SENTENCE ANATOMY -->
+    <div class="section-title">🧩 三、課文「積木拆句」＋ 逐行中翻英秘訣</div>
+    <div class="card">
+      <div class="control-bar">
+        <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
+        <button class="toggle-btn active" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
+        <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式</button>
+      </div>
+
+      <!-- S1 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 1</span>
+          <div style="flex:1;">
+            <div class="sent-en">With her latest album <em>petal</em> released during a major world tour, <span class="key-term">award</span>-winning pop star Ariana Grande appears <span class="key-term">unstoppable</span>.</div>
+            <div class="sent-zh">隨著最新專輯《petal》在大型世界巡演期間發行，獲獎無數的流行巨星亞莉安娜看來勢不可擋。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('With her latest album petal released during a major world tour, award-winning pop star Ariana Grande appears unstoppable.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 附帶狀況 (With+O+OC)</span><span class="c-en">With her latest album petal released during a major world tour,</span><span class="c-zh">隨著最新專輯《petal》在大型世巡期間被發行</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">award-winning pop star Ariana Grande</span><span class="c-zh">獲獎無數的流行巨星亞莉安娜</span></div>
+          <div class="chunk v"><span class="c-role">[V+C] 連綴動詞+補語</span><span class="c-en">appears unstoppable</span><span class="c-zh">看來勢不可擋</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 附帶狀況句型：<code>With + O. + p.p.</code></div>因為專輯是「被發行」，受詞補語使用過去分詞 <code>released</code>；<code>appears unstoppable</code> 同義替換原課文的 <code>seems truly unstoppable</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>原課文 <code>in the middle of a major world tour</code> 換成更精煉的 <strong><code>during a major world tour</code></strong>。</div>
+        </div>
+      </div>
+
+      <!-- S2 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 2</span>
+          <div style="flex:1;">
+            <div class="sent-en">Beginning her career at age 20 with <em>Yours Truly</em> and the hit single “Problem,” her <span class="key-term">popularity</span> soared.</div>
+            <div class="sent-zh">她 20 歲以《Yours Truly》和暢銷單曲〈Problem〉展開職涯，人氣急速飆升。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Beginning her career at age 20 with Yours Truly and the hit single Problem, her popularity soared.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 分詞片語</span><span class="c-en">Beginning her career at age 20 with Yours Truly and the hit single “Problem,”</span><span class="c-zh">20 歲以《Yours Truly》與暢銷單曲展開職涯</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">her popularity</span><span class="c-zh">她的人氣</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">soared</span><span class="c-zh">急速飆升</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 學測高頻動詞：<code>soar</code>（暴漲、高飛）</div>原課文 <code>caused her popularity to grow fast</code> 可濃縮為 <strong><code>her popularity soared / skyrocketed</code></strong>。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>「在 20 歲時」除了 <code>at the age of 20</code>，也可簡寫為 <strong><code>at age 20</code></strong>。</div>
+        </div>
+      </div>
+
+      <!-- S3 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 3</span>
+          <div style="flex:1;">
+            <div class="sent-en">However, just as her career was <span class="gram-term">going from strength to strength</span>, <span class="key-term">tragedy</span> struck three times in 2017: an attacker <span class="gram-term">set</span> a <span class="key-term">bomb</span> <span class="gram-term">off</span> at a Manchester <span class="key-term">stadium</span>, a close friend passed away, and her <span class="key-term">engagement</span> <span class="gram-term">came to a sudden end</span>.</div>
+            <div class="sent-zh">然而，正當她的事業蒸蒸日上時，悲劇在 2017 年接連發生了三次：攻擊者在曼徹斯特體育館引爆炸彈、摯友離世，以及婚約突然告終。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('However, just as her career was going from strength to strength, tragedy struck three times in 2017: an attacker set a bomb off at a Manchester stadium, a close friend passed away, and her engagement came to a sudden end.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 時間子句</span><span class="c-en">However, just as her career was going from strength to strength,</span><span class="c-zh">然而正當她的事業蒸蒸日上時</span></div>
+          <div class="chunk s"><span class="c-role">[S+V] 主句</span><span class="c-en">tragedy struck three times in 2017:</span><span class="c-zh">悲劇在 2017 年降臨三次：</span></div>
+          <div class="chunk o"><span class="c-role">[Conj] 冒號平行子句</span><span class="c-en">an attacker set a bomb off..., a close friend passed away, and her engagement came to a sudden end.</span><span class="c-zh">引爆炸彈、摯友離世，且婚約突然告終。</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 冒號（Colon）引出三大平行事件</div>在科普或新聞報導中，先用總括句 <code>tragedy struck three times:</code> 再用三個平行子句列舉細節，邏輯極度清晰。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 核心片語複習</div><strong><code>go from strength to strength</code></strong>（蒸蒸日上）、<strong><code>set a bomb off</code></strong>（引爆炸彈）、<strong><code>come to a sudden end</code></strong>（突然告終）。</div>
+        </div>
+      </div>
+
+      <!-- S4 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 4</span>
+          <div style="flex:1;">
+            <div class="sent-en">Grande <span class="gram-term">was left deeply shaken</span>, and although she seemed to <span class="key-term">bounce</span> back, she recently <span class="key-term">admitted</span> that she <span class="gram-term">considered</span> <span class="key-term">quitting</span> music <span class="gram-term">for good</span> in 2022.</div>
+            <div class="sent-zh">亞莉安娜因而深受震驚打擊，儘管表面看似振作，她最近坦承曾在 2022 年考慮永遠退出樂壇。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Grande was left deeply shaken, and although she seemed to bounce back, she recently admitted that she considered quitting music for good in 2022.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S+V+C] 被動狀態</span><span class="c-en">Grande was left deeply shaken,</span><span class="c-zh">亞莉安娜深受震驚打擊</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 讓步子句</span><span class="c-en">and although she seemed to bounce back,</span><span class="c-zh">且儘管她看似振作起來</span></div>
+          <div class="chunk v"><span class="c-role">[S+V+O] 坦承內容</span><span class="c-en">she recently admitted that she considered quitting music for good in 2022.</span><span class="c-zh">她最近坦承曾在 2022 年考慮永遠退出樂壇。</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 兩大核心句型同句串聯</div>前半句溫習 <strong><code>be left + p.p.</code>（<code>was left deeply shaken</code>）</strong>，後半句溫習 <strong><code>consider + V-ing</code>（<code>considered quitting</code>）</strong>。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>原課文 <code>appeared to bounce back</code> 與 <strong><code>seemed to bounce back</code></strong> 完全等義。</div>
+        </div>
+      </div>
+
+      <!-- S5 & S6 -->
+      <div class="sent-card" style="margin-bottom:0;">
+        <div class="sent-top">
+          <span class="sent-num">句 5–7</span>
+          <div style="flex:1;">
+            <div class="sent-en"><span class="key-term">Ironically</span>, portraying the confident good <span class="key-term">witch</span> Glinda in the film <em>Wicked</em> <span class="gram-term">may have ended up</span> saving her musical passion. The character's self-assurance began to <span class="gram-term">rub off on</span> Grande, inspiring a <span class="key-term">bold</span> shift: she decided to <span class="gram-term">leave behind</span> exhausting tours and <span class="gram-term">press events</span> to make the <span class="key-term">creative</span> process her primary <span class="key-term">focus</span> <span class="gram-term">on her own terms</span>. This renewal produced the chart-topping <em>eternal sunshine</em> (2024) and <em>petal</em>, a <span class="key-term">daring</span> new work that <span class="key-term">delights</span> fans in her vibrant new musical <span class="key-term">era</span>.</div>
+            <div class="sent-zh">諷刺的是，在電影《魔法壞女巫》中飾演自信的好女巫葛琳達，最終可能拯救了她的音樂熱情。該角色的自信開始感染了亞莉安娜，啟發了一項大膽轉變：她決定拋下累人的巡演與媒體活動，按照自己的步調將創作過程作為首要重心。這場重生孕育了冠軍專輯《eternal sunshine》（2024）以及《petal》，一部在她充滿活力的全新音樂時代中令樂迷欣喜的大膽創新之作。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Ironically, portraying the confident good witch Glinda in the film Wicked may have ended up saving her musical passion. The characters self-assurance began to rub off on Grande, inspiring a bold shift: she decided to leave behind exhausting tours and press events to make the creative process her primary focus on her own terms. This renewal produced the chart-topping eternal sunshine and petal, a daring new work that delights fans in her vibrant new musical era.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 動名詞主詞</span><span class="c-en">portraying the confident good witch Glinda in the film Wicked</span><span class="c-zh">在片中飾演自信的好女巫葛琳達</span></div>
+          <div class="chunk v"><span class="c-role">[V+O] 過去推測</span><span class="c-en">may have ended up saving her musical passion.</span><span class="c-zh">最終可能拯救了她的音樂熱情。</span></div>
+          <div class="chunk m"><span class="c-role">[S+V+M] 特質感染與轉變</span><span class="c-en">The character's self-assurance began to rub off on Grande, inspiring a bold shift...</span><span class="c-zh">角色的自信開始感染她，啟發了大膽轉變……</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 動名詞片語作主詞：<code>Portraying Glinda...</code></div>動詞 <code>portray</code>（飾演、描繪）對應原課文的 <code>whom Grande plays in the movie</code>；名詞 <code>self-assurance</code> 對應 <code>self-confident</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>原課文 <code>went straight to number one</code> 可換成複合形容詞 <strong><code>chart-topping</code>（奪下排行榜冠軍的）</strong>。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: 15-QUESTION QUIZ -->
+    <div class="section-title">🎯 四、15 題大考實戰檢測（客觀科普報導篇・含克漏字）</div>
+    <div class="card">
+      <div style="background:#0284c7;color:#fff;padding:0.9rem 1.2rem;border-radius:12px;font-weight:800;margin-bottom:1.2rem;display:flex;justify-content:space-between;">
+        <span id="score-text">🏆 目前得分：0 / 15</span>
+        <button class="toggle-btn" onclick="location.reload()">🔄 重置本頁測驗</button>
+      </div>
+
+      <h3 style="color:#0369a1;">Part A — 克漏字綜合測驗 (Cloze Test：第 1～5 題)</h3>
+      <div class="cloze-passage-box">
+        Ariana Grande's early career went <span class="cloze-blank">(__1__)</span> after her debut album and the single “Problem.” Yet a series of tragedies in 2017—including a bomb attack at a UK stadium and a broken engagement—left the young singer deeply <span class="cloze-blank">(__2__)</span>. By 2022, she seriously considered <span class="cloze-blank">(__3__)</span> the music industry for good. Ironically, portraying the witch Glinda <span class="cloze-blank">(__4__)</span> saving her passion. As Glinda's confidence rubbed off <span class="cloze-blank">(__5__)</span> her, Grande chose to leave exhausting tours behind and prioritize the creative process on her own terms.
+      </div>
+
+      <div class="q-block">
+        <div><strong>1. (__1__)</strong></div>
+        <button class="quiz-btn" onclick="ans(this,true,1)">(A) from strength to strength</button>
+        <button class="quiz-btn" onclick="ans(this,false,1)">(B) from door to door</button>
+        <button class="quiz-btn" onclick="ans(this,false,1)">(C) from bad to worse</button>
+        <button class="quiz-btn" onclick="ans(this,false,1)">(D) from hand to mouth</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：<code>go from strength to strength</code> 表事業「蒸蒸日上、越來越成功」。(C) 越來越糟 (D) 僅夠餬口。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>2. (__2__)</strong></div>
+        <button class="quiz-btn" onclick="ans(this,false,2)">(A) shake</button>
+        <button class="quiz-btn" onclick="ans(this,false,2)">(B) shaking</button>
+        <button class="quiz-btn" onclick="ans(this,true,2)">(C) shaken</button>
+        <button class="quiz-btn" onclick="ans(this,false,2)">(D) shook</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：<code>leave + O. + p.p.</code>，受詞 <code>the young singer</code> 感到震驚，故用過去分詞 <code>shaken</code>。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>3. (__3__)</strong></div>
+        <button class="quiz-btn" onclick="ans(this,false,3)">(A) to quit</button>
+        <button class="quiz-btn" onclick="ans(this,true,3)">(B) quitting</button>
+        <button class="quiz-btn" onclick="ans(this,false,3)">(C) quit</button>
+        <button class="quiz-btn" onclick="ans(this,false,3)">(D) be quitting</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：<code>consider + V-ing</code> 為必考動名詞搭配。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>4. (__4__)</strong></div>
+        <button class="quiz-btn" onclick="ans(this,false,4)">(A) may end up to</button>
+        <button class="quiz-btn" onclick="ans(this,true,4)">(B) may have ended up</button>
+        <button class="quiz-btn" onclick="ans(this,false,4)">(C) must be ended up</button>
+        <button class="quiz-btn" onclick="ans(this,false,4)">(D) can have end up</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：對過去已發生事件的肯定推測用 <code>may + have + p.p.</code>（<code>may have ended up + saving</code>）。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>5. (__5__)</strong></div>
+        <button class="quiz-btn" onclick="ans(this,false,5)">(A) at</button>
+        <button class="quiz-btn" onclick="ans(this,false,5)">(B) to</button>
+        <button class="quiz-btn" onclick="ans(this,true,5)">(C) on</button>
+        <button class="quiz-btn" onclick="ans(this,false,5)">(D) by</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：<code>rub off on sb</code>（感染／影響某人）。</div>
+      </div>
+
+      <h3 style="color:#0369a1;margin-top:1.4rem;">Part B — 文意字彙與片語搭配 (第 6～9 題)</h3>
+
+      <div class="q-block">
+        <div><strong>6. Winning the national science ________ gave the high school student great confidence to pursue a career in engineering.</strong></div>
+        <button class="quiz-btn" onclick="ans(this,true,6)">(A) award</button>
+        <button class="quiz-btn" onclick="ans(this,false,6)">(B) bomb</button>
+        <button class="quiz-btn" onclick="ans(this,false,6)">(C) tragedy</button>
+        <button class="quiz-btn" onclick="ans(this,false,6)">(D) witch</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：贏得全國科學「獎項（<code>award</code>）」帶給這位高中生很大的自信。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>7. Advertising agencies are always looking for ________ young designers who can come up with fresh and original ideas.</strong></div>
+        <button class="quiz-btn" onclick="ans(this,false,7)">(A) shaken</button>
+        <button class="quiz-btn" onclick="ans(this,true,7)">(B) creative</button>
+        <button class="quiz-btn" onclick="ans(this,false,7)">(C) tiring</button>
+        <button class="quiz-btn" onclick="ans(this,false,7)">(D) sudden</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：能提出新穎原創點子的「有創意的（<code>creative</code>）」年輕設計師。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>8. After losing the first two sets, the tennis player managed to ________ back and win the championship match.</strong></div>
+        <button class="quiz-btn" onclick="ans(this,false,8)">(A) rub</button>
+        <button class="quiz-btn" onclick="ans(this,false,8)">(B) drop</button>
+        <button class="quiz-btn" onclick="ans(this,true,8)">(C) bounce</button>
+        <button class="quiz-btn" onclick="ans(this,false,8)">(D) set</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：<code>bounce back</code> 意為「振作起來、反敗為勝、迅速恢復」。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>9. Someone accidentally ________ the fire alarm while cooking in the dormitory kitchen last night.</strong></div>
+        <button class="quiz-btn" onclick="ans(this,true,9)">(A) set off</button>
+        <button class="quiz-btn" onclick="ans(this,false,9)">(B) rubbed off</button>
+        <button class="quiz-btn" onclick="ans(this,false,9)">(C) left behind</button>
+        <button class="quiz-btn" onclick="ans(this,false,9)">(D) gave up</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：<code>set off</code> 除了引爆炸彈，也常指「觸發（火災警報器、警鈴）」。</div>
+      </div>
+
+      <h3 style="color:#0369a1;margin-top:1.4rem;">Part C — 重要文法與中翻英除錯 (第 10～12 題)</h3>
+
+      <div class="q-block">
+        <div><strong>10. The ground is all wet this morning; it ________ heavily while we were sleeping last night.</strong></div>
+        <button class="quiz-btn" onclick="ans(this,false,10)">(A) may rain</button>
+        <button class="quiz-btn" onclick="ans(this,true,10)">(B) may have rained</button>
+        <button class="quiz-btn" onclick="ans(this,false,10)">(C) should rain</button>
+        <button class="quiz-btn" onclick="ans(this,false,10)">(D) can be raining</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：推測昨晚睡覺時（過去時間）「可能下過大雨」，使用 <code>may + have + p.p.</code>。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>11. 【中翻英除錯】「她開朗的態度很快就感染了辦公室裡的每個人。」哪一個句子完全正確？</strong></div>
+        <button class="quiz-btn" onclick="ans(this,false,11)">(A) Her cheerful attitude quickly rubbed off to everyone in the office.</button>
+        <button class="quiz-btn" onclick="ans(this,false,11)">(B) Everyone in the office quickly rubbed off on her cheerful attitude.</button>
+        <button class="quiz-btn" onclick="ans(this,true,11)">(C) Her cheerful attitude quickly rubbed off on everyone in the office.</button>
+        <button class="quiz-btn" onclick="ans(this,false,11)">(D) Her cheerful attitude was quickly rubbed off with everyone in the office.</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：<code>A rub off on B</code> 必須以「特質／態度（<code>Her cheerful attitude</code>）」作主詞，並搭配介系詞 <code>on</code>。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>12. 【中翻英除錯】「在考慮辭掉工作之後，他決定創業。」哪一個句子完全正確？</strong></div>
+        <button class="quiz-btn" onclick="ans(this,true,12)">(A) After considering quitting his job, he decided to start his own business.</button>
+        <button class="quiz-btn" onclick="ans(this,false,12)">(B) After considering to quit his job, he decided to start his own business.</button>
+        <button class="quiz-btn" onclick="ans(this,false,12)">(C) After considered quitting his job, he decided starting his own business.</button>
+        <button class="quiz-btn" onclick="ans(this,false,12)">(D) After he considering quit his job, he decided to start his own business.</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：<code>After + V-ing (considering)</code> + <code>consider + V-ing (quitting)</code>，且 <code>decide + to V</code>。</div>
+      </div>
+
+      <h3 style="color:#0369a1;margin-top:1.4rem;">Part D — 大考閱讀測驗 (第 13～15 題)</h3>
+
+      <div class="q-block">
+        <div><strong>13. In Paragraph 1 of this rewritten report, what does the word “soared” most likely mean?</strong></div>
+        <button class="quiz-btn" onclick="ans(this,false,13)">(A) Disappeared suddenly.</button>
+        <button class="quiz-btn" onclick="ans(this,true,13)">(B) Rose rapidly to a high level.</button>
+        <button class="quiz-btn" onclick="ans(this,false,13)">(C) Remained completely unchanged.</button>
+        <button class="quiz-btn" onclick="ans(this,false,13)">(D) Caused painful injuries.</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：<code>her popularity soared</code> 對應原課文 <code>caused her popularity to grow fast</code>，意為迅速飆升。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>14. Which of the following was NOT one of the three tragedies that struck Grande in 2017?</strong></div>
+        <button class="quiz-btn" onclick="ans(this,false,14)">(A) A bomb attack at her concert stadium in Manchester.</button>
+        <button class="quiz-btn" onclick="ans(this,false,14)">(B) The death of a close friend.</button>
+        <button class="quiz-btn" onclick="ans(this,false,14)">(C) The sudden end of her engagement.</button>
+        <button class="quiz-btn" onclick="ans(this,true,14)">(D) The commercial failure of her debut album Yours Truly.</button>
+        <div class="quiz-exp">✅ <strong>正解 (D)</strong>：她的首張專輯《Yours Truly》是商業上的暢銷作（<code>a commercial hit</code>），並非 2017 年的悲劇。</div>
+      </div>
+
+      <div class="q-block" style="margin-bottom:0;">
+        <div><strong>15. What can be inferred about Grande's new musical era from the second paragraph?</strong></div>
+        <button class="quiz-btn" onclick="ans(this,true,15)">(A) Prioritizing mental well-being and creative freedom allowed her to produce successful and innovative albums.</button>
+        <button class="quiz-btn" onclick="ans(this,false,15)">(B) Avoiding press events caused her albums eternal sunshine and petal to sell poorly.</button>
+        <button class="quiz-btn" onclick="ans(this,false,15)">(C) She regrets playing the character Glinda in the movie Wicked.</button>
+        <button class="quiz-btn" onclick="ans(this,false,15)">(D) She has permanently retired from recording any new songs.</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：拋下疲憊巡演並將創作過程作為重心後，她推出的《eternal sunshine》空降冠軍，新作《petal》也充滿生命力，證明重視身心與創作自由反而帶來更大成功。</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const fullText = "With her latest album petal released during a major world tour, award-winning pop star Ariana Grande appears unstoppable. Beginning her career at age 20 with Yours Truly and the hit single Problem, her popularity soared. However, just as her career was going from strength to strength, tragedy struck three times in 2017: an attacker set a bomb off at a Manchester stadium, a close friend passed away, and her engagement came to a sudden end. Grande was left deeply shaken, and although she seemed to bounce back, she recently admitted that she considered quitting music for good in 2022. Ironically, portraying the confident good witch Glinda in the film Wicked may have ended up saving her musical passion. The character's self-assurance began to rub off on Grande, inspiring a bold shift: she decided to leave behind exhausting tours and press events to make the creative process her primary focus on her own terms. This renewal produced the chart-topping eternal sunshine and petal, a daring new work that delights fans in her vibrant new musical era.";
+    let playing = false;
+    function speak(t) {
+      window.speechSynthesis.cancel();
+      playing = false;
+      const u = new SpeechSynthesisUtterance(t);
+      u.lang = 'en-US'; u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    }
+    function toggleFullAudio() {
+      if (playing) { window.speechSynthesis.cancel(); playing = false; document.getElementById('btn-full-audio').textContent = '🔊 全篇連續朗讀'; return; }
+      window.speechSynthesis.cancel(); playing = true;
+      document.getElementById('btn-full-audio').textContent = '⏹️ 停止朗讀';
+      const u = new SpeechSynthesisUtterance(fullText);
+      u.lang = 'en-US'; u.rate = 0.95;
+      u.onend = () => { playing = false; document.getElementById('btn-full-audio').textContent = '🔊 全篇連續朗讀'; };
+      window.speechSynthesis.speak(u);
+    }
+    function toggleReaderZh() {
+      document.body.classList.toggle('hide-reader-zh');
+      document.getElementById('btn-reader-zh').classList.toggle('active');
+    }
+    let fs = 1.14;
+    function changeFontSize(d) {
+      fs = Math.min(1.5, Math.max(0.95, fs + d * 0.08));
+      document.documentElement.style.setProperty('--reader-font-size', fs + 'rem');
+    }
+    let sc = 0, done = new Set();
+    function ans(btn, ok, n) {
+      const p = btn.parentElement;
+      p.querySelectorAll('.quiz-btn').forEach(b => b.disabled = true);
+      if (ok) { btn.classList.add('correct'); if (!done.has(n)) sc++; }
+      else { btn.classList.add('wrong'); p.querySelectorAll('.quiz-btn').forEach(b => { if (b.getAttribute('onclick').includes('true')) b.classList.add('correct'); }); }
+      done.add(n);
+      p.querySelector('.quiz-exp').style.display = 'block';
+      document.getElementById('score-text').textContent = `🏆 目前得分：${sc} / 15（已答 ${done.size} 題）`;
+    }
+  </script>
+</body>
+</html>
