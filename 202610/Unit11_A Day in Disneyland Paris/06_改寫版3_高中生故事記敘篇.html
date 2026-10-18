@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>改寫版三：高中生遊記故事篇｜Unit 11 A Day in Disneyland Paris</title>
+  <style>
+    :root {
+      --bg: #f4f7fb; --card: #ffffff; --ink: #1e293b; --muted: #64748b; --border: #e2e8f0;
+      --amber: #d97706; --amber-bg: #fffbeb; --amber-border: #fde68a;
+      --orange: #ea580c; --orange-bg: #fff7ed; --orange-border: #fed7aa;
+      --green: #059669; --green-bg: #ecfdf5; --green-border: #a7f3d0;
+      --purple: #7c3aed; --purple-bg: #f5f3ff; --purple-border: #ddd6fe;
+      --red: #dc2626; --red-bg: #fef2f2; --yellow-hl: #fef08a;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.75; padding-bottom: 4rem; }
+    .hero { background: linear-gradient(135deg, #78350f 0%, #b45309 55%, #d97706 100%); color: #fff; padding: 2.4rem 1.5rem 2rem; text-align: center; }
+    .hero-badges { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .pill { background: rgba(255,255,255,0.2); padding: 0.25rem 0.85rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
+    .pill.gold { background: #fde68a; color: #78350f; }
+    .hero h1 { margin: 0.2rem 0; font-size: clamp(1.5rem, 3.8vw, 2.2rem); font-weight: 900; }
+    .hero h2 { margin: 0.3rem 0 0; font-size: 1.12rem; font-weight: 500; color: #fef3c7; }
+    .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0.6rem 1rem; display: flex; justify-content: center; gap: 0.45rem; flex-wrap: wrap; box-shadow: 0 4px 12px rgba(15,23,42,0.05); }
+    .nav-btn { border: 1px solid var(--border); background: #fff; color: var(--ink); padding: 0.42rem 0.85rem; border-radius: 999px; font-size: 0.86rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: all 0.18s; }
+    .nav-btn:hover { border-color: var(--amber); color: var(--amber); }
+    .nav-btn.primary { background: var(--amber); color: #fff; border-color: var(--amber); }
+    .container { max-width: 1040px; margin: 0 auto; padding: 1.5rem 1rem; }
+    .section-title { display: flex; align-items: center; gap: 0.6rem; font-size: 1.35rem; font-weight: 900; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--amber); }
+    .card, .reader-card { background: var(--card); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(15,23,42,0.04); }
+    .infographic-img { width: 100%; border-radius: 14px; border: 2px solid var(--border); margin-bottom: 1.2rem; display: block; }
+    .storyboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .story-panel { border-radius: 14px; padding: 1.1rem; border: 2px solid transparent; }
+    .story-panel.p1 { background: var(--amber-bg); border-color: var(--amber-border); }
+    .story-panel.p2 { background: var(--orange-bg); border-color: var(--orange-border); }
+    .story-panel.p3 { background: var(--purple-bg); border-color: var(--purple-border); }
+    .story-panel.p4 { background: var(--green-bg); border-color: var(--green-border); }
+    .panel-step { font-size: 0.78rem; font-weight: 800; padding: 0.15rem 0.55rem; border-radius: 6px; display: inline-block; margin-bottom: 0.4rem; background: rgba(255,255,255,0.85); }
+    .panel-icon { font-size: 1.8rem; float: right; }
+    .story-panel h4 { margin: 0.2rem 0 0.4rem; font-size: 1.05rem; font-weight: 800; }
+    .story-panel p { margin: 0; font-size: 0.88rem; color: #334155; }
+    .eng-tag { display: inline-block; margin-top: 0.5rem; background: #fff; padding: 0.2rem 0.55rem; border-radius: 6px; font-family: monospace; font-size: 0.82rem; font-weight: 700; color: var(--amber); }
+    .reader-header, .control-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; background: #f8fafc; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 1.2rem; border: 1px solid var(--border); }
+    .toggle-btn { border: 1px solid var(--border); background: #fff; padding: 0.4rem 0.85rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+    .toggle-btn.active { background: var(--amber); color: #fff; border-color: var(--amber); }
+    .reader-para { margin-bottom: 1.2rem; padding: 1rem 1.2rem; border-radius: 12px; background: #fafcff; border: 1px solid #e2e8f0; }
+    .reader-en { font-size: var(--reader-font-size, 1.14rem); line-height: 1.85; color: #0f172a; font-weight: 500; }
+    .reader-zh { margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px dashed #cbd5e1; color: #475569; font-size: 0.98rem; }
+    body.hide-reader-zh .reader-zh, body.hide-zh .sent-zh { display: none; }
+    .sent-card { border: 2px solid var(--border); border-radius: 16px; padding: 1.2rem; margin-bottom: 1.1rem; background: #fff; }
+    .sent-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; }
+    .sent-num { background: var(--amber-bg); color: var(--amber); font-weight: 900; font-size: 0.85rem; padding: 0.2rem 0.6rem; border-radius: 8px; flex-shrink: 0; }
+    .sent-en { font-size: 1.13rem; font-weight: 600; color: #0f172a; flex: 1; }
+    .sent-zh { margin-top: 0.4rem; font-size: 0.95rem; color: #475569; padding-left: 0.5rem; border-left: 3px solid #cbd5e1; }
+    .key-term { background: var(--yellow-hl); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #9a3412; }
+    .gram-term { background: var(--purple-bg); border-bottom: 2px solid var(--purple); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #5b21b6; }
+    body.cloze-mode .key-term, body.cloze-mode .gram-term { background: #cbd5e1; color: transparent; border-color: transparent; cursor: pointer; user-select: none; }
+    body.cloze-mode .key-term:hover { background: var(--yellow-hl); color: #9a3412; }
+    body.cloze-mode .gram-term:hover { background: var(--purple-bg); color: #5b21b6; }
+    .audio-btn { border: none; background: var(--amber-bg); color: var(--amber); padding: 0.35rem 0.65rem; border-radius: 999px; font-size: 0.82rem; font-weight: 800; cursor: pointer; flex-shrink: 0; }
+    .chunk-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.85rem 0; }
+    .chunk { border-radius: 10px; padding: 0.4rem 0.7rem; font-size: 0.87rem; display: flex; flex-direction: column; border: 1px solid transparent; }
+    .chunk .c-role { font-size: 0.7rem; font-weight: 800; opacity: 0.85; }
+    .chunk .c-en { font-weight: 800; }
+    .chunk .c-zh { font-size: 0.78rem; }
+    .chunk.s { background: #fff1f2; border-color: #fecdd3; color: #be123c; }
+    .chunk.v { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .chunk.o { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .chunk.c { background: #f5f3ff; border-color: #ddd6fe; color: #6d28d9; }
+    .chunk.m { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+    .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.8rem; margin-top: 0.6rem; }
+    .insight-box { border-radius: 10px; padding: 0.8rem 1rem; font-size: 0.89rem; }
+    .insight-box.grammar { background: #f8fafc; border-left: 4px solid var(--amber); }
+    .insight-box.trans { background: #fffbeb; border-left: 4px solid var(--orange); }
+    .insight-title { font-weight: 800; margin-bottom: 0.3rem; }
+    .quiz-btn { display: block; width: 100%; text-align: left; padding: 0.72rem 1rem; margin: 0.4rem 0; border: 2px solid var(--border); border-radius: 10px; background: #fff; font-size: 0.93rem; font-weight: 600; cursor: pointer; }
+    .quiz-btn:hover { border-color: var(--amber); background: var(--amber-bg); }
+    .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
+    .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
+    .quiz-exp { display: none; margin-top: 0.45rem; padding: 0.7rem 1rem; border-radius: 10px; background: var(--green-bg); color: #065f46; font-size: 0.88rem; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badges">
+      <span class="pill gold">進階改寫版三｜🧑‍🎓 第一人稱高中生故事記敘篇</span>
+      <span class="pill">UNIT 11 學測英文作文記敘文範本</span>
+    </div>
+    <h1>My Unforgettable Adventure in Disneyland Paris</h1>
+    <h2>我的巴黎迪士尼難忘冒險記（第一人稱高中生遊記視角・練學測記敘文與結尾金句）</h2>
+  </header>
+
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../../index.html">⬅️ 返回總覽</a>
+    <a class="nav-btn" href="./03_互動圖文學習講義.html">📖 原版主講義</a>
+    <a class="nav-btn" href="./04_改寫版1_客觀科普報導篇.html">📰 1. 科普旅遊報導</a>
+    <a class="nav-btn" href="./05_改寫版2_第二人稱代入篇.html">💬 2. 第二人稱</a>
+    <a class="nav-btn primary" href="./06_改寫版3_高中生故事記敘篇.html">🧑‍🎓 3. 高中生故事</a>
+    <a class="nav-btn" href="./07_改寫版4_正反論證議論文篇.html">⚖️ 4. 正反議論文</a>
+  </nav>
+
+  <div class="container">
+
+    <div class="section-title">🎬 一、四格圖解大意 (4-Panel Visual Storyboard)</div>
+    <div class="card">
+      <img src="./03_AI_視覺圖解講義.jpg" alt="Unit 11 Infographic" class="infographic-img" />
+      <div class="storyboard">
+        <div class="story-panel p1">
+          <span class="panel-icon">🎒</span>
+          <span class="panel-step">起 · 圓夢踏入園區</span>
+          <h4>1. 自從去年起期待已久的旅程</h4>
+          <p>自從去年讀到巴黎迪士尼的介紹以來，我和妹妹就一直夢想造訪；入園後我們立刻朝驚人的城堡奔去。</p>
+          <span class="eng-tag">Since I read / walked toward</span>
+        </div>
+        <div class="story-panel p2">
+          <span class="panel-icon">🐉</span>
+          <span class="panel-step">承 · 鼓起勇氣探險</span>
+          <h4>2. 地底惡龍與三大經典設施</h4>
+          <p>導覽牌提醒當心——城堡底下沉睡著令人生畏的惡龍！我鼓起勇氣探訪後，接著玩遍巨雷山等三大經典設施。</p>
+          <span class="eng-tag">below it sleeps / courage</span>
+        </div>
+        <div class="story-panel p3">
+          <span class="panel-icon">🍕</span>
+          <span class="panel-step">轉 · 尋讀美食地圖</span>
+          <h4>3. 用 Scanning 找到米奇雪糕披薩</h4>
+          <p>中午肚子餓時，我用尋讀法掃描園區地圖上的 food 關鍵字，找到墨西哥與印義料理，還吃了米奇形狀的雪糕與披薩。</p>
+          <span class="eng-tag">snacks shaped like Mickey</span>
+        </div>
+        <div class="story-panel p4">
+          <span class="panel-icon">🎆</span>
+          <span class="panel-step">合 · 夜空煙火感動收尾</span>
+          <h4>4. 煙火與魔法大秀畫下完美句點</h4>
+          <p>夜晚園區在煙火中閃耀，自 2025 年推出的《Disney Tales of Magic》更為我們漫長的一天畫下最圓滿的句點。</p>
+          <span class="eng-tag">fireworks / cap off our day</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">📖 二、完整課文沉浸閱讀（高中生故事記敘版・約 178 字）</div>
+    <div class="reader-card">
+      <div class="reader-header">
+        <div style="font-weight:800;font-size:0.95rem;">🧑‍🎓 文體特色：第一人稱（I / my sister and I）故事記敘，可直接作為學測英文作文「難忘的旅遊經驗」滿分範本</div>
+        <div>
+          <button class="toggle-btn" id="btn-full-audio" onclick="toggleFullAudio()">🔊 全篇連續朗讀</button>
+          <button class="toggle-btn active" id="btn-reader-zh" onclick="toggleReaderZh()">👁️ 顯示中文對照</button>
+          <button class="toggle-btn" onclick="changeFontSize(1)">A+</button>
+          <button class="toggle-btn" onclick="changeFontSize(-1)">A-</button>
+        </div>
+      </div>
+
+      <div class="reader-para">
+        <div class="reader-en">
+          <span class="gram-term">Since I joined</span> my high school English club last year, I <span class="gram-term">have dreamed of</span> visiting Disneyland <span class="key-term">Paris</span>. This summer, my sister and I finally entered this magical place filled with rides, shows, and our favorite characters. Excitedly, we walked along Main Street <span class="key-term">toward</span> the <span class="key-term">incredible</span> castle at the end. A sign warned us to <span class="gram-term">look out</span>—<span class="gram-term">below it sleeps a fearsome dragon</span>! Gathering up my <span class="key-term">courage</span>, I led my sister into the cave before riding popular <span class="key-term">classics</span> like Big Thunder Mountain, Pirates of the Caribbean, and Peter Pan’s Flight. Because each area has its own <span class="key-term">theme</span>, we explored many exciting worlds in a single day.
+        </div>
+        <div class="reader-zh">
+          自從我去年加入高中英文社以來，我就一直夢想造訪巴黎迪士尼樂園。今年夏天，我和妹妹終於踏入這個充滿遊樂設施、表演與我們最愛角色的奇幻之地。我們興奮地沿著美國小鎮大街朝向盡頭那座令人驚嘆的城堡走去。一面告示牌提醒我們當心——在城堡底下沉睡著一隻令人生畏的惡龍！我鼓起勇氣，在搭乘巨雷山、加勒比海盜與小飛俠等熱門經典設施前，先帶著妹妹走進洞穴探險。因為每個區域都有自己的主題，我們在一天內探索了許多令人興奮的世界。
+        </div>
+      </div>
+
+      <div class="reader-para" style="margin-bottom:0;">
+        <div class="reader-en">
+          At noon, I scanned the park map for the key word “food” and saw that <span class="gram-term">there is plenty of great food</span> to enjoy, from <span class="key-term">Mexican</span> dishes at Casa de Coco to <span class="key-term">Indian</span> and <span class="key-term">Italian</span> meals at Colonel Hathi’s Outpost. Better still, <span class="gram-term">there are cute snacks shaped like</span> Mickey Mouse, so we bought ice cream <span class="key-term">bars</span> and pizzas. At night, the park shone with lights, music, and <span class="key-term">fireworks</span>. <span class="gram-term">Since 2025, visitors have been able to</span> enjoy <em>Disney Tales of Magic</em>, and watching scenes from <em>Cinderella</em> and <em>Encanto</em> was a truly wonderful way to <span class="gram-term">cap off</span> our long day at one of the world’s best <span class="key-term">theme parks</span>.
+        </div>
+        <div class="reader-zh">
+          到了中午，我用尋讀法在園區地圖上掃描關鍵字「food」，發現這裡有許多美味食物可供享用，從可可餐廳的墨西哥料理到哈athi上校前哨站的印度與義大利餐點應有盡有。更棒的是，還有做成米奇形狀的可愛點心，於是我們買了雪糕和披薩。到了夜晚，園區因燈光、音樂與煙火而閃耀。自從 2025 年以來，遊客便能欣賞《Disney Tales of Magic》，而觀看《仙履奇緣》與《魔法滿屋》的電影場景，真是為我們在世界頂尖主題樂園之一的漫長一天畫下圓滿句點的絕佳方式。
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">🧩 三、課文「積木拆句」＋ 逐行中翻英秘訣</div>
+    <div class="card">
+      <div class="control-bar">
+        <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
+        <div>
+          <button class="toggle-btn active" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
+          <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式</button>
+        </div>
+      </div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 1</span>
+          <div style="flex:1;">
+            <div class="sent-en"><span class="gram-term">Since I joined</span> my high school English club last year, I <span class="gram-term">have dreamed of</span> visiting Disneyland <span class="key-term">Paris</span>.</div>
+            <div class="sent-zh">自從我去年加入高中英文社以來，我就一直夢想造訪巴黎迪士尼樂園。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Since I joined my high school English club last year, I have dreamed of visiting Disneyland Paris.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Since + S + V-ed] 過去式子句</span><span class="c-en">Since I joined my high school English club last year,</span><span class="c-zh">自從我去年加入高中英文社以來</span></div>
+          <div class="chunk s"><span class="c-role">[S+V] 現在完成式</span><span class="c-en">I have dreamed of</span><span class="c-zh">我就一直夢想著</span></div>
+          <div class="chunk o"><span class="c-role">[O] 動名詞受詞</span><span class="c-en">visiting Disneyland Paris.</span><span class="c-zh">造訪巴黎迪士尼樂園</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 完美套用課本 p.47 例句結構：<code>Since I joined..., I have + p.p.</code></div>課本 Language Note 2 例句是 <code>Since I joined the film club, I have made many friends.</code> 這裡直接活學活用到遊記第一句！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 作文破題公式</div>寫「期待已久的活動／旅行」時，用 <code>Since + 過去事件, I have dreamed of V-ing...</code> 開頭最自然。</div>
+        </div>
+      </div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 2</span>
+          <div style="flex:1;">
+            <div class="sent-en">Excitedly, we walked along Main Street <span class="key-term">toward</span> the <span class="key-term">incredible</span> castle, where a sign warned us to <span class="gram-term">look out</span>—<span class="gram-term">below it sleeps a fearsome dragon</span>!</div>
+            <div class="sent-zh">我們興奮地沿著美國小鎮大街朝驚人的城堡走去，那裡的告示牌提醒我們當心——在它底下沉睡著一隻令人生畏的惡龍！</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Excitedly, we walked along Main Street toward the incredible castle, where a sign warned us to look out—below it sleeps a fearsome dragon!')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 情緒副詞放句首</span><span class="c-en">Excitedly,</span><span class="c-zh">興奮地</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+M] 核心移動</span><span class="c-en">we walked along Main Street toward the incredible castle,</span><span class="c-zh">我們沿小鎮大街朝驚人城堡走去</span></div>
+          <div class="chunk c"><span class="c-role">[關係副詞+倒裝句]</span><span class="c-en">where a sign warned us to look out—below it sleeps a fearsome dragon!</span><span class="c-zh">告示牌提醒當心——底下沉睡著可怕惡龍！</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 情緒副詞 <code>Excitedly,</code> 放句首修飾全句</div>學測記敘文必備技巧：在句首加上 <code>Excitedly,</code> / <code>Thankfully,</code> / <code>To our amazement,</code> 讓故事充滿情緒張力。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 倒裝句保持現在式</div>告示牌上的標語 <code>below it sleeps a fearsome dragon!</code> 屬於園區恆常設定，直接保留現在式倒裝！</div>
+        </div>
+      </div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 3</span>
+          <div style="flex:1;">
+            <div class="sent-en">Gathering up my <span class="key-term">courage</span>, I led my sister into the cave before riding popular <span class="key-term">classics</span> like Big Thunder Mountain, Pirates of the Caribbean, and Peter Pan’s Flight.</div>
+            <div class="sent-zh">我鼓起勇氣，在搭乘巨雷山、加勒比海盜與小飛俠等熱門經典設施前，先帶著妹妹走進洞穴探險。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Gathering up my courage, I led my sister into the cave before riding popular classics like Big Thunder Mountain, Pirates of the Caribbean, and Peter Pan’s Flight.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 分詞構句</span><span class="c-en">Gathering up my courage,</span><span class="c-zh">鼓起我的勇氣</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 主句動作</span><span class="c-en">I led my sister into the cave</span><span class="c-zh">我帶妹妹走進洞穴</span></div>
+          <div class="chunk m"><span class="c-role">[M] 時間介系詞片語</span><span class="c-en">before riding popular classics like Big Thunder Mountain, Pirates of the Caribbean, and Peter Pan’s Flight.</span><span class="c-zh">在搭乘熱門經典設施之前</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 分詞構句：<code>Gathering up my courage, I...</code></div>原為 <code>As I gathered up my courage, I led...</code>，主詞相同省略連接詞與主詞，改用現在分詞開頭！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 必背片語</div>「鼓起勇氣」英文說法：<code>gather (up) one's courage</code> 或 <code>pluck up one's courage</code>。</div>
+        </div>
+      </div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 4</span>
+          <div style="flex:1;">
+            <div class="sent-en">At noon, I scanned the map and saw that <span class="gram-term">there is plenty of great food</span> to enjoy and that <span class="gram-term">there are cute snacks shaped like</span> Mickey Mouse, including ice cream <span class="key-term">bars</span> and pizzas.</div>
+            <div class="sent-zh">到了中午，我尋讀地圖並發現這裡有許多美味食物可享用，還有做成米奇形狀的可愛點心，包括雪糕與披薩。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('At noon, I scanned the map and saw that there is plenty of great food to enjoy and that there are cute snacks shaped like Mickey Mouse, including ice cream bars and pizzas.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[M+S+V] 尋讀動作</span><span class="c-en">At noon, I scanned the map and saw</span><span class="c-zh">中午我尋讀地圖並發現</span></div>
+          <div class="chunk o"><span class="c-role">[O1] 名詞子句 1</span><span class="c-en">that there is plenty of great food to enjoy</span><span class="c-zh">有充足的美食可享用</span></div>
+          <div class="chunk o"><span class="c-role">[O2] 名詞子句 2</span><span class="c-en">and that there are cute snacks shaped like Mickey Mouse, including ice cream bars and pizzas.</span><span class="c-zh">且有做成米奇形狀的點心，含雪糕與披薩</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 並列名詞子句：<code>saw that + 子句 1 + and that + 子句 2</code></div>當及物動詞後接兩個受詞子句時，第二個 <code>that</code> 不可省略！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 結合 Scanning 與點心</div>把尋讀地圖（<code>scanned the map</code>）自然串進故事轉折。</div>
+        </div>
+      </div>
+
+      <div class="sent-card" style="margin-bottom:0;">
+        <div class="sent-top">
+          <span class="sent-num">句 5</span>
+          <div style="flex:1;">
+            <div class="sent-en"><span class="gram-term">Since 2025, visitors have been able to</span> enjoy <em>Disney Tales of Magic</em> with <span class="key-term">fireworks</span>, and watching it was a truly wonderful way to <span class="gram-term">cap off</span> our long day at one of the world’s best <span class="key-term">theme parks</span>.</div>
+            <div class="sent-zh">自從 2025 年以來，遊客便能欣賞搭配煙火的《Disney Tales of Magic》，而觀看這場秀真是為我們在世界頂尖主題樂園之一的漫長一天畫下圓滿句點的絕佳方式。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Since 2025, visitors have been able to enjoy Disney Tales of Magic with fireworks, and watching it was a truly wonderful way to cap off our long day at one of the world’s best theme parks.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[Since + 現在完成式]</span><span class="c-en">Since 2025, visitors have been able to enjoy Disney Tales of Magic with fireworks,</span><span class="c-zh">自 2025 年起遊客已能欣賞煙火魔法大秀</span></div>
+          <div class="chunk s"><span class="c-role">[Conj+動名詞主詞]</span><span class="c-en">and watching it</span><span class="c-zh">而觀看這場秀</span></div>
+          <div class="chunk o"><span class="c-role">[V+C+M] 完美收尾</span><span class="c-en">was a truly wonderful way to cap off our long day at one of the world’s best theme parks.</span><span class="c-zh">真是為漫長一日畫下圓滿句點的絕佳方式</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 動名詞片語作主詞：<code>watching it was a truly wonderful way to cap off...</code></div>將課文的指示代名詞 <code>This is...</code> 具體化為動名詞主詞 <code>watching it was...</code>，是高分作文必學句型！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 記敘文結尾金句</div>背下這句，所有校外教學、畢業旅行、家庭出遊作文都能完美收尾！</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">🎯 四、15 題大考實戰檢測（高中生故事記敘篇）</div>
+    <div class="card">
+      <div class="control-bar" style="background:var(--amber-bg);border-color:var(--amber-border);">
+        <strong style="color:var(--amber);">🏆 即時得分：<span id="score-val">0</span> / 15</strong>
+        <button class="toggle-btn" onclick="resetQuiz()">🔄 重新作答</button>
+      </div>
+      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:1rem;font-size:0.95rem;">
+        <strong>[克漏字短文 Q1–Q5]</strong> Since I <strong>(__1__)</strong> my high school English club last year, I have dreamed of visiting Disneyland Paris. This summer, my sister and I walked along Main Street <strong>(__2__)</strong> the incredible castle. A sign warned us to look out because below it sleeps a fearsome dragon! <strong>(__3__)</strong> up my courage, I led my sister into the cave. At noon, we saw that there are cute snacks <strong>(__4__)</strong> like Mickey Mouse, including ice cream bars. At night, watching the fireworks show was a wonderful way to <strong>(__5__)</strong> our long day.
+      </div>
+      <div id="quiz-container"></div>
+    </div>
+
+  </div>
+
+  <script>
+    const fullText = "Since I joined my high school English club last year, I have dreamed of visiting Disneyland Paris. This summer, my sister and I finally entered this magical place filled with rides, shows, and our favorite characters. Excitedly, we walked along Main Street toward the incredible castle at the end. A sign warned us to look out—below it sleeps a fearsome dragon! Gathering up my courage, I led my sister into the cave before riding popular classics like Big Thunder Mountain, Pirates of the Caribbean, and Peter Pan’s Flight. Because each area has its own theme, we explored many exciting worlds in a single day. At noon, I scanned the park map for the key word food and saw that there is plenty of great food to enjoy, from Mexican dishes at Casa de Coco to Indian and Italian meals at Colonel Hathi’s Outpost. Better still, there are cute snacks shaped like Mickey Mouse, so we bought ice cream bars and pizzas. At night, the park shone with lights, music, and fireworks. Since 2025, visitors have been able to enjoy Disney Tales of Magic, and watching scenes from Cinderella and Encanto was a truly wonderful way to cap off our long day at one of the world’s best theme parks.";
+
+    function speak(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US'; u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    }
+    let playing = false;
+    function toggleFullAudio() {
+      const btn = document.getElementById('btn-full-audio');
+      if (playing) { window.speechSynthesis.cancel(); playing = false; btn.textContent = '🔊 全篇連續朗讀'; return; }
+      playing = true; btn.textContent = '⏹️ 停止朗讀';
+      const u = new SpeechSynthesisUtterance(fullText);
+      u.lang = 'en-US'; u.rate = 0.95;
+      u.onend = () => { playing = false; btn.textContent = '🔊 全篇連續朗讀'; };
+      window.speechSynthesis.speak(u);
+    }
+    function toggleReaderZh() {
+      document.body.classList.toggle('hide-reader-zh');
+      document.getElementById('btn-reader-zh').classList.toggle('active');
+    }
+    let fs = 1.14;
+    function changeFontSize(d) {
+      fs = Math.min(1.45, Math.max(0.95, fs + d * 0.08));
+      document.documentElement.style.setProperty('--reader-font-size', fs + 'rem');
+    }
+
+    const quizData = [
+      { q: "1. [克漏字 Q1] Since I (__1__) my high school English club last year, I have dreamed of visiting Disneyland Paris.", opts: ["(A) join", "(B) joined", "(C) have joined", "(D) had joined"], ans: 1, exp: "正解 (B) joined。連接詞 Since 引導的子句搭配過去時間 last year，必須用過去簡單式 joined。" },
+      { q: "2. [克漏字 Q2] This summer, my sister and I walked along Main Street (__2__) the incredible castle.", opts: ["(A) toward", "(B) among", "(C) except", "(D) aboard"], ans: 0, exp: "正解 (A) toward（朝、向）。" },
+      { q: "3. [克漏字 Q3] (__3__) up my courage, I led my sister into the cave.", opts: ["(A) Gather", "(B) Gathered", "(C) Gathering", "(D) To gathering"], ans: 2, exp: "正解 (C) Gathering。主詞 I 主動「鼓起勇氣」，分詞構句用現在分詞 Gathering up my courage。" },
+      { q: "4. [克漏字 Q4] ...we saw that there are cute snacks (__4__) like Mickey Mouse, including ice cream bars.", opts: ["(A) shape", "(B) shaped", "(C) shaping", "(D) shapes"], ans: 1, exp: "正解 (B) shaped。過去分詞片語 shaped like Mickey Mouse 表被塑造成米奇形狀。" },
+      { q: "5. [克漏字 Q5] At night, watching the fireworks show was a wonderful way to (__5__) our long day.", opts: ["(A) cap off", "(B) look out", "(C) pick out", "(D) take off"], ans: 0, exp: "正解 (A) cap off（為……畫下圓滿句點）。" },
+      { q: "6. [文意字彙] My little sister was afraid of the ______ dragon sleeping under the castle.", opts: ["(A) fearsome", "(B) Italian", "(C) Mexican", "(D) delicious"], ans: 0, exp: "正解 (A) fearsome（令人生畏的、可怕的）。" },
+      { q: "7. [文意字彙] We bought two chocolate ice cream ______ to cool down in the afternoon.", opts: ["(A) themes", "(B) bars", "(C) classics", "(D) fireworks"], ans: 1, exp: "正解 (B) bars（雪糕、冰棒）。" },
+      { q: "8. [文意字彙] Pirates of the Caribbean is a ______ attraction that visitors of all ages love.", opts: ["(A) classic", "(B) hungry", "(C) fearsome", "(D) bar"], ans: 0, exp: "正解 (A) classic（經典的／經典設施）。" },
+      { q: "9. [文法實戰] Watching scenes from Cinderella and Encanto ______ a wonderful way to end the night.", opts: ["(A) were", "(B) are", "(C) was", "(D) have"], ans: 2, exp: "正解 (C) was。動名詞片語 Watching scenes... 作主詞時視為單數，搭配單數動詞 was。" },
+      { q: "10. [文法實戰] There ______ several students waiting outside the classroom right now.", opts: ["(A) is", "(B) was", "(C) has", "(D) are"], ans: 3, exp: "正解 (D) are。後接複數可數名詞 several students 且時間為 right now，故用 are。" },
+      { q: "11. [文法實戰] Disneyland Paris is one of the world's best theme ______.", opts: ["(A) park", "(B) parks", "(C) parking", "(D) parked"], ans: 1, exp: "正解 (B) parks。one of the + 最高級 + 複數可數名詞（parks）！" },
+      { q: "12. [中翻英實戰] 「在城堡底下沉睡著一隻令人生畏的惡龍！」正確的完全倒裝句為：", opts: ["(A) Below the castle does sleep a fearsome dragon!", "(B) Below the castle sleeps a fearsome dragon!", "(C) Below the castle a fearsome dragon sleep!", "(D) Sleeps below the castle a fearsome dragon!"], ans: 1, exp: "正解 (B) Below the castle sleeps a fearsome dragon!" },
+      { q: "13. [閱讀測驗] How did the narrator quickly find where to eat on the park map at noon?", opts: ["(A) By reading every word on the map from top to bottom.", "(B) By scanning the map for the key word 'food'.", "(C) By asking the dragon below the castle.", "(D) By calling Colonel Hathi on the phone."], ans: 1, exp: "正解 (B)。文中提到 At noon, I scanned the park map for the key word 'food'。" },
+      { q: "14. [閱讀測驗] What did the narrator and his/her sister do BEFORE riding Big Thunder Mountain?", opts: ["(A) They watched Disney Tales of Magic.", "(B) They walked into the dragon's cave below the castle.", "(C) They left the theme park.", "(D) They watched the nighttime fireworks."], ans: 1, exp: "正解 (B)。文中提到 I led my sister into the cave before riding popular classics like Big Thunder Mountain。" },
+      { q: "15. [閱讀測驗] How did the narrator feel about the nighttime show Disney Tales of Magic?", opts: ["(A) It was boring and too long.", "(B) It was a truly wonderful way to cap off their long day.", "(C) It was too scary for high school students.", "(D) It only showed scenes from Pirates of the Caribbean."], ans: 1, exp: "正解 (B)。作者讚賞這場秀是為漫長充實的一天畫下完美句點的絕佳方式。" }
+    ];
+
+    let score = 0; const answered = new Set();
+    function renderQuiz() {
+      const box = document.getElementById('quiz-container');
+      box.innerHTML = quizData.map((item, idx) => `
+        <div style="margin-bottom:1rem;">
+          <div style="font-weight:800;margin-bottom:0.35rem;">${item.q}</div>
+          <div id="opts-${idx}">
+            ${item.opts.map((opt, oIdx) => `<button class="quiz-btn" onclick="checkAns(${idx}, ${oIdx}, this)">${opt}</button>`).join('')}
+          </div>
+          <div id="exp-${idx}" class="quiz-exp">${item.exp}</div>
+        </div>
+      `).join('');
+    }
+    function checkAns(qIdx, oIdx, btn) {
+      if (answered.has(qIdx)) return;
+      answered.add(qIdx);
+      const item = quizData[qIdx];
+      const btns = document.getElementById(`opts-${qIdx}`).querySelectorAll('.quiz-btn');
+      if (oIdx === item.ans) { btn.classList.add('correct'); score++; document.getElementById('score-val').textContent = score; }
+      else { btn.classList.add('wrong'); btns[item.ans].classList.add('correct'); }
+      document.getElementById(`exp-${qIdx}`).style.display = 'block';
+    }
+    function resetQuiz() { score = 0; answered.clear(); document.getElementById('score-val').textContent = '0'; renderQuiz(); }
+    renderQuiz();
+  </script>
+</body>
+</html>
