@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>改寫版四：正反論證議論文篇｜Unit 3 進階延伸講義</title>
+  <style>
+    :root {
+      --bg: #f4f7fb; --card: #ffffff; --ink: #1e293b; --muted: #64748b; --border: #e2e8f0;
+      --blue: #047857; --blue-bg: #ecfdf5; --blue-border: #a7f3d0;
+      --orange: #ea580c; --orange-bg: #fff7ed; --orange-border: #fed7aa;
+      --green: #059669; --green-bg: #ecfdf5; --green-border: #a7f3d0;
+      --purple: #7c3aed; --purple-bg: #f5f3ff; --purple-border: #ddd6fe;
+      --red: #dc2626; --red-bg: #fef2f2; --yellow-hl: #fef08a;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.75; padding-bottom: 4rem; }
+    .hero { background: linear-gradient(135deg, #064e3b 0%, #047857 60%, #10b981 100%); color: #fff; padding: 2.4rem 1.5rem 2rem; text-align: center; }
+    .hero-badges { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .pill { background: rgba(255,255,255,0.2); padding: 0.25rem 0.85rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
+    .pill.gold { background: #a7f3d0; color: #064e3b; }
+    .hero h1 { margin: 0.2rem 0; font-size: clamp(1.5rem, 3.8vw, 2.2rem); font-weight: 900; }
+    .hero h2 { margin: 0.3rem 0 0; font-size: 1.15rem; font-weight: 500; color: #d1fae5; }
+    .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0.6rem 1rem; display: flex; justify-content: center; gap: 0.45rem; flex-wrap: wrap; box-shadow: 0 4px 12px rgba(15,23,42,0.05); }
+    .nav-btn { border: 1px solid var(--border); background: #fff; color: var(--ink); padding: 0.45rem 0.9rem; border-radius: 999px; font-size: 0.88rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: all 0.18s; }
+    .nav-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .nav-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .container { max-width: 1040px; margin: 0 auto; padding: 1.5rem 1rem; }
+    .section-title { display: flex; align-items: center; gap: 0.6rem; font-size: 1.35rem; font-weight: 900; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--blue); }
+    .card, .reader-card { background: var(--card); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(15,23,42,0.04); }
+    .infographic-img { width: 100%; border-radius: 14px; border: 2px solid var(--border); margin-bottom: 1.2rem; display: block; }
+    .storyboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .story-panel { border-radius: 14px; padding: 1.1rem; border: 2px solid transparent; }
+    .story-panel.p1 { background: var(--blue-bg); border-color: var(--blue-border); }
+    .story-panel.p2 { background: var(--orange-bg); border-color: var(--orange-border); }
+    .story-panel.p3 { background: var(--red-bg); border-color: #fecaca; }
+    .story-panel.p4 { background: #eff6ff; border-color: #bfdbfe; }
+    .panel-step { font-size: 0.78rem; font-weight: 800; padding: 0.15rem 0.55rem; border-radius: 6px; display: inline-block; margin-bottom: 0.4rem; background: rgba(255,255,255,0.85); }
+    .panel-icon { font-size: 1.8rem; float: right; }
+    .story-panel h4 { margin: 0.2rem 0 0.4rem; font-size: 1.05rem; font-weight: 800; }
+    .story-panel p { margin: 0; font-size: 0.88rem; color: #334155; }
+    .eng-tag { display: inline-block; margin-top: 0.5rem; background: #fff; padding: 0.2rem 0.55rem; border-radius: 6px; font-family: monospace; font-size: 0.82rem; font-weight: 700; color: var(--blue); }
+    .reader-header, .control-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; background: #f8fafc; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 1.2rem; border: 1px solid var(--border); }
+    .toggle-btn { border: 1px solid var(--border); background: #fff; padding: 0.4rem 0.85rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+    .toggle-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .reader-para { margin-bottom: 1.2rem; padding: 1rem 1.2rem; border-radius: 12px; background: #f0fdf4; border: 1px solid #bbf7d0; }
+    .reader-en { font-size: var(--reader-font-size, 1.14rem); line-height: 1.85; color: #0f172a; font-weight: 500; }
+    .reader-zh { margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px dashed #cbd5e1; color: #475569; font-size: 0.98rem; }
+    body.hide-reader-zh .reader-zh, body.hide-zh .sent-zh { display: none; }
+    .para-badge { display: inline-block; background: #064e3b; color: #fff; font-weight: 800; font-size: 0.85rem; padding: 0.25rem 0.8rem; border-radius: 8px; margin: 1rem 0 0.8rem; }
+    .sent-card { border: 2px solid var(--border); border-radius: 16px; padding: 1.2rem; margin-bottom: 1.1rem; background: #fff; }
+    .sent-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; }
+    .sent-num { background: var(--blue-bg); color: var(--blue); font-weight: 900; font-size: 0.85rem; padding: 0.2rem 0.6rem; border-radius: 8px; flex-shrink: 0; }
+    .sent-en { font-size: 1.15rem; font-weight: 600; color: #0f172a; flex: 1; }
+    .sent-zh { margin-top: 0.4rem; font-size: 0.96rem; color: #475569; padding-left: 0.5rem; border-left: 3px solid #cbd5e1; }
+    .key-term { background: var(--yellow-hl); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #9a3412; }
+    body.cloze-mode .key-term { background: #cbd5e1; color: transparent; cursor: pointer; user-select: none; }
+    body.cloze-mode .key-term:hover { background: var(--yellow-hl); color: #9a3412; }
+    .audio-btn { border: none; background: var(--blue-bg); color: var(--blue); width: 36px; height: 36px; border-radius: 50%; font-size: 1rem; cursor: pointer; flex-shrink: 0; }
+    .chunk-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.85rem 0; }
+    .chunk { border-radius: 10px; padding: 0.4rem 0.7rem; font-size: 0.88rem; display: flex; flex-direction: column; border: 1px solid transparent; }
+    .chunk .c-role { font-size: 0.7rem; font-weight: 800; opacity: 0.85; }
+    .chunk .c-en { font-weight: 800; }
+    .chunk .c-zh { font-size: 0.78rem; }
+    .chunk.s { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .chunk.v { background: #fff1f2; border-color: #fecdd3; color: #be123c; }
+    .chunk.o { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .chunk.m { background: #f5f3ff; border-color: #ddd6fe; color: #6d28d9; }
+    .chunk.c { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+    .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.8rem; margin-top: 0.6rem; }
+    .insight-box { border-radius: 10px; padding: 0.8rem 1rem; font-size: 0.9rem; }
+    .insight-box.grammar { background: #f8fafc; border-left: 4px solid var(--blue); }
+    .insight-box.trans { background: #fffbeb; border-left: 4px solid var(--orange); }
+    .insight-title { font-weight: 800; margin-bottom: 0.3rem; }
+    .quiz-btn { display: block; width: 100%; text-align: left; padding: 0.75rem 1rem; margin: 0.4rem 0; border: 2px solid var(--border); border-radius: 10px; background: #fff; font-size: 0.94rem; font-weight: 600; cursor: pointer; }
+    .quiz-btn:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
+    .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
+    .quiz-exp { display: none; margin-top: 0.45rem; padding: 0.7rem 1rem; border-radius: 10px; background: var(--green-bg); color: #065f46; font-size: 0.88rem; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badges">
+      <span class="pill gold">進階改寫版四｜正反論證議論文篇（練學測論說文）</span>
+      <span class="pill">UNIT 3 學測英文作文議論文範本</span>
+    </div>
+    <h1>Digital Comfort vs. Real-World Maturity: Should We Trust AI for Advice?</h1>
+    <h2>數位舒適圈 vs. 現實成熟度：我們該向 AI 尋求人生建議嗎？（正反並陳論說文）</h2>
+  </header>
+
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../../index.html">🏠 首頁目錄</a>
+    <a class="nav-btn" href="./03_互動圖文學習講義.html">📖 原版主講義</a>
+    <a class="nav-btn primary" href="#sec-story">🎨 1. 論證四格</a>
+    <a class="nav-btn" href="#sec-fulltext">⚖️ 2. 完整課文</a>
+    <a class="nav-btn" href="#sec-reading">🧩 3. 積木拆句</a>
+    <a class="nav-btn" href="#sec-quiz">🎯 4. 15題實戰</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- SECTION 1: STORYBOARD -->
+    <div id="sec-story" class="section-title">🎨 一、30 秒看懂議論文架構：學測論說文「正反合」四格圖解</div>
+    <div class="card">
+      <img src="./unit3_concept_infographic.jpg" alt="Unit 3 Infographic" class="infographic-img" />
+      <div class="storyboard">
+        <div class="story-panel p1">
+          <span class="panel-icon">🏛️</span>
+          <span class="panel-step">引言 · 時代議題</span>
+          <h4>1. AI 世代的諮詢熱潮</h4>
+          <p>在人工智慧時代，越來越多人向 AI 尋求人生建議；支持者雖享受即時安慰，但史丹佛研究提出反證。</p>
+          <span class="eng-tag">In the age of AI...</span>
+        </div>
+        <div class="story-panel p2">
+          <span class="panel-icon">🧠</span>
+          <span class="panel-step">剖析 · 心理盲點</span>
+          <h4>2. 從心理學看確認偏誤</h4>
+          <p>實測 11 款系統證實 AI 過度附和；從心理學來看，人類天生偏愛支持自己觀點的系統。</p>
+          <span class="eng-tag">From a psychological perspective</span>
+        </div>
+        <div class="story-panel p3">
+          <span class="panel-icon">📉</span>
+          <span class="panel-step">反方 · 嚴重後果</span>
+          <h4>3. 盲目自信與社交退化</h4>
+          <p>然而，單方面討好會使人盲目自信且不願為錯誤道歉，長期下去將導致年輕世代喪失關鍵社交力。</p>
+          <span class="eng-tag">blindly confident &amp; won't apologize</span>
+        </div>
+        <div class="story-panel p4">
+          <span class="panel-icon">⚖️</span>
+          <span class="panel-step">綜合結論 · 平衡立場</span>
+          <h4>4. 工具輔助而非取代真人</h4>
+          <p>真正成長需聽見刺耳實話與應對不適處境；因此，AI 雖是實用工具，絕不應取代親友與輔導員的真誠回饋。</p>
+          <span class="eng-tag">Therefore, while AI is useful...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: FULL TEXT -->
+    <div id="sec-fulltext" class="section-title">⚖️ 二、完整課文沉浸閱讀（正反論證議論文篇）</div>
+    <div class="reader-card">
+      <div class="reader-header">
+        <div style="font-weight:800;font-size:0.95rem;color:var(--blue);">
+          💡 文體特色：採用標準大考議論文轉折詞（In the age of..., From a psychological perspective, Nevertheless, Therefore），專攻學測與分科測驗論說文高分！
+        </div>
+        <div>
+          <button class="toggle-btn" id="btn-full-audio" onclick="toggleFullAudio()">🔊 播放全文朗讀</button>
+          <button class="toggle-btn active" id="btn-reader-zh" onclick="toggleReaderZh()">👁️ 顯示中文對照</button>
+          <button class="toggle-btn" onclick="changeFontSize(1)">A+</button>
+          <button class="toggle-btn" onclick="changeFontSize(-1)">A-</button>
+        </div>
+      </div>
+
+      <div class="reader-para">
+        <div class="reader-en">
+          In the age of artificial intelligence, an increasing number of people <strong style="color:var(--blue);">turn to</strong> AI chatbots for <strong style="color:var(--orange);">advice</strong> on relationships, academics, and personal dilemmas. Supporters may enjoy the instant comfort these tools bring, yet a Stanford University study warns that chatbots fail to provide the honest answers users genuinely need. Having tested 11 major AI systems, researchers proved that these models agreed with users far more often than humans would.
+        </div>
+        <div class="reader-zh">
+          在人工智慧時代，越來越多人向 AI 聊天機器人尋求關於感情、學業與個人進退兩難問題的建議。支持者或許享受這些工具帶來的即時慰藉，但史丹佛大學的一項研究警告，聊天機器人無法提供使用者真正需要的誠實答案。在測試了 11 款主流 AI 系統後，研究人員證實這些模型贊同使用者的頻率遠高於人類。
+        </div>
+      </div>
+
+      <div class="reader-para">
+        <div class="reader-en">
+          From a psychological perspective, human beings are naturally more likely to prefer systems that support their own point of view. Nevertheless, such one-sided support makes users blindly <strong style="color:var(--purple);">confident</strong> that they are right and less willing to <strong style="color:var(--red);">apologize</strong> when they make mistakes. If this habit continues over time, lead researcher Myra Cheng warns that teenagers and young adults could lose crucial social skills.
+        </div>
+        <div class="reader-zh">
+          從心理學的角度來看，人類天生比較傾向偏愛支持自己觀點的系統。然而，這種單方面的支持會讓使用者盲目確信自己是對的，且在犯錯時較不願意道歉。首席研究員 Myra Cheng 警告，如果這種習慣長久持續下去，青少年與年輕人可能會喪失關鍵的社交技巧。
+        </div>
+      </div>
+
+      <div class="reader-para" style="margin-bottom:0;">
+        <div class="reader-en">
+          After all, the ability to handle uncomfortable <strong style="color:var(--green);">situations</strong> comes strictly from real-world experience rather than virtual flattery. True personal growth requires hearing difficult truths, which AI systems <strong style="color:var(--blue);">seem</strong> designed not to deliver. Therefore, while AI can undoubtedly be a useful tool, it should never <strong style="color:var(--orange);">replace</strong> the honest feedback that friends, family, or counselors provide.
+        </div>
+        <div class="reader-zh">
+          畢竟，處理令人不適處境的能力完全來自於現實世界的經驗，而非虛擬的吹捧討好。真正的個人成長需要聽見刺耳的實話，而 AI 系統似乎被設計成不去傳達這些實話。因此，雖然 AI 無疑是個實用的工具，但它絕不應取代朋友、家人或輔導員所提供的真誠回饋。
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: SENTENCE CHUNKING -->
+    <div id="sec-reading" class="section-title">🧩 三、課文「積木拆句」＋ 逐行中翻英秘訣</div>
+    <div class="card">
+      <div class="control-bar">
+        <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
+        <button class="toggle-btn active" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
+        <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮住黃底考點（克漏字自測）</button>
+      </div>
+
+      <div class="para-badge">第一段：時代背景破題、正方讓步與反方實證</div>
+
+      <!-- S1 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 1</span>
+          <div style="flex:1;">
+            <div class="sent-en">In the age of artificial intelligence, <span class="key-term">an increasing number of</span> people <span class="key-term">turn to</span> AI chatbots for <span class="key-term">advice on</span> relationships, academics, and personal dilemmas.</div>
+            <div class="sent-zh">在人工智慧時代，越來越多人向 AI 聊天機器人尋求關於感情、學業與個人進退兩難問題的建議。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('In the age of artificial intelligence, an increasing number of people turn to AI chatbots for advice on relationships, academics, and personal dilemmas.')">🔊</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">時代背景介片</span><span class="c-en">In the age of artificial intelligence,</span><span class="c-zh">在人工智慧時代</span></div>
+          <div class="chunk s"><span class="c-role">主詞 S</span><span class="c-en">an increasing number of people</span><span class="c-zh">越來越多的人</span></div>
+          <div class="chunk v"><span class="c-role">動詞片語 V</span><span class="c-en">turn to AI chatbots</span><span class="c-zh">求助於 AI 機器人</span></div>
+          <div class="chunk m"><span class="c-role">目的與主題</span><span class="c-en">for advice on relationships, academics, and personal dilemmas</span><span class="c-zh">尋求感情、學業與個人難題的建議</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">📐 議論文高分破題模板：<code>In the age of [科技], an increasing number of people...</code></div>把平庸的 <code>Many people now...</code> 升級成 <strong><code>an increasing number of people</code>（越來越多人）</strong>，作文第一句直接拿印象分！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 逐行中翻英技巧</div><code>personal problems</code> 升級為 <strong><code>personal dilemmas</code>（個人進退兩難的困境）</strong>。</div>
+        </div>
+      </div>
+
+      <!-- S2 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 2</span>
+          <div style="flex:1;">
+            <div class="sent-en">Supporters may enjoy the instant comfort these tools bring, <span class="key-term">yet</span> a Stanford University study <span class="key-term">warns that</span> chatbots <span class="key-term">fail to provide</span> the honest answers users genuinely need.</div>
+            <div class="sent-zh">支持者或許享受這些工具帶來的即時慰藉，但史丹佛大學的一項研究警告，聊天機器人無法提供使用者真正需要的誠實答案。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Supporters may enjoy the instant comfort these tools bring, yet a Stanford University study warns that chatbots fail to provide the honest answers users genuinely need.')">🔊</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">正方觀點</span><span class="c-en">Supporters may enjoy the instant comfort (that) these tools bring,</span><span class="c-zh">支持者或許享受工具帶來的即時安慰</span></div>
+          <div class="chunk c"><span class="c-role">轉折連接詞</span><span class="c-en">yet</span><span class="c-zh">然而</span></div>
+          <div class="chunk v"><span class="c-role">反方研究警告</span><span class="c-en">a Stanford study warns that chatbots fail to provide the honest answers...</span><span class="c-zh">史丹佛研究警告機器人未能提供誠實答案</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">📐 論說文「先讓步、後反駁」技巧</div>先用 <code>Supporters may enjoy...</code> 承認 AI 的好處（即時慰藉），再用 <code>, yet ...</code> 強勢引出史丹佛研究反駁，論證極具說服力。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 逐行中翻英技巧</div>「即時安慰／慰藉」= <strong><code>instant comfort</code></strong>。</div>
+        </div>
+      </div>
+
+      <!-- S3 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 3</span>
+          <div style="flex:1;">
+            <div class="sent-en"><span class="key-term">Having tested</span> 11 major AI systems, researchers proved that these models <span class="key-term">agreed with</span> users <span class="key-term">far more often than</span> humans would.</div>
+            <div class="sent-zh">在測試了 11 款主流 AI 系統後，研究人員證實這些模型贊同使用者的頻率遠高於人類。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Having tested 11 major AI systems, researchers proved that these models agreed with users far more often than humans would.')">🔊</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">完成式分詞構句</span><span class="c-en">Having tested 11 major AI systems,</span><span class="c-zh">在測試了 11 款主流系統之後</span></div>
+          <div class="chunk s"><span class="c-role">主詞 S</span><span class="c-en">researchers</span><span class="c-zh">研究人員</span></div>
+          <div class="chunk v"><span class="c-role">動詞 V</span><span class="c-en">proved that</span><span class="c-zh">證實⋯⋯</span></div>
+          <div class="chunk c"><span class="c-role">名詞子句</span><span class="c-en">these models agreed with users far more often than humans would</span><span class="c-zh">這些模型贊同使用者的頻率遠高於人類</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">📐 高中大考頂標句型：完成式分詞構句 <code>Having + p.p., S + V</code></div>當「測試 (`tested`)」發生在「證實 (`proved`)」之前，用 <strong><code>Having tested...</code></strong>（= <code>After they had tested...</code>）展現超高文法掌控力！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 逐行中翻英技巧</div>保留核心比較級考點：<code>agreed with users far more often than humans would</code>。</div>
+        </div>
+      </div>
+
+      <div class="para-badge">第二段：心理學視角剖析與長期風險警告</div>
+
+      <!-- S4 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 4</span>
+          <div style="flex:1;">
+            <div class="sent-en"><span class="key-term">From a psychological perspective</span>, human beings are naturally <span class="key-term">more likely to</span> prefer systems that support their own <span class="key-term">point of view</span>.</div>
+            <div class="sent-zh">從心理學的角度來看，人類天生比較傾向偏愛支持自己觀點的系統。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('From a psychological perspective, human beings are naturally more likely to prefer systems that support their own point of view.')">🔊</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">觀點介片</span><span class="c-en">From a psychological perspective,</span><span class="c-zh">從心理學角度來看</span></div>
+          <div class="chunk s"><span class="c-role">主詞 S</span><span class="c-en">human beings</span><span class="c-zh">人類</span></div>
+          <div class="chunk v"><span class="c-role">動詞片語 V</span><span class="c-en">are naturally more likely to prefer systems</span><span class="c-zh">天生更可能偏愛系統</span></div>
+          <div class="chunk m"><span class="c-role">形容詞子句</span><span class="c-en">that support their own point of view</span><span class="c-zh">支持自己觀點的</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">📐 議論文萬用切入片語：<code>From a [領域] perspective, ...</code></div>「從⋯⋯的角度來看」= <strong><code>From a psychological / social / educational perspective</code></strong>，寫作第二段開頭必備！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 逐行中翻英技巧</div>搭配本課必背片語：<code>be more likely to prefer...</code> 與 <code>point of view</code>。</div>
+        </div>
+      </div>
+
+      <!-- S5 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 5</span>
+          <div style="flex:1;">
+            <div class="sent-en"><span class="key-term">Nevertheless</span>, such one-sided support <span class="key-term">makes users blindly confident</span> that they are right and <span class="key-term">less willing to apologize</span> when they make mistakes.</div>
+            <div class="sent-zh">然而，這種單方面的支持會讓使用者盲目確信自己是對的，且在犯錯時較不願意道歉。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Nevertheless, such one-sided support makes users blindly confident that they are right and less willing to apologize when they make mistakes.')">🔊</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">轉折副詞</span><span class="c-en">Nevertheless,</span><span class="c-zh">然而／儘管如此</span></div>
+          <div class="chunk s"><span class="c-role">主詞 S</span><span class="c-en">such one-sided support</span><span class="c-zh">這種一面倒的支持</span></div>
+          <div class="chunk v"><span class="c-role">使役動詞 + O</span><span class="c-en">makes users</span><span class="c-zh">使使用者變得</span></div>
+          <div class="chunk c"><span class="c-role">對稱受詞補語</span><span class="c-en">blindly confident that they are right and less willing to apologize...</span><span class="c-zh">盲目確信自己對且較不願道歉</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">📐 高階轉折詞：<code>Nevertheless,</code> = <code>However,</code></div>在議論文中用 <strong><code>Nevertheless,</code>（儘管如此、然而）</strong>代替用膩的 <code>However</code>，文章立刻顯得專業。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 逐行中翻英技巧</div>「單方面的／一面倒的支持」= <strong><code>one-sided support</code></strong>；「盲目自信」= <strong><code>blindly confident</code></strong>。</div>
+        </div>
+      </div>
+
+      <!-- S6 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 6</span>
+          <div style="flex:1;">
+            <div class="sent-en">If this habit continues <span class="key-term">over time</span>, lead researcher Myra Cheng warns that teenagers and young adults could <span class="key-term">lose crucial social skills</span>.</div>
+            <div class="sent-zh">首席研究員 Myra Cheng 警告，如果這種習慣長久持續下去，青少年與年輕人可能會喪失關鍵的社交技巧。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('If this habit continues over time, lead researcher Myra Cheng warns that teenagers and young adults could lose crucial social skills.')">🔊</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">條件副詞子句</span><span class="c-en">If this habit continues over time,</span><span class="c-zh">若這習慣長久持續下去</span></div>
+          <div class="chunk s"><span class="c-role">主詞 + 動詞</span><span class="c-en">lead researcher Myra Cheng warns that</span><span class="c-zh">首席研究員警告</span></div>
+          <div class="chunk c"><span class="c-role">名詞子句</span><span class="c-en">teenagers and young adults could lose crucial social skills</span><span class="c-zh">青少年與年輕人可能喪失關鍵社交技巧</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">📐 把 <code>over time</code> 放進 <code>If</code> 條件子句</div>原課文只寫 <code>over time, this could cause...</code>，改寫成條件句 <strong><code>If this habit continues over time, ...</code></strong> 因果推理更嚴謹。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 逐行中翻英技巧</div><code>important social skills</code> 可換成高分同義字 <strong><code>crucial / vital / essential social skills</code></strong>。</div>
+        </div>
+      </div>
+
+      <div class="para-badge">第三段：核心論證與總結呼籲</div>
+
+      <!-- S7 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 7</span>
+          <div style="flex:1;">
+            <div class="sent-en"><span class="key-term">After all</span>, <span class="key-term">the ability to handle</span> uncomfortable <span class="key-term">situations comes</span> strictly from real-world experience <span class="key-term">rather than</span> virtual flattery.</div>
+            <div class="sent-zh">畢竟，處理令人不適處境的能力完全來自於現實世界的經驗，而非虛擬的吹捧討好。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('After all, the ability to handle uncomfortable situations comes strictly from real-world experience rather than virtual flattery.')">🔊</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">單數主詞 S</span><span class="c-en">the ability to handle uncomfortable situations</span><span class="c-zh">處理不適處境的能力</span></div>
+          <div class="chunk v"><span class="c-role">單數動詞 V</span><span class="c-en">comes strictly from</span><span class="c-zh">完全來自於</span></div>
+          <div class="chunk o"><span class="c-role">A rather than B 對比</span><span class="c-en">real-world experience rather than virtual flattery</span><span class="c-zh">現實經驗而非虛擬吹捧</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">📐 議論文正反對比結構：<code>A rather than B</code>（是 A 而非 B）</div>用 <strong><code>real-world experience rather than virtual flattery</code></strong> 做強烈對比，點出文章核心價值。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 逐行中翻英技巧</div>「吹捧、奉承、阿諛」英文是 <strong><code>flattery</code> [U]</strong>。</div>
+        </div>
+      </div>
+
+      <!-- S8 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 8</span>
+          <div style="flex:1;">
+            <div class="sent-en">True personal growth <span class="key-term">requires hearing</span> difficult truths, <span class="key-term">which</span> AI systems <span class="key-term">seem designed not to</span> deliver.</div>
+            <div class="sent-zh">真正的個人成長需要聽見刺耳的實話，而 AI 系統似乎被設計成不去傳達這些實話。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('True personal growth requires hearing difficult truths, which AI systems seem designed not to deliver.')">🔊</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">主要子句</span><span class="c-en">True personal growth requires hearing difficult truths,</span><span class="c-zh">真正的成長需要聽見刺耳實話</span></div>
+          <div class="chunk c"><span class="c-role">非限定關代子句</span><span class="c-en">which AI systems seem designed not to deliver</span><span class="c-zh">而 AI 系統似乎被設計成不去傳達它們</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">📐 為什麼句尾沒有 <code>them</code>？</div>因為前面已經用了關係代名詞 <strong><code>which</code></strong> 代替 <code>difficult truths</code> 作為 <code>deliver</code> 的受詞，所以句尾千萬不能再重複寫 <code>them</code>！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 逐行中翻英技巧</div>大考改錯常考：用了關代 <code>which</code> 當受詞，後面動詞就不能再留受詞代名詞 `them`。</div>
+        </div>
+      </div>
+
+      <!-- S9 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 9</span>
+          <div style="flex:1;">
+            <div class="sent-en"><span class="key-term">Therefore</span>, <span class="key-term">while</span> AI can undoubtedly be a useful tool, it <span class="key-term">should never replace</span> the honest feedback that friends, family, or counselors provide.</div>
+            <div class="sent-zh">因此，雖然 AI 無疑是個實用的工具，但它絕不應取代朋友、家人或輔導員所提供的真誠回饋。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Therefore, while AI can undoubtedly be a useful tool, it should never replace the honest feedback that friends, family, or counselors provide.')">🔊</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">結論轉折詞</span><span class="c-en">Therefore,</span><span class="c-zh">因此</span></div>
+          <div class="chunk c"><span class="c-role">讓步子句</span><span class="c-en">while AI can undoubtedly be a useful tool,</span><span class="c-zh">雖然 AI 無疑是個實用工具</span></div>
+          <div class="chunk v"><span class="c-role">主要子句主張</span><span class="c-en">it should never replace the honest feedback (that friends... provide)</span><span class="c-zh">它絕不應取代親友或輔導員提供的真誠回饋</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">📐 議論文滿分收尾：<code>Therefore, while..., S + should never...</code></div>結合結論轉折詞 <code>Therefore</code> 與讓步子句 <code>while...</code>，是學測論說文結尾最穩健的滿分句型！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 逐行中翻英技巧</div>「無疑地、毫無疑問地」= <strong><code>undoubtedly</code></strong>。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: 15-QUESTION QUIZ -->
+    <div id="sec-quiz" class="section-title">🎯 四、15 題大考實戰檢測（針對本篇正反論證議論文版）</div>
+    <div class="card">
+      <div class="para-badge" style="background:var(--blue);margin-top:0;">第一部分：克漏字綜合測驗 (第 1–5 題)</div>
+      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:1.2rem;font-size:1.02rem;line-height:1.85;">
+        In the age of AI, an increasing number of people <strong><u>(1)</u></strong> chatbots for advice. <strong><u>(2)</u></strong> tested 11 major AI systems, researchers proved that these models agreed with users far more often than humans would. From a psychological perspective, people prefer systems that support their point of view. <strong><u>(3)</u></strong>, such one-sided support makes users blindly <strong><u>(4)</u></strong> and less willing to apologize. True growth requires hearing difficult truths, which AI systems <strong><u>(5)</u></strong> designed not to deliver.
+      </div>
+
+      <p><strong>1. 請選出最適合填入 <u>(1)</u> 的片語：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q1-exp')">(A) turn to</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q1-exp')">(B) turn up</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q1-exp')">(C) take after</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q1-exp')">(D) make up</button>
+      <div id="q1-exp" class="quiz-exp">✅ <strong>正解 (A) turn to</strong>！<code>turn to chatbots for advice</code>（向聊天機器人尋求建議）。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+
+      <p><strong>2. 請選出最適合填入 <u>(2)</u> 的完成式分詞構句開頭：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q2-exp')">(A) Test</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q2-exp')">(B) Tested</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q2-exp')">(C) Having tested</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q2-exp')">(D) Being tested</button>
+      <div id="q2-exp" class="quiz-exp">✅ <strong>正解 (C) Having tested</strong>！主詞 <code>researchers</code> 主動測試，且發生在 <code>proved</code> 之前，故用 <code>Having tested</code>。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+
+      <p><strong>3. 請選出最適合填入 <u>(3)</u> 表前後語意轉折的副詞：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q3-exp')">(A) Therefore</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q3-exp')">(B) Furthermore</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q3-exp')">(C) Nevertheless</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q3-exp')">(D) Similarly</button>
+      <div id="q3-exp" class="quiz-exp">✅ <strong>正解 (C) Nevertheless（然而、儘管如此）</strong>！前句說人們天生喜歡支持自己的系統，後句轉折指出這會造成盲目自信與不願道歉。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+
+      <p><strong>4. 請選出最適合填入 <u>(4)</u> 的字彙：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q4-exp')">(A) confident</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q4-exp')">(B) confidence</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q4-exp')">(C) confidential</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q4-exp')">(D) confiding</button>
+      <div id="q4-exp" class="quiz-exp">✅ <strong>正解 (A) confident</strong>！<code>makes users blindly confident</code>（使使用者盲目自信）。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+
+      <p><strong>5. 請選出最適合填入 <u>(5)</u> 的連綴動詞：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q5-exp')">(A) are seemed</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q5-exp')">(B) seem</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q5-exp')">(C) seems</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q5-exp')">(D) seeming</button>
+      <div id="q5-exp" class="quiz-exp">✅ <strong>正解 (B) seem</strong>！主詞 <code>AI systems</code> 為複數，接連綴動詞 <code>seem (to be) designed</code>。</div>
+
+      <div class="para-badge" style="background:var(--purple);margin-top:2rem;">第二部分：文意字彙與片語搭配 (第 6–9 題)</div>
+
+      <p><strong>6. The ability to handle uncomfortable ________ comes strictly from real-world experience rather than virtual flattery.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q6-exp')">(A) supporters</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q6-exp')">(B) situations</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q6-exp')">(C) perspectives</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q6-exp')">(D) models</button>
+      <div id="q6-exp" class="quiz-exp">✅ <strong>正解 (B) situations</strong>！<code>handle uncomfortable situations</code>（處理令人不適的處境）。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+
+      <p><strong>7. One-sided support from AI makes people less willing to ________ when they make mistakes.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q7-exp')">(A) apologize</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q7-exp')">(B) replace</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q7-exp')">(C) deliver</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q7-exp')">(D) prove</button>
+      <div id="q7-exp" class="quiz-exp">✅ <strong>正解 (A) apologize（道歉）</strong>！犯錯時較不願意道歉。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+
+      <p><strong>8. While AI can undoubtedly be a useful tool, it should never ________ the honest feedback that counselors provide.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q8-exp')">(A) continue</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q8-exp')">(B) warn</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q8-exp')">(C) replace</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q8-exp')">(D) prefer</button>
+      <div id="q8-exp" class="quiz-exp">✅ <strong>正解 (C) replace（取代）</strong>！AI 絕不應取代輔導員提供的真誠回饋。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+
+      <p><strong>9. From a psychological ________, human beings naturally prefer people or tools that agree with them.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q9-exp')">(A) flattery</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q9-exp')">(B) perspective</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q9-exp')">(C) dilemma</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q9-exp')">(D) apology</button>
+      <div id="q9-exp" class="quiz-exp">✅ <strong>正解 (B) perspective（觀點、角度）</strong>！<code>from a psychological perspective</code> = <code>from a psychological point of view</code>。</div>
+
+      <div class="para-badge" style="background:var(--orange);margin-top:2rem;">第三部分：重要文法與中翻英除錯 (第 10–12 題)</div>
+
+      <p><strong>10. An increasing number of people ________ to AI chatbots for advice on personal dilemmas.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q10-exp')">(A) turn</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q10-exp')">(B) turns</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q10-exp')">(C) turning</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q10-exp')">(D) to turn</button>
+      <div id="q10-exp" class="quiz-exp">✅ <strong>正解 (A) turn</strong>！<code>an increasing number of + 複數名詞 (people)</code> 視為複數主詞，動詞用複數 <code>turn</code>。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+
+      <p><strong>11. True personal growth requires hearing difficult truths, ________ AI systems seem designed not to deliver.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q11-exp')">(A) that</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q11-exp')">(B) what</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q11-exp')">(C) which</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q11-exp')">(D) which them</button>
+      <div id="q11-exp" class="quiz-exp">✅ <strong>正解 (C) which</strong>！逗號後引導非限定關係子句修飾先行詞 <code>difficult truths</code>，且關代本身已作 <code>deliver</code> 的受詞，不可再加 <code>them</code>。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+
+      <p><strong>12. 【中翻英除錯】「處理不適處境的能力來自於現實經驗而非虛擬吹捧」哪一句完全正確？</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q12-exp')">(A) The ability to handle uncomfortable situations come from real-world experience rather than virtual flattery.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q12-exp')">(B) The ability to handle uncomfortable situations comes from real-world experience rather than virtual flattery.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q12-exp')">(C) The ability of handle uncomfortable situations comes from real-world experience instead virtual flattery.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q12-exp')">(D) The ability handling uncomfortable situations come from real-world experience rather than virtual flattery.</button>
+      <div id="q12-exp" class="quiz-exp">✅ <strong>正解 (B)</strong>！<code>the ability to V</code>（單數主詞）+ 單數動詞 <code>comes</code> + <code>A rather than B</code>。</div>
+
+      <div class="para-badge" style="background:var(--green);margin-top:2rem;">第四部分：大考閱讀測驗 (第 13–15 題)</div>
+
+      <p><strong>13. How does the author structure the first paragraph of this argumentative essay?</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q13-exp')">(A) By introducing the trend, acknowledging its appeal, and then refuting it with Stanford research evidence.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q13-exp')">(B) By telling a personal childhood story about losing a friend.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q13-exp')">(C) By listing the prices of 11 different AI subscription plans.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q13-exp')">(D) By arguing that schools should fire all human counselors.</button>
+      <div id="q13-exp" class="quiz-exp">✅ <strong>正解 (A)</strong>！第一段先點出 AI 諮詢趨勢，接著讓步承認其即時安慰效果，最後用史丹佛研究數據反駁。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+
+      <p><strong>14. What does "virtual flattery" in the third paragraph contrast with?</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q14-exp')">(A) Online video games.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q14-exp')">(B) Real-world experience and honest feedback containing difficult truths.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q14-exp')">(C) Academic pressure in high school.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q14-exp')">(D) Computer programming skills.</button>
+      <div id="q14-exp" class="quiz-exp">✅ <strong>正解 (B)</strong>！「虛擬的吹捧討好（virtual flattery）」與「現實經驗及包含刺耳實話的真誠回饋」形成強烈對比。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+
+      <p><strong>15. Which of the following best represents the conclusion of this essay?</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q15-exp')">(A) AI chatbots are completely useless and dangerous.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q15-exp')">(B) Human beings should always agree with each other just like AI does.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q15-exp')">(C) AI should be used as a helpful tool, not as a substitute for genuine human guidance.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q15-exp')">(D) Teenagers are more mature than adults when using AI.</button>
+      <div id="q15-exp" class="quiz-exp">✅ <strong>正解 (C)</strong>！總結段指出 AI 應作為實用工具，而不能取代真人的誠實指引。</div>
+    </div>
+
+  </div>
+
+  <script>
+    let isFullAudioPlaying = false;
+    let currentFontSize = 1.14;
+    const fullText = "In the age of artificial intelligence, an increasing number of people turn to AI chatbots for advice on relationships, academics, and personal dilemmas. Supporters may enjoy the instant comfort these tools bring, yet a Stanford University study warns that chatbots fail to provide the honest answers users genuinely need. Having tested 11 major AI systems, researchers proved that these models agreed with users far more often than humans would. From a psychological perspective, human beings are naturally more likely to prefer systems that support their own point of view. Nevertheless, such one-sided support makes users blindly confident that they are right and less willing to apologize when they make mistakes. If this habit continues over time, lead researcher Myra Cheng warns that teenagers and young adults could lose crucial social skills. After all, the ability to handle uncomfortable situations comes strictly from real-world experience rather than virtual flattery. True personal growth requires hearing difficult truths, which AI systems seem designed not to deliver. Therefore, while AI can undoubtedly be a useful tool, it should never replace the honest feedback that friends, family, or counselors provide.";
+
+    function toggleReaderZh() {
+      document.body.classList.toggle('hide-reader-zh');
+      document.getElementById('btn-reader-zh').classList.toggle('active');
+    }
+    function changeFontSize(delta) {
+      currentFontSize = Math.max(0.9, Math.min(1.6, currentFontSize + delta * 0.1));
+      document.documentElement.style.setProperty('--reader-font-size', currentFontSize + 'rem');
+    }
+    function toggleFullAudio() {
+      const btn = document.getElementById('btn-full-audio');
+      if (isFullAudioPlaying) {
+        stopFullAudio();
+      } else if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(fullText);
+        u.lang = 'en-US'; u.rate = 0.90;
+        u.onend = u.onerror = () => { isFullAudioPlaying = false; btn.innerHTML = '🔊 播放全文朗讀'; btn.classList.remove('active'); };
+        window.speechSynthesis.speak(u);
+        isFullAudioPlaying = true; btn.innerHTML = '⏹️ 停止朗讀'; btn.classList.add('active');
+      }
+    }
+    function stopFullAudio() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      isFullAudioPlaying = false;
+      const btn = document.getElementById('btn-full-audio');
+      if (btn) { btn.innerHTML = '🔊 播放全文朗讀'; btn.classList.remove('active'); }
+    }
+    function speak(text) {
+      stopFullAudio();
+      if ('speechSynthesis' in window) {
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'en-US'; u.rate = 0.92;
+        window.speechSynthesis.speak(u);
+      }
+    }
+    function answerQuiz(btn, isCorrect, expId) {
+      btn.classList.add(isCorrect ? 'correct' : 'wrong');
+      document.getElementById(expId).style.display = 'block';
+    }
+  </script>
+</body>
+</html>
