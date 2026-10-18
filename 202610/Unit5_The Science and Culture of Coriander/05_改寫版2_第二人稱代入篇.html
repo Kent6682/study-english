@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>改寫版二：第二人稱代入篇｜Unit 5 The Science and Culture of Coriander</title>
+  <style>
+    :root {
+      --bg: #f4f7fb; --card: #ffffff; --ink: #1e293b; --muted: #64748b; --border: #e2e8f0;
+      --blue: #4f46e5; --blue-bg: #eef2ff; --blue-border: #c7d2fe;
+      --orange: #ea580c; --orange-bg: #fff7ed; --orange-border: #fed7aa;
+      --green: #059669; --green-bg: #ecfdf5; --green-border: #a7f3d0;
+      --purple: #7c3aed; --purple-bg: #f5f3ff; --purple-border: #ddd6fe;
+      --red: #dc2626; --red-bg: #fef2f2; --yellow-hl: #fef08a;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.75; padding-bottom: 4rem; }
+    .hero { background: linear-gradient(135deg, #312e81 0%, #4338ca 60%, #6366f1 100%); color: #fff; padding: 2.4rem 1.5rem 2rem; text-align: center; }
+    .hero-badges { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .pill { background: rgba(255,255,255,0.2); padding: 0.25rem 0.85rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
+    .pill.gold { background: #fde047; color: #1e1b4b; }
+    .hero h1 { margin: 0.2rem 0; font-size: clamp(1.5rem, 3.8vw, 2.2rem); font-weight: 900; }
+    .hero h2 { margin: 0.3rem 0 0; font-size: 1.12rem; font-weight: 500; color: #e0e7ff; }
+    .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0.6rem 1rem; display: flex; justify-content: center; gap: 0.45rem; flex-wrap: wrap; box-shadow: 0 4px 12px rgba(15,23,42,0.05); }
+    .nav-btn { border: 1px solid var(--border); background: #fff; color: var(--ink); padding: 0.42rem 0.85rem; border-radius: 999px; font-size: 0.86rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: all 0.18s; }
+    .nav-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .nav-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .container { max-width: 1040px; margin: 0 auto; padding: 1.5rem 1rem; }
+    .section-title { display: flex; align-items: center; gap: 0.6rem; font-size: 1.35rem; font-weight: 900; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--blue); }
+    .card, .reader-card { background: var(--card); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(15,23,42,0.04); }
+    .infographic-img { width: 100%; border-radius: 14px; border: 2px solid var(--border); margin-bottom: 1.2rem; display: block; }
+    .storyboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .story-panel { border-radius: 14px; padding: 1.1rem; border: 2px solid transparent; }
+    .story-panel.p1 { background: var(--blue-bg); border-color: var(--blue-border); }
+    .story-panel.p2 { background: var(--orange-bg); border-color: var(--orange-border); }
+    .story-panel.p3 { background: var(--purple-bg); border-color: var(--purple-border); }
+    .story-panel.p4 { background: var(--green-bg); border-color: var(--green-border); }
+    .panel-step { font-size: 0.78rem; font-weight: 800; padding: 0.15rem 0.55rem; border-radius: 6px; display: inline-block; margin-bottom: 0.4rem; background: rgba(255,255,255,0.85); }
+    .panel-icon { font-size: 1.8rem; float: right; }
+    .story-panel h4 { margin: 0.2rem 0 0.4rem; font-size: 1.05rem; font-weight: 800; }
+    .story-panel p { margin: 0; font-size: 0.88rem; color: #334155; }
+    .eng-tag { display: inline-block; margin-top: 0.5rem; background: #fff; padding: 0.2rem 0.55rem; border-radius: 6px; font-family: monospace; font-size: 0.82rem; font-weight: 700; color: var(--blue); }
+    .reader-header, .control-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; background: #f8fafc; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 1.2rem; border: 1px solid var(--border); }
+    .toggle-btn { border: 1px solid var(--border); background: #fff; padding: 0.4rem 0.85rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+    .toggle-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .reader-para { margin-bottom: 1.2rem; padding: 1rem 1.2rem; border-radius: 12px; background: #fafcff; border: 1px solid #e2e8f0; }
+    .reader-en { font-size: var(--reader-font-size, 1.14rem); line-height: 1.85; color: #0f172a; font-weight: 500; }
+    .reader-zh { margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px dashed #cbd5e1; color: #475569; font-size: 0.98rem; }
+    body.hide-reader-zh .reader-zh, body.hide-zh .sent-zh { display: none; }
+    .para-badge { display: inline-block; background: #312e81; color: #fff; font-weight: 800; font-size: 0.85rem; padding: 0.25rem 0.8rem; border-radius: 8px; margin: 1rem 0 0.8rem; }
+    .sent-card { border: 2px solid var(--border); border-radius: 16px; padding: 1.2rem; margin-bottom: 1.1rem; background: #fff; }
+    .sent-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; }
+    .sent-num { background: var(--blue-bg); color: var(--blue); font-weight: 900; font-size: 0.85rem; padding: 0.2rem 0.6rem; border-radius: 8px; flex-shrink: 0; }
+    .sent-en { font-size: 1.15rem; font-weight: 600; color: #0f172a; flex: 1; }
+    .sent-zh { margin-top: 0.4rem; font-size: 0.96rem; color: #475569; padding-left: 0.5rem; border-left: 3px solid #cbd5e1; }
+    .key-term { background: var(--yellow-hl); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #9a3412; }
+    .gram-term { background: var(--purple-bg); border-bottom: 2px solid var(--purple); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #5b21b6; }
+    body.cloze-mode .key-term, body.cloze-mode .gram-term { background: #cbd5e1; color: transparent; border-color: transparent; cursor: pointer; user-select: none; }
+    body.cloze-mode .key-term:hover { background: var(--yellow-hl); color: #9a3412; }
+    body.cloze-mode .gram-term:hover { background: var(--purple-bg); color: #5b21b6; }
+    .audio-btn { border: none; background: var(--blue-bg); color: var(--blue); padding: 0.35rem 0.65rem; border-radius: 999px; font-size: 0.82rem; font-weight: 800; cursor: pointer; flex-shrink: 0; }
+    .chunk-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.85rem 0; }
+    .chunk { border-radius: 10px; padding: 0.4rem 0.7rem; font-size: 0.88rem; display: flex; flex-direction: column; border: 1px solid transparent; }
+    .chunk .c-role { font-size: 0.7rem; font-weight: 800; opacity: 0.85; }
+    .chunk .c-en { font-weight: 800; }
+    .chunk .c-zh { font-size: 0.78rem; }
+    .chunk.s { background: #fff1f2; border-color: #fecdd3; color: #be123c; }
+    .chunk.v { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .chunk.o { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .chunk.c { background: #f5f3ff; border-color: #ddd6fe; color: #6d28d9; }
+    .chunk.m { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+    .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.8rem; margin-top: 0.6rem; }
+    .insight-box { border-radius: 10px; padding: 0.8rem 1rem; font-size: 0.9rem; }
+    .insight-box.grammar { background: #f8fafc; border-left: 4px solid var(--blue); }
+    .insight-box.trans { background: #fffbeb; border-left: 4px solid var(--orange); }
+    .insight-title { font-weight: 800; margin-bottom: 0.3rem; }
+    .quiz-btn { display: block; width: 100%; text-align: left; padding: 0.75rem 1rem; margin: 0.4rem 0; border: 2px solid var(--border); border-radius: 10px; background: #fff; font-size: 0.94rem; font-weight: 600; cursor: pointer; }
+    .quiz-btn:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
+    .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
+    .quiz-exp { display: none; margin-top: 0.45rem; padding: 0.7rem 1rem; border-radius: 10px; background: var(--green-bg); color: #065f46; font-size: 0.88rem; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badges">
+      <span class="pill gold">進階改寫版二｜💬 第二人稱科普代入篇</span>
+      <span class="pill">UNIT 5 You 對話式視角特訓</span>
+    </div>
+    <h1>Why Does Coriander Taste Like Soap to You?</h1>
+    <h2>為什麼香菜在你嘴裡嚐起來像肥皂？（以 You 提問引導讀者・學測科普引言最愛文體）</h2>
+  </header>
+
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../../index.html">⬅️ 返回總覽</a>
+    <a class="nav-btn" href="./03_互動圖文學習講義.html">📖 原版主講義</a>
+    <a class="nav-btn" href="./04_改寫版1_客觀科普報導篇.html">📰 1. 科普報導</a>
+    <a class="nav-btn primary" href="./05_改寫版2_第二人稱代入篇.html">💬 2. 第二人稱</a>
+    <a class="nav-btn" href="./06_改寫版3_高中生故事記敘篇.html">🧑‍🎓 3. 高中生故事</a>
+    <a class="nav-btn" href="./07_改寫版4_正反論證議論文篇.html">⚖️ 4. 正反議論文</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- SECTION 1: STORYBOARD -->
+    <div id="sec-story" class="section-title">🎬 一、四格圖解大意 (4-Panel Visual Storyboard)</div>
+    <div class="card">
+      <img src="./03_AI_視覺圖解講義.jpg" alt="Unit 5 Infographic" class="infographic-img" />
+      <div class="storyboard">
+        <div class="story-panel p1">
+          <span class="panel-icon">🍜</span>
+          <span class="panel-step">起 · 情境提問</span>
+          <h4>1. 你是香菜控還是反香菜派？</h4>
+          <p>當你喝台灣麵線湯時，若覺得香菜像肥皂，別怪自己挑食，真正原因其實藏在你的 DNA 裡！</p>
+          <span class="eng-tag">tastes like soap / your DNA</span>
+        </div>
+        <div class="story-panel p2">
+          <span class="panel-icon">🧠</span>
+          <span class="panel-step">承 · 你的大腦解讀</span>
+          <h4>2. 你的特定基因偵測到醛類</h4>
+          <p>若你帶有特定基因，大腦會把香菜裡的醛類處理成不快氣味；但若你從小常吃，這種反應會少很多。</p>
+          <span class="eng-tag">process the herb / reaction</span>
+        </div>
+        <div class="story-panel p3">
+          <span class="panel-icon">✈️</span>
+          <span class="panel-step">轉 · 當你出國點餐時</span>
+          <h4>3. 在美英點餐別搞混名稱！</h4>
+          <p>你在美國點 cilantro 是葉子、coriander 是種子，而在英國兩者都叫 coriander，歷史更可追溯至八千年前。</p>
+          <span class="eng-tag">while in the UK / stretches back</span>
+        </div>
+        <div class="story-panel p4">
+          <span class="panel-icon">🍦</span>
+          <span class="panel-step">合 · 挑戰你的味蕾極限</span>
+          <h4>4. 你敢試雙倍香菜披薩嗎？</h4>
+          <p>從台灣的香菜冰淇淋到日本必勝客雙倍香菜披薩，不管你愛不愛，香菜都已佔據你的餐桌！</p>
+          <span class="eng-tag">such a hit that / twice the amount</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: FULL TEXT IMMERSIVE READING -->
+    <div id="sec-fulltext" class="section-title">📖 二、完整課文沉浸閱讀（第二人稱代入改寫版・約 175 字）</div>
+    <div class="reader-card">
+      <div class="reader-header">
+        <div style="font-weight:800;font-size:0.95rem;">💬 文體特色：以問句與 <code>you / your</code> 開場，將抽象遺傳學轉化為讀者切身體驗</div>
+        <div>
+          <button class="toggle-btn" id="btn-full-audio" onclick="toggleFullAudio()">🔊 全篇連續朗讀</button>
+          <button class="toggle-btn active" id="btn-reader-zh" onclick="toggleReaderZh()">👁️ 顯示中文對照</button>
+          <button class="toggle-btn" onclick="changeFontSize(1)">A+</button>
+          <button class="toggle-btn" onclick="changeFontSize(-1)">A-</button>
+        </div>
+      </div>
+
+      <div class="reader-para">
+        <div class="reader-en">
+          When you bite into a bowl of noodles topped with coriander, do you enjoy its fresh <span class="gram-term">taste</span>, or do you feel it <span class="gram-term">tastes like</span> soap? If you hate this hotly <span class="key-term">debated</span> <span class="key-term">flavor</span>, do not blame your personal <span class="key-term">preference</span>—the answer behind this <span class="key-term">dispute</span> <span class="gram-term">lies in</span> your DNA. If you carry a <span class="key-term">specific</span> <span class="key-term">gene</span> sensitive to soap chemicals called aldehydes, your brain will <span class="key-term">process</span> the herb as unpleasant, though this <span class="key-term">reaction</span> is far less common if you grew up eating it in local <span class="key-term">cuisines</span>.
+        </div>
+        <div class="reader-zh">
+          當你咬下一口撒上香菜的湯麵時，你是享受它的清新滋味，還是覺得它嚐起來像肥皂？如果你討厭這種爭論最激烈的風味，別怪你的個人偏好——這場爭論背後的答案其實在於你的 DNA。如果你帶有一種對稱為醛類的肥皂化學物質敏感的特定基因，你的大腦就會將這種香草解讀為令人不快，不過如果你從小在當地料理中常吃它長大，這種反應就少見得多。
+        </div>
+      </div>
+
+      <div class="reader-para" style="margin-bottom:0;">
+        <div class="reader-en">
+          When traveling abroad, you will notice that Americans call the leaves cilantro, <span class="gram-term">while</span> people in the UK call both leaves and seeds coriander—a name from a Greek word for “stink bug.” Its history <span class="key-term">stretches</span> back to 6000 BCE, when ancients used it to <span class="key-term">flavor</span> bread and <span class="key-term">preserve</span> meat before it <span class="gram-term">had</span> <span class="key-term">spread</span> across Europe and traveled with <span class="key-term">explorers</span>. Today, you can try unusual <span class="key-term">products</span> like <span class="key-term">coriander-flavored</span> chips in Taiwan, or visit a Japanese pizza <span class="key-term">chain</span> whose <span class="key-term">released</span> coriander pizza became <span class="gram-term">such a hit that</span> it returned with <span class="gram-term">twice the amount of</span> the herb, alongside festivals and <span class="key-term">perfumes</span> for <span class="key-term">devoted</span> fans!
+        </div>
+        <div class="reader-zh">
+          出國旅遊時，你會注意到美國人把葉子叫 cilantro，而英國人則把葉子和種子都叫 coriander——這個名字源自希臘文的「臭蟲」。它的歷史可追溯至西元前 6000 年，古人用它調味麵包並保存肉類，隨後它傳遍歐洲並跟著探險家遠行。如今，你可以在台灣嚐試香菜口味洋芋片等新奇產品，或造訪日本一家披薩連鎖店，他們推出的香菜披薩成為如此熱賣的商品，以致於以雙倍分量的香菜回歸，此外還有為忠實粉絲舉辦的節慶與香水！
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: SENTENCE ANATOMY -->
+    <div id="sec-reading" class="section-title">🧩 三、課文「積木拆句」＋ 逐行中翻英秘訣</div>
+    <div class="card">
+      <div class="control-bar">
+        <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
+        <button class="toggle-btn active" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
+        <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式</button>
+      </div>
+
+      <!-- S1 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 1</span>
+          <div style="flex:1;">
+            <div class="sent-en">When you bite into a bowl of noodles topped with coriander, do you enjoy its fresh <span class="gram-term">taste</span>, or do you feel it <span class="gram-term">tastes like</span> soap?</div>
+            <div class="sent-zh">當你咬下一口撒上香菜的湯麵時，你是享受它的清新滋味，還是覺得它嚐起來像肥皂？</div>
+          </div>
+          <button class="audio-btn" onclick="speak('When you bite into a bowl of noodles topped with coriander, do you enjoy its fresh taste, or do you feel it tastes like soap?')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 時間副詞子句</span><span class="c-en">When you bite into a bowl of noodles</span><span class="c-zh">當你吃一碗麵時</span></div>
+          <div class="chunk m"><span class="c-role">[M] 過去分詞修飾</span><span class="c-en">topped with coriander,</span><span class="c-zh">上面撒了香菜的</span></div>
+          <div class="chunk v"><span class="c-role">[V1] 疑問句 1</span><span class="c-en">do you enjoy its fresh taste,</span><span class="c-zh">你享受它的清新滋味嗎</span></div>
+          <div class="chunk v"><span class="c-role">[V2] 疑問句 2</span><span class="c-en">or do you feel it tastes like soap?</span><span class="c-zh">還是覺得它嚐起來像肥皂？</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 飲食描寫神片語：<code>A (which is) topped with B</code></div>表示「上面鋪滿／撒上 B 的 A」，例如 <code>noodles topped with coriander</code>（撒上香菜的麵）、<code>pizza topped with cheese</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 寫作鉤子 (Hook) 秘訣</div>英文作文第一句用 <code>When you..., do you A or B?</code> 提問開場，能立刻抓住閱卷老師的目光！</div>
+        </div>
+      </div>
+
+      <!-- S2 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 2</span>
+          <div style="flex:1;">
+            <div class="sent-en">If you hate this hotly <span class="key-term">debated</span> <span class="key-term">flavor</span>, do not blame your personal <span class="key-term">preference</span>—the answer behind this <span class="key-term">dispute</span> <span class="gram-term">lies in</span> your DNA.</div>
+            <div class="sent-zh">如果你討厭這種爭論最激烈的風味，別怪你的個人偏好——這場爭論背後的答案其實在於你的 DNA。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('If you hate this hotly debated flavor, do not blame your personal preference—the answer behind this dispute lies in your DNA.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 條件子句</span><span class="c-en">If you hate this hotly debated flavor,</span><span class="c-zh">如果你討厭這備受爭論的風味</span></div>
+          <div class="chunk v"><span class="c-role">[V] 祈使句</span><span class="c-en">do not blame your personal preference</span><span class="c-zh">別怪你的個人偏好</span></div>
+          <div class="chunk s"><span class="c-role">[S+V] 破折號補充</span><span class="c-en">—the answer behind this dispute lies in your DNA</span><span class="c-zh">——爭論背後的答案在於你的 DNA</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 條件子句 + 祈使句：<code>If you V1..., (do not) V2...</code></div>第二人稱文章中常用祈使句與讀者對話，自然帶出核心片語 <code>lies in your DNA</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 中翻英秘訣</div>「別怪某事物」寫成 <strong><code>do not blame + N.</code></strong>，簡單又道地。</div>
+        </div>
+      </div>
+
+      <!-- S3 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 3</span>
+          <div style="flex:1;">
+            <div class="sent-en">If you carry a <span class="key-term">specific</span> <span class="key-term">gene</span> sensitive to soap chemicals called aldehydes, your brain will <span class="key-term">process</span> the herb as unpleasant, though this <span class="key-term">reaction</span> is far less common if you grew up eating it in local <span class="key-term">cuisines</span>.</div>
+            <div class="sent-zh">如果你帶有一種對稱為醛類的肥皂化學物質敏感的特定基因，你的大腦就會將這種香草解讀為令人不快，不過如果你從小在當地料理中常吃它長大，這種反應就少見得多。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('If you carry a specific gene sensitive to soap chemicals called aldehydes, your brain will process the herb as unpleasant, though this reaction is far less common if you grew up eating it in local cuisines.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 條件子句</span><span class="c-en">If you carry a specific gene (which is) sensitive to ... aldehydes,</span><span class="c-zh">若你帶有對醛類敏感的特定基因</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O+C] 主句</span><span class="c-en">your brain will process the herb as unpleasant,</span><span class="c-zh">你的大腦會將這香草解讀為不快</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 讓步補充</span><span class="c-en">though this reaction is far less common if you grew up eating it...</span><span class="c-zh">不過若你從小常吃，這反應就少得多</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 形容詞片語後位修飾：<code>a specific gene (that is) sensitive to...</code></div>當關係子句是 <code>that/which + be + 形容詞片語 (sensitive to...)</code> 時，可以直接把 <code>that is</code> 省略！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 搭配詞秘訣</div>「帶有某種基因」除了用 <code>have a gene</code>，生物科普最常用動詞 <strong><code>carry a specific gene</code></strong>！</div>
+        </div>
+      </div>
+
+      <!-- S4 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 4</span>
+          <div style="flex:1;">
+            <div class="sent-en">When traveling abroad, you will notice that Americans call the leaves cilantro, <span class="gram-term">while</span> people in the UK call both leaves and seeds coriander—a name from a Greek word for “stink bug.”</div>
+            <div class="sent-zh">出國旅遊時，你會注意到美國人把葉子叫 cilantro，而英國人則把葉子和種子都叫 coriander——這個名字源自希臘文的「臭蟲」。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('When traveling abroad, you will notice that Americans call the leaves cilantro, while people in the UK call both leaves and seeds coriander—a name from a Greek word for stink bug.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 保留連接詞分詞構句</span><span class="c-en">When (you are) traveling abroad,</span><span class="c-zh">當你出國旅遊時，</span></div>
+          <div class="chunk s"><span class="c-role">[S+V] 主句</span><span class="c-en">you will notice that Americans call the leaves cilantro,</span><span class="c-zh">你會注意到美國人稱葉子為 cilantro</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對比子句</span><span class="c-en">while people in the UK call both ... coriander</span><span class="c-zh">而英國人稱兩者為 coriander</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 保留連接詞的分詞構句：<code>When traveling abroad, you...</code></div>前後主詞都是 <code>you</code>，因此 <code>When you travel / are traveling abroad</code> 簡化為 <strong><code>When traveling abroad</code></strong>。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 中翻英秘訣</div>「出國旅遊」固定寫 <strong><code>travel abroad</code></strong>（<code>abroad</code> 是副詞，前面不加 `to`！）。</div>
+        </div>
+      </div>
+
+      <!-- S5 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 5</span>
+          <div style="flex:1;">
+            <div class="sent-en">Today, you can try unusual <span class="key-term">products</span> like <span class="key-term">coriander-flavored</span> chips in Taiwan, or visit a Japanese pizza <span class="key-term">chain</span> whose <span class="key-term">released</span> coriander pizza became <span class="gram-term">such a hit that</span> it returned with <span class="gram-term">twice the amount of</span> the herb, alongside festivals and <span class="key-term">perfumes</span> for <span class="key-term">devoted</span> fans!</div>
+            <div class="sent-zh">如今，你可以在台灣嚐試香菜口味洋芋片等新奇產品，或造訪日本一家披薩連鎖店，他們推出的香菜披薩成為如此熱賣的商品，以致於以雙倍分量的香菜回歸，此外還有為忠實粉絲舉辦的節慶與香水！</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Today, you can try unusual products like coriander-flavored chips in Taiwan, or visit a Japanese pizza chain whose released coriander pizza became such a hit that it returned with twice the amount of the herb, alongside festivals and perfumes for devoted fans!')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S+V1]</span><span class="c-en">you can try unusual products ... in Taiwan,</span><span class="c-zh">你可在台灣嘗試新奇產品</span></div>
+          <div class="chunk v"><span class="c-role">[V2+O]</span><span class="c-en">or visit a Japanese pizza chain</span><span class="c-zh">或造訪日本披薩連鎖店</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 所有格關代 whose</span><span class="c-en">whose released coriander pizza became such a hit that...</span><span class="c-zh">該店推出的香菜披薩大受歡迎以致於……</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 所有格關係代名詞 <code>whose + 名詞</code></div>先行詞雖然是無生命的商店 <code>a Japanese pizza chain</code>，依然可以用所有格關代 <strong><code>whose</code></strong> 修飾後面的名詞 <code>coriander pizza</code>！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 中翻英秘訣</div><code>alongside + N.</code> 表示「與……並存；除此之外還有……」，能優雅地把多個補充例子串在一起。</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION 4: 15-QUESTION QUIZ -->
+    <div id="sec-quiz" class="section-title">🎯 四、15 題大考實戰檢測（第二人稱代入篇專屬測驗）</div>
+    <div class="card">
+      <div class="para-badge" style="background:var(--blue);margin-top:0;">Part A — 克漏字綜合測驗 (Cloze Test, 第 1–5 題)</div>
+      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:1.2rem;font-size:1rem;line-height:1.85;">
+        When you eat noodles <strong><u>(__1__)</u></strong> with fresh coriander, do you think it tastes like soap? If you hate this debated flavor, the answer actually lies in your DNA. If you carry a specific gene <strong><u>(__2__)</u></strong> to aldehydes, your brain processes the herb as unpleasant. <strong><u>(__3__)</u></strong> traveling abroad, you will notice that Americans call the leaves cilantro, while people in the UK call both parts coriander. Today, you can visit a Japanese pizza chain <strong><u>(__4__)</u></strong> coriander pizza became such a hit that it returned with <strong><u>(__5__)</u></strong> of the herb!
+      </div>
+
+      <p><strong>1. 請選出最適合填入 <u>(__1__)</u> 的分詞：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q1-exp')">(A) topping</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q1-exp')">(B) topped</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q1-exp')">(C) tops</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q1-exp')">(D) to top</button>
+      <div id="q1-exp" class="quiz-exp">✅ <strong>正解 (B) topped</strong>！麵條是「被撒上」香菜，故用過去分詞 <code>noodles (which are) topped with fresh coriander</code>。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+      <p><strong>2. 請選出最適合填入 <u>(__2__)</u> 的形容詞：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q2-exp')">(A) sensitive</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q2-exp')">(B) sensible</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q2-exp')">(C) devoted</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q2-exp')">(D) curious</button>
+      <div id="q2-exp" class="quiz-exp">✅ <strong>正解 (A) sensitive（敏感的）</strong>！注意與形近字 <code>sensible</code>（明智的、通情達理的）區分；「對……敏感」為 <code>sensitive to</code>。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+      <p><strong>3. 請選出最適合填入 <u>(__3__)</u> 的連接詞：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q3-exp')">(A) During</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q3-exp')">(B) When</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q3-exp')">(C) Despite</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q3-exp')">(D) Because</button>
+      <div id="q3-exp" class="quiz-exp">✅ <strong>正解 (B) When</strong>！<code>When traveling abroad</code> 為保留連接詞的分詞構句（<code>= When you are traveling abroad</code>）；<code>During</code> 為介系詞，後面通常接名詞（如 <code>During your trip</code>）。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+      <p><strong>4. 請選出最適合填入 <u>(__4__)</u> 的關係詞：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q4-exp')">(A) which</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q4-exp')">(B) where</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q4-exp')">(C) whose</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q4-exp')">(D) what</button>
+      <div id="q4-exp" class="quiz-exp">✅ <strong>正解 (C) whose</strong>！先行詞為 <code>a Japanese pizza chain</code>，後方為名詞 <code>coriander pizza</code>（該連鎖店的香菜披薩），表所屬關係用所有格關代 <code>whose</code>。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+      <p><strong>5. 請選出最適合填入 <u>(__5__)</u> 的倍數結構：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q5-exp')">(A) twice the amount</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q5-exp')">(B) the twice amount</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q5-exp')">(C) twice amounts</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q5-exp')">(D) two times amount</button>
+      <div id="q5-exp" class="quiz-exp">✅ <strong>正解 (A) twice the amount</strong>！公式為 <code>倍數 (twice) + the + 計量詞 (amount) + of + N.</code>。</div>
+
+      <div class="para-badge" style="background:var(--purple);margin-top:1.8rem;">Part B — 文意字彙與片語搭配 (第 6–9 題)</div>
+
+      <p><strong>6. Instead of blaming your personal ________, you can blame your DNA if you cannot stand the smell of cilantro.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q6-exp')">(A) preference</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q6-exp')">(B) product</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q6-exp')">(C) explorer</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q6-exp')">(D) perfume</button>
+      <div id="q6-exp" class="quiz-exp">✅ <strong>正解 (A) preference（偏好、喜好）</strong>！<code>personal preference</code> 指「個人偏好」。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+      <p><strong>7. In the 15th century, European ________ sailed across the oceans and brought new spices and herbs to different continents.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q7-exp')">(A) reactions</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q7-exp')">(B) chains</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q7-exp')">(C) explorers</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q7-exp')">(D) genes</button>
+      <div id="q7-exp" class="quiz-exp">✅ <strong>正解 (C) explorers（探險家）</strong>！十五世紀的歐洲「探險家（explorers）」航越海洋將香料帶往不同大陸。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+      <p><strong>8. My grandmother always uses fresh garlic and herbs to ________ the soup and make it smell wonderful.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q8-exp')">(A) debate</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q8-exp')">(B) flavor</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q8-exp')">(C) stretch</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q8-exp')">(D) release</button>
+      <div id="q8-exp" class="quiz-exp">✅ <strong>正解 (B) flavor（給……調味）</strong>！<code>to + 原形動詞 flavor</code> 表示「替湯調味」。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+      <p><strong>9. News about the strange coriander milk tea quickly ________ across social media and attracted many curious buyers.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q9-exp')">(A) spread</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q9-exp')">(B) preserved</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q9-exp')">(C) processed</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q9-exp')">(D) debated</button>
+      <div id="q9-exp" class="quiz-exp">✅ <strong>正解 (A) spread（傳播、擴散）</strong>！關於香菜奶茶的消息迅速在社群媒體上「傳開（spread）」。</div>
+
+      <div class="para-badge" style="background:var(--orange);margin-top:1.8rem;">Part C — 重要文法與中翻英除錯 (第 10–12 題)</div>
+
+      <p><strong>10. ________ the task was extremely challenging, all the team members managed to complete it on time.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q10-exp')">(A) Despite</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q10-exp')">(B) While</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q10-exp')">(C) During</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q10-exp')">(D) Because</button>
+      <div id="q10-exp" class="quiz-exp">✅ <strong>正解 (B) While</strong>！句首的 <code>While</code> 引導讓步副詞子句，相當於 <code>Although</code>（雖然任務極具挑戰性，所有隊員仍設法準時完成）。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+      <p><strong>11. It was ________ cold and rainy day that we decided to stay home and order pizza instead.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q11-exp')">(A) so a</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q11-exp')">(B) such</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q11-exp')">(C) such a</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q11-exp')">(D) so</button>
+      <div id="q11-exp" class="quiz-exp">✅ <strong>正解 (C) such a</strong>！後方有單數可數名詞 <code>day</code>，故用 <code>such a + Adj. + 單數名詞 + that</code>。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+      <p><strong>12. 【中翻英除錯】「亞當說蛋糕裡的奶油嚐起來像芒果。」哪一句完全正確？</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q12-exp')">(A) Adam said the cream in the cake tastes mangoes.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q12-exp')">(B) Adam said the cream in the cake is tasting like mangoes.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q12-exp')">(C) Adam said the cream in the cake tastes like mangoes.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q12-exp')">(D) Adam said the cream in the cake tastes deliciously like mangoes.</button>
+      <div id="q12-exp" class="quiz-exp">✅ <strong>正解 (C)</strong>！連綴動詞 <code>taste</code> 後方接名詞 <code>mangoes</code> 時，必須加介系詞 <code>like</code>，且不可用進行式。</div>
+
+      <div class="para-badge" style="background:var(--green);margin-top:1.8rem;">Part D — 大考閱讀測驗 (第 13–15 題)</div>
+
+      <p><strong>13. If you order “coriander” in London, what might you receive compared to ordering it in New York?</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q13-exp')">(A) In London, “coriander” can refer to either the fresh leaves or the seeds, whereas in New York the leaves are specifically called “cilantro.”</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q13-exp')">(B) In London, coriander is only sold as a perfume, not as food.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q13-exp')">(C) In New York, “coriander” means stink bugs.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q13-exp')">(D) There is no difference between American and British terms for the plant.</button>
+      <div id="q13-exp" class="quiz-exp">✅ <strong>正解 (A)</strong>！英國將葉子與種子統稱為 coriander，而美國將葉子稱為 cilantro、種子稱為 coriander。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+      <p><strong>14. According to the passage, under what condition is a person LESS likely to find coriander unpleasant?</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q14-exp')">(A) When they only smell coriander perfume instead of eating the leaves.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q14-exp')">(B) If they grew up eating coriander regularly in their local cuisine.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q14-exp')">(C) If they wash their mouth with soap before eating noodles.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q14-exp')">(D) When they eat coriander seeds from 6000 BCE.</button>
+      <div id="q14-exp" class="quiz-exp">✅ <strong>正解 (B)</strong>！文中明確指出從小在日常料理中經常吃香菜長大的人，出現這種排斥反應的比例低得多。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+      <p><strong>15. What is the tone of this second-person rewritten passage?</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q15-exp')">(A) Angry and critical of modern fast-food chains.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q15-exp')">(B) Engaging, informative, and conversational.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q15-exp')">(C) Sad and nostalgic about ancient Greek history.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q15-exp')">(D) Strictly legal and warning against food poisoning.</button>
+      <div id="q15-exp" class="quiz-exp">✅ <strong>正解 (B) 引人入勝、資訊豐富且具對話感</strong>！透過第二人稱 <code>you</code> 提問與引導，兼具趣味與科普知識。</div>
+    </div>
+
+  </div>
+
+  <script>
+    let isFullAudioPlaying = false;
+    let currentFontSize = 1.14;
+    function toggleReaderZh() {
+      document.body.classList.toggle('hide-reader-zh');
+      document.getElementById('btn-reader-zh').classList.toggle('active');
+    }
+    function changeFontSize(delta) {
+      currentFontSize = Math.max(0.95, Math.min(1.55, currentFontSize + delta * 0.1));
+      document.documentElement.style.setProperty('--reader-font-size', currentFontSize + 'rem');
+    }
+    const articleText = "When you bite into a bowl of noodles topped with coriander, do you enjoy its fresh taste, or do you feel it tastes like soap? If you hate this hotly debated flavor, do not blame your personal preference—the answer behind this dispute lies in your DNA. If you carry a specific gene sensitive to soap chemicals called aldehydes, your brain will process the herb as unpleasant, though this reaction is far less common if you grew up eating it in local cuisines. When traveling abroad, you will notice that Americans call the leaves cilantro, while people in the UK call both leaves and seeds coriander—a name from a Greek word for stink bug. Its history stretches back to 6000 BCE, when ancients used it to flavor bread and preserve meat before it had spread across Europe and traveled with explorers. Today, you can try unusual products like coriander-flavored chips in Taiwan, or visit a Japanese pizza chain whose released coriander pizza became such a hit that it returned with twice the amount of the herb, alongside festivals and perfumes for devoted fans!";
+    function toggleFullAudio() {
+      const btn = document.getElementById('btn-full-audio');
+      if (isFullAudioPlaying) {
+        window.speechSynthesis.cancel();
+        isFullAudioPlaying = false;
+        btn.innerHTML = '🔊 全篇連續朗讀';
+        btn.classList.remove('active');
+      } else {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(articleText);
+        u.lang = 'en-US'; u.rate = 0.92;
+        u.onend = () => { isFullAudioPlaying = false; btn.innerHTML = '🔊 全篇連續朗讀'; btn.classList.remove('active'); };
+        window.speechSynthesis.speak(u);
+        isFullAudioPlaying = true;
+        btn.innerHTML = '⏹️ 停止朗讀';
+        btn.classList.add('active');
+      }
+    }
+    function speak(text) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US'; u.rate = 0.94;
+      window.speechSynthesis.speak(u);
+    }
+    function answerQuiz(btn, isCorrect, expId) {
+      const siblings = btn.parentElement.querySelectorAll('.quiz-btn');
+      siblings.forEach(b => { if (b.getAttribute('onclick').includes(expId)) b.classList.remove('correct', 'wrong'); });
+      btn.classList.add(isCorrect ? 'correct' : 'wrong');
+      document.getElementById(expId).style.display = 'block';
+    }
+  </script>
+</body>
+</html>
