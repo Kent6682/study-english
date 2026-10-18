@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>改寫版二：第二人稱代入篇｜Unit 14 Microhabits: Small Wins Keep You Moving</title>
+  <style>
+    :root {
+      --bg: #f5f3ff; --card: #ffffff; --ink: #1e293b; --muted: #64748b; --border: #e2e8f0;
+      --indigo: #4f46e5; --indigo-bg: #eef2ff; --indigo-border: #c7d2fe;
+      --orange: #ea580c; --orange-bg: #fff7ed; --orange-border: #fed7aa;
+      --green: #059669; --green-bg: #ecfdf5; --green-border: #a7f3d0;
+      --purple: #7c3aed; --purple-bg: #f5f3ff; --purple-border: #ddd6fe;
+      --red: #dc2626; --red-bg: #fef2f2; --yellow-hl: #fef08a;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.75; padding-bottom: 4rem; }
+    .hero { background: linear-gradient(135deg, #312e81 0%, #4338ca 60%, #6366f1 100%); color: #fff; padding: 2.4rem 1.5rem 2rem; text-align: center; }
+    .hero-badges { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .pill { background: rgba(255,255,255,0.2); padding: 0.25rem 0.85rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
+    .pill.gold { background: #fde047; color: #1e1b4b; }
+    .hero h1 { margin: 0.2rem 0; font-size: clamp(1.5rem, 3.8vw, 2.2rem); font-weight: 900; }
+    .hero h2 { margin: 0.3rem 0 0; font-size: 1.12rem; font-weight: 500; color: #e0e7ff; }
+    .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0.6rem 1rem; display: flex; justify-content: center; gap: 0.45rem; flex-wrap: wrap; box-shadow: 0 4px 12px rgba(15,23,42,0.05); }
+    .nav-btn { border: 1px solid var(--border); background: #fff; color: var(--ink); padding: 0.42rem 0.85rem; border-radius: 999px; font-size: 0.86rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: all 0.18s; }
+    .nav-btn:hover { border-color: var(--indigo); color: var(--indigo); }
+    .nav-btn.primary { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+    .container { max-width: 1040px; margin: 0 auto; padding: 1.5rem 1rem; }
+    .section-title { display: flex; align-items: center; gap: 0.6rem; font-size: 1.35rem; font-weight: 900; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--indigo); }
+    .card, .reader-card { background: var(--card); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(15,23,42,0.04); }
+    .infographic-img { width: 100%; border-radius: 14px; border: 2px solid var(--border); margin-bottom: 1.2rem; display: block; }
+    .storyboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .story-panel { border-radius: 14px; padding: 1.1rem; border: 2px solid transparent; }
+    .story-panel.p1 { background: var(--indigo-bg); border-color: var(--indigo-border); }
+    .story-panel.p2 { background: var(--orange-bg); border-color: var(--orange-border); }
+    .story-panel.p3 { background: var(--purple-bg); border-color: var(--purple-border); }
+    .story-panel.p4 { background: var(--green-bg); border-color: var(--green-border); }
+    .panel-step { font-size: 0.78rem; font-weight: 800; padding: 0.15rem 0.55rem; border-radius: 6px; display: inline-block; margin-bottom: 0.4rem; background: rgba(255,255,255,0.85); }
+    .panel-icon { font-size: 1.8rem; float: right; }
+    .story-panel h4 { margin: 0.2rem 0 0.4rem; font-size: 1.05rem; font-weight: 800; }
+    .story-panel p { margin: 0; font-size: 0.88rem; color: #334155; }
+    .eng-tag { display: inline-block; margin-top: 0.5rem; background: #fff; padding: 0.2rem 0.55rem; border-radius: 6px; font-family: monospace; font-size: 0.82rem; font-weight: 700; color: var(--indigo); }
+    .reader-header, .control-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; background: #f8fafc; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 1.2rem; border: 1px solid var(--border); }
+    .toggle-btn { border: 1px solid var(--border); background: #fff; padding: 0.4rem 0.85rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+    .toggle-btn.active { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+    .reader-para { margin-bottom: 1.2rem; padding: 1rem 1.2rem; border-radius: 12px; background: #fafaff; border: 1px solid #e0e7ff; }
+    .reader-en { font-size: var(--reader-font-size, 1.14rem); line-height: 1.85; color: #0f172a; font-weight: 500; }
+    .reader-zh { margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px dashed #cbd5e1; color: #475569; font-size: 0.98rem; }
+    body.hide-reader-zh .reader-zh, body.hide-zh .sent-zh { display: none; }
+    .sent-card { border: 2px solid var(--border); border-radius: 16px; padding: 1.2rem; margin-bottom: 1.1rem; background: #fff; }
+    .sent-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; }
+    .sent-num { background: var(--indigo-bg); color: var(--indigo); font-weight: 900; font-size: 0.85rem; padding: 0.2rem 0.6rem; border-radius: 8px; flex-shrink: 0; }
+    .sent-en { font-size: 1.15rem; font-weight: 600; color: #0f172a; flex: 1; }
+    .sent-zh { margin-top: 0.4rem; font-size: 0.96rem; color: #475569; padding-left: 0.5rem; border-left: 3px solid #cbd5e1; }
+    .key-term { background: var(--yellow-hl); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #9a3412; }
+    .gram-term { background: var(--purple-bg); border-bottom: 2px solid var(--purple); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #5b21b6; }
+    body.cloze-mode .key-term, body.cloze-mode .gram-term { background: #cbd5e1; color: transparent; border-color: transparent; cursor: pointer; user-select: none; }
+    body.cloze-mode .key-term:hover { background: var(--yellow-hl); color: #9a3412; }
+    body.cloze-mode .gram-term:hover { background: var(--purple-bg); color: #5b21b6; }
+    .audio-btn { border: none; background: var(--indigo-bg); color: var(--indigo); padding: 0.35rem 0.65rem; border-radius: 999px; font-size: 0.82rem; font-weight: 800; cursor: pointer; flex-shrink: 0; }
+    .chunk-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.85rem 0; }
+    .chunk { border-radius: 10px; padding: 0.4rem 0.7rem; font-size: 0.88rem; display: flex; flex-direction: column; border: 1px solid transparent; }
+    .chunk .c-role { font-size: 0.7rem; font-weight: 800; opacity: 0.85; }
+    .chunk .c-en { font-weight: 800; }
+    .chunk .c-zh { font-size: 0.78rem; }
+    .chunk.s { background: #fff1f2; border-color: #fecdd3; color: #be123c; }
+    .chunk.v { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .chunk.o { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .chunk.c { background: #f5f3ff; border-color: #ddd6fe; color: #6d28d9; }
+    .chunk.m { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+    .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.8rem; margin-top: 0.6rem; }
+    .insight-box { border-radius: 10px; padding: 0.8rem 1rem; font-size: 0.9rem; }
+    .insight-box.grammar { background: #f8fafc; border-left: 4px solid var(--indigo); }
+    .insight-box.trans { background: #fffbeb; border-left: 4px solid var(--orange); }
+    .insight-title { font-weight: 800; margin-bottom: 0.3rem; }
+    .cloze-passage-box { background: var(--indigo-bg); border: 2px solid var(--indigo-border); border-radius: 14px; padding: 1.2rem; margin-bottom: 1.2rem; line-height: 1.85; }
+    .cloze-blank { background: #fff; border: 2px solid var(--indigo); color: var(--indigo); font-weight: 900; padding: 0.1rem 0.55rem; border-radius: 6px; }
+    .q-block { padding: 1rem; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1rem; }
+    .quiz-btn { display: block; width: 100%; text-align: left; padding: 0.72rem 1rem; margin: 0.4rem 0; border: 2px solid var(--border); border-radius: 10px; background: #fff; font-size: 0.94rem; font-weight: 600; cursor: pointer; }
+    .quiz-btn:hover { border-color: var(--indigo); background: var(--indigo-bg); }
+    .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
+    .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
+    .quiz-exp { display: none; margin-top: 0.45rem; padding: 0.7rem 1rem; border-radius: 10px; background: var(--green-bg); color: #065f46; font-size: 0.88rem; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badges">
+      <span class="pill gold">進階改寫版二｜💬 第二人稱科普代入篇</span>
+      <span class="pill">UNIT 14 You 對話式引導特訓</span>
+    </div>
+    <h1>Imagine Redesigning Your Daily Routine in Just Two Minutes</h1>
+    <h2>想像在兩分鐘內重塑你的日常：教練式第二人稱引導（You 對話視角・100% 涵蓋必考字彙與文法）</h2>
+  </header>
+
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../../index.html">⬅️ 返回總覽</a>
+    <a class="nav-btn" href="./03_互動圖文學習講義.html">📖 原版主講義</a>
+    <a class="nav-btn" href="./04_改寫版1_客觀科普報導篇.html">📰 1. 科普報導</a>
+    <a class="nav-btn primary" href="./05_改寫版2_第二人稱代入篇.html">💬 2. 第二人稱</a>
+    <a class="nav-btn" href="./06_改寫版3_高中生故事記敘篇.html">🧑‍🎓 3. 高中生故事</a>
+    <a class="nav-btn" href="./07_改寫版4_正反論證議論文篇.html">⚖️ 4. 正反議論文</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- SECTION 1: STORYBOARD -->
+    <div class="section-title">🎬 一、四格圖解大意 (4-Panel Visual Storyboard)</div>
+    <div class="card">
+      <img src="./03_AI_視覺圖解講義.jpg" alt="Unit 14 Infographic" class="infographic-img" />
+      <div class="storyboard">
+        <div class="story-panel p1">
+          <span class="panel-icon">💭</span>
+          <span class="panel-step">起 · 情境提問代入</span>
+          <h4>1. 想像你買了新書卻在兩週後放棄</h4>
+          <p>想像你設定每年讀二十本書的目標，起初充滿幹勁，幾週後卻放棄。別怪自己缺乏動力，而是目標太難維持！</p>
+          <span class="eng-tag">Picture yourself / difficult to maintain</span>
+        </div>
+        <div class="story-panel p2">
+          <span class="panel-icon">📖</span>
+          <span class="panel-step">承 · 啟動微習慣配方</span>
+          <h4>2. 把書放枕頭上，每天睡前只讀兩頁</h4>
+          <p>與其空談讀完整本書，不如把書放在枕頭上，移除滑手機等阻礙。每天讀兩頁既不會想略過，還能帶來成就感。</p>
+          <span class="eng-tag">hard to skip / sense of achievement</span>
+        </div>
+        <div class="story-panel p3">
+          <span class="panel-icon">⚡</span>
+          <span class="panel-step">轉 · 打造晨間習慣堆疊</span>
+          <h4>3. 整理床鋪→喝水→短暫散步→背單字</h4>
+          <p>一旦微習慣穩定，讓既有常規當你的觸發點，不用靠記憶力！更能連續串連鋪床、喝水與短暫散步形成習慣鏈。</p>
+          <span class="eng-tag">kicks things off / habit stacking</span>
+        </div>
+        <div class="story-panel p4">
+          <span class="panel-icon">✅</span>
+          <span class="panel-step">合 · 打勾清單與自我調整</span>
+          <h4>4. 看見走了多遠，漏掉一天只需微調</h4>
+          <p>在日曆清單打勾追蹤進度能讓你看見成果。萬一漏掉一天，思考哪裡出錯並調整，每天一點點就能帶來大改變。</p>
+          <span class="eng-tag">tracking your progress / what went wrong</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: FULL TEXT IMMERSIVE READING -->
+    <div class="section-title">📖 二、完整課文沉浸閱讀（第二人稱代入改寫版・約 180 字）</div>
+    <div class="reader-card">
+      <div class="reader-header">
+        <div style="font-weight:800;font-size:0.95rem;">💬 文體特色：以教練對話式「Picture yourself...（想像你自己……）」引導讀者親身體驗微習慣設計</div>
+        <div>
+          <button class="toggle-btn" id="btn-full-audio" onclick="toggleFullAudio()">🔊 全篇連續朗讀</button>
+          <button class="toggle-btn active" id="btn-reader-zh" onclick="toggleReaderZh()">👁️ 顯示中文對照</button>
+          <button class="toggle-btn" onclick="changeFontSize(1)">A+</button>
+          <button class="toggle-btn" onclick="changeFontSize(-1)">A-</button>
+        </div>
+      </div>
+
+      <div class="reader-para">
+        <div class="reader-en">
+          Picture yourself setting an exciting <span class="key-term">goal</span> on New Year's Day, <span class="gram-term">only to give up</span> before February arrives. You might blame yourself for lacking <span class="key-term">motivation</span> or <span class="key-term">self-discipline</span>, yet your plan was simply too huge to <span class="key-term">maintain</span>. This is <span class="gram-term">where microhabits can help</span> you succeed. A microhabit is a tiny <span class="key-term">task</span> <span class="gram-term">that feels effortless to start</span> and nearly impossible to <span class="key-term">skip</span>. <span class="gram-term">Instead of promising</span> to exercise for an hour, take a <span class="key-term">brief</span> five-minute walk after lunch. Completing it gives your brain a sense of <span class="key-term">achievement</span><span class="gram-term">, which inspires you</span> to <span class="gram-term">keep going</span>. Simply focus on <span class="gram-term">one change at a time</span> and clear away anything <span class="gram-term">that gets in your way</span>.
+        </div>
+        <div class="reader-zh">
+          想像你自己在元旦設定了一個令人興奮的目標，結果在二月到來前卻放棄了。你可能會責怪自己缺乏動力或自律，但其實你的計畫只是太大而難以維持。這就是微習慣能幫助你成功的地方。微習慣是一項微小的任務，讓人覺得毫不費力就能開始，且幾乎不可能略過不做。與其承諾要運動一整小時，不如在午餐後進行短暫的五分鐘散步。完成它會帶給你的大腦一股成就感，這會激勵你持續下去。只要一次專注於一項改變，並清除任何會阻礙你的事物。
+        </div>
+      </div>
+
+      <div class="reader-para" style="margin-bottom:0;">
+        <div class="reader-en">
+          <span class="gram-term">Once your microhabit becomes routine</span>, anchor it to a daily habit so that the old habit acts as a <span class="key-term">trigger</span>. Because the routine <span class="gram-term">kicks things off</span> for you, you never need <span class="key-term">memory</span>. You can even <span class="gram-term">take this</span> <span class="key-term">further</span> with <span class="gram-term">habit stacking</span> by performing several actions <span class="gram-term">in a row</span> right after you <span class="gram-term">make your bed</span>. Finally, <span class="key-term">tracking</span> your <span class="key-term">progress</span> on a checklist shows <span class="gram-term">how far you've come</span>. If you miss a day, calmly review <span class="gram-term">what went wrong</span> and <span class="key-term">adjust</span>—because <span class="gram-term">lasting</span> habits <span class="gram-term">lead to</span> life-changing results.
+        </div>
+        <div class="reader-zh">
+          一旦你的微習慣成為常規，將它固定在日常習慣上，讓舊習慣扮演誘因（觸發點）的角色。因為這項常規會替你啟動整個流程，你完全不需要依賴記憶力。你甚至可以在整理好床鋪後，透過連續執行好幾個動作的「習慣堆疊」將此做法更推進一步。最後，在核對清單上追蹤你的進展，能顯示出你已經走了多遠。如果你漏掉了一天，冷靜檢視哪裡出了問題並加以調整——因為持久的習慣終將帶來改變人生的成果。
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: SENTENCE ANATOMY -->
+    <div class="section-title">🧩 三、課文「積木拆句」＋ 逐行中翻英秘訣</div>
+    <div class="card">
+      <div class="control-bar">
+        <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
+        <div>
+          <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode');this.classList.toggle('active');">🙈 遮罩背誦模式</button>
+          <button class="toggle-btn" onclick="document.body.classList.toggle('hide-zh');this.classList.toggle('active');">👁️ 顯示/隱藏中譯</button>
+        </div>
+      </div>
+
+      <!-- S1 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S01</span>
+          <div class="sent-en">
+            Picture yourself setting an exciting <span class="key-term">goal</span> on New Year's Day, <span class="gram-term">only to give up</span> before February arrives.
+            <div class="sent-zh">想像你自己在元旦設定了一個令人興奮的目標，結果在二月到來前卻放棄了。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Picture yourself setting an exciting goal on New Years Day, only to give up before February arrives.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V+O+OC] 祈使句＋現在分詞補語</span><span class="c-en">Picture yourself setting an exciting goal on New Year's Day,</span><span class="c-zh">想像你自己元旦正在設定興奮的目標，</span></div>
+          <div class="chunk m"><span class="c-role">[M] 結果不定詞片語</span><span class="c-en">only to give up before February arrives.</span><span class="c-zh">結果在二月到來前卻放棄了。</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與句型亮點</div><code>Picture / Imagine + oneself + V-ing</code>（想像自己正在做某事）是學測第二人稱科普文最經典的開場句型！</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 寫作秘訣</div>用「元旦設目標、二月前放棄」具體化原版的 <code>a few weeks later</code>。</div>
+        </div>
+      </div>
+
+      <!-- S2 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S02</span>
+          <div class="sent-en">
+            You might blame yourself for lacking <span class="key-term">motivation</span> or <span class="key-term">self-discipline</span>, yet your plan was simply too huge to <span class="key-term">maintain</span>.
+            <div class="sent-zh">你可能會責怪自己缺乏動力或自律，但其實你的計畫只是太大而難以維持。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('You might blame yourself for lacking motivation or self-discipline, yet your plan was simply too huge to maintain.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S+V+O] 主句一</span><span class="c-en">You might blame yourself</span><span class="c-zh">你可能會責怪自己</span></div>
+          <div class="chunk m"><span class="c-role">[M] 原因介系詞片語</span><span class="c-en">for lacking motivation or self-discipline,</span><span class="c-zh">因為缺乏動力或自律，</span></div>
+          <div class="chunk c"><span class="c-role">[Conj+S+V+C] 對等轉折子句</span><span class="c-en">yet your plan was simply too huge to maintain.</span><span class="c-zh">然而你的計畫只是太大而無法維持。</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與句型亮點</div>結合 <code>blame sb for V-ing</code>（因某事責怪某人）與 <code>too + adj. (huge) + to V (maintain)</code>（太……以致於無法……）。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 寫作秘訣</div>對等連接詞 <code>, yet + S + V</code> 比 <code>, but</code> 更具文章質感。</div>
+        </div>
+      </div>
+
+      <!-- S3 & S4 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S03–04</span>
+          <div class="sent-en">
+            This is <span class="gram-term">where microhabits can help</span> you succeed. A microhabit is a tiny <span class="key-term">task</span> <span class="gram-term">that feels effortless to start</span> and nearly impossible to <span class="key-term">skip</span>.
+            <div class="sent-zh">這就是微習慣能幫助你成功的地方。微習慣是一項微小的任務，讓人覺得毫不費力就能開始，且幾乎不可能略過不做。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('This is where microhabits can help you succeed. A microhabit is a tiny task that feels effortless to start and nearly impossible to skip.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S+V+C] wh- 名詞子句補語</span><span class="c-en">This is where microhabits can help you succeed.</span><span class="c-zh">這就是微習慣能助你成功之處。</span></div>
+          <div class="chunk o"><span class="c-role">[S+V+C] 主句</span><span class="c-en">A microhabit is a tiny task</span><span class="c-zh">微習慣是一項微小任務</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 限定形容詞子句</span><span class="c-en">that feels effortless to start and nearly impossible to skip.</span><span class="c-zh">感覺毫不費力就能開始且幾乎不可能略過。</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與句型亮點</div><code>effortless to start</code>（毫不費力就能開始）與 <code>nearly impossible to skip</code>（幾乎不可能略過）完美升級原版的 <code>easy to start and hard to skip</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 寫作秘訣</div>字尾 <code>-less</code> 表「無、不費……的」，<code>effortless</code> 是 <code>take very little effort</code> 的最佳一字濃縮！</div>
+        </div>
+      </div>
+
+      <!-- S5 & S6 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S05–06</span>
+          <div class="sent-en">
+            <span class="gram-term">Instead of promising</span> to exercise for an hour, take a <span class="key-term">brief</span> five-minute walk after lunch. Completing it gives your brain a sense of <span class="key-term">achievement</span><span class="gram-term">, which inspires you</span> to <span class="gram-term">keep going</span>.
+            <div class="sent-zh">與其承諾要運動一整小時，不如在午餐後進行短暫的五分鐘散步。完成它會帶給你的大腦一股成就感，這會激勵你持續下去。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Instead of promising to exercise for an hour, take a brief five-minute walk after lunch. Completing it gives your brain a sense of achievement, which inspires you to keep going.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語</span><span class="c-en">Instead of promising to exercise for an hour,</span><span class="c-zh">與其承諾運動一小時，</span></div>
+          <div class="chunk v"><span class="c-role">[V+O] 祈使句</span><span class="c-en">take a brief five-minute walk after lunch.</span><span class="c-zh">午餐後進行短暫的五分鐘散步吧。</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+IO+DO] 動名詞主詞</span><span class="c-en">Completing it gives your brain a sense of achievement,</span><span class="c-zh">完成它會給大腦成就感，</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 非限定形容詞子句</span><span class="c-en">which inspires you to keep going.</span><span class="c-zh">這會激勵你持續下去。</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與句型亮點</div>以 <code>, which inspires you to keep going</code> 重現非限定關代子句，並用 <code>inspire sb to V</code> 替換 <code>encourage sb to V</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 寫作秘訣</div>用動名詞片語 <code>Completing it</code> 當主詞，緊密銜接前句的五分鐘散步。</div>
+        </div>
+      </div>
+
+      <!-- S7 & S8 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S07–08</span>
+          <div class="sent-en">
+            Simply focus on <span class="gram-term">one change at a time</span> and clear away anything <span class="gram-term">that gets in your way</span>. <span class="gram-term">Once your microhabit becomes routine</span>, anchor it to a daily habit so that the old habit acts as a <span class="key-term">trigger</span>.
+            <div class="sent-zh">只要一次專注於一項改變，並清除任何會阻礙你的事物。一旦你的微習慣成為常規，將它固定在日常習慣上，讓舊習慣扮演誘因的角色。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Simply focus on one change at a time and clear away anything that gets in your way. Once your microhabit becomes routine, anchor it to a daily habit so that the old habit acts as a trigger.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V1+V2] 祈使句</span><span class="c-en">Simply focus on one change at a time and clear away anything that gets in your way.</span><span class="c-zh">只要一次專注一項改變並清除任何阻礙。</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 一旦...子句</span><span class="c-en">Once your microhabit becomes routine,</span><span class="c-zh">一旦微習慣成為常規，</span></div>
+          <div class="chunk v"><span class="c-role">[V+O+M] 祈使句＋目的子句</span><span class="c-en">anchor it to a daily habit so that the old habit acts as a trigger.</span><span class="c-zh">將它錨定在日常習慣上，好讓舊習慣充當誘因。</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與句型亮點</div><code>anchor A to B</code>（將 A 像船錨一樣固定／連結在 B 上）是 <code>link A to B</code> 的高階形象化動詞！</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 寫作秘訣</div><code>act as / serve as + N</code>（扮演……的角色、充當……）是學測閱讀與寫作極常出現的片語。</div>
+        </div>
+      </div>
+
+      <!-- S9–S11 -->
+      <div class="sent-card" style="margin-bottom:0;">
+        <div class="sent-top">
+          <span class="sent-num">S09–11</span>
+          <div class="sent-en">
+            Because the routine <span class="gram-term">kicks things off</span> for you, you never need <span class="key-term">memory</span>, and you can <span class="gram-term">take this</span> <span class="key-term">further</span> with <span class="gram-term">habit stacking</span> by performing several actions <span class="gram-term">in a row</span> right after you <span class="gram-term">make your bed</span>. Finally, <span class="key-term">tracking</span> your <span class="key-term">progress</span> on a checklist shows <span class="gram-term">how far you've come</span>; if you miss a day, calmly review <span class="gram-term">what went wrong</span> and <span class="key-term">adjust</span>—because <span class="gram-term">lasting</span> habits <span class="gram-term">lead to</span> life-changing results.
+            <div class="sent-zh">因為這項常規會替你啟動整個流程，你完全不需要依賴記憶力，而且你可以在整理好床鋪後，透過連續執行好幾個動作的「習慣堆疊」將此做法更推進一步。最後，在核對清單上追蹤進展能顯示你已經走了多遠；若漏掉一天，冷靜檢視哪裡出了問題並加以調整——因為持久的習慣終將帶來改變人生的成果。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Because the routine kicks things off for you, you never need memory, and you can take this further with habit stacking by performing several actions in a row right after you make your bed. Finally, tracking your progress on a checklist shows how far you have come; if you miss a day, calmly review what went wrong and adjust, because lasting habits lead to life-changing results.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj+S+V] 原因與主句</span><span class="c-en">Because the routine kicks things off for you, you never need memory,</span><span class="c-zh">因為常規替你啟動流程，你無須記憶力，</span></div>
+          <div class="chunk v"><span class="c-role">[S+V+M] 習慣堆疊</span><span class="c-en">and you can take this further with habit stacking... in a row right after you make your bed.</span><span class="c-zh">且可在鋪床後用習慣堆疊連續執行動作。</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 追蹤與調整</span><span class="c-en">Finally, tracking your progress... shows how far you've come; review what went wrong and adjust.</span><span class="c-zh">最後，追蹤進度顯示走了多遠；檢視何處出錯並調整。</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與句型亮點</div>完整涵蓋 Day 30 所有核心考點：<code>kicks things off</code>、<code>memory</code>、<code>take this further</code>、<code>habit stacking</code>、<code>in a row</code>、<code>make your bed</code>、<code>tracking your progress</code>、<code>how far you've come</code>、<code>what went wrong</code>、<code>adjust</code>、<code>lasting</code>、<code>lead to</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 寫作秘訣</div><code>life-changing results</code>（改變人生的成果）是 <code>big changes</code> 的高分複合形容詞替換。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: 15-QUESTION QUIZ -->
+    <div class="section-title">🎯 四、15 題大考實戰檢測（第二人稱代入篇專屬題庫）</div>
+    <div class="card">
+      <div style="background:var(--indigo-bg);padding:0.85rem 1.2rem;border-radius:12px;margin-bottom:1.2rem;display:flex;justify-content:space-between;align-items:center;font-weight:800;color:var(--indigo);">
+        <span id="score-text">目前得分 0 / 15 題</span>
+        <button class="toggle-btn" onclick="resetQuiz()">🔄 重置本頁測驗</button>
+      </div>
+
+      <h3 style="color:var(--indigo);margin-top:0;">Part A — 克漏字綜合測驗 (Cloze Test：第 1～5 題)</h3>
+      <div class="cloze-passage-box">
+        Picture yourself setting an ambitious goal on New Year's Day, <span class="cloze-blank">(__1__)</span> give up before February arrives. Instead of <span class="cloze-blank">(__2__)</span> to work out for an hour, try a brief five-minute walk after lunch. Completing this tiny task gives your brain a sense of achievement<span class="cloze-blank">(__3__)</span> inspires you to keep going. <span class="cloze-blank">(__4__)</span> your microhabit becomes routine, anchor it to an existing habit so that the old habit kicks things off automatically. Finally, if you miss a day, simply review <span class="cloze-blank">(__5__)</span> and adjust your schedule.
+      </div>
+
+      <div class="q-block">
+        <div><strong>1. (__1__)</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(A) in order to</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 1)">(B) only to</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(C) so that</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(D) as to</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：<code>, only to V</code> 表「不料卻……、結果卻……」。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>2. (__2__)</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, true, 2)">(A) promising</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(B) promise</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(C) promised</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(D) to promise</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：介系詞片語 <code>Instead of</code> 後面須接動名詞 <code>V-ing</code>。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>3. (__3__)</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(A) what</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(B) that</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 3)">(C) , which</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(D) , who</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：非限定形容詞子句代表前面整件事，須加逗點並用 <code>, which</code>。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>4. (__4__)</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, true, 4)">(A) Once</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(B) Unless</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(C) Until</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(D) Without</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：<code>Once + S + V</code> 表「一旦……」。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>5. (__5__)</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(A) what did go wrong</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(B) that went wrong</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 5)">(C) what went wrong</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(D) how went wrong</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：<code>what went wrong</code> 為複合關代 <code>what</code> 引導的名詞子句作 <code>review</code> 的受詞。</div>
+      </div>
+
+      <h3 style="color:var(--indigo);margin-top:1.5rem;">Part B — 文意字彙與片語搭配 (Vocabulary & Collocations：第 6～9 題)</h3>
+
+      <div class="q-block">
+        <div><strong>6. A microhabit is a tiny __________ that feels effortless to start and nearly impossible to skip.</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, true, 6)">(A) task</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(B) memory</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(C) microscope</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(D) progress</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：<code>a tiny task</code> 指「一項微小的任務」。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>7. Because the existing routine kicks things off for you, you do not need to rely on __________ or motivation.</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(A) achievement</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 7)">(B) memory</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(C) trigger</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(D) goal</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：常規會自動提醒並啟動流程，因此不需要依賴「記憶力（<code>memory</code>）」或動力。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>8. You can __________ this method __________ with habit stacking by linking several actions in a row.</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, true, 8)">(A) take; further</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(B) get; wrong</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(C) make; brief</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(D) keep; close</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：<code>take sth further</code> 意為「將某事進一步發展；使……更上一層樓」。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>9. Clear away anything that __________ so that your first step feels as simple as possible.</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(A) makes your bed</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(B) kicks things off</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 9)">(C) gets in your way</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(D) leads to changes</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：<code>gets in your way</code> 意為「擋住你的路；阻礙你」。</div>
+      </div>
+
+      <h3 style="color:var(--indigo);margin-top:1.5rem;">Part C — 重要文法與中翻英除錯 (Grammar & Translation：第 10～12 題)</h3>
+
+      <div class="q-block">
+        <div><strong>10. Picture yourself __________ an exciting goal on New Year's Day, only to give up a few weeks later.</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(A) set</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(B) to set</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 10)">(C) setting</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(D) be set</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：<code>Picture / Imagine + oneself + V-ing</code>，用現在分詞 <code>setting</code> 作受詞補語表主動進行的畫面。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>11. Tracking your progress on a checklist __________ how far you've come and builds confidence.</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, true, 11)">(A) shows</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(B) show</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(C) showing</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(D) to show</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：動名詞片語 <code>Tracking your progress on a checklist</code> 作主詞視為單數，且後方對等動詞為 <code>and builds</code>，故填單數動詞 <code>shows</code>。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>12. Which of the following uses the word “once” as a CONJUNCTION meaning “as soon as”?</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(A) Juliet visits the public library once a week.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(B) Teagan once worked at a secondhand bookstore.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 12)">(C) Once your microhabit becomes routine, anchor it to a daily habit.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(D) Holden goes jogging once every two days.</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：(A)(D) 的 <code>once</code> 為頻率副詞「一次」；(B) 的 <code>once</code> 為時間副詞「曾經」；僅 (C) 的 <code>Once + S + V</code> 為連接詞「一旦；一……就……」。</div>
+      </div>
+
+      <h3 style="color:var(--indigo);margin-top:1.5rem;">Part D — 大考閱讀測驗 (Reading Comprehension：第 13～15 題)</h3>
+
+      <div class="q-block">
+        <div><strong>13. Why does the author use the phrase “Picture yourself...” at the beginning of the passage?</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, true, 13)">(A) To help readers relate to the common experience of abandoning oversized New Year's resolutions.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(B) To ask readers to take a photograph of themselves at the gym.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(C) To prove that nobody should ever set goals in January.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(D) To teach readers how to paint a self-portrait.</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：第二人稱代入法 <code>Picture yourself...</code> 能立刻喚起讀者對「新年新希望半途而廢」的共鳴。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>14. In paragraph 2, what does “anchor it to a daily habit” mean?</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(A) Stop doing the daily habit completely.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 14)">(B) Link the new microhabit to something you already do regularly.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(C) Write the habit down on a heavy metal anchor.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(D) Perform the habit only when you are traveling by ship.</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：<code>anchor A to B</code> 在此等同於課文的 <code>link it to something you already do</code>（將新習慣連結／固定在既有日常習慣上）。</div>
+      </div>
+
+      <div class="q-block" style="margin-bottom:0;">
+        <div><strong>15. What is the key takeaway of the final sentence in the passage?</strong></div>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(A) Missing a single day ruins all your previous effort.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 15)">(B) Adjusting after setbacks and staying consistent with small daily actions leads to lasting transformation.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(C) Checklists are useless unless you never make a mistake.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(D) Only people with photographic memory can build new habits.</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：末句強調漏掉一天時只需冷靜檢視原因並調整，因為持久的微習慣終將帶來改變人生的成果。</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const paras = [
+      "Picture yourself setting an exciting goal on New Year's Day, only to give up before February arrives. You might blame yourself for lacking motivation or self-discipline, yet your plan was simply too huge to maintain. This is where microhabits can help you succeed. A microhabit is a tiny task that feels effortless to start and nearly impossible to skip. Instead of promising to exercise for an hour, take a brief five-minute walk after lunch. Completing it gives your brain a sense of achievement, which inspires you to keep going. Simply focus on one change at a time and clear away anything that gets in your way.",
+      "Once your microhabit becomes routine, anchor it to a daily habit so that the old habit acts as a trigger. Because the routine kicks things off for you, you never need memory. You can even take this further with habit stacking by performing several actions in a row right after you make your bed. Finally, tracking your progress on a checklist shows how far you have come. If you miss a day, calmly review what went wrong and adjust, because lasting habits lead to life-changing results."
+    ];
+    let isFullPlaying = false;
+    function speak(text, rate = 0.95) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      isFullPlaying = false;
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US'; u.rate = rate;
+      window.speechSynthesis.speak(u);
+    }
+    function toggleFullAudio() {
+      if (!('speechSynthesis' in window)) return;
+      const btn = document.getElementById('btn-full-audio');
+      if (isFullPlaying) { window.speechSynthesis.cancel(); isFullPlaying = false; btn.textContent = '🔊 全篇連續朗讀'; return; }
+      window.speechSynthesis.cancel(); isFullPlaying = true; btn.textContent = '⏹️ 停止朗讀';
+      const u = new SpeechSynthesisUtterance(paras.join(' '));
+      u.lang = 'en-US'; u.rate = 0.95;
+      u.onend = () => { isFullPlaying = false; btn.textContent = '🔊 全篇連續朗讀'; };
+      window.speechSynthesis.speak(u);
+    }
+    function toggleReaderZh() {
+      document.body.classList.toggle('hide-reader-zh');
+      document.getElementById('btn-reader-zh').classList.toggle('active');
+    }
+    let currentFontSize = 1.14;
+    function changeFontSize(d) {
+      currentFontSize = Math.min(1.5, Math.max(0.95, currentFontSize + d * 0.08));
+      document.documentElement.style.setProperty('--reader-font-size', currentFontSize + 'rem');
+    }
+    let score = 0, answered = new Set();
+    function checkAns(btn, isCorrect, qNum) {
+      const block = btn.parentElement;
+      block.querySelectorAll('.quiz-btn').forEach(b => b.disabled = true);
+      if (isCorrect) { btn.classList.add('correct'); if (!answered.has(qNum)) score++; }
+      else { btn.classList.add('wrong'); block.querySelectorAll('.quiz-btn').forEach(b => { if (b.getAttribute('onclick').includes('true')) b.classList.add('correct'); }); }
+      answered.add(qNum);
+      block.querySelector('.quiz-exp').style.display = 'block';
+      document.getElementById('score-text').textContent = `目前得分 ${score} / 15 題（已作答 ${answered.size} 題）`;
+    }
+    function resetQuiz() {
+      score = 0; answered.clear();
+      document.querySelectorAll('.quiz-btn').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+      document.querySelectorAll('.quiz-exp').forEach(e => e.style.display = 'none');
+      document.getElementById('score-text').textContent = '目前得分 0 / 15 題';
+    }
+  </script>
+</body>
+</html>

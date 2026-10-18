@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>改寫版二：第二人稱代入篇｜Unit 9 A Taste of Hawaii: Exploring Oahu</title>
+  <style>
+    :root {
+      --bg: #f4f7fb; --card: #ffffff; --ink: #1e293b; --muted: #64748b; --border: #e2e8f0;
+      --blue: #4f46e5; --blue-bg: #eef2ff; --blue-border: #c7d2fe;
+      --orange: #ea580c; --orange-bg: #fff7ed; --orange-border: #fed7aa;
+      --green: #059669; --green-bg: #ecfdf5; --green-border: #a7f3d0;
+      --purple: #7c3aed; --purple-bg: #f5f3ff; --purple-border: #ddd6fe;
+      --red: #dc2626; --red-bg: #fef2f2; --yellow-hl: #fef08a;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.75; padding-bottom: 4rem; }
+    .hero { background: linear-gradient(135deg, #312e81 0%, #4338ca 55%, #6366f1 100%); color: #fff; padding: 2.4rem 1.5rem 2rem; text-align: center; }
+    .hero-badges { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .pill { background: rgba(255,255,255,0.2); padding: 0.25rem 0.85rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
+    .pill.gold { background: #fde047; color: #1e1b4b; }
+    .hero h1 { margin: 0.2rem 0; font-size: clamp(1.5rem, 3.8vw, 2.2rem); font-weight: 900; }
+    .hero h2 { margin: 0.3rem 0 0; font-size: 1.12rem; font-weight: 500; color: #e0e7ff; }
+    .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0.6rem 1rem; display: flex; justify-content: center; gap: 0.45rem; flex-wrap: wrap; box-shadow: 0 4px 12px rgba(15,23,42,0.05); }
+    .nav-btn { border: 1px solid var(--border); background: #fff; color: var(--ink); padding: 0.42rem 0.85rem; border-radius: 999px; font-size: 0.86rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: all 0.18s; }
+    .nav-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .nav-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .container { max-width: 1040px; margin: 0 auto; padding: 1.5rem 1rem; }
+    .section-title { display: flex; align-items: center; gap: 0.6rem; font-size: 1.35rem; font-weight: 900; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--blue); }
+    .card, .reader-card { background: var(--card); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(15,23,42,0.04); }
+    .infographic-img { width: 100%; border-radius: 14px; border: 2px solid var(--border); margin-bottom: 1.2rem; display: block; }
+    .storyboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .story-panel { border-radius: 14px; padding: 1.1rem; border: 2px solid transparent; }
+    .story-panel.p1 { background: var(--blue-bg); border-color: var(--blue-border); }
+    .story-panel.p2 { background: var(--orange-bg); border-color: var(--orange-border); }
+    .story-panel.p3 { background: var(--green-bg); border-color: var(--green-border); }
+    .story-panel.p4 { background: var(--purple-bg); border-color: var(--purple-border); }
+    .panel-step { font-size: 0.78rem; font-weight: 800; padding: 0.15rem 0.55rem; border-radius: 6px; display: inline-block; margin-bottom: 0.4rem; background: rgba(255,255,255,0.85); }
+    .panel-icon { font-size: 1.8rem; float: right; }
+    .story-panel h4 { margin: 0.2rem 0 0.4rem; font-size: 1.05rem; font-weight: 800; }
+    .story-panel p { margin: 0; font-size: 0.88rem; color: #334155; }
+    .eng-tag { display: inline-block; margin-top: 0.5rem; background: #fff; padding: 0.2rem 0.55rem; border-radius: 6px; font-family: monospace; font-size: 0.82rem; font-weight: 700; color: var(--blue); }
+    .reader-header, .control-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; background: #f8fafc; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 1.2rem; border: 1px solid var(--border); }
+    .toggle-btn { border: 1px solid var(--border); background: #fff; padding: 0.4rem 0.85rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+    .toggle-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .reader-para { margin-bottom: 1.2rem; padding: 1rem 1.2rem; border-radius: 12px; background: #fafcff; border: 1px solid #e2e8f0; }
+    .reader-en { font-size: var(--reader-font-size, 1.14rem); line-height: 1.85; color: #0f172a; font-weight: 500; }
+    .reader-zh { margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px dashed #cbd5e1; color: #475569; font-size: 0.98rem; }
+    body.hide-reader-zh .reader-zh, body.hide-zh .sent-zh { display: none; }
+    .para-badge { display: inline-block; background: #312e81; color: #fff; font-weight: 800; font-size: 0.85rem; padding: 0.25rem 0.8rem; border-radius: 8px; margin: 1rem 0 0.8rem; }
+    .sent-card { border: 2px solid var(--border); border-radius: 16px; padding: 1.2rem; margin-bottom: 1.1rem; background: #fff; }
+    .sent-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; }
+    .sent-num { background: var(--blue-bg); color: var(--blue); font-weight: 900; font-size: 0.85rem; padding: 0.2rem 0.6rem; border-radius: 8px; flex-shrink: 0; }
+    .sent-en { font-size: 1.15rem; font-weight: 600; color: #0f172a; flex: 1; }
+    .sent-zh { margin-top: 0.4rem; font-size: 0.96rem; color: #475569; padding-left: 0.5rem; border-left: 3px solid #cbd5e1; }
+    .key-term { background: var(--yellow-hl); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #9a3412; }
+    .gram-term { background: var(--purple-bg); border-bottom: 2px solid var(--purple); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #5b21b6; }
+    body.cloze-mode .key-term, body.cloze-mode .gram-term { background: #cbd5e1; color: transparent; border-color: transparent; cursor: pointer; user-select: none; }
+    body.cloze-mode .key-term:hover { background: var(--yellow-hl); color: #9a3412; }
+    body.cloze-mode .gram-term:hover { background: var(--purple-bg); color: #5b21b6; }
+    .audio-btn { border: none; background: var(--blue-bg); color: var(--blue); padding: 0.35rem 0.65rem; border-radius: 999px; font-size: 0.82rem; font-weight: 800; cursor: pointer; flex-shrink: 0; }
+    .chunk-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.85rem 0; }
+    .chunk { border-radius: 10px; padding: 0.4rem 0.7rem; font-size: 0.88rem; display: flex; flex-direction: column; border: 1px solid transparent; }
+    .chunk .c-role { font-size: 0.7rem; font-weight: 800; opacity: 0.85; }
+    .chunk .c-en { font-weight: 800; }
+    .chunk .c-zh { font-size: 0.78rem; }
+    .chunk.s { background: #fff1f2; border-color: #fecdd3; color: #be123c; }
+    .chunk.v { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .chunk.o { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .chunk.c { background: #f5f3ff; border-color: #ddd6fe; color: #6d28d9; }
+    .chunk.m { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+    .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.8rem; margin-top: 0.6rem; }
+    .insight-box { border-radius: 10px; padding: 0.8rem 1rem; font-size: 0.9rem; }
+    .insight-box.grammar { background: #f8fafc; border-left: 4px solid var(--blue); }
+    .insight-box.trans { background: #fffbeb; border-left: 4px solid var(--orange); }
+    .insight-title { font-weight: 800; margin-bottom: 0.3rem; }
+    .score-banner { background: linear-gradient(135deg, #eef2ff 0%, #ecfdf5 100%); border: 2px solid var(--blue-border); border-radius: 14px; padding: 1rem 1.25rem; margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; }
+    .quiz-btn { display: block; width: 100%; text-align: left; padding: 0.75rem 1rem; margin: 0.4rem 0; border: 2px solid var(--border); border-radius: 10px; background: #fff; font-size: 0.94rem; font-weight: 600; cursor: pointer; }
+    .quiz-btn:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
+    .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
+    .quiz-exp { display: none; margin-top: 0.45rem; padding: 0.7rem 1rem; border-radius: 10px; background: var(--green-bg); color: #065f46; font-size: 0.88rem; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badges">
+      <span class="pill gold">進階改寫版二｜💬 第二人稱代入篇 (You 沉浸導覽視角)</span>
+      <span class="pill">UNIT 9 旅遊導覽與祈使引導特訓</span>
+    </div>
+    <h1>Picture Yourself in Oahu: Your Ultimate October Island Guide</h1>
+    <h2>想像你正置身歐胡島：十月專屬海島漫遊指南（You 對話式導覽・100% 涵蓋必考字彙與文法）</h2>
+  </header>
+
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../../index.html">⬅️ 返回總覽</a>
+    <a class="nav-btn" href="./03_互動圖文學習講義.html">📖 原版主講義</a>
+    <a class="nav-btn" href="./04_改寫版1_客觀科普報導篇.html">📰 1. 科普報導</a>
+    <a class="nav-btn primary" href="./05_改寫版2_第二人稱代入篇.html">💬 2. 第二人稱</a>
+    <a class="nav-btn" href="./06_改寫版3_高中生故事記敘篇.html">🧑‍🎓 3. 高中生故事</a>
+    <a class="nav-btn" href="./07_改寫版4_正反論證議論文篇.html">⚖️ 4. 正反議論文</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- SECTION 1: STORYBOARD -->
+    <div id="sec-story" class="section-title">🎬 一、四格圖解大意 (4-Panel Visual Storyboard)</div>
+    <div class="card">
+      <img src="./03_AI_視覺圖解講義.jpg" alt="Unit 9 Infographic" class="infographic-img" />
+      <div class="storyboard">
+        <div class="story-panel p1">
+          <span class="panel-icon">✈️</span>
+          <span class="panel-step">起 · 邀請你出發</span>
+          <h4>1. 十月出發，享受無擁擠海灘</h4>
+          <p>想像你在十月飛抵歐胡島，夏日人潮已散，微風讓你的午後保持舒適，穿過鑽石頭山隧道即可俯瞰壯闊海岸。</p>
+          <span class="eng-tag">Imagine arriving in October</span>
+        </div>
+        <div class="story-panel p2">
+          <span class="panel-icon">🔦</span>
+          <span class="panel-step">承 · 帶你走進王宮</span>
+          <h4>2. 踏入比白宮更早通電的宮殿</h4>
+          <p>走進檀香山伊奧拉尼宮，你會發現卡拉卡瓦國王熱愛科技到在 1887 年就用電力照亮相思木階梯與王座廳。</p>
+          <span class="eng-tag">so much that he lit...</span>
+        </div>
+        <div class="story-panel p3">
+          <span class="panel-icon">🥢</span>
+          <span class="panel-step">轉 · 請你品嚐海島味</span>
+          <h4>3. 大啖生魚波奇、慢烤豬與刨冰</h4>
+          <p>在傳統宴會上，你可以品嚐原住民生魚波奇、地下烤爐慢烤豬肉，以及日本移民帶來的果漿刨冰。</p>
+          <span class="eng-tag">Native / raw / oven</span>
+        </div>
+        <div class="story-panel p4">
+          <span class="panel-icon">👻</span>
+          <span class="panel-step">合 · 挑戰你的膽量</span>
+          <h4>4. 漫步變裝大道或挑戰暗影驚魂</h4>
+          <p>十月底你可加入卡拉卡瓦大道的萬聖慶典，或走進瓦伊帕胡鬧鬼莊園小心暗處演員！無論做什麼都能徹底放鬆。</p>
+          <span class="eng-tag">Whether you hike or...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: FULL TEXT IMMERSIVE READING -->
+    <div id="sec-fulltext" class="section-title">📖 二、完整課文沉浸閱讀（第二人稱 You 代入改寫版・約 180 字）</div>
+    <div class="reader-card">
+      <div class="reader-header">
+        <div style="font-weight:800;font-size:0.95rem;">💬 文體特色：以「Imagine... / You can...」直接與讀者對話，訓練學測旅遊指南與演講稿文體</div>
+        <div>
+          <button class="toggle-btn" id="btn-full-audio" onclick="toggleFullAudio()">🔊 全篇連續朗讀</button>
+          <button class="toggle-btn active" id="btn-reader-zh" onclick="toggleReaderZh()">👁️ 顯示中文對照</button>
+          <button class="toggle-btn" onclick="changeFontSize(1)">A+</button>
+          <button class="toggle-btn" onclick="changeFontSize(-1)">A-</button>
+        </div>
+      </div>
+
+      <div class="reader-para">
+        <div class="reader-en">
+          Imagine escaping to Oahu in October, when gentle trade winds <span class="gram-term">keep your afternoons comfortable</span> and warm ocean waters welcome you. <span class="gram-term">With the summer crowds gone</span>, you will immediately feel <span class="key-term">relaxed</span> and understand why nature is the heart of the island’s <span class="key-term">appeal</span>. You can hike up Diamond Head, passing through a dim <span class="key-term">tunnel</span> to a century-old <span class="key-term">lookout</span>, or travel <span class="key-term">farther</span> north to go <span class="key-term">snorkeling</span> in calm bays. Beyond coastal <span class="key-term">scenery</span>, you can step inside Honolulu’s ’Iolani Palace, where King Kalākaua loved modern technology <span class="gram-term">so much that</span> he lit the royal halls with <span class="key-term">electricity</span> in 1887—years before the White House—and admire its grand koa <span class="key-term">throne</span> room.
+        </div>
+        <div class="reader-zh">
+          想像你在十月逃離塵囂來到歐胡島，此時溫和的信風讓你的午後保持舒適，溫暖的海水更張開雙臂歡迎你。隨著夏日人潮散去，你會立刻感到放鬆，並明白為何大自然是這座島嶼魅力的核心。你可以健行登上鑽石頭山，穿過幽暗的隧道抵達百年瞭望臺，或者往更北方走，在平靜的海灣裡浮潛。除了海岸風景外，你還能踏入檀香山的伊奧拉尼宮——卡拉卡瓦國王如此熱愛現代科技，以致於他在 1887 年就用電力點亮王室大廳，比白宮還早了好幾年——並讚嘆那氣派的相思木王座廳。
+        </div>
+      </div>
+
+      <div class="reader-para" style="margin-bottom:0;">
+        <div class="reader-en">
+          When hunger strikes, you will taste the stories of people who <span class="gram-term">have called Oahu home</span>. At a lively luau, you can sample <span class="key-term">Native</span> Hawaiian poke made with fresh <span class="key-term">raw</span> fish, savor kalua pork slow-cooked in an underground <span class="key-term">oven</span>, and cool off with fluffy shave ice introduced by Japanese <span class="key-term">immigrants</span>. If you visit in late October, Kalākaua <span class="key-term">Avenue</span> surrounds you with creative <span class="key-term">costumes</span> during a massive <span class="key-term">Halloween</span> <span class="key-term">celebration</span>. For <span class="gram-term">those who crave</span> a real scare, Waipahu’s <span class="key-term">Haunted</span> <span class="key-term">Plantation</span> awaits, where actors hide in the <span class="key-term">shadows</span> ready to leap out! <span class="gram-term">Whether</span> you are climbing volcanic trails <span class="gram-term">or watching</span> sunset waves, you can easily slow down and settle into island life.
+        </div>
+        <div class="reader-zh">
+          當飢餓來襲時，你將品嚐到那些以歐胡島為家的人們的故事。在熱鬧的傳統宴會上，你可以試吃以新鮮生魚製成的夏威夷原住民波奇、細細品味地下烤爐慢火烘烤的卡魯瓦豬肉，並享用日本移民引進的蓬鬆刨冰消暑。如果你在十月底造訪，卡拉卡瓦大道會在盛大的萬聖節慶典期間讓你被創意服裝包圍。對於那些渴望真正驚嚇感的人來說，瓦伊帕胡的鬧鬼莊園正等著你，演員們躲藏在陰暗處隨時準備跳出來！無論你是在攀登火山步道，還是在觀賞夕陽海浪，你都能輕易放慢腳步，融入海島生活。
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: SENTENCE ANATOMY -->
+    <div id="sec-reading" class="section-title">🧩 三、課文「積木拆句」＋ 逐行中翻英秘訣</div>
+    <div class="card">
+      <div class="control-bar">
+        <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
+        <button class="toggle-btn active" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
+        <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式</button>
+      </div>
+
+      <!-- S1 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 1</span>
+          <div style="flex:1;">
+            <div class="sent-en">Imagine escaping to Oahu in October, when gentle trade winds <span class="gram-term">keep your afternoons comfortable</span> and warm ocean waters welcome you.</div>
+            <div class="sent-zh">想像你在十月逃離塵囂來到歐胡島，此時溫和的信風讓你的午後保持舒適，溫暖的海水更歡迎你。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Imagine escaping to Oahu in October, when gentle trade winds keep your afternoons comfortable and warm ocean waters welcome you.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V+O] 祈使動詞+動名詞</span><span class="c-en">Imagine escaping to Oahu in October,</span><span class="c-zh">想像在十月度假前往歐胡島</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 關係副詞子句</span><span class="c-en">when gentle trade winds keep your afternoons comfortable</span><span class="c-zh">此時溫和信風使你的午後保持舒適</span></div>
+          <div class="chunk o"><span class="c-role">[Conj+S+V] 對等子句</span><span class="c-en">and warm ocean waters welcome you.</span><span class="c-zh">且溫暖海水歡迎著你</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 破題神招：<code>Imagine + V-ing..., when + S. + V.</code></div><code>imagine</code> 後接動名詞 <code>escaping</code>，逗號後用關係副詞 <code>when</code> 補充說明十月的氣候。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 寫作秘訣</div>把讀者直接拉進場景，是英文旅遊專欄與演講最吸睛的開頭方式！</div>
+        </div>
+      </div>
+
+      <!-- S2 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 2</span>
+          <div style="flex:1;">
+            <div class="sent-en"><span class="gram-term">With the summer crowds gone</span>, you will immediately feel <span class="key-term">relaxed</span> and understand why nature is the heart of the island’s <span class="key-term">appeal</span>.</div>
+            <div class="sent-zh">隨著夏日人潮散去，你會立刻感到放鬆，並明白為何大自然是這座島嶼魅力的核心。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('With the summer crowds gone, you will immediately feel relaxed and understand why nature is the heart of the island’s appeal.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 附帶狀況</span><span class="c-en">With the summer crowds gone,</span><span class="c-zh">隨著夏日人潮散去</span></div>
+          <div class="chunk s"><span class="c-role">[S+V1+C] 主句</span><span class="c-en">you will immediately feel relaxed</span><span class="c-zh">你會立刻感到放鬆</span></div>
+          <div class="chunk c"><span class="c-role">[V2+O] 間接問句</span><span class="c-en">and understand why nature is the heart of the island’s appeal.</span><span class="c-zh">並明白為何自然是島嶼魅力核心</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 名詞子句作受詞：<code>understand + why + S. + V.</code></div>間接問句語序維持「主詞 + 動詞」（<code>why nature is...</code>），不可倒裝！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div><code>a big part of Oahu’s appeal</code> 換成 <strong><code>the heart of the island’s appeal</code>（魅力的核心）</strong>。</div>
+        </div>
+      </div>
+
+      <!-- S3 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 3</span>
+          <div style="flex:1;">
+            <div class="sent-en">You can hike up Diamond Head, passing through a dim <span class="key-term">tunnel</span> to a century-old <span class="key-term">lookout</span>, or travel <span class="key-term">farther</span> north to go <span class="key-term">snorkeling</span> in calm bays.</div>
+            <div class="sent-zh">你可以健行登上鑽石頭山，穿過幽暗的隧道抵達百年瞭望臺，或者往更北方走，在平靜的海灣裡浮潛。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('You can hike up Diamond Head, passing through a dim tunnel to a century-old lookout, or travel farther north to go snorkeling in calm bays.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S+V1] 選項一</span><span class="c-en">You can hike up Diamond Head,</span><span class="c-zh">你可以健行登上鑽石頭山</span></div>
+          <div class="chunk m"><span class="c-role">[M] 分詞構句</span><span class="c-en">passing through a dim tunnel to a century-old lookout,</span><span class="c-zh">穿過幽暗隧道抵達百年瞭望臺</span></div>
+          <div class="chunk c"><span class="c-role">[Conj+V2] 選項二</span><span class="c-en">or travel farther north to go snorkeling in calm bays.</span><span class="c-zh">或往更北走去平靜海灣浮潛</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 戶外運動搭配：<code>go + V-ing</code>（<code>go snorkeling / go hiking</code>）</div>從事戶外休閒活動常搭配 <code>go + V-ing</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 分詞構句修飾過程</div><code>, passing through a dim tunnel...</code> 生動描繪健行過程中的連續動作。</div>
+        </div>
+      </div>
+
+      <!-- S4 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 4</span>
+          <div style="flex:1;">
+            <div class="sent-en">Beyond coastal <span class="key-term">scenery</span>, you can step inside Honolulu’s ’Iolani Palace, where King Kalākaua loved modern technology <span class="gram-term">so much that</span> he lit the royal halls with <span class="key-term">electricity</span> in 1887—years before the White House—and admire its grand koa <span class="key-term">throne</span> room.</div>
+            <div class="sent-zh">除了海岸風景外，你還能踏入檀香山的伊奧拉尼宮——卡拉卡瓦國王如此熱愛現代科技，以致於他在 1887 年就用電力點亮王室大廳，比白宮還早了好幾年——並讚嘆那氣派的相思木王座廳。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Beyond coastal scenery, you can step inside Honolulu’s Iolani Palace, where King Kalakaua loved modern technology so much that he lit the royal halls with electricity in 1887—years before the White House—and admire its grand koa throne room.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 轉折片語</span><span class="c-en">Beyond coastal scenery,</span><span class="c-zh">除了海岸風景外</span></div>
+          <div class="chunk s"><span class="c-role">[S+V1] 主句動作一</span><span class="c-en">you can step inside Honolulu’s ’Iolani Palace,</span><span class="c-zh">你可以踏入檀香山伊奧拉尼宮</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] where 關係子句</span><span class="c-en">where King Kalākaua loved modern technology so much that he lit... with electricity,</span><span class="c-zh">在那裡國王用電力點亮大廳</span></div>
+          <div class="chunk v"><span class="c-role">[Conj+V2] 主句動作二</span><span class="c-en">and admire its grand koa throne room.</span><span class="c-zh">並讚嘆其氣派的相思木王座廳</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 關係副詞 <code>, where + 完整子句</code> 補充說明景點歷史</div>介紹古蹟時，在古蹟名稱後加 <code>, where + 歷史人物故事</code>，一氣呵成！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 對稱動詞</div><code>can step inside... and admire...</code> 兩個原形動詞共用助動詞 <code>can</code>。</div>
+        </div>
+      </div>
+
+      <!-- S5 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 5</span>
+          <div style="flex:1;">
+            <div class="sent-en">At a lively luau, you can sample <span class="key-term">Native</span> Hawaiian poke made with fresh <span class="key-term">raw</span> fish, savor kalua pork slow-cooked in an underground <span class="key-term">oven</span>, and cool off with fluffy shave ice introduced by Japanese <span class="key-term">immigrants</span>.</div>
+            <div class="sent-zh">在熱鬧的傳統宴會上，你可以試吃以新鮮生魚製成的夏威夷原住民波奇、細細品味地下烤爐慢火烘烤的卡魯瓦豬肉，並享用日本移民引進的蓬鬆刨冰消暑。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('At a lively luau, you can sample Native Hawaiian poke made with fresh raw fish, savor kalua pork slow-cooked in an underground oven, and cool off with fluffy shave ice introduced by Japanese immigrants.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V1+O1] 品嚐波奇</span><span class="c-en">you can sample Native Hawaiian poke made with fresh raw fish,</span><span class="c-zh">你可以試吃新鮮生魚波奇</span></div>
+          <div class="chunk o"><span class="c-role">[V2+O2] 品味烤豬</span><span class="c-en">savor kalua pork slow-cooked in an underground oven,</span><span class="c-zh">細細品味地下烤爐慢烤豬肉</span></div>
+          <div class="chunk m"><span class="c-role">[V3+O3] 吃冰消暑</span><span class="c-en">and cool off with fluffy shave ice introduced by Japanese immigrants.</span><span class="c-zh">並用日本移民引進的刨冰消暑</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 美食動詞三連發：<code>sample</code>（試吃）、<code>savor</code>（細細品味）、<code>cool off with</code>（吃……消暑）</div>避免整段只會重複用 <code>eat</code>！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 寫作亮點</div>平行排比三個動詞片語，節奏感極強。</div>
+        </div>
+      </div>
+
+      <!-- S6 -->
+      <div class="sent-card" style="margin-bottom:0;">
+        <div class="sent-top">
+          <span class="sent-num">句 6</span>
+          <div style="flex:1;">
+            <div class="sent-en">For <span class="gram-term">those who crave</span> a real scare after seeing the <span class="key-term">costumes</span> and <span class="key-term">Halloween</span> <span class="key-term">celebration</span> on Kalākaua <span class="key-term">Avenue</span>, Waipahu’s <span class="key-term">Haunted</span> <span class="key-term">Plantation</span> awaits with actors hiding in the <span class="key-term">shadows</span>—so <span class="gram-term">whether</span> you are climbing volcanic trails <span class="gram-term">or watching</span> sunset waves, you can easily slow down and settle into island life.</div>
+            <div class="sent-zh">對於那些在看過卡拉卡瓦大道上的創意服裝與萬聖節慶典後、仍渴望真正驚嚇感的人來說，瓦伊帕胡的鬧鬼莊園正以躲在暗處的演員等著你——因此無論你是在攀登火山步道或觀賞夕陽海浪，都能輕易放慢腳步融入海島生活。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('For those who crave a real scare after seeing the costumes and Halloween celebration on Kalakaua Avenue, Waipahu’s Haunted Plantation awaits with actors hiding in the shadows—so whether you are climbing volcanic trails or watching sunset waves, you can easily slow down and settle into island life.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] those who 子句</span><span class="c-en">For those who crave a real scare...,</span><span class="c-zh">對於那些渴望真正驚嚇感的人</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+M] 附帶狀況</span><span class="c-en">Waipahu’s Haunted Plantation awaits with actors hiding in the shadows</span><span class="c-zh">鬧鬼莊園正以躲在暗處的演員等待著</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] Whether 讓步子句</span><span class="c-en">—so whether you are climbing volcanic trails or watching sunset waves, you can easily slow down...</span><span class="c-zh">無論攀登步道或看海浪都能慢下來</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 <code>with + O. (actors) + V-ing (hiding in the shadows)</code></div>因為演員是「主動躲藏」，故 <code>with</code> 附帶狀況的補語使用現在分詞 <code>hiding</code>！</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div><code>want a real scare</code> 換成渴望程度更高的 <strong><code>crave a real scare</code></strong>。</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION 4: 15-QUESTION QUIZ -->
+    <div id="sec-quiz" class="section-title">🎯 四、15 題大考實戰檢測（第二人稱代入篇・含克漏字）</div>
+    <div class="card">
+
+      <div class="score-banner">
+        <div>
+          <strong style="font-size:1.08rem;color:var(--blue);">🏆 改寫版二隨堂測驗成績：</strong>
+          <span id="quiz-score-text" style="font-size:1.02rem;font-weight:800;color:var(--blue);margin-left:0.5rem;">已答對 0 / 15 題</span>
+        </div>
+        <button class="toggle-btn" onclick="resetQuiz()">🔄 重新作答</button>
+      </div>
+
+      <div class="para-badge" style="background:var(--blue);margin-top:0;">Part A — 克漏字綜合測驗 (Cloze Test, 第 1–5 題)</div>
+      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:1.2rem;font-size:1rem;line-height:1.85;">
+        Imagine escaping to Oahu in October, when gentle breezes <strong><u>(__1__)</u></strong> and warm waters welcome you. With the summer crowds gone, you will feel completely <strong><u>(__2__)</u></strong>. You can hike up Diamond Head through a tunnel or travel farther north to go snorkeling. In Honolulu, you can visit ’Iolani Palace, where King Kalākaua loved technology <strong><u>(__3__)</u></strong> he lit the palace with electricity in 1887. At a traditional luau, you can savor kalua pork cooked in an underground oven. For <strong><u>(__4__)</u></strong> crave a Halloween thrill, Waipahu’s Haunted Plantation awaits, with actors <strong><u>(__5__)</u></strong> in the shadows ready to jump out!
+      </div>
+
+      <p><strong>1. 請選出最適合填入 <u>(__1__)</u> 的結構：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q1')">(A) keep your afternoons comfortable</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q1')">(B) keep your afternoons comfortably</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q1')">(C) make your afternoons comfort</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q1')">(D) let your afternoons comfortable</button>
+      <div id="q1" class="quiz-exp">✅ <strong>正解 (A) keep your afternoons comfortable</strong>！<code>keep + O. + 形容詞補語 (comfortable)</code>。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+
+      <p><strong>2. 請選出最適合填入 <u>(__2__)</u> 的分詞形容詞：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q2')">(A) relax</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q2')">(B) relaxing</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q2')">(C) relaxed</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q2')">(D) relaxation</button>
+      <div id="q2" class="quiz-exp">✅ <strong>正解 (C) relaxed</strong>！主詞是人（<code>you</code>），表示「感到放鬆的」必用過去分詞轉化之形容詞 <code>relaxed</code>。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+
+      <p><strong>3. 請選出最適合填入 <u>(__3__)</u> 的結構：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q3')">(A) too much to</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q3')">(B) so much that</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q3')">(C) such much that</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q3')">(D) enough to</button>
+      <div id="q3" class="quiz-exp">✅ <strong>正解 (B) so much that</strong>！連接後方完整結果子句 <code>he lit the palace...</code>。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+
+      <p><strong>4. 請選出最適合填入 <u>(__4__)</u> 的詞彙：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q4')">(A) anyone who</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q4')">(B) those who</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q4')">(C) who</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q4')">(D) those whom</button>
+      <div id="q4" class="quiz-exp">✅ <strong>正解 (B) those who</strong>！後方接複數動詞 <code>crave</code>，且缺主格關代 <code>who</code>。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+
+      <p><strong>5. 請選出最適合填入 <u>(__5__)</u> 的分詞形式：</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q5')">(A) hide</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q5')">(B) hidden</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q5')">(C) hiding</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q5')">(D) to hiding</button>
+      <div id="q5" class="quiz-exp">✅ <strong>正解 (C) hiding</strong>！<code>with + O. (actors) + V-ing (hiding)</code>，演員「主動躲藏」在陰暗處，故用現在分詞。</div>
+
+      <div class="para-badge" style="background:var(--purple);margin-top:1.8rem;">Part B — 文意字彙與片語搭配 (第 6–9 題)</div>
+
+      <p><strong>6. Visitors to the luau can sample ________ Hawaiian dishes such as poke and kalua pork while watching hula dancing.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q6')">(A) Native</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q6')">(B) Raw</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q6')">(C) Haunted</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q6')">(D) Farther</button>
+      <div id="q6" class="quiz-exp">✅ <strong>正解 (A) Native（原住民的、當地的）</strong>！<code>Native Hawaiian dishes</code> 指夏威夷原住民傳統料理。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+
+      <p><strong>7. On Halloween night, children dressed in creative ________ walked down the avenue asking for candy.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q7')">(A) tunnels</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q7')">(B) ovens</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q7')">(C) costumes</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q7')">(D) thrones</button>
+      <div id="q7" class="quiz-exp">✅ <strong>正解 (C) costumes（特殊節慶服裝、裝扮）</strong>！身穿創意裝扮的小孩沿著大道討糖果。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+
+      <p><strong>8. A big part of the national park’s ________ lies in its unspoiled beaches and breathtaking mountain scenery.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q8')">(A) electricity</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q8')">(B) appeal</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q8')">(C) shadow</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q8')">(D) immigrant</button>
+      <div id="q8" class="quiz-exp">✅ <strong>正解 (B) appeal（吸引力、魅力）</strong>！這座國家公園的「魅力」很大一部分在於未受破壞的海灘與山景。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+
+      <p><strong>9. After a busy week in the city, spending a weekend on the island helps travelers slow down and ________ a peaceful pace of life.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q9')">(A) settle into</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q9')">(B) pass through</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q9')">(C) jump out</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q9')">(D) fill with</button>
+      <div id="q9" class="quiz-exp">✅ <strong>正解 (A) settle into（融入、適應）</strong>！放慢腳步並「融入」寧靜的生活步調。</div>
+
+      <div class="para-badge" style="background:var(--orange);margin-top:1.8rem;">Part C — 重要文法與中翻英除錯 (第 10–12 題)</div>
+
+      <p><strong>10. Whether you ________ by plane or by boat, you will be amazed by the sweeping views of the Hawaiian coast.</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q10')">(A) will arrive</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q10')">(B) arrive</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q10')">(C) arriving</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q10')">(D) arrived</button>
+      <div id="q10" class="quiz-exp">✅ <strong>正解 (B) arrive</strong>！<code>Whether ... or ...</code> 引導的讓步副詞子句中，須以「現在簡單式（arrive）」代替未來式！</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+
+      <p><strong>11. Imagine ________ through a dark haunted village with actors hiding in the shadows around every corner!</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q11')">(A) walk</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q11')">(B) to walk</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q11')">(C) walking</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q11')">(D) walked</button>
+      <div id="q11" class="quiz-exp">✅ <strong>正解 (C) walking</strong>！動詞 <code>imagine</code>（想像）後方必須接動名詞 <code>V-ing</code>。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+
+      <p><strong>12. 【中翻英除錯】「無論你是喜歡衝浪或是偏好浮潛，歐胡島都值得一遊。」哪一句英文完全正確？</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q12')">(A) If you love surfing or prefer snorkeling, Oahu is worth a visit.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q12')">(B) Whether you love surfing or prefer snorkeling, but Oahu is worth a visit.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q12')">(C) Whether you love surfing or prefer snorkeling, Oahu is worth a visit.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q12')">(D) Whether you love surfing or prefer snorkeling, Oahu is worth to visit.</button>
+      <div id="q12" class="quiz-exp">✅ <strong>正解 (C)</strong>！(A) 句首表「無論」不可用 <code>If</code>；(B) 讓步子句不可與對等連接詞 <code>but</code> 連用；(D) <code>worth</code> 後接名詞 <code>a visit</code> 或動名詞 <code>visiting</code>，不可接 <code>to visit</code>。</div>
+
+      <div class="para-badge" style="background:var(--green);margin-top:1.8rem;">Part D — 大考閱讀測驗 (第 13–15 題)</div>
+
+      <p><strong>13. Who is the target audience of this rewritten passage?</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q13')">(A) Potential travelers looking for an engaging autumn vacation guide to Oahu.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q13')">(B) Electrical engineers studying 19th-century power grids.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q13')">(C) Professional surfers competing in winter tournaments.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q13')">(D) Historians researching the architecture of the White House.</button>
+      <div id="q13" class="quiz-exp">✅ <strong>正解 (A)</strong>！全篇使用第二人稱 <code>you</code> 與祈使句 <code>Imagine...</code>，旨在為尋找秋季旅遊目的地的潛在遊客提供生動導覽。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+
+      <p><strong>14. According to the guide, what can you experience at a traditional luau?</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q14')">(A) Walking through a dark village with scary actors.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q14')">(B) Climbing through a narrow tunnel to a volcanic lookout.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q14')">(C) Sampling local dishes like poke and kalua pork while enjoying music and hula.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q14')">(D) Viewing the koa wood stairs inside ’Iolani Palace.</button>
+      <div id="q14" class="quiz-exp">✅ <strong>正解 (C)</strong>！在傳統夏威夷宴會（luau）上，遊客能品嚐波奇、卡魯瓦烤豬與刨冰，並欣賞現場音樂與草裙舞。</div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;" />
+
+      <p><strong>15. Why does the author mention the White House in the first paragraph?</strong></p>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q15')">(A) To show that ’Iolani Palace was designed by the same architect.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, true, 'q15')">(B) To emphasize how advanced ’Iolani Palace was in adopting electricity in 1887.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q15')">(C) To explain why King Kalākaua moved to Washington, D.C.</button>
+      <button class="quiz-btn" onclick="answerQuiz(this, false, 'q15')">(D) To prove that Hawaii had more royal palaces than the US mainland.</button>
+      <div id="q15" class="quiz-exp">✅ <strong>正解 (B)</strong>！藉由「比美國白宮還早好幾年通電（years before the White House）」，凸顯伊奧拉尼宮與卡拉卡瓦國王在引進電力科技上的先進程度。</div>
+
+    </div>
+  </div>
+
+  <script>
+    let isFullAudioPlaying = false;
+    let currentFontSize = 1.14;
+    let answeredCount = 0;
+    let correctCount = 0;
+    const fullText = "Imagine escaping to Oahu in October, when gentle trade winds keep your afternoons comfortable and warm ocean waters welcome you. With the summer crowds gone, you will immediately feel relaxed and understand why nature is the heart of the island’s appeal. You can hike up Diamond Head, passing through a dim tunnel to a century-old lookout, or travel farther north to go snorkeling in calm bays. Beyond coastal scenery, you can step inside Honolulu’s Iolani Palace, where King Kalakaua loved modern technology so much that he lit the royal halls with electricity in 1887—years before the White House—and admire its grand koa throne room. When hunger strikes, you will taste the stories of people who have called Oahu home. At a lively luau, you can sample Native Hawaiian poke made with fresh raw fish, savor kalua pork slow-cooked in an underground oven, and cool off with fluffy shave ice introduced by Japanese immigrants. If you visit in late October, Kalakaua Avenue surrounds you with creative costumes during a massive Halloween celebration. For those who crave a real scare, Waipahu’s Haunted Plantation awaits, where actors hide in the shadows ready to leap out! Whether you are climbing volcanic trails or watching sunset waves, you can easily slow down and settle into island life.";
+
+    function toggleReaderZh() {
+      document.body.classList.toggle('hide-reader-zh');
+      document.getElementById('btn-reader-zh').classList.toggle('active');
+    }
+    function changeFontSize(delta) {
+      currentFontSize = Math.max(0.95, Math.min(1.55, currentFontSize + delta * 0.1));
+      document.documentElement.style.setProperty('--reader-font-size', currentFontSize + 'rem');
+    }
+    function toggleFullAudio() {
+      const btn = document.getElementById('btn-full-audio');
+      if (isFullAudioPlaying) {
+        window.speechSynthesis.cancel();
+        isFullAudioPlaying = false;
+        btn.innerHTML = '🔊 全篇連續朗讀';
+        btn.classList.remove('active');
+      } else if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(fullText);
+        u.lang = 'en-US'; u.rate = 0.92;
+        u.onend = () => { isFullAudioPlaying = false; btn.innerHTML = '🔊 全篇連續朗讀'; btn.classList.remove('active'); };
+        window.speechSynthesis.speak(u);
+        isFullAudioPlaying = true;
+        btn.innerHTML = '⏹️ 停止朗讀';
+        btn.classList.add('active');
+      }
+    }
+    function speak(text, rate = 0.95) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        isFullAudioPlaying = false;
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'en-US'; u.rate = rate;
+        window.speechSynthesis.speak(u);
+      }
+    }
+    function answerQuiz(btn, isCorrect, expId) {
+      const exp = document.getElementById(expId);
+      const already = exp.dataset.answered === 'true';
+      btn.parentElement.querySelectorAll('.quiz-btn').forEach(b => {
+        if (b.getAttribute('onclick').includes("'" + expId + "'")) b.classList.remove('correct', 'wrong');
+      });
+      btn.classList.add(isCorrect ? 'correct' : 'wrong');
+      exp.style.display = 'block';
+      if (!already) {
+        exp.dataset.answered = 'true';
+        answeredCount++;
+        if (isCorrect) correctCount++;
+        document.getElementById('quiz-score-text').textContent = `已答對 ${correctCount} / 15 題（進度 ${answeredCount}/15｜換算分數：${Math.round(correctCount/15*100)} 分）`;
+      }
+    }
+    function resetQuiz() {
+      answeredCount = 0; correctCount = 0;
+      document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      document.querySelectorAll('.quiz-exp').forEach(e => { e.style.display = 'none'; delete e.dataset.answered; });
+      document.getElementById('quiz-score-text').textContent = '已答對 0 / 15 題';
+    }
+  </script>
+</body>
+</html>

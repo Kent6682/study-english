@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>改寫版一：客觀科普報導篇｜Unit 12 What Banknotes Tell Us About the Countries That Print Them</title>
+  <style>
+    :root {
+      --bg: #f4f7fb; --card: #ffffff; --ink: #1e293b; --muted: #64748b; --border: #e2e8f0;
+      --blue: #0284c7; --blue-bg: #e0f2fe; --blue-border: #bae6fd;
+      --orange: #ea580c; --orange-bg: #fff7ed; --orange-border: #fed7aa;
+      --green: #059669; --green-bg: #ecfdf5; --green-border: #a7f3d0;
+      --purple: #7c3aed; --purple-bg: #f5f3ff; --purple-border: #ddd6fe;
+      --red: #dc2626; --red-bg: #fef2f2; --yellow-hl: #fef08a;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.75; padding-bottom: 4rem; }
+    .hero { background: linear-gradient(135deg, #0f172a 0%, #0369a1 60%, #0284c7 100%); color: #fff; padding: 2.4rem 1.5rem 2rem; text-align: center; }
+    .hero-badges { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .pill { background: rgba(255,255,255,0.2); padding: 0.25rem 0.85rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
+    .pill.gold { background: #38bdf8; color: #0f172a; }
+    .hero h1 { margin: 0.2rem 0; font-size: clamp(1.5rem, 3.8vw, 2.2rem); font-weight: 900; }
+    .hero h2 { margin: 0.3rem 0 0; font-size: 1.12rem; font-weight: 500; color: #bae6fd; }
+    .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0.6rem 1rem; display: flex; justify-content: center; gap: 0.45rem; flex-wrap: wrap; box-shadow: 0 4px 12px rgba(15,23,42,0.05); }
+    .nav-btn { border: 1px solid var(--border); background: #fff; color: var(--ink); padding: 0.42rem 0.85rem; border-radius: 999px; font-size: 0.86rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: all 0.18s; }
+    .nav-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .nav-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .container { max-width: 1040px; margin: 0 auto; padding: 1.5rem 1rem; }
+    .section-title { display: flex; align-items: center; gap: 0.6rem; font-size: 1.35rem; font-weight: 900; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--blue); }
+    .card, .reader-card { background: var(--card); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(15,23,42,0.04); }
+    .infographic-img { width: 100%; border-radius: 14px; border: 2px solid var(--border); margin-bottom: 1.2rem; display: block; }
+    .storyboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .story-panel { border-radius: 14px; padding: 1.1rem; border: 2px solid transparent; }
+    .story-panel.p1 { background: var(--blue-bg); border-color: var(--blue-border); }
+    .story-panel.p2 { background: var(--orange-bg); border-color: var(--orange-border); }
+    .story-panel.p3 { background: var(--purple-bg); border-color: var(--purple-border); }
+    .story-panel.p4 { background: var(--green-bg); border-color: var(--green-border); }
+    .panel-step { font-size: 0.78rem; font-weight: 800; padding: 0.15rem 0.55rem; border-radius: 6px; display: inline-block; margin-bottom: 0.4rem; background: rgba(255,255,255,0.85); }
+    .panel-icon { font-size: 1.8rem; float: right; }
+    .story-panel h4 { margin: 0.2rem 0 0.4rem; font-size: 1.05rem; font-weight: 800; }
+    .story-panel p { margin: 0; font-size: 0.88rem; color: #334155; }
+    .eng-tag { display: inline-block; margin-top: 0.5rem; background: #fff; padding: 0.2rem 0.55rem; border-radius: 6px; font-family: monospace; font-size: 0.82rem; font-weight: 700; color: var(--blue); }
+    .reader-header, .control-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; background: #f8fafc; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 1.2rem; border: 1px solid var(--border); }
+    .toggle-btn { border: 1px solid var(--border); background: #fff; padding: 0.4rem 0.85rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+    .toggle-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .reader-para { margin-bottom: 1.2rem; padding: 1rem 1.2rem; border-radius: 12px; background: #fafcff; border: 1px solid #e2e8f0; }
+    .reader-en { font-size: var(--reader-font-size, 1.14rem); line-height: 1.85; color: #0f172a; font-weight: 500; }
+    .reader-zh { margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px dashed #cbd5e1; color: #475569; font-size: 0.98rem; }
+    body.hide-reader-zh .reader-zh, body.hide-zh .sent-zh { display: none; }
+    .sent-card { border: 2px solid var(--border); border-radius: 16px; padding: 1.2rem; margin-bottom: 1.1rem; background: #fff; }
+    .sent-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; }
+    .sent-num { background: var(--blue-bg); color: var(--blue); font-weight: 900; font-size: 0.85rem; padding: 0.2rem 0.6rem; border-radius: 8px; flex-shrink: 0; }
+    .sent-en { font-size: 1.15rem; font-weight: 600; color: #0f172a; flex: 1; }
+    .sent-zh { margin-top: 0.4rem; font-size: 0.96rem; color: #475569; padding-left: 0.5rem; border-left: 3px solid #cbd5e1; }
+    .key-term { background: var(--yellow-hl); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #9a3412; }
+    .gram-term { background: var(--purple-bg); border-bottom: 2px solid var(--purple); padding: 0 5px; border-radius: 5px; font-weight: 800; color: #5b21b6; }
+    body.cloze-mode .key-term, body.cloze-mode .gram-term { background: #cbd5e1; color: transparent; border-color: transparent; cursor: pointer; user-select: none; }
+    body.cloze-mode .key-term:hover { background: var(--yellow-hl); color: #9a3412; }
+    body.cloze-mode .gram-term:hover { background: var(--purple-bg); color: #5b21b6; }
+    .audio-btn { border: none; background: var(--blue-bg); color: var(--blue); padding: 0.35rem 0.65rem; border-radius: 999px; font-size: 0.82rem; font-weight: 800; cursor: pointer; flex-shrink: 0; }
+    .chunk-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.85rem 0; }
+    .chunk { border-radius: 10px; padding: 0.4rem 0.7rem; font-size: 0.88rem; display: flex; flex-direction: column; border: 1px solid transparent; }
+    .chunk .c-role { font-size: 0.7rem; font-weight: 800; opacity: 0.85; }
+    .chunk .c-en { font-weight: 800; }
+    .chunk .c-zh { font-size: 0.78rem; }
+    .chunk.s { background: #fff1f2; border-color: #fecdd3; color: #be123c; }
+    .chunk.v { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .chunk.o { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .chunk.c { background: #f5f3ff; border-color: #ddd6fe; color: #6d28d9; }
+    .chunk.m { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+    .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.8rem; margin-top: 0.6rem; }
+    .insight-box { border-radius: 10px; padding: 0.8rem 1rem; font-size: 0.9rem; }
+    .insight-box.grammar { background: #f8fafc; border-left: 4px solid var(--blue); }
+    .insight-box.trans { background: #fffbeb; border-left: 4px solid var(--orange); }
+    .insight-title { font-weight: 800; margin-bottom: 0.3rem; }
+    .cloze-passage-box { background: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 14px; padding: 1.2rem; margin-bottom: 1.2rem; line-height: 1.85; }
+    .cloze-blank { background: #fff; border: 2px solid var(--blue); color: var(--blue); font-weight: 900; padding: 0.1rem 0.55rem; border-radius: 6px; }
+    .q-block { padding: 1rem; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1rem; }
+    .quiz-btn { display: block; width: 100%; text-align: left; padding: 0.72rem 1rem; margin: 0.4rem 0; border: 2px solid var(--border); border-radius: 10px; background: #fff; font-size: 0.94rem; font-weight: 600; cursor: pointer; }
+    .quiz-btn:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
+    .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
+    .quiz-exp { display: none; margin-top: 0.45rem; padding: 0.7rem 1rem; border-radius: 10px; background: var(--green-bg); color: #065f46; font-size: 0.88rem; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badges">
+      <span class="pill gold">進階改寫版一｜📰 客觀科普報導文體</span>
+      <span class="pill">UNIT 12 同義換句話說特訓</span>
+    </div>
+    <h1>Currency as Cultural Mirrors: How Banknotes Reflect National Identity</h1>
+    <h2>作為文化鏡像的貨幣：紙鈔如何反映國家認同（客觀報導視角・100% 涵蓋必考字彙與文法）</h2>
+  </header>
+
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../../index.html">⬅️ 返回總覽</a>
+    <a class="nav-btn" href="./03_互動圖文學習講義.html">📖 原版主講義</a>
+    <a class="nav-btn primary" href="./04_改寫版1_客觀科普報導篇.html">📰 1. 科普報導</a>
+    <a class="nav-btn" href="./05_改寫版2_第二人稱代入篇.html">💬 2. 第二人稱</a>
+    <a class="nav-btn" href="./06_改寫版3_高中生故事記敘篇.html">🧑‍🎓 3. 高中生故事</a>
+    <a class="nav-btn" href="./07_改寫版4_正反論證議論文篇.html">⚖️ 4. 正反議論文</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- SECTION 1: STORYBOARD -->
+    <div class="section-title">🎬 一、四格圖解大意 (4-Panel Visual Storyboard)</div>
+    <div class="card">
+      <img src="./03_AI_視覺圖解講義.jpg" alt="Unit 12 Infographic" class="infographic-img" />
+      <div class="storyboard">
+        <div class="story-panel p1">
+          <span class="panel-icon">🌿</span>
+          <span class="panel-step">起 · 自然與科學定位</span>
+          <h4>1. 哥斯大黎加生態與瑞士直立鈔</h4>
+          <p>紙鈔不僅代表經濟財富，更傳遞文化認同：哥斯大黎加科隆呈現樹懶等動植物，瑞士法郎則改以直立雙手圖案表彰科學與藝術的卓越。</p>
+          <span class="eng-tag">represent / comes in / no longer / excellence</span>
+        </div>
+        <div class="story-panel p2">
+          <span class="panel-icon">🏛️</span>
+          <span class="panel-step">承 · 歷史記憶的定格</span>
+          <h4>2. 英國 5 英鎊與邱吉爾演說</h4>
+          <p>許多國家以紙鈔紀念塑造過去的重要人物，如英國五英鎊印有邱吉爾，背後清晰可見指向三點鐘的大笨鐘，致敬其「辛勞與汗水」演說。</p>
+          <span class="eng-tag">figures / visible / toil & sweat</span>
+        </div>
+        <div class="story-panel p3">
+          <span class="panel-icon">⚖️</span>
+          <span class="panel-step">轉 · 跨國團結與性別平權</span>
+          <h4>3. 歐元虛構建築與澳幣女性人物</h4>
+          <p>除了觀察圖案本身，背後的設計動機同樣關鍵：歐元以虛構建築促進 21 國團結，澳洲則在每張紙鈔印上女性以推崇平權理想。</p>
+          <span class="eng-tag">aside from / fictional / promote / unity</span>
+        </div>
+        <div class="story-panel p4">
+          <span class="panel-icon">🔬</span>
+          <span class="panel-step">合 · 聚合物防偽工程</span>
+          <h4>4. 塑膠鈔票與光影防偽技術</h4>
+          <p>澳洲率先引進由聚合物塑膠製成的紙鈔，並結合全像圖與閃亮防偽條等安全特徵，防止偽造者複製，展現文化與科技的結合。</p>
+          <span class="eng-tag">be made of / plastic / security / shiny</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: FULL TEXT IMMERSIVE READING -->
+    <div class="section-title">📖 二、完整課文沉浸閱讀（客觀科普報導改寫版・約 175 字）</div>
+    <div class="reader-card">
+      <div class="reader-header">
+        <div style="font-weight:800;font-size:0.95rem;">📰 文體特色：以學測常見的「客觀文化與科技科普報導」視角，進行高頻同義詞與句構替換</div>
+        <div>
+          <button class="toggle-btn" id="btn-full-audio" onclick="toggleFullAudio()">🔊 全篇連續朗讀</button>
+          <button class="toggle-btn active" id="btn-reader-zh" onclick="toggleReaderZh()">👁️ 顯示中文對照</button>
+          <button class="toggle-btn" onclick="changeFontSize(1)">A+</button>
+          <button class="toggle-btn" onclick="changeFontSize(-1)">A-</button>
+        </div>
+      </div>
+
+      <div class="reader-para">
+        <div class="reader-en">
+          Beyond the financial wealth that money <span class="key-term">represents</span>, <span class="key-term">banknotes</span> serve as cultural mirrors reflecting a nation’s history, values, and <span class="key-term">identity</span>. The Costa Rican colón <span class="gram-term">comes in</span> vibrant notes displaying native wildlife like coral reefs and <span class="key-term">sloths</span>. <span class="key-term">Meanwhile</span>, Switzerland honors its national <span class="key-term">excellence</span> in science and the arts: modern Swiss franc notes <span class="gram-term">no longer</span> portray famous people, but instead adopt a <span class="key-term">vertical</span> layout featuring hands engaged in various tasks. Historical <span class="key-term">figures</span> also remain prominent, as seen on the UK’s £5 note, which depicts Winston Churchill <span class="gram-term">with Big Ben</span> <span class="key-term">visible</span> <span class="gram-term">behind him</span> at three o’clock—recalling his iconic “blood, <span class="key-term">toil</span>, tears, and <span class="key-term">sweat</span>” speech.
+        </div>
+        <div class="reader-zh">
+          除了金錢所代表的財務財富之外，紙鈔還扮演著文化明鏡的角色，反映出一個國家的歷史、價值觀與身分認同。哥斯大黎加科隆有著色彩鮮豔的紙鈔款式，展示珊瑚礁與樹懶等本土野生動植物。與此同時，瑞士表彰其在科學與藝術上的國家卓越表現：現代瑞士法郎紙鈔不再描繪著名人物，而是改採直立式版面，以從事各種任務的雙手為特色。歷史人物同樣佔據重要地位，如英國五英鎊紙鈔描繪了溫斯頓．邱吉爾，他身後清晰可見指向三點鐘的大笨鐘——令人回想起他標誌性的「鮮血、辛勞、眼淚與汗水」演說。
+        </div>
+      </div>
+
+      <div class="reader-para" style="margin-bottom:0;">
+        <div class="reader-en">
+          <span class="gram-term">Aside from</span> examining what banknotes display, researchers study why such imagery is chosen. Euro notes depict <span class="key-term">fictional</span> architecture to <span class="key-term">promote</span> <span class="key-term">unity</span> and fairness across 21 European nations, whereas Australia champions equal rights by featuring women on every note. Australia was also the first country to introduce <span class="key-term">polymer</span> currency. Today, many modern notes <span class="gram-term">are made of</span> this durable <span class="key-term">plastic</span> and integrate <span class="key-term">security</span> features like <span class="key-term">holograms</span>, <span class="key-term">shiny</span> strips, and hidden text to deter <span class="key-term">counterfeiters</span>, proving that money <span class="gram-term">does have</span> a rich story to tell.
+        </div>
+        <div class="reader-zh">
+          除了檢視紙鈔展示什麼圖案之外，研究人員也探討為何選擇這類意象。歐元紙鈔描繪虛構建築以促進 21 個歐洲國家的團結與公平，而澳洲則透過在每張紙鈔印上女性來擁護平等權利。澳洲同時也是第一個引進聚合物貨幣的國家。如今，許多現代紙鈔皆由這種耐用的塑膠製成，並整合了全像圖、閃亮防偽條與隱藏文字等安全設計以遏阻偽鈔製造者，證明了金錢確實擁有豐富的故事可說。
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: SENTENCE ANATOMY -->
+    <div class="section-title">🧩 三、課文「積木拆句」＋ 逐行中翻英秘訣</div>
+    <div class="card">
+      <div class="control-bar">
+        <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
+        <button class="toggle-btn active" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
+        <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式</button>
+      </div>
+
+      <!-- S1 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 1</span>
+          <div style="flex:1;">
+            <div class="sent-en">Beyond the financial wealth that money <span class="key-term">represents</span>, <span class="key-term">banknotes</span> serve as cultural mirrors reflecting a nation’s history, values, and <span class="key-term">identity</span>.</div>
+            <div class="sent-zh">除了金錢所代表的財務財富之外，紙鈔還扮演著文化明鏡的角色，反映出一個國家的歷史、價值觀與身分認同。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Beyond the financial wealth that money represents, banknotes serve as cultural mirrors reflecting a nations history, values, and identity.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語+關係子句</span><span class="c-en">Beyond the financial wealth that money represents,</span><span class="c-zh">除了金錢所代表的財富之外</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+C] 主句</span><span class="c-en">banknotes serve as cultural mirrors</span><span class="c-zh">紙鈔扮演文化明鏡的角色</span></div>
+          <div class="chunk o"><span class="c-role">[M] 現在分詞片語</span><span class="c-en">reflecting a nation’s history, values, and identity.</span><span class="c-zh">反映出國家的歷史、價值觀與認同。</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 科普高頻構句：<code>serve as N. + V-ing...</code></div>用 <code>serve as cultural mirrors</code>（作為文化明鏡）搭配後位分詞片語 <code>reflecting...</code>，將原課文兩句濃縮為一句精煉的學術主題句。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>原課文 <code>tell you about...</code> 在客觀報導中可升級為 <strong><code>reflect / mirror</code></strong>（反映出）。</div>
+        </div>
+      </div>
+
+      <!-- S2 & S3 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 2–3</span>
+          <div style="flex:1;">
+            <div class="sent-en">The Costa Rican colón <span class="gram-term">comes in</span> vibrant notes displaying native wildlife like coral reefs and <span class="key-term">sloths</span>. <span class="key-term">Meanwhile</span>, Switzerland honors its national <span class="key-term">excellence</span> in science and the arts: modern Swiss franc notes <span class="gram-term">no longer</span> portray famous people, but instead adopt a <span class="key-term">vertical</span> layout featuring hands engaged in various tasks.</div>
+            <div class="sent-zh">哥斯大黎加科隆有著色彩鮮豔的紙鈔款式，展示珊瑚礁與樹懶等本土野生動植物。與此同時，瑞士表彰其在科學與藝術上的國家卓越表現：現代瑞士法郎紙鈔不再描繪著名人物，而是改採直立式版面，以從事各種任務的雙手為特色。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('The Costa Rican colon comes in vibrant notes displaying native wildlife like coral reefs and sloths. Meanwhile, Switzerland honors its national excellence in science and the arts: modern Swiss franc notes no longer portray famous people, but instead adopt a vertical layout featuring hands engaged in various tasks.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S+V+O] 哥斯大黎加</span><span class="c-en">The Costa Rican colón comes in vibrant notes displaying native wildlife...</span><span class="c-zh">哥斯大黎加科隆有展示野生動植物的鮮豔紙鈔</span></div>
+          <div class="chunk m"><span class="c-role">[M+S+V+O] 瑞士對照</span><span class="c-en">Meanwhile, Switzerland honors its national excellence in science and the arts:</span><span class="c-zh">同時，瑞士表彰其在科學與藝術的卓越：</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 対比動詞結構</span><span class="c-en">modern Swiss franc notes no longer portray..., but instead adopt a vertical layout...</span><span class="c-zh">不再描繪名人，而是採用直立版面……</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 緊湊對比句型：<code>no longer + V1, but instead + V2</code></div>將原課文兩句話合併為同一主詞的平行對比動詞 <code>no longer portray..., but instead adopt...</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>原課文 <code>bright, colorful</code> 換成 <strong><code>vibrant</code></strong>（鮮豔生動的）；<code>plants and animals</code> 換成 <strong><code>native wildlife</code></strong>。</div>
+        </div>
+      </div>
+
+      <!-- S4 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 4</span>
+          <div style="flex:1;">
+            <div class="sent-en">Historical <span class="key-term">figures</span> also remain prominent, as seen on the UK’s £5 note, which depicts Winston Churchill <span class="gram-term">with Big Ben</span> <span class="key-term">visible</span> <span class="gram-term">behind him</span> at three o’clock—recalling his iconic “blood, <span class="key-term">toil</span>, tears, and <span class="key-term">sweat</span>” speech.</div>
+            <div class="sent-zh">歷史人物同樣佔據重要地位，如英國五英鎊紙鈔描繪了溫斯頓．邱吉爾，他身後清晰可見指向三點鐘的大笨鐘——令人回想起他標誌性的「鮮血、辛勞、眼淚與汗水」演說。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Historical figures also remain prominent, as seen on the UKs five pound note, which depicts Winston Churchill with Big Ben visible behind him at three oclock, recalling his iconic blood, toil, tears, and sweat speech.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S+V+C] 主句</span><span class="c-en">Historical figures also remain prominent,</span><span class="c-zh">歷史人物同樣保持顯著地位</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 非限定關代</span><span class="c-en">as seen on the UK’s £5 note, which depicts Winston Churchill</span><span class="c-zh">如英國五英鎊所示，描繪了邱吉爾</span></div>
+          <div class="chunk m"><span class="c-role">[M] 附帶狀況 (with+O+OC)</span><span class="c-en">with Big Ben visible behind him at three o’clock—recalling his iconic speech.</span><span class="c-zh">大笨鐘在身後三點鐘清晰可見——令人回想起其經典演說。</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 <code>as seen on...</code>（如在……上所見）</div>為 <code>as it is seen on...</code> 的分詞簡化用法，常用於科普文章引出具體實例。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>原課文 <code>shows</code> 可替換為正式動詞 <strong><code>depicts / portrays</code></strong>（描繪、刻畫）。</div>
+        </div>
+      </div>
+
+      <!-- S5 & S6 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 5–6</span>
+          <div style="flex:1;">
+            <div class="sent-en"><span class="gram-term">Aside from</span> examining what banknotes display, researchers study why such imagery is chosen. Euro notes depict <span class="key-term">fictional</span> architecture to <span class="key-term">promote</span> <span class="key-term">unity</span> and fairness across 21 European nations, whereas Australia champions equal rights by featuring women on every note.</div>
+            <div class="sent-zh">除了檢視紙鈔展示什麼圖案之外，研究人員也探討為何選擇這類意象。歐元紙鈔描繪虛構建築以促進 21 個歐洲國家的團結與公平，而澳洲則透過在每張紙鈔印上女性來擁護平等權利。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Aside from examining what banknotes display, researchers study why such imagery is chosen. Euro notes depict fictional architecture to promote unity and fairness across 21 European nations, whereas Australia champions equal rights by featuring women on every note.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語</span><span class="c-en">Aside from examining what banknotes display,</span><span class="c-zh">除了檢視紙鈔展示什麼之外</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 主句</span><span class="c-en">researchers study why such imagery is chosen.</span><span class="c-zh">研究人員探討為何選擇這類意象。</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對比連接詞 whereas</span><span class="c-en">Euro notes depict fictional architecture to promote unity..., whereas Australia champions equal rights...</span><span class="c-zh">歐元描繪虛構建築促進團結，而澳洲則擁護平權……</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 對比連接詞 <code>whereas</code>（然而、反觀）</div>用 <code>whereas</code> 將歐元（團結公平）與澳洲（性別平權）並置對照，展現高階論述組織力。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>原課文 <code>the ideal of equal rights is favored</code> 改為主動動詞 <strong><code>champions equal rights</code></strong>（擁護、捍衛平權）。</div>
+        </div>
+      </div>
+
+      <!-- S7 & S8 -->
+      <div class="sent-card" style="margin-bottom:0;">
+        <div class="sent-top">
+          <span class="sent-num">句 7–8</span>
+          <div style="flex:1;">
+            <div class="sent-en">Australia was also the first country to introduce <span class="key-term">polymer</span> currency. Today, many modern notes <span class="gram-term">are made of</span> this durable <span class="key-term">plastic</span> and integrate <span class="key-term">security</span> features like <span class="key-term">holograms</span>, <span class="key-term">shiny</span> strips, and hidden text to deter <span class="key-term">counterfeiters</span>, proving that money <span class="gram-term">does have</span> a rich story to tell.</div>
+            <div class="sent-zh">澳洲同時也是第一個引進聚合物貨幣的國家。如今，許多現代紙鈔皆由這種耐用的塑膠製成，並整合了全像圖、閃亮防偽條與隱藏文字等安全設計以遏阻偽鈔製造者，證明了金錢確實擁有豐富的故事可說。</div>
+          </div>
+          <button class="audio-btn" onclick="speak('Australia was also the first country to introduce polymer currency. Today, many modern notes are made of this durable plastic and integrate security features like holograms, shiny strips, and hidden text to deter counterfeiters, proving that money does have a rich story to tell.')">🔊 朗讀</button>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S+V+O] 材質與防偽</span><span class="c-en">many modern notes are made of this durable plastic and integrate security features...</span><span class="c-zh">許多現代紙鈔由耐用塑膠製成並整合安全特徵</span></div>
+          <div class="chunk m"><span class="c-role">[M] 目的不定詞</span><span class="c-en">to deter counterfeiters,</span><span class="c-zh">以遏阻偽鈔製造者</span></div>
+          <div class="chunk c"><span class="c-role">[M] 結果分詞構句</span><span class="c-en">proving that money does have a rich story to tell.</span><span class="c-zh">證明了金錢確實有豐富的故事可說。</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 分詞構句總結：<code>, proving that + S. + V.</code></div>句尾用現在分詞構句 <code>, proving that...</code>（證明了……）收束全文，搭配強調助動詞 <code>does have</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>「防止／遏阻偽鈔製造者」可用高頻動詞 <strong><code>deter counterfeiters</code></strong>。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: 15-QUESTION QUIZ -->
+    <div class="section-title">🎯 四、15 題大考實戰檢測（客觀科普報導篇・含克漏字）</div>
+    <div class="card">
+      <div style="font-weight:800;color:var(--blue);margin-bottom:0.8rem;" id="score-text">🏆 目前得分：0 / 15</div>
+
+      <h3 style="color:var(--blue);">Part A — 克漏字綜合測驗 (Cloze Test：第 1～5 題)</h3>
+      <div class="cloze-passage-box">
+        Banknotes serve as cultural mirrors that reflect a country’s values and identity. For example, the Costa Rican colón <span class="cloze-blank">(__1__)</span> vibrant notes featuring coral reefs and sloths. <span class="cloze-blank">(__2__)</span>, Swiss franc notes <span class="cloze-blank">(__3__)</span> portray famous individuals; instead, they use a vertical design to honor national excellence in science and the arts. <span class="cloze-blank">(__4__)</span> examining what is printed on currency, historians also analyze why certain symbols are selected, such as the fictional bridges on Euro notes that promote unity. Finally, many modern banknotes <span class="cloze-blank">(__5__)</span> polymer plastic and include shiny strips to stop counterfeiters.
+      </div>
+
+      <div class="q-block">
+        <div><strong>1. (__1__)</strong></div>
+        <button class="quiz-btn" onclick="check(this,true,1)">(A) comes in</button>
+        <button class="quiz-btn" onclick="check(this,false,1)">(B) is come in</button>
+        <button class="quiz-btn" onclick="check(this,false,1)">(C) comes out of</button>
+        <button class="quiz-btn" onclick="check(this,false,1)">(D) comes up to</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：<code>come in + 款式/顏色</code> 表「有……的款式」，不及物片語動詞無被動。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>2. (__2__)</strong></div>
+        <button class="quiz-btn" onclick="check(this,false,2)">(A) Unless</button>
+        <button class="quiz-btn" onclick="check(this,true,2)">(B) Meanwhile</button>
+        <button class="quiz-btn" onclick="check(this,false,2)">(C) Because</button>
+        <button class="quiz-btn" onclick="check(this,false,2)">(D) Despite</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：<code>Meanwhile</code>（與此同時、另一方面）轉折銜接哥斯大黎加與瑞士的案例。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>3. (__3__)</strong></div>
+        <button class="quiz-btn" onclick="check(this,false,3)">(A) any longer</button>
+        <button class="quiz-btn" onclick="check(this,false,3)">(B) not anymore</button>
+        <button class="quiz-btn" onclick="check(this,true,3)">(C) no longer</button>
+        <button class="quiz-btn" onclick="check(this,false,3)">(D) no sooner</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：一般動詞 <code>portray</code> 之前用 <code>no longer</code> 表示「不再」。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>4. (__4__)</strong></div>
+        <button class="quiz-btn" onclick="check(this,true,4)">(A) Aside from</button>
+        <button class="quiz-btn" onclick="check(this,false,4)">(B) Due to</button>
+        <button class="quiz-btn" onclick="check(this,false,4)">(C) In spite</button>
+        <button class="quiz-btn" onclick="check(this,false,4)">(D) According</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：<code>Aside from + V-ing</code> 表示「除了……之外（還有）」。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>5. (__5__)</strong></div>
+        <button class="quiz-btn" onclick="check(this,false,5)">(A) are made into</button>
+        <button class="quiz-btn" onclick="check(this,true,5)">(B) are made of</button>
+        <button class="quiz-btn" onclick="check(this,false,5)">(C) make from</button>
+        <button class="quiz-btn" onclick="check(this,false,5)">(D) are making of</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：<code>be made of + polymer plastic</code>（由聚合物塑膠製成，看得出原料材質）。</div>
+      </div>
+
+      <h3 style="color:var(--blue);margin-top:1.4rem;">Part B — 文意字彙與片語搭配 (Vocabulary & Collocations：第 6～9 題)</h3>
+
+      <div class="q-block">
+        <div><strong>6. The university is internationally known for its academic ________ in medical research and engineering.</strong></div>
+        <button class="quiz-btn" onclick="check(this,false,6)">(A) sweat</button>
+        <button class="quiz-btn" onclick="check(this,true,6)">(B) excellence</button>
+        <button class="quiz-btn" onclick="check(this,false,6)">(C) hologram</button>
+        <button class="quiz-btn" onclick="check(this,false,6)">(D) counterfeiter</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：<code>academic excellence in...</code>（在……領域的學術卓越表現）。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>7. Because the characters and places in this novel are completely ________, they do not exist in the real world.</strong></div>
+        <button class="quiz-btn" onclick="check(this,true,7)">(A) fictional</button>
+        <button class="quiz-btn" onclick="check(this,false,7)">(B) vertical</button>
+        <button class="quiz-btn" onclick="check(this,false,7)">(C) shiny</button>
+        <button class="quiz-btn" onclick="check(this,false,7)">(D) plastic</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：完全「虛構的（<code>fictional</code>）」，不存在於真實世界。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>8. After hours of hard work and ________ under the hot sun, the farmers finally finished harvesting the rice.</strong></div>
+        <button class="quiz-btn" onclick="check(this,false,8)">(A) unity</button>
+        <button class="quiz-btn" onclick="check(this,false,8)">(B) polymer</button>
+        <button class="quiz-btn" onclick="check(this,true,8)">(C) toil</button>
+        <button class="quiz-btn" onclick="check(this,false,8)">(D) security</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：在烈日下數小時的苦幹與「辛勞（<code>toil</code>）」。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>9. The international sports festival aims to ________ friendship and mutual understanding among young athletes.</strong></div>
+        <button class="quiz-btn" onclick="check(this,false,9)">(A) counterfeit</button>
+        <button class="quiz-btn" onclick="check(this,true,9)">(B) promote</button>
+        <button class="quiz-btn" onclick="check(this,false,9)">(C) print</button>
+        <button class="quiz-btn" onclick="check(this,false,9)">(D) sweat</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：旨在「促進、提倡（<code>promote</code>）」年輕運動員間的友誼與相互理解。</div>
+      </div>
+
+      <h3 style="color:var(--blue);margin-top:1.4rem;">Part C — 重要文法與中翻英除錯 (Grammar & Translation：第 10～12 題)</h3>
+
+      <div class="q-block">
+        <div><strong>10. The UK’s £5 note depicts Winston Churchill, with the clock face of Big Ben clearly ________ behind him.</strong></div>
+        <button class="quiz-btn" onclick="check(this,false,10)">(A) visibility</button>
+        <button class="quiz-btn" onclick="check(this,false,10)">(B) visibly</button>
+        <button class="quiz-btn" onclick="check(this,true,10)">(C) visible</button>
+        <button class="quiz-btn" onclick="check(this,false,10)">(D) is visible</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：<code>with + O. + OC</code> 結構中，需用形容詞 <code>visible</code> 作為受詞補語修飾 <code>the clock face</code>（副詞 <code>clearly</code> 則用來修飾形容詞 <code>visible</code>）。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>11. 【同義句轉換】選出與 “Swiss franc notes no longer have images of people.” 語意與文法完全相同的句子：</strong></div>
+        <button class="quiz-btn" onclick="check(this,false,11)">(A) Swiss franc notes have no longer images of people anymore.</button>
+        <button class="quiz-btn" onclick="check(this,true,11)">(B) Swiss franc notes do not have images of people any longer.</button>
+        <button class="quiz-btn" onclick="check(this,false,11)">(C) Swiss franc notes not have images of people anymore.</button>
+        <button class="quiz-btn" onclick="check(this,false,11)">(D) Swiss franc notes are no longer have images of people.</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：<code>no longer + have</code> ＝ <code>do not have ... any longer / anymore</code>。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>12. 【中翻英除錯】「這款新背包有三種不同尺寸可供選擇。」請選出正確的英文翻譯：</strong></div>
+        <button class="quiz-btn" onclick="check(this,true,12)">(A) This new backpack comes in three different sizes.</button>
+        <button class="quiz-btn" onclick="check(this,false,12)">(B) This new backpack is come in three different sizes.</button>
+        <button class="quiz-btn" onclick="check(this,false,12)">(C) This new backpack is came in three different sizes.</button>
+        <button class="quiz-btn" onclick="check(this,false,12)">(D) This new backpack comes from three different sizes.</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：表示商品「有（尺寸、顏色、款式）可選」用主動不及物片語 <code>comes in</code>。</div>
+      </div>
+
+      <h3 style="color:var(--blue);margin-top:1.4rem;">Part D — 大考閱讀測驗 (Reading Comprehension：第 13～15 題)</h3>
+
+      <div class="q-block">
+        <div><strong>13. What does the phrase “cultural mirrors” in the first sentence of the rewritten passage imply?</strong></div>
+        <button class="quiz-btn" onclick="check(this,false,13)">(A) Modern banknotes are shiny enough to be used as actual mirrors.</button>
+        <button class="quiz-btn" onclick="check(this,true,13)">(B) Banknotes reflect the history, core values, and identity of the countries that issue them.</button>
+        <button class="quiz-btn" onclick="check(this,false,13)">(C) Banknotes are made of glass and silver in Switzerland.</button>
+        <button class="quiz-btn" onclick="check(this,false,13)">(D) Only artists and scientists are allowed to use banknotes.</button>
+        <div class="quiz-exp">✅ <strong>正解 (B)</strong>：「文化明鏡（<code>cultural mirrors</code>）」比喻紙鈔能映照出發行國家的歷史、核心價值觀與身分認同。</div>
+      </div>
+
+      <div class="q-block">
+        <div><strong>14. How do Swiss franc notes differ from UK £5 notes according to the report?</strong></div>
+        <button class="quiz-btn" onclick="check(this,true,14)">(A) Swiss franc notes are vertical and feature working hands instead of historical figures like Winston Churchill.</button>
+        <button class="quiz-btn" onclick="check(this,false,14)">(B) Swiss franc notes feature coral reefs and sloths, while UK notes feature fictional bridges.</button>
+        <button class="quiz-btn" onclick="check(this,false,14)">(C) Swiss franc notes are used by 21 European countries.</button>
+        <button class="quiz-btn" onclick="check(this,false,14)">(D) UK £5 notes do not have any people on them.</button>
+        <div class="quiz-exp">✅ <strong>正解 (A)</strong>：瑞士法郎已不再印人物肖像，改採直立設計呈現雙手活動；而英國五英鎊則印有歷史人物邱吉爾。</div>
+      </div>
+
+      <div class="q-block" style="margin-bottom:0;">
+        <div><strong>15. Why are features such as holograms, shiny strips, and hidden text integrated into modern polymer notes?</strong></div>
+        <button class="quiz-btn" onclick="check(this,false,15)">(A) To make the banknotes heavier than metal coins.</button>
+        <button class="quiz-btn" onclick="check(this,false,15)">(B) To honor famous wildlife photographers in Costa Rica.</button>
+        <button class="quiz-btn" onclick="check(this,true,15)">(C) To enhance security and make the currency much harder for counterfeiters to copy.</button>
+        <button class="quiz-btn" onclick="check(this,false,15)">(D) To replace digital payments completely by 2030.</button>
+        <div class="quiz-exp">✅ <strong>正解 (C)</strong>：全像圖、閃亮防偽條與隱藏文字皆為安全防偽設計（<code>security features</code>），目的是防止偽鈔製造者（<code>counterfeiters</code>）複製。</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentFontSize = 1.14;
+    let isReadingFull = false;
+    let score = 0;
+    const answered = {};
+
+    function speak(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    }
+
+    function toggleFullAudio() {
+      if (!('speechSynthesis' in window)) return;
+      const btn = document.getElementById('btn-full-audio');
+      if (isReadingFull) {
+        window.speechSynthesis.cancel();
+        isReadingFull = false;
+        btn.textContent = '🔊 全篇連續朗讀';
+        btn.classList.remove('active');
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const txt = Array.from(document.querySelectorAll('.reader-en')).map(e => e.innerText).join(' ');
+      const u = new SpeechSynthesisUtterance(txt);
+      u.lang = 'en-US';
+      u.rate = 0.94;
+      u.onend = () => { isReadingFull = false; btn.textContent = '🔊 全篇連續朗讀'; btn.classList.remove('active'); };
+      isReadingFull = true;
+      btn.textContent = '⏹️ 停止朗讀';
+      btn.classList.add('active');
+      window.speechSynthesis.speak(u);
+    }
+
+    function toggleReaderZh() {
+      document.body.classList.toggle('hide-reader-zh');
+      document.getElementById('btn-reader-zh').classList.toggle('active');
+    }
+
+    function changeFontSize(d) {
+      currentFontSize = Math.min(1.45, Math.max(0.95, currentFontSize + d * 0.08));
+      document.documentElement.style.setProperty('--reader-font-size', currentFontSize + 'rem');
+    }
+
+    function check(btn, ok, q) {
+      const blk = btn.parentElement;
+      blk.querySelectorAll('.quiz-btn').forEach(b => b.disabled = true);
+      if (ok) {
+        btn.classList.add('correct');
+        if (!answered[q]) score++;
+      } else {
+        btn.classList.add('wrong');
+        blk.querySelectorAll('.quiz-btn').forEach(b => {
+          if (b.getAttribute('onclick').includes('true')) b.classList.add('correct');
+        });
+      }
+      answered[q] = true;
+      blk.querySelector('.quiz-exp').style.display = 'block';
+      document.getElementById('score-text').textContent = `🏆 目前得分：${score} / 15（已作答 ${Object.keys(answered).length} 題）`;
+    }
+  </script>
+</body>
+</html>
