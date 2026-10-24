@@ -81,6 +81,96 @@
     .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
     .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
     .quiz-exp { display: none; margin-top: 0.45rem; padding: 0.7rem 1rem; border-radius: 10px; background: var(--green-bg); color: #065f46; font-size: 0.88rem; }
+  
+    /* MASTER TEACHER TRANSLATION WALKTHROUGH */
+    .master-trans-details {
+      margin-top: 0.7rem;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .master-trans-details[open] {
+      border-color: #4ade80;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.08);
+    }
+    .master-trans-summary {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.9rem;
+      cursor: pointer;
+      background: #f0fdf4;
+      user-select: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #166534;
+    }
+    .master-trans-summary:hover {
+      background: #dcfce7;
+    }
+    .master-trans-summary::-webkit-details-marker {
+      display: none;
+    }
+    .master-badge {
+      background: #16a34a;
+      color: #ffffff;
+      padding: 0.12rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .master-summary-text {
+      flex: 1;
+    }
+    .master-arrow {
+      font-size: 0.75rem;
+      color: #16a34a;
+      transition: transform 0.2s ease;
+    }
+    .master-trans-details[open] .master-arrow {
+      transform: rotate(180deg);
+    }
+    .master-trans-body {
+      padding: 0.8rem 1rem;
+      background: #ffffff;
+      border-top: 1px dashed #bbf7d0;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: #334155;
+    }
+    .master-step {
+      margin-bottom: 0.55rem;
+    }
+    .master-step:last-child {
+      margin-bottom: 0;
+    }
+    .m-step-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      margin-right: 0.4rem;
+      font-family: Consolas, monospace;
+    }
+    .m-step-tag.s1 { background: #fee2e2; color: #991b1b; }
+    .m-step-tag.s2 { background: #e0f2fe; color: #075985; }
+    .m-step-tag.s3 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s4 { background: #ede9fe; color: #5b21b6; }
+
+    /* CONJUNCTION / CLAUSE BOX */
+    .conj-box { margin-top: 0.7rem; background: #faf5ff; border: 1px dashed #c4b5fd; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.88rem; }
+    .conj-title { font-weight: 800; color: #6d28d9; margin-bottom: 0.3rem; }
+    .conj-item { display: grid; grid-template-columns: auto 1fr; gap: 0.6rem; padding: 0.5rem 0; border-top: 1px solid #ede9fe; align-items: start; }
+    .conj-item:first-of-type { border-top: none; }
+    .conj-word { background: #6d28d9; color: #fff; border-radius: 6px; padding: 0.1rem 0.55rem; font-weight: 800; font-family: Consolas, monospace; white-space: nowrap; }
+    .conj-type { display: inline-block; font-weight: 800; color: #4c1d95; margin-bottom: 0.15rem; }
+    .conj-item ul { margin: 0; padding-left: 1.1rem; color: #334155; line-height: 1.7; }
+    body.hide-zh .conj-box { display: block; }
+
   </style>
 </head>
 <body>
@@ -177,9 +267,19 @@
     <div class="section-title">🧩 三、課文「積木拆句」＋ 逐行中翻英秘訣</div>
     <div class="card">
       <div class="control-bar">
-        <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
-        <button class="toggle-btn active" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
-        <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式</button>
+        <div style="font-size:0.88rem;font-weight:800;">
+          🎨 積木色塊圖例：
+          <span style="color:#be123c;">[S] 主詞(紅)</span> ・
+          <span style="color:#1e40af;">[V] 動詞(藍)</span> ・
+          <span style="color:#047857;">[O/C] 受詞/補語(綠)</span> ・
+          <span style="color:#6d28d9;">[Conj] 子句/連接詞(紫)</span> ・
+          <span style="color:#b45309;">[M] 修飾語(橘)</span>
+        </div>
+        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+          <button class="toggle-btn active" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
+          <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式</button>
+          <button class="toggle-btn" id="btn-toggle-master-trans" onclick="toggleAllMasterTrans()">👨‍🏫 一鍵展開名師翻譯拆解</button>
+        </div>
       </div>
 
       <!-- S1 -->
@@ -187,40 +287,136 @@
         <div class="sent-top">
           <span class="sent-num">句 1</span>
           <div style="flex:1;">
-            <div class="sent-en">Last Sunday, my grandfather showed me his collection of world <span class="key-term">banknotes</span> and explained that money—beyond the wealth it <span class="key-term">represents</span>—tells stories about a country’s history, values, and <span class="key-term">identity</span>.</div>
-            <div class="sent-zh">上週日，爺爺向我展示他的世界紙鈔收藏冊，並解釋說金錢——除了它所代表的財富之外——還訴說著一個國家的歷史、價值觀與身分認同。</div>
+            <div class="sent-en">Last Sunday, my grandfather showed me his collection of world <span class="key-term">banknotes</span> <span class="gram-term">and</span> explained <span class="gram-term">that</span> money—beyond the wealth it <span class="key-term">represents</span>—tells stories about a country’s history, values, and <span class="key-term">identity</span>.</div>
+            <div class="sent-zh">上週日，我爺爺向我展示了他收藏的世界各國紙鈔，並解釋說，金錢除了它所代表的財富之外，還訴說著一個國家的歷史、價值觀與身分認同的故事。</div>
           </div>
-          <button class="audio-btn" onclick="speak('Last Sunday, my grandfather showed me his collection of world banknotes and explained that money, beyond the wealth it represents, tells stories about a countrys history, values, and identity.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak(this.dataset.t, 0.95)" data-t="Last Sunday, my grandfather showed me his collection of world banknotes and explained that money, beyond the wealth it represents, tells stories about a country’s history, values, and identity.">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak(this.dataset.t, 0.75)" data-t="Last Sunday, my grandfather showed me his collection of world banknotes and explained that money, beyond the wealth it represents, tells stories about a country’s history, values, and identity.">🐢 慢速</button>
+          </div>
         </div>
         <div class="chunk-row">
-          <div class="chunk s"><span class="c-role">[M+S+V1+O] 故事背景</span><span class="c-en">Last Sunday, my grandfather showed me his collection of world banknotes</span><span class="c-zh">上週日爺爺給我看他的世界紙鈔收藏</span></div>
-          <div class="chunk v"><span class="c-role">[V2+Conj] 解釋主旨</span><span class="c-en">and explained that money—beyond the wealth it represents—tells stories...</span><span class="c-zh">並解釋金錢除了代表的財富外，還訴說著故事……</span></div>
+          <div class="chunk m"><span class="c-role">[M] 時間副詞</span><span class="c-en">Last Sunday,</span><span class="c-zh">上週日</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 主句動詞1</span><span class="c-en">my grandfather showed me his collection of world banknotes</span><span class="c-zh">爺爺給我看了他收藏的世界紙鈔</span></div>
+          <div class="chunk c"><span class="c-role">[Conj+V] 主句動詞2</span><span class="c-en">and explained that</span><span class="c-zh">並解釋說</span></div>
+          <div class="chunk s"><span class="c-role">[S] 子句主詞</span><span class="c-en">money—beyond the wealth it represents—</span><span class="c-zh">金錢——除了它代表的財富之外——</span></div>
+          <div class="chunk v"><span class="c-role">[V+O] 子句動詞+受詞</span><span class="c-en">tells stories about a country’s history, values, and identity.</span><span class="c-zh">訴說著關於一個國家的歷史、價值觀與認同的故事</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 記敘文時態原則：過去式敘事 ＋ 現在簡單式表不變事實</div><code>showed</code> 與 <code>explained</code> 用過去式敘述上週日發生的事；但紙鈔本身的特徵（<code>it represents / tells stories / comes in</code>）是現存客觀事實，故從屬子句維持現在簡單式！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 作文萬用開場</div>「向某人展示……的收藏」：<strong><code>show sb one's collection of...</code></strong>。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 雙動詞並列 <code>showed ... and explained ...</code></div>雙破折號插入 <code>—beyond the wealth (that) it represents—</code>，先行詞 <code>the wealth</code> 省略受格關代。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 記敘文起手式</div>以具體時間（<code>Last Sunday</code>）與人物互動開啟故事，引人入勝。</div>
         </div>
+        <div class="conj-box">
+          <div class="conj-title">🔗 連接詞／子句解析</div>
+          <div class="conj-item"><span class="conj-word">and</span><div><span class="conj-type">對等連接詞</span><ul><li><b>功能：</b>連接兩個過去式動詞 <code>showed</code> 與 <code>explained</code>。</li></ul></div></div>
+          <div class="conj-item"><span class="conj-word">that</span><div><span class="conj-type">名詞子句連接詞</span><ul><li><b>功能：</b>引導 <code>explained</code> 的受詞子句。</li></ul></div></div>
+          <div class="conj-item"><span class="conj-word">(that/which)</span><div><span class="conj-type">受格關係代名詞（省略）</span><ul><li><b>先行詞：</b><code>the wealth</code></li><li><b>功能：</b>作 <code>represents</code> 的受詞。</li></ul></div></div>
+        </div>
+
+        <!-- 👨‍🏫 補教名師英翻中思維拆解（預設折疊） -->
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">英翻中關鍵思路拆解：如何調序翻出道地中文？（點擊展開）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+                        <div class="master-step"><span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹：<code>Grandfather showed me banknotes and explained that money tells stories...</code>。</div>
+            <div class="master-step"><span class="m-step-tag s2">Step 2</span><strong>【理順修飾層次】：</strong>破折號插入語 <code>—beyond the wealth it represents—</code> 是核心補充。</div>
+            <div class="master-step"><span class="m-step-tag s3">Step 3</span><strong>【中英思維調序】：</strong>破折號內的形容詞子句向前調翻：「除了【它所代表的】財富之外」，其餘順譯。</div>
+            <div class="master-step"><span class="m-step-tag s4">Step 4</span><strong>【名師高分潤飾】：</strong><code>his collection of...</code> 翻「他珍藏的……」比「他的收藏」更有溫度。</div>
+          </div>
+        </details>
       </div>
 
-      <!-- S2 & S3 -->
+      <!-- S2 -->
       <div class="sent-card">
         <div class="sent-top">
-          <span class="sent-num">句 2–3</span>
+          <span class="sent-num">句 2</span>
           <div style="flex:1;">
-            <div class="sent-en">Turning the first page, I saw that the Costa Rican colón <span class="gram-term">comes in</span> colorful notes with coral reefs and cute <span class="key-term">sloths</span>. <span class="key-term">Meanwhile</span>, Grandpa pointed to his Swiss franc notes, which <span class="gram-term">no longer</span> have images of people; instead, they are <span class="key-term">vertical</span> and feature working hands to honor Switzerland’s <span class="key-term">excellence</span> in science and the arts.</div>
-            <div class="sent-zh">翻開第一頁，我看到哥斯大黎加科隆有著印上珊瑚礁與可愛樹懶的繽紛紙鈔。與此同時，爺爺指著他的瑞士法郎紙鈔，上面已不再有人物肖像；取而代之的是，它們採直立式設計並以工作中的雙手為特色，表彰瑞士在科學與藝術上的卓越表現。</div>
+            <div class="sent-en"><span class="gram-term">Turning</span> the first page, I saw <span class="gram-term">that</span> the Costa Rican colón <span class="gram-term">comes in</span> colorful notes with coral reefs and cute <span class="key-term">sloths</span>.</div>
+            <div class="sent-zh">翻開第一頁，我看見哥斯大黎加科隆有著印有珊瑚礁與可愛樹懶的繽紛紙鈔。</div>
           </div>
-          <button class="audio-btn" onclick="speak('Turning the first page, I saw that the Costa Rican colon comes in colorful notes with coral reefs and cute sloths. Meanwhile, Grandpa pointed to his Swiss franc notes, which no longer have images of people; instead, they are vertical and feature working hands to honor Switzerlands excellence in science and the arts.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak(this.dataset.t, 0.95)" data-t="Turning the first page, I saw that the Costa Rican colón comes in colorful notes with coral reefs and cute sloths.">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak(this.dataset.t, 0.75)" data-t="Turning the first page, I saw that the Costa Rican colón comes in colorful notes with coral reefs and cute sloths.">🐢 慢速</button>
+          </div>
         </div>
         <div class="chunk-row">
-          <div class="chunk m"><span class="c-role">[M] 現在分詞構句</span><span class="c-en">Turning the first page,</span><span class="c-zh">翻開第一頁時</span></div>
-          <div class="chunk s"><span class="c-role">[S+V+O] 視覺描寫</span><span class="c-en">I saw that the Costa Rican colón comes in colorful notes...</span><span class="c-zh">我看到哥斯大黎加科隆有繽紛紙鈔</span></div>
-          <div class="chunk c"><span class="c-role">[Conj] 非限定關係子句</span><span class="c-en">Grandpa pointed to his Swiss franc notes, which no longer have images of people...</span><span class="c-zh">爺爺指著他的瑞郎紙鈔，上面不再有人物圖像……</span></div>
+          <div class="chunk m"><span class="c-role">[M] 分詞構句（時間）</span><span class="c-en">Turning the first page,</span><span class="c-zh">翻開第一頁時</span></div>
+          <div class="chunk s"><span class="c-role">[S+V] 主句</span><span class="c-en">I saw that</span><span class="c-zh">我看見</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 子句</span><span class="c-en">the Costa Rican colón comes in colorful notes</span><span class="c-zh">哥斯大黎加科隆有繽紛的紙鈔款式</span></div>
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語修飾</span><span class="c-en">with coral reefs and cute sloths.</span><span class="c-zh">帶著珊瑚礁與可愛樹懶</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 分詞構句 <code>Turning the first page, I saw...</code></div><code>When I turned the first page</code> 簡化為 <code>Turning the first page</code>，讓故事推進充滿動作感。</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 非限定關代串聯</div>用 <strong><code>, which no longer have...</code></strong> 補充說明爺爺手指的瑞士法郎。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 現在分詞構句 <code>Turning the first page, I saw...</code></div>原句為 <code>When I turned the first page, I saw...</code>，主詞皆為 <code>I</code>，省略連接詞與主詞，動詞轉為 V-ing。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 記敘文動作推進</div>用分詞構句取代呆板的 <code>And then I turned...</code>，是大考作文拿分關鍵！</div>
         </div>
+        <div class="conj-box">
+          <div class="conj-title">🔗 連接詞／子句解析</div>
+          <div class="conj-item"><span class="conj-word">that</span><div><span class="conj-type">名詞子句連接詞</span><ul><li><b>功能：</b>引導 <code>saw</code> 的受詞子句。</li></ul></div></div>
+        </div>
+
+        <!-- 👨‍🏫 補教名師英翻中思維拆解（預設折疊） -->
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">英翻中關鍵思路拆解：如何調序翻出道地中文？（點擊展開）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+                        <div class="master-step"><span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>分詞構句作時間狀語 <code>Turning the first page</code>，主句為 <code>I saw that the colón comes in colorful notes</code>。</div>
+            <div class="master-step"><span class="m-step-tag s2">Step 2</span><strong>【理順修飾層次】：</strong>介系詞片語 <code>with coral reefs and cute sloths</code> 修飾 <code>notes</code>。</div>
+            <div class="master-step"><span class="m-step-tag s3">Step 3</span><strong>【中英思維調序】：</strong>修飾語向前收：「翻開第一頁，我看到科隆有著【印著珊瑚礁與可愛樹懶的】多彩紙鈔」。</div>
+            <div class="master-step"><span class="m-step-tag s4">Step 4</span><strong>【名師高分潤飾】：</strong><code>Turning the first page</code> 翻「翻開首頁／翻過第一頁」；<code>cute sloths</code> 可愛樹懶。</div>
+          </div>
+        </details>
+      </div>
+
+      <!-- S3 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 3</span>
+          <div style="flex:1;">
+            <div class="sent-en"><span class="key-term">Meanwhile</span>, Grandpa pointed to his Swiss franc notes, <span class="gram-term">which</span> <span class="gram-term">no longer</span> have images of people; <span class="gram-term">instead</span>, they are <span class="key-term">vertical</span> <span class="gram-term">and</span> <span class="key-term">feature</span> working hands to honor Switzerland’s <span class="key-term">excellence</span> in science and the arts.</div>
+            <div class="sent-zh">與此同時，爺爺指向他的瑞士法郎紙鈔，那上面已不再印有人物肖像；取而代之的是，它們採直立式設計，並以勞動雙手為特色，以向瑞士在科學與藝術上的卓越成就致敬。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak(this.dataset.t, 0.95)" data-t="Meanwhile, Grandpa pointed to his Swiss franc notes, which no longer have images of people; instead, they are vertical and feature working hands to honor Switzerland’s excellence in science and the arts.">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak(this.dataset.t, 0.75)" data-t="Meanwhile, Grandpa pointed to his Swiss franc notes, which no longer have images of people; instead, they are vertical and feature working hands to honor Switzerland’s excellence in science and the arts.">🐢 慢速</button>
+          </div>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 轉折副詞</span><span class="c-en">Meanwhile,</span><span class="c-zh">與此同時</span></div>
+          <div class="chunk s"><span class="c-role">[S+V] 主句</span><span class="c-en">Grandpa pointed to his Swiss franc notes,</span><span class="c-zh">爺爺指著他的瑞士法郎紙鈔</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 非限定關係子句</span><span class="c-en">which no longer have images of people;</span><span class="c-zh">那些紙鈔不再有人物圖像；</span></div>
+          <div class="chunk m"><span class="c-role">[M+S+V] 轉折對比</span><span class="c-en">instead, they are vertical and feature working hands</span><span class="c-zh">取而代之的是直立的且以雙手為特色</span></div>
+          <div class="chunk m"><span class="c-role">[M] 目的不定詞</span><span class="c-en">to honor Switzerland’s excellence in science and the arts.</span><span class="c-zh">以表彰瑞士在科學與藝術的卓越</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 <code>which</code> 非限定關代 ＆ 分號對稱</div><code>, which no longer have...</code> 先行詞為 <code>Swiss franc notes</code>；分號後接 <code>instead</code> 表轉折。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 敘事與知識結合</div>透過爺爺手指的動作（<code>pointed to</code>）帶出瑞士紙鈔的知識點。</div>
+        </div>
+        <div class="conj-box">
+          <div class="conj-title">🔗 連接詞／子句解析</div>
+          <div class="conj-item"><span class="conj-word">Meanwhile</span><div><span class="conj-type">轉折副詞</span><ul><li><b>功能：</b>「與此同時」。</li></ul></div></div>
+          <div class="conj-item"><span class="conj-word">which</span><div><span class="conj-type">主格關係代名詞（非限定）</span><ul><li><b>先行詞：</b><code>his Swiss franc notes</code></li><li><b>功能：</b>引導非限定子句補充說明紙鈔現況。</li></ul></div></div>
+        </div>
+
+        <!-- 👨‍🏫 補教名師英翻中思維拆解（預設折疊） -->
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">英翻中關鍵思路拆解：如何調序翻出道地中文？（點擊展開）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+                        <div class="master-step"><span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主句 <code>Grandpa pointed to notes</code>，後面以非限定關代子句 <code>which no longer have...</code> 補充說明。</div>
+            <div class="master-step"><span class="m-step-tag s2">Step 2</span><strong>【理順修飾層次】：</strong>分號後 <code>instead, they are...</code> 承接否定，並以目的不定詞 <code>to honor...</code> 結尾。</div>
+            <div class="master-step"><span class="m-step-tag s3">Step 3</span><strong>【中英思維調序】：</strong>中文把非限定關代拆成獨立短句更顯流暢：「……指向瑞士法郎，那些紙鈔如今已不印肖像；取而代之的是……」。</div>
+            <div class="master-step"><span class="m-step-tag s4">Step 4</span><strong>【名師高分潤飾】：</strong><code>pointed to</code> 翻「指著／引導我看著」；<code>to honor...</code> 翻「向其卓越成就致敬」。</div>
+          </div>
+        </details>
       </div>
 
       <!-- S4 -->
@@ -228,40 +424,219 @@
         <div class="sent-top">
           <span class="sent-num">句 4</span>
           <div style="flex:1;">
-            <div class="sent-en">Next, we admired historical <span class="key-term">figures</span> like Winston Churchill on the UK’s £5 note, <span class="gram-term">with Big Ben</span> <span class="key-term">visible</span> <span class="gram-term">behind him</span> at three o’clock—marking his famous “blood, <span class="key-term">toil</span>, tears, and <span class="key-term">sweat</span>” speech.</div>
-            <div class="sent-zh">接著，我們欣賞了歷史重要人物，例如英國五英鎊紙鈔上的溫斯頓．邱吉爾，他身後清晰可見指向三點鐘的大笨鐘——紀念他著名的「鮮血、辛勞、眼淚與汗水」演說。</div>
+            <div class="sent-en">Next, we admired historical <span class="key-term">figures</span> like Winston Churchill on the UK’s £5 note, <span class="gram-term">with Big Ben</span> <span class="key-term">visible</span> <span class="gram-term">behind him</span> at three o’clock—<span class="gram-term">marking</span> his famous “blood, <span class="key-term">toil</span>, tears, and <span class="key-term">sweat</span>” speech.</div>
+            <div class="sent-zh">接著，我們欣賞了英國五英鎊紙鈔上像溫斯頓．邱吉爾這樣的歷史人物，他身後清晰可見指向三點鐘的大笨鐘——標記了他著名的「鮮血、辛勞、眼淚與汗水」演說。</div>
           </div>
-          <button class="audio-btn" onclick="speak('Next, we admired historical figures like Winston Churchill on the UKs five pound note, with Big Ben visible behind him at three oclock, marking his famous blood, toil, tears, and sweat speech.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak(this.dataset.t, 0.95)" data-t="Next, we admired historical figures like Winston Churchill on the UK’s five pound note, with Big Ben visible behind him at three o’clock, marking his famous blood, toil, tears, and sweat speech.">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak(this.dataset.t, 0.75)" data-t="Next, we admired historical figures like Winston Churchill on the UK’s five pound note, with Big Ben visible behind him at three o’clock, marking his famous blood, toil, tears, and sweat speech.">🐢 慢速</button>
+          </div>
         </div>
         <div class="chunk-row">
-          <div class="chunk s"><span class="c-role">[S+V+O] 欣賞人物</span><span class="c-en">Next, we admired historical figures like Winston Churchill on the UK’s £5 note,</span><span class="c-zh">接著我們欣賞了英國五英鎊上的邱吉爾等歷史人物</span></div>
-          <div class="chunk m"><span class="c-role">[M] 附帶狀況 (with+O+OC)</span><span class="c-en">with Big Ben visible behind him at three o’clock—marking his famous speech.</span><span class="c-zh">大笨鐘在身後三點鐘清晰可見——紀念其著名演說。</span></div>
+          <div class="chunk m"><span class="c-role">[M] 時間副詞</span><span class="c-en">Next,</span><span class="c-zh">接著</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 主句</span><span class="c-en">we admired historical figures like Winston Churchill on the UK’s £5 note,</span><span class="c-zh">我們欣賞了英國五鎊紙鈔上的邱吉爾等歷史人物</span></div>
+          <div class="chunk m"><span class="c-role">[M] 附帶狀況 with+O+OC</span><span class="c-en">with Big Ben visible behind him at three o’clock—</span><span class="c-zh">身後大笨鐘指向三點清晰可見——</span></div>
+          <div class="chunk m"><span class="c-role">[M] 分詞構句</span><span class="c-en">marking his famous “blood, toil, tears, and sweat” speech.</span><span class="c-zh">標記著他著名的演說</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 記敘文高級動詞：<code>admire</code>（欣賞、讚賞）</div>用 <code>we admired...</code> 取代單調的 <code>we looked at...</code>。</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 破折號分詞補充</div><code>—marking his famous speech</code>（標誌／紀念他的著名演說）。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 <code>admire</code> ＆ 分詞構句 <code>marking...</code></div><code>—marking...</code> 現在分詞片語修飾三點鐘的象徵歷史意義。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 記敘動詞：<code>admired</code></div>以 <code>admired</code>（讚賞、欽佩地觀賞）呈現祖孫共賞的溫馨氛圍。</div>
         </div>
+
+        <!-- 👨‍🏫 補教名師英翻中思維拆解（預設折疊） -->
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">英翻中關鍵思路拆解：如何調序翻出道地中文？（點擊展開）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+                        <div class="master-step"><span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹：<code>we admired historical figures like Winston Churchill...</code>。</div>
+            <div class="master-step"><span class="m-step-tag s2">Step 2</span><strong>【理順修飾層次】：</strong>介系詞 <code>with Big Ben visible...</code> 與破折號 <code>marking...</code> 交代畫面與意義。</div>
+            <div class="master-step"><span class="m-step-tag s3">Step 3</span><strong>【中英思維調序】：</strong>依序翻譯：祖孫動作（欣賞）→ 紙鈔畫面（邱吉爾與大笨鐘）→ 破折號意義（銘記歷史名言）。</div>
+            <div class="master-step"><span class="m-step-tag s4">Step 4</span><strong>【名師高分潤飾】：</strong><code>marking</code> 翻「定格了／標記著」；<code>admired</code> 翻「細細品味／讚嘆」。</div>
+          </div>
+        </details>
       </div>
 
-      <!-- S5, S6, S7, S8 -->
-      <div class="sent-card" style="margin-bottom:0;">
+      <!-- S5 -->
+      <div class="sent-card">
         <div class="sent-top">
-          <span class="sent-num">句 5–8</span>
+          <span class="sent-num">句 5</span>
           <div style="flex:1;">
-            <div class="sent-en"><span class="gram-term">Aside from</span> looking at what notes show, Grandpa taught me to ask why those designs were chosen. He explained that Euro notes’ <span class="key-term">fictional</span> buildings <span class="key-term">promote</span> <span class="key-term">unity</span> across 21 nations, while Australia champions equal rights by featuring a woman on every note. When I touched an Australian bill, I learned that many modern notes <span class="gram-term">are made of</span> <span class="key-term">polymer</span>, a durable <span class="key-term">plastic</span> that stops <span class="key-term">counterfeiters</span> from copying them, complete with <span class="key-term">security</span> features like <span class="key-term">holograms</span> and <span class="key-term">shiny</span> strips. That afternoon, I realized money really <span class="gram-term">does have</span> a lot to say!</div>
-            <div class="sent-zh">除了觀察紙鈔呈現什麼之外，爺爺還教我去追問為何選擇那些設計。他解釋說，歐元紙鈔的虛構建築促進了 21 國之間的團結，而澳洲則透過在每張紙鈔印上女性來擁護平等權利。當我觸摸一張澳幣時，我得知許多現代紙鈔是由聚合物製成的，這是一種能阻止偽鈔製造者複製的耐用塑膠，還配備了全像圖與閃亮防偽條等安全特徵。那天下午，我體會到金錢確實有好多故事要訴說！</div>
+            <div class="sent-en"><span class="gram-term">Aside from</span> looking at <span class="gram-term">what</span> notes show, Grandpa taught me to ask <span class="gram-term">why</span> those designs were chosen.</div>
+            <div class="sent-zh">除了觀察紙鈔上呈現了什麼，爺爺更教導我要去追問為何會選擇這些設計。</div>
           </div>
-          <button class="audio-btn" onclick="speak('Aside from looking at what notes show, Grandpa taught me to ask why those designs were chosen. He explained that Euro notes fictional buildings promote unity across 21 nations, while Australia champions equal rights by featuring a woman on every note. When I touched an Australian bill, I learned that many modern notes are made of polymer, a durable plastic that stops counterfeiters from copying them, complete with security features like holograms and shiny strips. That afternoon, I realized money really does have a lot to say!')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak(this.dataset.t, 0.95)" data-t="Aside from looking at what notes show, Grandpa taught me to ask why those designs were chosen.">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak(this.dataset.t, 0.75)" data-t="Aside from looking at what notes show, Grandpa taught me to ask why those designs were chosen.">🐢 慢速</button>
+          </div>
         </div>
         <div class="chunk-row">
-          <div class="chunk m"><span class="c-role">[M] Aside from + V-ing</span><span class="c-en">Aside from looking at what notes show,</span><span class="c-zh">除了看紙鈔印什麼之外</span></div>
-          <div class="chunk v"><span class="c-role">[S+V+O] 阻止偽造</span><span class="c-en">a durable plastic that stops counterfeiters from copying them,</span><span class="c-zh">阻止偽鈔製造者複製它們的耐用塑膠</span></div>
-          <div class="chunk o"><span class="c-role">[M+S+V] 故事感悟結尾</span><span class="c-en">That afternoon, I realized money really does have a lot to say!</span><span class="c-zh">那天下午，我體會到金錢確實有很多話要說！</span></div>
+          <div class="chunk m"><span class="c-role">[M] 介系詞+名詞子句</span><span class="c-en">Aside from looking at what notes show,</span><span class="c-zh">除了看紙鈔呈現什麼之外</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 主句</span><span class="c-en">Grandpa taught me to ask</span><span class="c-zh">爺爺教我要去問</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 間接問句（名詞子句）</span><span class="c-en">why those designs were chosen.</span><span class="c-zh">為何選擇那些設計</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 大考必考阻卻句型：<code>stop / prevent / keep + O. + from + V-ing</code></div><code>stops counterfeiters from copying them</code>（阻止偽鈔製造者複製它們），介系詞 <code>from</code> 與動名詞 <code>copying</code> 缺一不可！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 記敘文收尾金句</div><strong><code>That afternoon, I realized (that)...</code></strong>（那天下午，我領悟到……）是學測故事體作文最經典的收尾方式。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 <code>teach sb to V</code> ＆ 雙名詞子句</div><code>what notes show</code>（表象）與 <code>why those designs were chosen</code>（內涵）在故事中形成頓悟點。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 人物傳承寫作亮點</div>把生硬的學術探討轉化為「祖父的人生智慧啟發」。</div>
         </div>
+        <div class="conj-box">
+          <div class="conj-title">🔗 連接詞／子句解析</div>
+          <div class="conj-item"><span class="conj-word">what</span><div><span class="conj-type">複合關代</span><ul><li><b>功能：</b>引導 <code>looking at</code> 的受詞子句。</li></ul></div></div>
+          <div class="conj-item"><span class="conj-word">why</span><div><span class="conj-type">疑問副詞</span><ul><li><b>功能：</b>引導 <code>ask</code> 的受詞子句。</li></ul></div></div>
+        </div>
+
+        <!-- 👨‍🏫 補教名師英翻中思維拆解（預設折疊） -->
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">英翻中關鍵思路拆解：如何調序翻出道地中文？（點擊展開）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+                        <div class="master-step"><span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主句主幹：<code>Grandpa taught me to ask why...</code>。</div>
+            <div class="master-step"><span class="m-step-tag s2">Step 2</span><strong>【理順修飾層次】：</strong>前半句 <code>Aside from...</code> 承接剛才看到的畫面，引出更深的思索。</div>
+            <div class="master-step"><span class="m-step-tag s3">Step 3</span><strong>【中英思維調序】：</strong>對稱順譯：「除了看……之外，爺爺教我更要去思考為什麼……」。</div>
+            <div class="master-step"><span class="m-step-tag s4">Step 4</span><strong>【名師高分潤飾】：</strong><code>taught me to ask</code> 翻「啟發我去探究／教我去追問背後的緣由」。</div>
+          </div>
+        </details>
+      </div>
+
+      <!-- S6 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 6</span>
+          <div style="flex:1;">
+            <div class="sent-en">He explained <span class="gram-term">that</span> Euro notes’ <span class="key-term">fictional</span> buildings <span class="key-term">promote</span> <span class="key-term">unity</span> across 21 nations, <span class="gram-term">while</span> Australia champions equal rights by <span class="gram-term">featuring</span> a woman on every note.</div>
+            <div class="sent-zh">他解釋說，歐元紙鈔上的虛構建築促進了 21 個國家的團結，而澳洲則透過在每張鈔票上印上女性肖像來捍衛平權。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak(this.dataset.t, 0.95)" data-t="He explained that Euro notes’ fictional buildings promote unity across 21 nations, while Australia champions equal rights by featuring a woman on every note.">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak(this.dataset.t, 0.75)" data-t="He explained that Euro notes’ fictional buildings promote unity across 21 nations, while Australia champions equal rights by featuring a woman on every note.">🐢 慢速</button>
+          </div>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S+V] 主句</span><span class="c-en">He explained that</span><span class="c-zh">他解釋說</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 歐元子句</span><span class="c-en">Euro notes’ fictional buildings promote unity across 21 nations,</span><span class="c-zh">歐元虛構建築促進 21 國團結</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對比連接詞</span><span class="c-en">while</span><span class="c-zh">而／反觀</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 澳洲子句</span><span class="c-en">Australia champions equal rights by featuring a woman on every note.</span><span class="c-zh">澳洲透過每張鈔票印女性來捍衛平權</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 <code>while</code> 對比子句</div>在間接引述動詞 <code>explained that...</code> 之後包覆兩大對比概念。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 作文敘事技巧</div>用 <code>He explained that...</code> 帶出知識，語氣自然不說教。</div>
+        </div>
+        <div class="conj-box">
+          <div class="conj-title">🔗 連接詞／子句解析</div>
+          <div class="conj-item"><span class="conj-word">that</span><div><span class="conj-type">名詞子句連接詞</span><ul><li><b>功能：</b>引導 <code>explained</code> 的受詞子句。</li></ul></div></div>
+          <div class="conj-item"><span class="conj-word">while</span><div><span class="conj-type">對比從屬連接詞</span><ul><li><b>功能：</b>對比歐元與澳洲的兩種設計理念。</li></ul></div></div>
+        </div>
+
+        <!-- 👨‍🏫 補教名師英翻中思維拆解（預設折疊） -->
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">英翻中關鍵思路拆解：如何調序翻出道地中文？（點擊展開）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+                        <div class="master-step"><span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹：<code>He explained that A, while B</code>。</div>
+            <div class="master-step"><span class="m-step-tag s2">Step 2</span><strong>【理順修飾層次】：</strong>A 是歐元虛構建築（團結），B 是澳洲女性平權（平等）。</div>
+            <div class="master-step"><span class="m-step-tag s3">Step 3</span><strong>【中英思維調序】：</strong>依長輩講解的口吻順譯：「他解釋說，歐元……；而澳洲則……」。</div>
+            <div class="master-step"><span class="m-step-tag s4">Step 4</span><strong>【名師高分潤飾】：</strong><code>champions equal rights</code> 翻「捍衛平權理念」；<code>fictional</code> 虛構的。</div>
+          </div>
+        </details>
+      </div>
+
+      <!-- S7 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 7</span>
+          <div style="flex:1;">
+            <div class="sent-en"><span class="gram-term">When</span> I touched an Australian bill, I learned <span class="gram-term">that</span> many modern notes <span class="gram-term">are made of</span> <span class="key-term">polymer</span>, a durable <span class="key-term">plastic</span> <span class="gram-term">that</span> stops <span class="key-term">counterfeiters</span> from copying them, complete with <span class="key-term">security</span> features like <span class="key-term">holograms</span> <span class="gram-term">and</span> <span class="key-term">shiny</span> strips.</div>
+            <div class="sent-zh">當我觸摸一張澳洲紙鈔時，我得知許多現代紙鈔是由聚合物製成的，這是一種能防止偽造者複製的耐用塑膠，並配備了全像圖與閃亮防偽條等安全設計。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak(this.dataset.t, 0.95)" data-t="When I touched an Australian bill, I learned that many modern notes are made of polymer, a durable plastic that stops counterfeiters from copying them, complete with security features like holograms and shiny strips.">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak(this.dataset.t, 0.75)" data-t="When I touched an Australian bill, I learned that many modern notes are made of polymer, a durable plastic that stops counterfeiters from copying them, complete with security features like holograms and shiny strips.">🐢 慢速</button>
+          </div>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 時間子句</span><span class="c-en">When I touched an Australian bill,</span><span class="c-zh">當我觸摸一張澳洲鈔票時</span></div>
+          <div class="chunk s"><span class="c-role">[S+V] 主句</span><span class="c-en">I learned that</span><span class="c-zh">我得知</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 子句主幹</span><span class="c-en">many modern notes are made of polymer,</span><span class="c-zh">許多現代紙鈔由聚合物製成</span></div>
+          <div class="chunk o"><span class="c-role">[同位語] 說明聚合物</span><span class="c-en">a durable plastic</span><span class="c-zh">一種耐用的塑膠</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 關係子句</span><span class="c-en">that stops counterfeiters from copying them,</span><span class="c-zh">能防止偽造者複製它的</span></div>
+          <div class="chunk m"><span class="c-role">[M] 形容詞片語補充</span><span class="c-en">complete with security features like holograms and shiny strips.</span><span class="c-zh">配備有全像圖與防偽條等安全設計</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 <code>stop sb from V-ing</code> ＆ <code>complete with...</code></div>1. <code>stop / prevent / keep + 受詞 + from V-ing</code>「防止某人做某事」。<br/>2. <code>complete with...</code> 表「配備有、包含全套……」。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 記敘感官描摹：<code>touched</code></div>動詞 <code>touched</code> 帶出紙鈔特殊的塑膠光滑觸感。</div>
+        </div>
+        <div class="conj-box">
+          <div class="conj-title">🔗 連接詞／子句解析</div>
+          <div class="conj-item"><span class="conj-word">When</span><div><span class="conj-type">時間從屬連接詞</span><ul><li><b>功能：</b>引導時間副詞子句。</li></ul></div></div>
+          <div class="conj-item"><span class="conj-word">that</span><div><span class="conj-type">名詞子句連接詞</span><ul><li><b>功能：</b>引導 <code>learned</code> 的受詞子句。</li></ul></div></div>
+          <div class="conj-item"><span class="conj-word">that</span><div><span class="conj-type">主格關係代名詞</span><ul><li><b>先行詞：</b><code>a durable plastic</code></li><li><b>功能：</b>在子句中當主詞。</li></ul></div></div>
+        </div>
+
+        <!-- 👨‍🏫 補教名師英翻中思維拆解（預設折疊） -->
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">英翻中關鍵思路拆解：如何調序翻出道地中文？（點擊展開）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+                        <div class="master-step"><span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>時間子句 <code>When I touched...</code> ＋ 主句 <code>I learned that notes are made of polymer</code>。</div>
+            <div class="master-step"><span class="m-step-tag s2">Step 2</span><strong>【理順修飾層次】：</strong>同位語 <code>a durable plastic</code> 後面帶關係子句 <code>that stops...</code>，句尾掛 <code>complete with...</code>。</div>
+            <div class="master-step"><span class="m-step-tag s3">Step 3</span><strong>【中英思維調序】：</strong>把修飾語往前融合成通順中文：「這是一種【能防範偽造的】耐用塑膠，且【配有全像圖與閃光條等安全設計】」。</div>
+            <div class="master-step"><span class="m-step-tag s4">Step 4</span><strong>【名師高分潤飾】：</strong><code>complete with...</code> 翻「一應俱全地配備了……」極具畫面細膩感。</div>
+          </div>
+        </details>
+      </div>
+
+      <!-- S8 -->
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 8</span>
+          <div style="flex:1;">
+            <div class="sent-en">That afternoon, I realized money really <span class="gram-term">does have</span> a lot to say!</div>
+            <div class="sent-zh">那個下午，我領悟到金錢確實有千言萬語要向我們訴說！</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak(this.dataset.t, 0.95)" data-t="That afternoon, I realized money really does have a lot to say!">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak(this.dataset.t, 0.75)" data-t="That afternoon, I realized money really does have a lot to say!">🐢 慢速</button>
+          </div>
+        </div>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 時間狀語</span><span class="c-en">That afternoon,</span><span class="c-zh">那個下午</span></div>
+          <div class="chunk s"><span class="c-role">[S+V] 主句</span><span class="c-en">I realized</span><span class="c-zh">我領悟到</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 省略that子句</span><span class="c-en">(that) money really does have a lot to say!</span><span class="c-zh">金錢確實有很多話要說！</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 強調助動詞 <code>does have</code> ＆ 記敘收尾</div><code>realized (that) money really does have...</code> 省略受詞子句連接詞 that，以強調助動詞 <code>does</code> 收束全篇。</div>
+          <div class="insight-box trans"><div class="insight-title">🎯 作文收束昇華</div>記敘文結尾呼應開頭，並以感嘆句點出收穫與感悟。</div>
+        </div>
+        <div class="conj-box">
+          <div class="conj-title">🔗 連接詞／子句解析</div>
+          <div class="conj-item"><span class="conj-word">(that)</span><div><span class="conj-type">名詞子句連接詞（省略）</span><ul><li><b>功能：</b>引導 <code>realized</code> 的受詞子句。</li></ul></div></div>
+        </div>
+
+        <!-- 👨‍🏫 補教名師英翻中思維拆解（預設折疊） -->
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">英翻中關鍵思路拆解：如何調序翻出道地中文？（點擊展開）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+                        <div class="master-step"><span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹：<code>That afternoon, I realized money really does have a lot to say!</code>。</div>
+            <div class="master-step"><span class="m-step-tag s2">Step 2</span><strong>【理順修飾層次】：</strong>時間副詞 <code>That afternoon</code> 標誌著這段難忘對話的結束；強調助動詞 <code>does</code> 增添感悟份量。</div>
+            <div class="master-step"><span class="m-step-tag s3">Step 3</span><strong>【中英思維調序】：</strong>時間先講，感悟接續，中英語序渾然天成。</div>
+            <div class="master-step"><span class="m-step-tag s4">Step 4</span><strong>【名師高分潤飾】：</strong><code>realized</code> 翻「恍然大悟／深切領會」；<code>a lot to say</code> 呼應首段，翻「千言萬語」絕妙點睛。</div>
+          </div>
+        </details>
       </div>
     </div>
 
@@ -425,10 +800,11 @@
     let score = 0;
     const answered = {};
 
-    function speak(text) {
+    function speak(text, rate = 0.95) {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
+      u.rate = rate;
       u.lang = 'en-US';
       u.rate = 0.95;
       window.speechSynthesis.speak(u);
