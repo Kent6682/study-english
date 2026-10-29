@@ -79,6 +79,46 @@
     .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
     .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
     .quiz-exp { display: none; margin-top: 0.45rem; padding: 0.7rem 1rem; border-radius: 10px; background: var(--green-bg); color: #065f46; font-size: 0.88rem; }
+
+    /* V4：正常／慢速雙按鈕（覆蓋舊版 36px 圓形按鈕） */
+    .audio-group { display: flex; gap: 0.35rem; flex-shrink: 0; align-self: flex-start; }
+    .audio-group .audio-btn { width: auto; height: auto; border-radius: 999px; padding: 0.35rem 0.65rem; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+    .audio-group .audio-btn.slow { background: #f1f5f9; color: #475569; }
+
+    /* ===== V4 句卡元件（名師拆解 Step 1~7／連接詞框） ===== */
+    .conj-box { margin-top: 0.75rem; background: #faf5ff; border: 1.5px solid #d8b4fe; border-radius: 10px; padding: 0.55rem 0.9rem; font-size: 0.88rem; }
+    details.conj-box[open] { padding-bottom: 0.85rem; }
+    details.conj-box summary.conj-title { font-weight: 800; color: #6d28d9; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; list-style: none; margin: 0; padding: 0.1rem 0; }
+    details.conj-box summary.conj-title::-webkit-details-marker { display: none; }
+    details.conj-box[open] summary.conj-title { margin-bottom: 0.6rem; border-bottom: 1px dashed #d8b4fe; padding-bottom: 0.45rem; }
+    details.conj-box .conj-arrow { font-size: 0.82rem; color: #7c3aed; display: inline-block; transition: transform 0.2s ease; }
+    details.conj-box[open] .conj-arrow { transform: rotate(180deg); }
+    .conj-word-preview { background: #7c3aed; color: #fff; font-size: 0.75rem; font-family: Consolas, monospace; padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700; }
+    .conj-concept { background: #fff; border: 1px solid #c084fc; border-radius: 8px; padding: 0.65rem 0.85rem; margin-top: 0.5rem; font-size: 0.85rem; color: #4c1d95; line-height: 1.55; box-shadow: 0 2px 6px rgba(124,58,237,0.06); }
+    .conj-concept strong { color: #6b21a8; }
+    .conj-meta-list { margin-bottom: 0.5rem; padding-bottom: 0.45rem; border-bottom: 1px dashed #d8b4fe; font-size: 0.85rem; color: #6b21a8; line-height: 1.6; }
+    .conj-title-main { font-weight: 800; color: #5b21b6; margin-bottom: 0.35rem; font-size: 0.9rem; }
+    .conj-desc { font-size: 0.86rem; color: #334155; line-height: 1.65; margin-bottom: 0.5rem; }
+    .conj-killer-tip { background: #faf5ff; border-left: 3px solid #9333ea; padding: 0.35rem 0.6rem; border-radius: 0 4px 4px 0; font-size: 0.84rem; color: #581c87; }
+    .master-trans-details { margin-top: 0.7rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; overflow: hidden; }
+    .master-trans-details[open] { border-color: #4ade80; box-shadow: 0 4px 12px rgba(34,197,94,0.08); }
+    .master-trans-summary { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem; cursor: pointer; background: #f0fdf4; user-select: none; font-size: 0.88rem; font-weight: 700; color: #166534; list-style: none; }
+    .master-trans-summary:hover { background: #dcfce7; }
+    .master-trans-summary::-webkit-details-marker { display: none; }
+    .master-badge { background: #16a34a; color: #fff; padding: 0.12rem 0.5rem; border-radius: 6px; font-size: 0.74rem; font-weight: 800; white-space: nowrap; }
+    .master-summary-text { flex: 1; }
+    .master-arrow { font-size: 0.75rem; color: #16a34a; display: inline-block; transition: transform 0.2s ease; }
+    .master-trans-details[open] > summary .master-arrow { transform: rotate(180deg); }
+    .master-trans-body { padding: 0.85rem 1rem; background: #fff; border-top: 1px dashed #bbf7d0; font-size: 0.87rem; line-height: 1.65; color: #1e293b; }
+    .master-step { margin-bottom: 0.65rem; padding-left: 0.5rem; border-left: 3px solid #22c55e; }
+    .master-step:last-child { margin-bottom: 0; }
+    .m-step-tag { font-weight: 800; font-size: 0.75rem; padding: 0.1rem 0.4rem; border-radius: 4px; margin-right: 0.35rem; display: inline-block; }
+    .m-step-tag.s1 { background: #dbeafe; color: #1e40af; }
+    .m-step-tag.s2 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s3 { background: #ede9fe; color: #5b21b6; }
+    .m-step-tag.s4 { background: #ffedd5; color: #9a3412; }
+    .m-step-tag.s5 { background: #dcfce7; color: #166534; }
+    @media print { .audio-group, .control-bar { display: none !important; } .sent-card { break-inside: avoid; } }
   </style>
 </head>
 <body>
@@ -179,89 +219,918 @@
         <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
         <button class="toggle-btn active" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
         <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式</button>
+        <button id="toggle-conj-btn" class="toggle-btn" onclick="toggleAllConj()">🔗 一鍵展開所有連接詞解析</button>
+        <button id="btn-toggle-master-trans" class="toggle-btn" onclick="toggleAllMasterTrans()">👨‍🏫 一鍵展開名師翻譯拆解</button>
       </div>
 
       <!-- S1 -->
+      <div class="para-badge">第一段：夜市香菜之爭與生物課的解答（第 1–4 句）</div>
+
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 1</span>
-          <div style="flex:1;">
-            <div class="sent-en">Last Friday at a Taiwanese night market, my American exchange partner Leo and I had a funny <span class="key-term">dispute</span> over one of the world’s most hotly <span class="key-term">debated</span> <span class="key-term">flavors</span>: coriander.</div>
+          <div class="sent-en">
+            Last Friday at a Taiwanese night market, my American exchange partner Leo and I had a funny <span class="key-term">dispute</span> over one of the world’s most hotly <span class="key-term">debated</span> <span class="key-term">flavors</span>: coriander.
             <div class="sent-zh">上週五在台灣的夜市裡，我的美國交換生學伴 Leo 和我針對世界上爭論最激烈的風味之一「香菜」發生了一場有趣的爭論。</div>
           </div>
-          <button class="audio-btn" onclick="speak('Last Friday at a Taiwanese night market, my American exchange partner Leo and I had a funny dispute over one of the world’s most hotly debated flavors: coriander.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Last Friday at a Taiwanese night market, my American exchange partner Leo and I had a funny dispute over one of the world’s most hotly debated flavors: coriander.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Last Friday at a Taiwanese night market, my American exchange partner Leo and I had a funny dispute over one of the world’s most hotly debated flavors: coriander.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹 <code>my American exchange partner Leo and I (S) had (V) a funny dispute (O)</code>；<code>over ...</code> 交代爭論的主題，冒號後 <code>coriander</code> 揭曉答案。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>had</code>：記敘文敘述上週五發生的事。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>全句無子句；<code>Last Friday at a Taiwanese night market</code> 交代時間與地點；<code>dispute over + N</code>；冒號後的 coriander 是同位語。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>時間、地點照中文習慣放句首；<code>over ... coriander</code> 的主題提到「發生爭論」前，用「針對……」；冒號後的「香菜」併進前面，用引號標出。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>have a dispute over sth</code>（為某事起爭執）；<code>Leo and I</code> 禮貌上別人在前、I 在後；<code>exchange partner</code>（交換生學伴）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「我們有一個有趣的爭論在世界最被爭論的風味之一：香菜」，over 和冒號都沒處理。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Last Friday at a Taiwanese night market,</code>（時間＋地點）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「上週五在台灣的夜市裡」，記敘文開頭先交代時間、地點，中英順序相同。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>my American exchange partner Leo and I</code>（主詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「我的美國交換生學伴 Leo 和我」，exchange partner 譯「交換生學伴」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>had a funny dispute</code>（動詞＋受詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        had a dispute 譯「發生了一場……爭論」，funny 譯「有趣的」；動詞留到最後，前面要先插入爭論主題。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>over one of the world’s most hotly debated flavors: coriander.</code>（主題介系詞片語＋同位語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】over 表主題，提到動詞前譯「針對……」；冒號後的 coriander 是答案，併進來用引號標出：「針對世界上爭論最激烈的風味之一『香菜』」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 4（主題連同冒號答案超車） ➔ 語塊 3（「發生了一場有趣的爭論」壓軸）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：上週五在台灣的夜市裡，我的美國交換生學伴 Leo 和我【針對世界上爭論最激烈的風味之一「香菜」】發生了一場有趣的爭論。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：dispute over + N ➔「針對 N 發生爭論」，主題提到動詞前；冒號揭曉的答案用引號併入。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">記敘文開頭先交代時間地點，Last Friday at a Taiwanese night market 照順序翻：「上週五在台灣的夜市裡」。主詞「我的美國交換生學伴 Leo 和我」也順著接。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>動詞片語後面接 over / about + 主題時，主題提到動詞前，翻「針對……」</strong>：「針對世界上爭論最激烈的風味之一……發生了一場有趣的爭論」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>冒號後面只有一個名詞時，把它併到前面的名詞後，用引號標出</strong>：「……風味之一『香菜』」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：had a dispute 翻「發生了一場爭論」，不要翻「有一個爭論」。英文寫 Leo and I，自己放後面，是禮貌的順序。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：上週五在台灣的夜市裡，我的美國交換生學伴 Leo 和我針對世界上爭論最激烈的風味之一「香菜」發生了一場有趣的爭論。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">無連接詞</span><span class="conj-word-preview">over</span><span class="conj-word-preview">: 同位語</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>單一主句</strong>：Leo and I had a funny dispute</div>
+              <div>• <strong>介系詞片語</strong>：over ... 交代爭論主題</div>
+              <div>• <strong>冒號＋同位語</strong>：coriander 揭曉是哪一種風味</div>
+            </div>
+            <div class="conj-title-main">單一主句 ＋ over 主題 ＋ 冒號揭曉</div>
+            <div class="conj-desc">
+              本句沒有連接詞。句首 <code>Last Friday at a Taiwanese night market</code> 交代時間地點；主幹 <code>Leo and I had a funny dispute</code>；<code>over one of the world’s most hotly debated flavors</code> 說明爭論的主題，最後用冒號把答案 coriander 放在句尾，製造懸念。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：冒號後面只有一個名詞 ➔ 揭曉前面說的是什麼，翻譯時用引號併進前面。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
           <div class="chunk m"><span class="c-role">[M] 時間與地點</span><span class="c-en">Last Friday at a Taiwanese night market,</span><span class="c-zh">上週五在台灣夜市</span></div>
-          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">my American exchange partner Leo and I</span><span class="c-zh">我的美國交換學伴 Leo 和我</span></div>
-          <div class="chunk v"><span class="c-role">[V+O] 動詞受詞</span><span class="c-en">had a funny dispute over ... flavors: coriander</span><span class="c-zh">針對香菜展開一場有趣的爭論</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">my American exchange partner Leo and I</span><span class="c-zh">我的美國交換生學伴 Leo 和我</span></div>
+          <div class="chunk v"><span class="c-role">[V+O] 動詞受詞</span><span class="c-en">had a funny dispute over ... flavors: coriander</span><span class="c-zh">針對香菜發生一場有趣的爭論</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 記敘文黃金開場：<code>時間 + 地點 + 人物 + 事件 (had a dispute over...)</code></div>與 `debate over` 一樣，名詞 `dispute` 後面也是搭配介系詞 <strong><code>over</code></strong> 表示「針對某事的爭論」！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 禮貌主詞順序</div>英文把「別人跟自己」放一起當主詞時，基於禮貌永遠先寫別人再寫 <code>I</code>：<strong><code>Leo and I</code></strong>。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>記敘文開場：<code>時間 + 地點 + 人物 + 事件 (had a dispute over ...)</code></strong><br/>和 <code>debate over</code> 一樣，名詞 <code>dispute</code> 也搭配介系詞 <code>over</code>，表示「針對某事的爭論」。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>禮貌主詞順序</strong><br/>英文把別人和自己一起當主詞時，禮貌上先寫別人再寫 <code>I</code>：<code>Leo and I</code>。</div>
         </div>
       </div>
-
-      <!-- S2 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 2</span>
-          <div style="flex:1;">
-            <div class="sent-en">I loved its fresh <span class="gram-term">taste</span> in my peanut ice cream roll, <span class="gram-term">while</span> Leo shouted that it <span class="gram-term">tasted like</span> soap!</div>
+          <div class="sent-en">
+            I loved its fresh <span class="gram-term">taste</span> in my peanut ice cream roll, <span class="gram-term">while</span> Leo shouted that it <span class="gram-term">tasted like</span> soap!
             <div class="sent-zh">我超愛它在花生捲冰淇淋裡的清新滋味，而 Leo 卻大喊它嚐起來像肥皂！</div>
           </div>
-          <button class="audio-btn" onclick="speak('I loved its fresh taste in my peanut ice cream roll, while Leo shouted that it tasted like soap!')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('I loved its fresh taste in my peanut ice cream roll, while Leo shouted that it tasted like soap!', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('I loved its fresh taste in my peanut ice cream roll, while Leo shouted that it tasted like soap!', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>子句一 <code>I (S) loved (V) its fresh taste (O)</code>；while 子句 <code>Leo (S) shouted (V) + that 子句 (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>loved / shouted / tasted</code>：敘述當時的反應，that 子句也跟著用過去式。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>while</code> 表對比（而）；<code>that</code> 引導 shouted 的受詞子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>in my peanut ice cream roll</code> 修飾 taste，搬到「清新滋味」前；while 子句加「卻」強化反差。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>taste</code> 名詞（滋味）與 <code>taste like</code> 動詞同句出現；表對比的 while 譯「而」；記敘文中 loved 可譯「超愛」，貼近高中生口吻。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：把 while 翻成「當 Leo 大喊時」，兩個人的反差就不見了。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>I loved its fresh taste</code>（子句一）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「我超愛它的清新滋味」，loved 在高中生記敘文裡譯「超愛」更生動。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>in my peanut ice cream roll,</code>（地點介系詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】修飾 taste，搬到「清新滋味」前：「它在花生捲冰淇淋裡的清新滋味」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>while Leo shouted</code>（對比子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：while 譯「而」，加「卻」強化反差：「而 Leo 卻大喊」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>that it tasted like soap!</code>（名詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：that 不譯：「它嚐起來像肥皂！」，保留驚嘆號。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 的「我超愛它」 ➔ 語塊 2（地點超車到「滋味」前） ➔ 語塊 1 的「清新滋味」 ➔ 語塊 3 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：我超愛它【在花生捲冰淇淋裡的】清新滋味，而 Leo 卻大喊它嚐起來像肥皂！
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：對比的 while 翻「而……卻……」；名詞後的 in + 地點可提到名詞前當修飾。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">前半是我的反應：I loved its fresh taste，「我超愛它的清新滋味」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>名詞後面接 in + 地點、說明「在哪裡的」時，可以提到名詞前當修飾</strong>：「它在花生捲冰淇淋裡的清新滋味」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>while 前後是兩個人相反的反應時，翻「而」，再補一個「卻」</strong>：「而 Leo 卻大喊它嚐起來像肥皂！」</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：shouted that 的 that 不用翻。loved 翻「超愛」，配上驚嘆號，高中生記敘文的語氣就出來了。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：我超愛它在花生捲冰淇淋裡的清新滋味，而 Leo 卻大喊它嚐起來像肥皂！</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">while</span><span class="conj-word-preview">that</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>對比連接詞</strong>：while 連接我和 Leo 相反的反應</div>
+              <div>• <strong>名詞子句連接詞</strong>：that 引導 shouted 的受詞</div>
+            </div>
+            <div class="conj-title-main">while 對比 ＋ that 名詞子句</div>
+            <div class="conj-desc">
+              1. while 前後各是完整子句：<code>I loved its fresh taste ...</code> 與 <code>Leo shouted that ...</code>，兩人反應相反，while 表對比「而」。<br/>2. <code>shouted</code> 後接 that 子句當受詞；主句是過去式，that 子句也用過去式 tasted，時態一致。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：while 前後是兩個人相反的反應 ➔ 翻「而……卻……」。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
-          <div class="chunk s"><span class="c-role">[S1+V1+O1]</span><span class="c-en">I loved its fresh taste in my peanut ice cream roll,</span><span class="c-zh">我愛它在花生捲冰淇淋裡的清新滋味</span></div>
+          <div class="chunk s"><span class="c-role">[S1+V1+O1]</span><span class="c-en">I loved its fresh taste in my peanut ice cream roll,</span><span class="c-zh">我超愛它在花生捲冰淇淋裡的清新滋味</span></div>
           <div class="chunk c"><span class="c-role">[Conj] 對比連接詞</span><span class="c-en">while</span><span class="c-zh">而（對照反差）</span></div>
           <div class="chunk s"><span class="c-role">[S2+V2+O2]</span><span class="c-en">Leo shouted that it tasted like soap!</span><span class="c-zh">Leo 卻大喊它嚐起來像肥皂！</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 用一句話同時展現 <code>taste</code> 名詞、<code>taste like</code> 動詞與 <code>while</code> 對比！</div>因為是敘述上週五發生的事，全句時態一致採用過去式（<code>loved / shouted / tasted like</code>）。</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 台灣特色美食英文</div>「花生捲冰淇淋」英文寫作 <strong><code>peanut ice cream roll</code></strong>，介紹台灣文化必備！</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>一句話同時用到 <code>taste</code> 名詞、<code>taste like</code> 動詞與 <code>while</code> 對比</strong><br/>敘述上週五發生的事，全句時態一致用過去式（<code>loved / shouted / tasted like</code>）。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>台灣美食英文</strong><br/>「花生捲冰淇淋」寫作 <code>peanut ice cream roll</code>，介紹台灣文化時很好用。</div>
         </div>
       </div>
-
-      <!-- S3 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 3</span>
-          <div style="flex:1;">
-            <div class="sent-en">The next day, our biology teacher explained that this was not just personal <span class="key-term">preference</span>; Leo has a <span class="key-term">specific</span> <span class="key-term">gene</span> sensitive to soap chemicals called aldehydes, causing his brain to <span class="key-term">process</span> the herb as unpleasant.</div>
+          <div class="sent-en">
+            The next day, our biology teacher explained that this was not just personal <span class="key-term">preference</span>; Leo has a <span class="key-term">specific</span> <span class="key-term">gene</span> sensitive to soap chemicals called aldehydes, causing his brain to <span class="key-term">process</span> the herb as unpleasant.
             <div class="sent-zh">隔天，我們的生物老師解釋這不只是個人偏好；Leo 有一種對稱為醛類的肥皂化學物敏感的特定基因，導致他的大腦把這種香草解讀為令人不快的味道。</div>
           </div>
-          <button class="audio-btn" onclick="speak('The next day, our biology teacher explained that this was not just personal preference; Leo has a specific gene sensitive to soap chemicals called aldehydes, causing his brain to process the herb as unpleasant.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('The next day, our biology teacher explained that this was not just personal preference; Leo has a specific gene sensitive to soap chemicals called aldehydes, causing his brain to process the herb as unpleasant.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('The next day, our biology teacher explained that this was not just personal preference; Leo has a specific gene sensitive to soap chemicals called aldehydes, causing his brain to process the herb as unpleasant.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>子句一 <code>our biology teacher (S) explained (V) + that 子句 (O)</code>；分號後 <code>Leo (S) has (V) a specific gene (O)</code>，句尾接分詞構句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong><code>explained / was</code> 過去式敘述隔天的事；分號後 <code>has</code> 用現在式，因為 Leo 的基因到現在仍是事實。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>that</code> 引導 explained 的受詞子句；分號連接兩個相關的獨立子句；<code>sensitive to ...</code> 修飾 gene；<code>called aldehydes</code> 修飾 chemicals；<code>, causing ...</code> 表結果。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>sensitive to soap chemicals called aldehydes</code> 整串搬到「基因」前；分詞構句放句尾順翻「導致……」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>not just + N</code>（不只是）；<code>cause sb to V</code>；敘述過去時提到不變的事實，可用現在式。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「Leo 有一個特定基因敏感於肥皂化學物叫醛類，引起他的大腦處理香草作為不愉快」，修飾語全掛在後面。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>The next day, our biology teacher explained that</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「隔天，我們的生物老師解釋」，that 不譯。The next day 譯「隔天」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>this was not just personal preference;</code>（名詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「這不只是個人偏好；」，not just 譯「不只是」，分號保留。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>Leo has a specific gene</code>（分號後主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「Leo 有一種……特定基因」，「基因」要等修飾語戴上去。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>sensitive to soap chemicals called aldehydes,</code>（形容詞片語後位修飾）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】整串搬到「基因」前，called aldehydes 再提到「化學物」前：「對稱為醛類的肥皂化學物敏感的」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>causing his brain to process the herb as unpleasant</code>（結果分詞構句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「導致他的大腦把這種香草解讀為令人不快的味道」，記敘文用「把」字句比「將」口語。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 的「Leo 有一種」 ➔ 語塊 4（修飾超車） ➔ 語塊 3 的「特定基因」 ➔ 語塊 5</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：隔天，我們的生物老師解釋這不只是個人偏好；Leo 有一種【對稱為醛類的肥皂化學物敏感的】特定基因，導致他的大腦把這種香草解讀為令人不快的味道。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：名詞後的長形容詞片語整串搬到名詞前；句尾逗號＋V-ing 翻「導致……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">The next day 翻「隔天」，主句 our biology teacher explained that this was not just personal preference，順翻：「我們的生物老師解釋這不只是個人偏好」。</p>
+                <p style="margin: 0 0 0.5rem;">分號後面是老師給的具體原因：Leo has a specific gene，「Leo 有一種……特定基因」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>名詞後面直接接形容詞片語（sensitive to ...）時，整串搬到名詞前</strong>：「對稱為醛類的肥皂化學物敏感的特定基因」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>句尾逗號接 causing 這類 V-ing，照順序翻「導致……」</strong>：「導致他的大腦把這種香草解讀為令人不快的味道」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：老師解釋用過去式 explained，但 Leo 的基因到現在都一樣，所以用現在式 has，翻譯時不用加「當時」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：隔天，我們的生物老師解釋這不只是個人偏好；Leo 有一種對稱為醛類的肥皂化學物敏感的特定基因，導致他的大腦把這種香草解讀為令人不快的味道。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">that</span><span class="conj-word-preview">;</span><span class="conj-word-preview">sensitive to</span><span class="conj-word-preview">, causing</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>名詞子句連接詞</strong>：that 引導 explained 的受詞</div>
+              <div>• <strong>分號</strong>：連接老師的說明與具體原因</div>
+              <div>• <strong>形容詞片語後位修飾</strong>：a gene (that is) sensitive to ...</div>
+              <div>• <strong>分詞構句</strong>：, causing ... 表結果</div>
+            </div>
+            <div class="conj-title-main">that 名詞子句 ＋ 分號 ＋ 分詞構句</div>
+            <div class="conj-desc">
+              1. <code>explained</code> 後接 that 子句 <code>this was not just personal preference</code>。<br/>2. 分號後是另一個完整句，具體說明原因；分號連接意思緊密的兩個句子，不需要連接詞。<br/>3. <code>a specific gene sensitive to soap chemicals called aldehydes</code>：形容詞片語修飾 gene，過去分詞 called 修飾 chemicals。<br/>4. 句尾 <code>, causing his brain to ...</code> 表示基因造成的結果。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：分號後面是完整句 ➔ 補充說明前句，中文保留分號或用逗號接續即可。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
           <div class="chunk s"><span class="c-role">[S1+V1+O1]</span><span class="c-en">our biology teacher explained that this was not just personal preference;</span><span class="c-zh">生物老師解釋這不只是個人偏好；</span></div>
           <div class="chunk s"><span class="c-role">[S2+V2+O2]</span><span class="c-en">Leo has a specific gene sensitive to ... aldehydes,</span><span class="c-zh">Leo 有對醛類敏感的特定基因</span></div>
-          <div class="chunk m"><span class="c-role">[M] 分詞構句</span><span class="c-en">causing his brain to process the herb as unpleasant</span><span class="c-zh">導致他的大腦將這香草解讀為不快</span></div>
+          <div class="chunk m"><span class="c-role">[M] 分詞構句</span><span class="c-en">causing his brain to process the herb as unpleasant</span><span class="c-zh">導致他的大腦將這種香草解讀為令人不快</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 時態細節：老師解釋是過去式 <code>explained</code>，但 Leo 的基因是現在事實 <code>has / process</code>！</div>當敘述過去故事中提到「不變的科學事實或某人天生的基因特徵」時，維持現在簡單式最精準！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 轉場詞秘訣</div>記敘文推展到隔天，請寫 <strong><code>The next day,</code></strong> 或 <strong><code>The following day,</code></strong>（注意不是 `Tomorrow`！）。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>時態細節：老師解釋用過去式 <code>explained</code>，Leo 的基因用現在式 <code>has</code></strong><br/>敘述過去的故事時，提到不變的科學事實或天生的基因特徵，維持現在簡單式。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>轉場詞</strong><br/>記敘文推進到隔天，寫 <code>The next day,</code> 或 <code>The following day,</code>（不是 Tomorrow）。</div>
         </div>
       </div>
-
-      <!-- S4 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 4</span>
-          <div style="flex:1;">
-            <div class="sent-en">After school, I showed Leo unusual Taiwanese <span class="key-term">products</span> like <span class="key-term">coriander-flavored</span> chips, and told him how a coriander pizza <span class="key-term">released</span> by a Japanese restaurant <span class="key-term">chain</span> became <span class="gram-term">such a hit that</span> it returned with <span class="gram-term">twice the amount of</span> the herb, alongside festivals and <span class="key-term">perfumes</span> for <span class="key-term">devoted</span> fans!</div>
-            <div class="sent-zh">放學後，我帶 Leo 看香菜口味洋芋片等台灣新奇產品，還告訴他日本一家連鎖餐廳推出的香菜披薩如何成為如此熱賣的商品，以致於帶著雙倍分量的香菜回歸，此外還有為忠實粉絲舉辦的節慶與香水！</div>
+          <div class="sent-en">
+            Because I grew up eating Asian <span class="key-term">cuisines</span>, this <span class="key-term">reaction</span> is far less common for me.
+            <div class="sent-zh">因為我從小吃亞洲料理長大，這種反應在我身上少見得多。</div>
           </div>
-          <button class="audio-btn" onclick="speak('After school, I showed Leo unusual Taiwanese products like coriander-flavored chips, and told him how a coriander pizza released by a Japanese restaurant chain became such a hit that it returned with twice the amount of the herb, alongside festivals and perfumes for devoted fans!')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Because I grew up eating Asian cuisines, this reaction is far less common for me.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Because I grew up eating Asian cuisines, this reaction is far less common for me.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>從屬子句 <code>Because I (S) grew up (V) eating Asian cuisines</code>；主句 <code>this reaction (S) is (V) far less common (C)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong><code>grew up</code> 過去式交代成長經驗；主句 <code>is</code> 現在式陳述現在的狀況。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>Because</code> 引導原因副詞子句；<code>grow up + V-ing</code>；<code>for me</code> 表對象。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>原因在前，中文順翻；<code>for me</code> 提到「少見」前，譯「在我身上」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>grow up doing</code>（從小做某事長大）；far 修飾比較級；because 與 so 不同句併用。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：把 for me 直翻成「對我來說遠遠更少常見」，語意變成主觀感受，不像在說生理反應。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Because I grew up eating Asian cuisines,</code>（原因副詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「因為我從小吃亞洲料理長大」，grow up eating 譯「從小吃……長大」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>this reaction is far less common</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        主詞「這種反應」先翻，far less common 譯「少見得多」，留到句尾。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>for me</code>（對象介系詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】放到「少見」前，譯「在我身上」，強調是發生在我身體上的反應。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 的主詞 ➔ 語塊 3（對象超車） ➔ 語塊 2 的「少見得多」</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：因為我從小吃亞洲料理長大，這種反應【在我身上】少見得多。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：原因子句在前照翻；for + 人放到比較結果前，譯「在……身上」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">句首 Because 帶出原因，中文也是先因後果：「因為我從小吃亞洲料理長大」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>比較級後面接 for + 人時，把「在某人身上」提到比較結果前</strong>：「這種反應在我身上少見得多」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：grew up eating 翻「從小吃……長大」。for me 翻「在我身上」比「對我來說」更貼近生理反應的意思。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：因為我從小吃亞洲料理長大，這種反應在我身上少見得多。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">Because</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>從屬連接詞</strong>：Because 引導原因副詞子句</div>
+            </div>
+            <div class="conj-title-main">Because 原因子句</div>
+            <div class="conj-desc">
+              <code>Because I grew up eating Asian cuisines</code> 是原因，主句 <code>this reaction is far less common for me</code> 是結果。Because 子句放句首時用逗號接主句；英文一句只用一個連接詞，主句前不能再加 so。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：Because 放句首 ➔ 中文「因為……，」照翻；英文主句前不能再加 so。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
-          <div class="chunk s"><span class="c-role">[S+V1+IO+DO]</span><span class="c-en">I showed Leo unusual Taiwanese products...</span><span class="c-zh">我給 Leo 看台灣新奇產品</span></div>
-          <div class="chunk v"><span class="c-role">[V2+IO+DO]</span><span class="c-en">and told him how a coriander pizza ... became such a hit</span><span class="c-zh">並告訴他香菜披薩如何大受歡迎</span></div>
-          <div class="chunk c"><span class="c-role">[Conj] that 結果子句</span><span class="c-en">that it returned with twice the amount of the herb</span><span class="c-zh">以致於以雙倍分量的香菜回歸</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 原因子句</span><span class="c-en">Because I grew up eating Asian cuisines,</span><span class="c-zh">因為我從小吃亞洲料理長大</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">this reaction</span><span class="c-zh">這種反應</span></div>
+          <div class="chunk v"><span class="c-role">[V+C] 比較級補語</span><span class="c-en">is far less common</span><span class="c-zh">少見得多</span></div>
+          <div class="chunk m"><span class="c-role">[M] 對象</span><span class="c-en">for me</span><span class="c-zh">在我身上</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 授與動詞雙受詞：<code>show / tell + 人 (IO) + 事/名詞子句 (DO)</code></div><code>told him [how + S + V]</code> 是間接問句當受詞，注意 <code>how</code> 後面順序為正常語序 `a coriander pizza ... became`。</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 寫作收尾秘訣</div>用一個幽默的分享場景收尾，讓文化交流故事自然落幕。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong><code>grow up + V-ing</code>：從小做某事長大</strong><br/>原文 <code>people who grew up eating coriander regularly</code> 改成第一人稱的 <code>Because I grew up eating Asian cuisines</code>，把科學事實寫成自己的經驗。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>記敘文的因果收尾</strong><br/>用 <code>Because ..., this reaction is far less common for me.</code> 把老師講的科學原理套回自己身上，替第一段做結。</div>
+        </div>
+      </div>
+      <div class="para-badge">第二段：Leo 的冷知識與台日香菜商品（第 5–7 句）</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 5</span>
+          <div class="sent-en">
+            Leo also shared that Americans call the leaves cilantro, whereas British people call both leaves and seeds coriander—from a Greek word for “stink bug.”
+            <div class="sent-zh">Leo 還分享說美國人稱葉子為 cilantro，而英國人把葉子與種子都稱為 coriander——源自希臘文的「臭蟲」。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Leo also shared that Americans call the leaves cilantro, whereas British people call both leaves and seeds coriander—from a Greek word for “stink bug.”', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Leo also shared that Americans call the leaves cilantro, whereas British people call both leaves and seeds coriander—from a Greek word for “stink bug.”', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主句 <code>Leo (S) shared (V) + that 子句 (O)</code>；that 子句內 <code>Americans call ...</code> 與 <code>British people call ...</code> 用 whereas 對比；破折號後補充字源。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong><code>shared</code> 過去式敘述 Leo 說的話；that 子句用現在式 <code>call</code>，因為叫法到現在仍是事實。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>that</code> 引導 shared 的受詞子句；<code>whereas</code> 表對比（而），比 while 正式；破折號後 <code>from a Greek word ...</code> 補充 coriander 的來源。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>全句順翻；shared that 譯「分享說」；破折號後補「源自」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>whereas</code> ＝ while（對比），只表對比不表時間；<code>call A B</code>；敘述過去時提到不變的事實可用現在式。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：把 whereas 誤當成時間的 while，翻成「當……時」，或把破折號後的 from 直翻成「從一個希臘字」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Leo also shared that</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「Leo 還分享說」，also 譯「還」，that 譯成「說」帶出內容。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>Americans call the leaves cilantro,</code>（名詞子句一）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「美國人稱葉子為 cilantro」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>whereas British people call both leaves and seeds coriander</code>（對比子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：whereas 譯「而」；both A and B 用「把……都」：「而英國人把葉子與種子都稱為 coriander」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>—from a Greek word for “stink bug.”</code>（補充說明）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：破折號後補字源：「源自希臘文的『臭蟲』」，from 譯「源自」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 4（全句順翻）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：Leo 還分享說美國人稱葉子為 cilantro，而英國人把葉子與種子都稱為 coriander——源自希臘文的「臭蟲」。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：whereas ＝ while 表對比，翻「而」；破折號後的 from 片語翻「源自……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">主句 Leo also shared that 翻「Leo 還分享說」，後面是他說的內容。</p>
+                <p style="margin: 0 0 0.5rem;">that 子句順著翻：「美國人稱葉子為 cilantro」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 whereas / while 連接兩個結構相同、內容對照的句子，翻「而」</strong>：「而英國人把葉子與種子都稱為 coriander」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：破折號後面的 from a Greek word 翻「源自希臘文的……」，不要翻「從一個希臘字」。whereas 是改寫版換掉 while 的同義字，寫作時可以交替使用。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：Leo 還分享說美國人稱葉子為 cilantro，而英國人把葉子與種子都稱為 coriander——源自希臘文的「臭蟲」。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">that</span><span class="conj-word-preview">whereas</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>名詞子句連接詞</strong>：that 引導 shared 的受詞</div>
+              <div>• <strong>對比連接詞</strong>：whereas 連接美式與英式叫法</div>
+            </div>
+            <div class="conj-title-main">that 名詞子句 ＋ whereas 對比</div>
+            <div class="conj-desc">
+              1. <code>shared</code> 後接 that 子句，交代 Leo 分享的內容。<br/>2. that 子句裡用 <code>whereas</code> 連接兩個結構平行的 call A B 句子，對比美國和英國的叫法；whereas 只表對比，語氣比 while 正式。<br/>3. 破折號後 <code>from a Greek word for “stink bug”</code> 補充 coriander 這個字的來源。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：看到 whereas ➔ 一定是對比「而」，不會是時間。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S+V] 主句</span><span class="c-en">Leo also shared that</span><span class="c-zh">Leo 還分享說</span></div>
+          <div class="chunk s"><span class="c-role">[S1+V1+O+OC]</span><span class="c-en">Americans call the leaves cilantro,</span><span class="c-zh">美國人稱葉子為 cilantro</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對比連接詞</span><span class="c-en">whereas British people call both leaves and seeds coriander</span><span class="c-zh">而英國人把葉子與種子都稱為 coriander</span></div>
+          <div class="chunk m"><span class="c-role">[M] 補充字源</span><span class="c-en">—from a Greek word for “stink bug”</span><span class="c-zh">——源自希臘文的「臭蟲」</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>對比連接詞 <code>whereas</code></strong><br/>原文用 <code>while</code>，這裡換成 <code>whereas</code>，兩者都表「而」；whereas 只有對比的意思，不會和表時間的 while 混淆。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>轉述別人的話</strong><br/>記敘文用 <code>share that / explain that / tell sb that</code> 帶出別人說的內容，比一直用 say 更生動。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 6</span>
+          <div class="sent-en">
+            Its story <span class="key-term">stretches</span> back to 6000 BCE; Romans used it to <span class="key-term">flavor</span> bread and <span class="key-term">preserve</span> meat, and by the Middle Ages, it <span class="gram-term">had</span> <span class="key-term">spread</span> across Europe before <span class="key-term">explorers</span> brought it to Asia.
+            <div class="sent-zh">它的故事可追溯至西元前 6000 年；羅馬人用它調味麵包並保存肉類，到了中世紀它已傳遍歐洲，隨後探險家將它帶到亞洲。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Its story stretches back to 6000 BCE; Romans used it to flavor bread and preserve meat, and by the Middle Ages, it had spread across Europe before explorers brought it to Asia.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Its story stretches back to 6000 BCE; Romans used it to flavor bread and preserve meat, and by the Middle Ages, it had spread across Europe before explorers brought it to Asia.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>分號前 <code>Its story (S) stretches back (V) to 6000 BCE</code>；分號後 <code>Romans (S) used (V) it (O) ...</code>, and <code>it (S) had spread (V) ...</code>，句尾接 before 子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong><code>stretches</code> 現在式（歷史淵源是事實）；<code>used</code> 過去式；<code>had spread</code> 過去完成式，表示在中世紀、也在探險家帶到亞洲之前就已完成；<code>brought</code> 過去式。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>分號連接兩個獨立子句；<code>and</code> 連接 flavor 與 preserve；<code>, and</code> 連接兩個子句；<code>before</code> 引導時間子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>照時間先後順翻；before 子句在句尾，譯「隨後……」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>stretch back to</code>（追溯至）；<code>by + 過去時間 ➔ had p.p.</code>；<code>bring A to B</code>（把 A 帶到 B）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：把 before 子句搬到前面，翻成「在探險家把它帶到亞洲之前，到了中世紀它已經……」，時間順序繞了一圈。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Its story stretches back to 6000 BCE;</code>（分號前子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「它的故事可追溯至西元前 6000 年；」，its 指香菜，分號保留。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>Romans used it to flavor bread and preserve meat,</code>（分號後子句一）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「羅馬人用它調味麵包並保存肉類」，flavor 當動詞「調味」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>and by the Middle Ages, it had spread across Europe</code>（子句二）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「到了中世紀它已傳遍歐洲」，by + 過去時間配 had p.p.，譯「到了……已……」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>before explorers brought it to Asia</code>（時間子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：before 在句尾，照時間先後譯「隨後探險家將它帶到亞洲」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 4（全句照時間順翻）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：它的故事可追溯至西元前 6000 年；羅馬人用它調味麵包並保存肉類，到了中世紀它已傳遍歐洲，隨後探險家將它帶到亞洲。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：歷史句照時間先後順翻；句尾 before 子句翻「隨後……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句是 Leo 講的香菜歷史，分號前先總結：「它的故事可追溯至西元前 6000 年」。</p>
+                <p style="margin: 0 0 0.5rem;">分號後照時間往下說：「羅馬人用它調味麵包並保存肉類」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 by + 過去時間點，配上 had + p.p.，翻成「到了……已……」</strong>：「到了中世紀它已傳遍歐洲」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>before 子句放在句尾、而且是後來才發生的事，直接翻「隨後……」</strong>：「隨後探險家將它帶到亞洲」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：整句照時間先後排好了，不需要調序。flavor 在這裡是動詞「調味」，不是名詞「風味」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：它的故事可追溯至西元前 6000 年；羅馬人用它調味麵包並保存肉類，到了中世紀它已傳遍歐洲，隨後探險家將它帶到亞洲。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">;</span><span class="conj-word-preview">, and</span><span class="conj-word-preview">before</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>分號</strong>：連接「歷史有多久」與「具體經過」兩個子句</div>
+              <div>• <strong>對等連接詞</strong>：, and 連接羅馬人與中世紀兩個子句</div>
+              <div>• <strong>從屬連接詞</strong>：before 引導時間子句</div>
+            </div>
+            <div class="conj-title-main">分號 ＋ , and ＋ before 時間子句</div>
+            <div class="conj-desc">
+              1. 分號前先說總結 <code>Its story stretches back to 6000 BCE</code>，分號後接具體經過；兩個完整句意思緊密，用分號連接。<br/>2. <code>, and by the Middle Ages, it had spread across Europe</code>：by + 過去時間點搭配過去完成式。<br/>3. <code>before explorers brought it to Asia</code>：had spread 先發生，brought 後發生。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：主句 had p.p. ＋ before + 過去式 ➔ 主句先發生，before 子句在句尾時翻「隨後……」。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S+V] 分號前子句</span><span class="c-en">Its story stretches back to 6000 BCE;</span><span class="c-zh">它的故事可追溯至西元前 6000 年；</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 分號後子句</span><span class="c-en">Romans used it to flavor bread and preserve meat,</span><span class="c-zh">羅馬人用它調味麵包並保存肉類</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 過去完成式</span><span class="c-en">and by the Middle Ages, it had spread across Europe</span><span class="c-zh">到了中世紀它已傳遍歐洲</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 時間子句</span><span class="c-en">before explorers brought it to Asia</span><span class="c-zh">隨後探險家將它帶到亞洲</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>過去完成式 <code>had spread</code> 與過去式 <code>brought</code> 的先後</strong><br/>先傳遍歐洲（<code>had spread</code>），之後探險家才帶到亞洲（<code>before explorers brought it to Asia</code>）。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>分號的用法</strong><br/>兩個完整句意思緊密、又不想加連接詞時用分號：<code>Its story stretches back to 6000 BCE; Romans used it ...</code>。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 7</span>
+          <div class="sent-en">
+            After school, I showed Leo unusual Taiwanese <span class="key-term">products</span> like <span class="key-term">coriander-flavored</span> chips, and told him how a coriander pizza <span class="key-term">released</span> by a Japanese restaurant <span class="key-term">chain</span> became <span class="gram-term">such a hit that</span> it returned with <span class="gram-term">twice the amount of</span> the herb, alongside festivals and <span class="key-term">perfumes</span> for <span class="key-term">devoted</span> fans!
+            <div class="sent-zh">放學後，我帶 Leo 看香菜口味洋芋片等台灣新奇產品，還告訴他日本一家連鎖餐廳推出的香菜披薩如何成為如此熱賣的商品，以致於帶著雙倍分量的香菜回歸，此外還有為忠實粉絲舉辦的節慶與香水！</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('After school, I showed Leo unusual Taiwanese products like coriander-flavored chips, and told him how a coriander pizza released by a Japanese restaurant chain became such a hit that it returned with twice the amount of the herb, alongside festivals and perfumes for devoted fans!', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('After school, I showed Leo unusual Taiwanese products like coriander-flavored chips, and told him how a coriander pizza released by a Japanese restaurant chain became such a hit that it returned with twice the amount of the herb, alongside festivals and perfumes for devoted fans!', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹 <code>I (S) showed (V1) Leo (IO) unusual Taiwanese products (DO)</code>, <code>and told (V2) him (IO) + how 子句 (DO)</code>；how 子句內含 such ... that。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>showed / told / became / returned</code>：敘述放學後發生的事。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>and</code> 連接 showed 與 told；<code>how</code> 引導間接問句當 told 的直接受詞；<code>released by ...</code> 過去分詞修飾 pizza；<code>such ... that</code> 表結果；<code>alongside</code> 是介系詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>like ...</code> 舉例提到「產品」前；<code>released by ...</code> 搬到「香菜披薩」前；alongside 片語另起一句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>show / tell + 人 + 事</code>（雙受詞）；間接問句 <code>how + S + V</code> 用直述句語序；<code>such a + N + that</code>。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「我給 Leo 看台灣新奇產品像香菜洋芋片，並告訴他如何一個香菜披薩被日本連鎖餐廳推出變成如此一個熱門……」，how 被翻成「如何做」，分詞修飾也掛在後面。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>After school, I showed Leo unusual Taiwanese products</code>（主幹一）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「放學後，我帶 Leo 看……台灣新奇產品」，show sb sth 在記敘文譯「帶某人看」比「給某人看」自然。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>like coriander-flavored chips,</code>（舉例）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】like 舉例提到「產品」前：「香菜口味洋芋片等台灣新奇產品」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>and told him how</code>（主幹二）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「還告訴他……如何」，and 譯「還」；how 是間接問句，「如何」要放在披薩後面、動詞前。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>a coriander pizza released by a Japanese restaurant chain</code>（間接問句主詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】released by ... 搬到「披薩」前：「日本一家連鎖餐廳推出的香菜披薩」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>became such a hit that it returned with twice the amount of the herb,</code>（such ... that）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「如何成為如此熱賣的商品，以致於帶著雙倍分量的香菜回歸」，with 譯「帶著」，可以順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 6：<code>alongside festivals and perfumes for devoted fans!</code>（介系詞片語補充）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        另起一句：「此外還有為忠實粉絲舉辦的節慶與香水！」
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 的「放學後，我帶 Leo 看」 ➔ 語塊 2（舉例超車） ➔ 語塊 1 的「台灣新奇產品」 ➔ 語塊 3 的「還告訴他」 ➔ 語塊 4（分詞修飾超車） ➔ 語塊 3 的「如何」 ➔ 語塊 5 ➔ 語塊 6</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：放學後，我帶 Leo 看【香菜口味洋芋片等】台灣新奇產品，還告訴他【日本一家連鎖餐廳推出的】香菜披薩如何成為如此熱賣的商品，以致於帶著雙倍分量的香菜回歸，此外還有為忠實粉絲舉辦的節慶與香水！
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：間接問句 how + S + V 翻「S 如何 V」，「如何」放在主詞後面；分詞修飾搬到名詞前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">After school 翻「放學後」，主幹 I showed Leo unusual Taiwanese products，show sb sth 翻「帶某人看」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>名詞後面接 like + 例子時，先翻例子，再補「等＋名詞」</strong>：「我帶 Leo 看香菜口味洋芋片等台灣新奇產品」。</div>
+                <p style="margin: 0 0 0.5rem;">and told him how 翻「還告訴他……如何」，how 後面是一個間接問句。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>名詞後面接 released / made + by 某人時，先翻「某人推出的」，再翻名詞；間接問句的「如何」放在主詞後面</strong>：「日本一家連鎖餐廳推出的香菜披薩如何成為如此熱賣的商品」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>句尾 alongside + 名詞，另起一句翻「此外還有……」</strong>：「此外還有為忠實粉絲舉辦的節慶與香水！」</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：such a hit that 的 that 翻「以致於」，with twice the amount 在這裡翻「帶著雙倍分量的香菜」，直接順著說就好。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：放學後，我帶 Leo 看香菜口味洋芋片等台灣新奇產品，還告訴他日本一家連鎖餐廳推出的香菜披薩如何成為如此熱賣的商品，以致於帶著雙倍分量的香菜回歸，此外還有為忠實粉絲舉辦的節慶與香水！</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">and</span><span class="conj-word-preview">how</span><span class="conj-word-preview">released by</span><span class="conj-word-preview">such ... that</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>對等連接詞</strong>：and 連接 showed 與 told</div>
+              <div>• <strong>間接問句</strong>：how + S + V 當 told 的受詞</div>
+              <div>• <strong>過去分詞後位修飾</strong>：a coriander pizza (which was) released by ...</div>
+              <div>• <strong>結果子句</strong>：such a hit that ...</div>
+            </div>
+            <div class="conj-title-main">and 並列動詞 ＋ how 間接問句 ＋ such ... that</div>
+            <div class="conj-desc">
+              1. <code>I showed Leo ... and told him ...</code>：show 和 tell 都接雙受詞（人＋事），and 連接兩個動作。<br/>2. <code>how a coriander pizza ... became such a hit</code> 是間接問句，用直述句語序（主詞在動詞前），不寫成 how did a pizza become。<br/>3. <code>released by a Japanese restaurant chain</code> 修飾 pizza；<code>such a hit that it returned ...</code> 表結果。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：tell / show / explain + how + 主詞 + 動詞 ➔ 間接問句，中文「主詞如何……」。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S+V1+IO+DO]</span><span class="c-en">I showed Leo unusual Taiwanese products ...</span><span class="c-zh">我帶 Leo 看台灣新奇產品</span></div>
+          <div class="chunk v"><span class="c-role">[V2+IO+DO]</span><span class="c-en">and told him how a coriander pizza ... became such a hit</span><span class="c-zh">還告訴他香菜披薩如何大受歡迎</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] that 結果子句</span><span class="c-en">that it returned with twice the amount of the herb</span><span class="c-zh">以致於帶著雙倍分量的香菜回歸</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>雙受詞動詞：<code>show / tell + 人 (IO) + 事／名詞子句 (DO)</code></strong><br/><code>told him [how + S + V]</code> 是間接問句當受詞，how 後面用直述句語序 <code>a coriander pizza ... became</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>收尾</strong><br/>用一個分享的場景收尾，讓文化交流的故事自然落幕。</div>
         </div>
       </div>
 
@@ -441,6 +1310,27 @@
       siblings.forEach(b => { if (b.getAttribute('onclick').includes(expId)) b.classList.remove('correct', 'wrong'); });
       btn.classList.add(isCorrect ? 'correct' : 'wrong');
       document.getElementById(expId).style.display = 'block';
+    }
+
+    let allMasterTransOpen = false;
+    function toggleAllMasterTrans() {
+      allMasterTransOpen = !allMasterTransOpen;
+      document.querySelectorAll('.sent-card .master-trans-details').forEach(d => { d.open = allMasterTransOpen; });
+      const btn = document.getElementById('btn-toggle-master-trans');
+      if (btn) {
+        btn.textContent = allMasterTransOpen ? '👨‍🏫 一鍵收合名師翻譯拆解' : '👨‍🏫 一鍵展開名師翻譯拆解';
+        btn.classList.toggle('active', allMasterTransOpen);
+      }
+    }
+    let allConjOpen = false;
+    function toggleAllConj() {
+      allConjOpen = !allConjOpen;
+      document.querySelectorAll('.conj-box').forEach(d => { d.open = allConjOpen; });
+      const btn = document.getElementById('toggle-conj-btn');
+      if (btn) {
+        btn.textContent = allConjOpen ? '🔗 一鍵收合所有連接詞解析' : '🔗 一鍵展開所有連接詞解析';
+        btn.classList.toggle('active', allConjOpen);
+      }
     }
   </script>
 </body>

@@ -79,6 +79,46 @@
     .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
     .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
     .quiz-exp { display: none; margin-top: 0.45rem; padding: 0.7rem 1rem; border-radius: 10px; background: var(--green-bg); color: #065f46; font-size: 0.88rem; }
+
+    /* V4：正常／慢速雙按鈕（覆蓋舊版 36px 圓形按鈕） */
+    .audio-group { display: flex; gap: 0.35rem; flex-shrink: 0; align-self: flex-start; }
+    .audio-group .audio-btn { width: auto; height: auto; border-radius: 999px; padding: 0.35rem 0.65rem; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+    .audio-group .audio-btn.slow { background: #f1f5f9; color: #475569; }
+
+    /* ===== V4 句卡元件（名師拆解 Step 1~7／連接詞框） ===== */
+    .conj-box { margin-top: 0.75rem; background: #faf5ff; border: 1.5px solid #d8b4fe; border-radius: 10px; padding: 0.55rem 0.9rem; font-size: 0.88rem; }
+    details.conj-box[open] { padding-bottom: 0.85rem; }
+    details.conj-box summary.conj-title { font-weight: 800; color: #6d28d9; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; list-style: none; margin: 0; padding: 0.1rem 0; }
+    details.conj-box summary.conj-title::-webkit-details-marker { display: none; }
+    details.conj-box[open] summary.conj-title { margin-bottom: 0.6rem; border-bottom: 1px dashed #d8b4fe; padding-bottom: 0.45rem; }
+    details.conj-box .conj-arrow { font-size: 0.82rem; color: #7c3aed; display: inline-block; transition: transform 0.2s ease; }
+    details.conj-box[open] .conj-arrow { transform: rotate(180deg); }
+    .conj-word-preview { background: #7c3aed; color: #fff; font-size: 0.75rem; font-family: Consolas, monospace; padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700; }
+    .conj-concept { background: #fff; border: 1px solid #c084fc; border-radius: 8px; padding: 0.65rem 0.85rem; margin-top: 0.5rem; font-size: 0.85rem; color: #4c1d95; line-height: 1.55; box-shadow: 0 2px 6px rgba(124,58,237,0.06); }
+    .conj-concept strong { color: #6b21a8; }
+    .conj-meta-list { margin-bottom: 0.5rem; padding-bottom: 0.45rem; border-bottom: 1px dashed #d8b4fe; font-size: 0.85rem; color: #6b21a8; line-height: 1.6; }
+    .conj-title-main { font-weight: 800; color: #5b21b6; margin-bottom: 0.35rem; font-size: 0.9rem; }
+    .conj-desc { font-size: 0.86rem; color: #334155; line-height: 1.65; margin-bottom: 0.5rem; }
+    .conj-killer-tip { background: #faf5ff; border-left: 3px solid #9333ea; padding: 0.35rem 0.6rem; border-radius: 0 4px 4px 0; font-size: 0.84rem; color: #581c87; }
+    .master-trans-details { margin-top: 0.7rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; overflow: hidden; }
+    .master-trans-details[open] { border-color: #4ade80; box-shadow: 0 4px 12px rgba(34,197,94,0.08); }
+    .master-trans-summary { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem; cursor: pointer; background: #f0fdf4; user-select: none; font-size: 0.88rem; font-weight: 700; color: #166534; list-style: none; }
+    .master-trans-summary:hover { background: #dcfce7; }
+    .master-trans-summary::-webkit-details-marker { display: none; }
+    .master-badge { background: #16a34a; color: #fff; padding: 0.12rem 0.5rem; border-radius: 6px; font-size: 0.74rem; font-weight: 800; white-space: nowrap; }
+    .master-summary-text { flex: 1; }
+    .master-arrow { font-size: 0.75rem; color: #16a34a; display: inline-block; transition: transform 0.2s ease; }
+    .master-trans-details[open] > summary .master-arrow { transform: rotate(180deg); }
+    .master-trans-body { padding: 0.85rem 1rem; background: #fff; border-top: 1px dashed #bbf7d0; font-size: 0.87rem; line-height: 1.65; color: #1e293b; }
+    .master-step { margin-bottom: 0.65rem; padding-left: 0.5rem; border-left: 3px solid #22c55e; }
+    .master-step:last-child { margin-bottom: 0; }
+    .m-step-tag { font-weight: 800; font-size: 0.75rem; padding: 0.1rem 0.4rem; border-radius: 4px; margin-right: 0.35rem; display: inline-block; }
+    .m-step-tag.s1 { background: #dbeafe; color: #1e40af; }
+    .m-step-tag.s2 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s3 { background: #ede9fe; color: #5b21b6; }
+    .m-step-tag.s4 { background: #ffedd5; color: #9a3412; }
+    .m-step-tag.s5 { background: #dcfce7; color: #166534; }
+    @media print { .audio-group, .control-bar { display: none !important; } .sent-card { break-inside: avoid; } }
   </style>
 </head>
 <body>
@@ -179,89 +219,938 @@
         <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
         <button class="toggle-btn active" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
         <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式</button>
+        <button id="toggle-conj-btn" class="toggle-btn" onclick="toggleAllConj()">🔗 一鍵展開所有連接詞解析</button>
+        <button id="btn-toggle-master-trans" class="toggle-btn" onclick="toggleAllMasterTrans()">👨‍🏫 一鍵展開名師翻譯拆解</button>
       </div>
 
       <!-- S1 -->
+      <div class="para-badge">第一段：破題與批評者的論點（第 1–4 句）</div>
+
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 1</span>
-          <div style="flex:1;">
-            <div class="sent-en">Whether coriander is a culinary treasure or a soapy disaster remains one of the world’s most hotly <span class="key-term">debated</span> <span class="key-term">flavors</span>.</div>
+          <div class="sent-en">
+            Whether coriander is a culinary treasure or a soapy disaster remains one of the world’s most hotly <span class="key-term">debated</span> <span class="key-term">flavors</span>.
             <div class="sent-zh">香菜究竟是烹飪瑰寶還是肥皂味災難，至今仍是世界上爭論最激烈的風味之一。</div>
           </div>
-          <button class="audio-btn" onclick="speak('Whether coriander is a culinary treasure or a soapy disaster remains one of the world’s most hotly debated flavors.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Whether coriander is a culinary treasure or a soapy disaster remains one of the world’s most hotly debated flavors.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Whether coriander is a culinary treasure or a soapy disaster remains one of the world’s most hotly debated flavors.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主詞是名詞子句 <code>Whether coriander is a culinary treasure or a soapy disaster (S)</code>；動詞 <code>remains (V)</code>；補語 <code>one of the world’s most hotly debated flavors (C)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在簡單式 <code>is / remains</code>：陳述至今仍成立的爭議。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>Whether ... or ...</code> 引導名詞子句當主詞，視為單一件事，動詞用單數 remains；remains 是連綴動詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>名詞子句主詞很長，中文先說完再用逗號斷開，接「至今仍是……」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>名詞子句當主詞配單數動詞；<code>Whether A or B</code>（究竟是 A 還是 B）；<code>remain + N／adj</code>（仍然是）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：把 Whether 翻成「是否」，變成「是否香菜是烹飪瑰寶或肥皂災難仍然是……」，主詞讀不出來。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Whether coriander is a culinary treasure</code>（名詞子句主詞（前半））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：Whether 當主詞時譯「究竟是」，不譯「是否」：「香菜究竟是烹飪瑰寶」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>or a soapy disaster</code>（名詞子句主詞（後半））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「還是肥皂味災難」，主詞到此說完，用逗號斷開。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>remains</code>（連綴動詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：remain 譯「至今仍是」，「至今」把時間感補出來。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>one of the world’s most hotly debated flavors</code>（主詞補語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「世界上爭論最激烈的風味之一」，「之一」放句尾。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2（主詞說完，逗號斷開） ➔ 語塊 3 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：香菜究竟是烹飪瑰寶還是肥皂味災難，至今仍是世界上爭論最激烈的風味之一。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：Whether A or B 當主詞翻「究竟是 A 還是 B」，動詞用單數。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句一開頭就是 Whether，要先找出主要動詞：讀到 remains 才是全句的動詞，前面整串都是主詞。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>Whether A or B 當主詞時，翻成「究竟是 A 還是 B」，說完用逗號斷開，再接動詞</strong>：「香菜究竟是烹飪瑰寶還是肥皂味災難，」</div>
+                <p style="margin: 0 0 0.5rem;">接著 remains one of the world’s most hotly debated flavors，翻「至今仍是世界上爭論最激烈的風味之一」。</p>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：whether 在這裡不要翻「是否」。remain 翻「至今仍是」，比「保持」自然，也點出爭議一直沒停。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：香菜究竟是烹飪瑰寶還是肥皂味災難，至今仍是世界上爭論最激烈的風味之一。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">Whether ... or</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>名詞子句連接詞</strong>：Whether ... or ... 引導主詞子句</div>
+            </div>
+            <div class="conj-title-main">Whether 名詞子句當主詞</div>
+            <div class="conj-desc">
+              <code>Whether coriander is a culinary treasure or a soapy disaster</code> 是完整的名詞子句，整個當全句主詞，所以動詞用單數 <code>remains</code>。whether 帶出 A or B 兩個選項，表示究竟是哪一個還沒有定論，正好點出議論文要討論的爭議。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：句首 Whether 一路讀到第二個動詞才結束 ➔ Whether 子句當主詞，翻「究竟是……還是……，」再接主要動詞。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
           <div class="chunk s"><span class="c-role">[S] 名詞子句主詞</span><span class="c-en">Whether coriander is a culinary treasure or a soapy disaster</span><span class="c-zh">香菜究竟是烹飪瑰寶還是肥皂味災難</span></div>
-          <div class="chunk v"><span class="c-role">[V] 連綴動詞(單數!)</span><span class="c-en">remains</span><span class="c-zh">至今仍然是</span></div>
-          <div class="chunk o"><span class="c-role">[C] 主詞補語</span><span class="c-en">one of the world’s most hotly debated flavors</span><span class="c-zh">世上爭論最激烈的風味之一</span></div>
+          <div class="chunk v"><span class="c-role">[V] 連綴動詞（單數）</span><span class="c-en">remains</span><span class="c-zh">至今仍是</span></div>
+          <div class="chunk o"><span class="c-role">[C] 主詞補語</span><span class="c-en">one of the world’s most hotly debated flavors</span><span class="c-zh">世界上爭論最激烈的風味之一</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 學測議論文破題神句：<code>Whether S + V (or ...) + 單數動詞 remains ...</code></div>用 <code>Whether ... or ...</code> 名詞子句當整句話的主詞，視為「單一事件」，動詞必用單數 <strong><code>remains</code></strong>！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 對比修辭秘訣</div>用 <code>a culinary treasure</code>（烹飪瑰寶）對比 <code>a soapy disaster</code>（肥皂味災難），文采瞬間飆升！</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>議論文破題句：<code>Whether S + V (or ...) + 單數動詞 remains ...</code></strong><br/>用 <code>Whether ... or ...</code> 名詞子句當整句的主詞，視為單一事件，動詞用單數 <code>remains</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>對比修辭</strong><br/>用 <code>a culinary treasure</code>（烹飪瑰寶）對比 <code>a soapy disaster</code>（肥皂味災難），破題就把爭議的兩端擺出來。</div>
         </div>
       </div>
-
-      <!-- S2 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 2</span>
-          <div style="flex:1;">
-            <div class="sent-en">On the one hand, critics in this <span class="key-term">dispute</span> argue that it <span class="gram-term">tastes like</span> soap, a claim supported by biology rather than mere personal <span class="key-term">preference</span>.</div>
+          <div class="sent-en">
+            On the one hand, critics in this <span class="key-term">dispute</span> argue that it <span class="gram-term">tastes like</span> soap, a claim supported by biology rather than mere personal <span class="key-term">preference</span>.
             <div class="sent-zh">一方面，這場爭論中的批評者主張它嚐起來像肥皂，這項說法有生物學根據，而非單純的個人偏好。</div>
           </div>
-          <button class="audio-btn" onclick="speak('On the one hand, critics in this dispute argue that it tastes like soap, a claim supported by biology rather than mere personal preference.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('On the one hand, critics in this dispute argue that it tastes like soap, a claim supported by biology rather than mere personal preference.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('On the one hand, critics in this dispute argue that it tastes like soap, a claim supported by biology rather than mere personal preference.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹 <code>critics (S) argue (V) + that 子句 (O)</code>；逗號後 <code>a claim supported by ...</code> 是總結前句的同位語。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在簡單式 <code>argue / tastes</code>：陳述論點。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>On the one hand</code> 帶出第一方論點；<code>that</code> 引導 argue 的受詞子句；<code>a claim (which is) supported by ...</code> 為同位語＋過去分詞；<code>A rather than B</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>in this dispute</code> 搬到「批評者」前；同位語另起一句，補「這項說法」；supported by biology 譯「有生物學根據」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>argue that</code>（主張）；<code>A rather than B</code>（是 A 而非 B）；mere 譯「單純的、僅僅」。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：把 a claim supported by biology 直翻成「一個被生物學支持的主張」，接在句尾又長又硬。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>On the one hand,</code>（轉承語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「一方面」，議論文帶出第一個論點。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>critics in this dispute</code>（主詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】in this dispute 修飾 critics，搬到前面：「這場爭論中的批評者」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>argue that it tastes like soap,</code>（動詞＋名詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：argue 在議論文譯「主張」，that 不譯：「主張它嚐起來像肥皂」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>a claim supported by biology</code>（同位語＋過去分詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        另起一句，補「這項說法」：supported by biology 譯「有生物學根據」，比「被生物學支持」通順。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>rather than mere personal preference</code>（對比）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「而非單純的個人偏好」，rather than 譯「而非」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2（介系詞片語超車到主詞前） ➔ 語塊 3 ➔ 語塊 4（同位語另起一句） ➔ 語塊 5</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：一方面，【這場爭論中的】批評者主張它嚐起來像肥皂，這項說法有生物學根據，而非單純的個人偏好。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：句尾同位語 a claim ... 另起一句翻「這項說法……」；A rather than B 翻「是 A 而非 B」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">On the one hand 翻「一方面」，議論文要開始講第一方的論點了。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>主詞後面接 in / of + 名詞的修飾時，先翻修飾，再翻主詞</strong>：「這場爭論中的批評者」。</div>
+                <p style="margin: 0 0 0.5rem;">argue that it tastes like soap 翻「主張它嚐起來像肥皂」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>句尾逗號接 a claim / a view 這類總結前句的名詞時，另起一句，翻「這項說法……」</strong>：「這項說法有生物學根據，而非單純的個人偏好」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：argue 在議論文翻「主張」，不是「吵架」。supported by biology 翻「有生物學根據」，比「被生物學支持」順得多。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：一方面，這場爭論中的批評者主張它嚐起來像肥皂，這項說法有生物學根據，而非單純的個人偏好。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">On the one hand</span><span class="conj-word-preview">that</span><span class="conj-word-preview">a claim（同位語）</span><span class="conj-word-preview">rather than</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>轉承語</strong>：On the one hand 帶出第一方論點</div>
+              <div>• <strong>名詞子句連接詞</strong>：that 引導 argue 的受詞</div>
+              <div>• <strong>同位語＋過去分詞</strong>：a claim (which is) supported by biology</div>
+              <div>• <strong>對比</strong>：rather than</div>
+            </div>
+            <div class="conj-title-main">that 名詞子句 ＋ 總結式同位語</div>
+            <div class="conj-desc">
+              1. <code>argue</code> 後接 that 子句 <code>it tastes like soap</code>，交代批評者的主張。<br/>2. 逗號後的 <code>a claim</code> 回頭總結前面「它嚐起來像肥皂」這整個說法，再接過去分詞 <code>supported by biology</code> 說明根據，是議論文常見的總結式同位語。<br/>3. <code>rather than mere personal preference</code> 和 by biology 形成對比：根據是生物學，而不是個人偏好。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：句尾逗號後出現 a claim / a view / a move + 修飾語 ➔ 總結前面整句的同位語，另起一句翻「這項……」。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
-          <div class="chunk m"><span class="c-role">[M] 轉折連接</span><span class="c-en">On the one hand,</span><span class="c-zh">一方面，</span></div>
+          <div class="chunk m"><span class="c-role">[M] 轉承語</span><span class="c-en">On the one hand,</span><span class="c-zh">一方面，</span></div>
           <div class="chunk s"><span class="c-role">[S+V+O] 主句</span><span class="c-en">critics in this dispute argue that it tastes like soap,</span><span class="c-zh">批評者主張它嚐起來像肥皂</span></div>
-          <div class="chunk m"><span class="c-role">[M] 同位語+分詞</span><span class="c-en">a claim supported by biology rather than mere personal preference</span><span class="c-zh">一項由生物學支持而非僅是個人偏好的主張</span></div>
+          <div class="chunk m"><span class="c-role">[M] 同位語＋分詞</span><span class="c-en">a claim supported by biology rather than mere personal preference</span><span class="c-zh">這項說法有生物學根據，而非單純的個人偏好</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 概括同位語：<code>, a claim (which is) supported by ...</code></div>用 <code>a claim</code> 總結前面整個句子「香菜嚐起來像肥皂」，再接過去分詞 <code>supported by biology</code>，是高三與學測頂標寫作最愛的結構！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 中翻英秘訣</div><code>A rather than B</code> 表示「是 A 而不是 B」。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>總結式同位語：<code>, a claim (which is) supported by ...</code></strong><br/>用 <code>a claim</code> 總結前面整句「香菜嚐起來像肥皂」，再接過去分詞 <code>supported by biology</code>，是學測寫作很實用的結構。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>中翻英</strong><br/><code>A rather than B</code> 表示「是 A 而不是 B」。</div>
         </div>
       </div>
-
-      <!-- S3 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 3</span>
-          <div style="flex:1;">
-            <div class="sent-en">On the other hand, cultural exposure can overcome genetics, as this negative <span class="key-term">reaction</span> is far less common among people who grew up enjoying its fresh <span class="gram-term">taste</span> in traditional <span class="key-term">cuisines</span>.</div>
-            <div class="sent-zh">另一方面，後天的文化接觸能克服先天基因，因為這種負面反應在從小於傳統料理中享用其清新滋味長大的人當中少見得多。</div>
+          <div class="sent-en">
+            Individuals carrying a <span class="key-term">specific</span> <span class="key-term">gene</span> are sensitive to soap chemicals called aldehydes, causing their brains to <span class="key-term">process</span> the herb as unpleasant.
+            <div class="sent-zh">帶有特定基因的人對稱為醛類的肥皂化學物敏感，導致大腦將這種香草解讀為令人不快的味道。</div>
           </div>
-          <button class="audio-btn" onclick="speak('On the other hand, cultural exposure can overcome genetics, as this negative reaction is far less common among people who grew up enjoying its fresh taste in traditional cuisines.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Individuals carrying a specific gene are sensitive to soap chemicals called aldehydes, causing their brains to process the herb as unpleasant.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Individuals carrying a specific gene are sensitive to soap chemicals called aldehydes, causing their brains to process the herb as unpleasant.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹 <code>Individuals (S) are (V) sensitive (C)</code>；<code>carrying a specific gene</code> 修飾主詞；句尾接分詞構句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在簡單式 <code>are</code>：陳述生理事實。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>carrying ...</code> 是現在分詞後位修飾 individuals（＝ who carry）；<code>called aldehydes</code> 是過去分詞修飾 chemicals；<code>, causing ...</code> 表結果。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>carrying a specific gene</code> 搬到「人」前；<code>called aldehydes</code> 搬到「化學物」前；分詞構句順翻「導致……」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>N + V-ing</code>（主動：帶有……的人）vs. <code>N + p.p.</code>（被動：被稱為……的化學物）；<code>be sensitive to</code>（對……敏感）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「個人們帶著特定基因是敏感於肥皂化學物叫醛類，引起他們的大腦……」，兩個分詞都掛在後面。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Individuals</code>（主詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        中心名詞「人」，前面要戴上 carrying 片語；individuals 在議論文譯「人」就好，不必譯「個人們」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>carrying a specific gene</code>（現在分詞後位修飾）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】修飾 individuals，搬到前面：「帶有特定基因的人」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>are sensitive to soap chemicals</code>（動詞＋補語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「對……肥皂化學物敏感」，受詞夾在「對……敏感」中間。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>called aldehydes,</code>（過去分詞後位修飾）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】修飾 chemicals，搬到前面：「稱為醛類的肥皂化學物」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>causing their brains to process the herb as unpleasant</code>（結果分詞構句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「導致大腦將這種香草解讀為令人不快的味道」，their 指前面的人，中文省略不譯更簡潔。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 2（分詞修飾超車） ➔ 語塊 1 ➔ 語塊 3 的「對」 ➔ 語塊 4（分詞修飾超車） ➔ 語塊 3 的「肥皂化學物敏感」 ➔ 語塊 5</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：【帶有特定基因的】人對【稱為醛類的】肥皂化學物敏感，導致大腦將這種香草解讀為令人不快的味道。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：N + V-ing / N + p.p. 的後位修飾都搬到名詞前；句尾逗號＋V-ing 翻「導致……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句主詞是 Individuals，但要讀到 are 才知道主詞結束，中間的 carrying a specific gene 是修飾。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>名詞後面接 V-ing 或 p.p. 片語時，先翻分詞片語，再翻名詞</strong>：「帶有特定基因的人」、「稱為醛類的肥皂化學物」。</div>
+                <p style="margin: 0 0 0.5rem;">主幹 are sensitive to 翻「對……敏感」，把化學物夾在中間。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>句尾逗號接 causing 這類 V-ing，照順序翻「導致……」</strong>：「導致大腦將這種香草解讀為令人不快的味道」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：their brains 的 their 前面已經說過是誰，中文直接說「大腦」更簡潔。individuals 翻「人」就好。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：帶有特定基因的人對稱為醛類的肥皂化學物敏感，導致大腦將這種香草解讀為令人不快的味道。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">carrying</span><span class="conj-word-preview">called</span><span class="conj-word-preview">, causing</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>現在分詞後位修飾</strong>：Individuals (who are) carrying a specific gene</div>
+              <div>• <strong>過去分詞後位修飾</strong>：chemicals (that are) called aldehydes</div>
+              <div>• <strong>分詞構句</strong>：, causing ... 表結果</div>
+            </div>
+            <div class="conj-title-main">現在分詞 vs. 過去分詞後位修飾 ＋ 分詞構句</div>
+            <div class="conj-desc">
+              1. <code>Individuals carrying a specific gene</code>：人「帶有」基因是主動，用現在分詞 carrying，等於 individuals who carry。<br/>2. <code>chemicals called aldehydes</code>：化學物「被稱為」醛類是被動，用過去分詞 called。<br/>3. 主幹是 <code>Individuals ... are sensitive to ...</code>，句尾 <code>, causing their brains to ...</code> 表示敏感帶來的結果。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：名詞後面接分詞 ➔ 名詞自己做動作用 V-ing，名詞被怎樣用 p.p.；翻譯時都搬到名詞前。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
-          <div class="chunk m"><span class="c-role">[M] 轉折連接</span><span class="c-en">On the other hand,</span><span class="c-zh">另一方面，</span></div>
-          <div class="chunk s"><span class="c-role">[S+V+O] 主句</span><span class="c-en">cultural exposure can overcome genetics,</span><span class="c-zh">文化接觸能克服基因</span></div>
-          <div class="chunk c"><span class="c-role">[Conj] 原因子句 as</span><span class="c-en">as this negative reaction is far less common among people...</span><span class="c-zh">因為這種負面反應在……人群中少見得多</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞＋分詞修飾</span><span class="c-en">Individuals carrying a specific gene</span><span class="c-zh">帶有特定基因的人</span></div>
+          <div class="chunk v"><span class="c-role">[V+C] 連綴動詞＋補語</span><span class="c-en">are sensitive to soap chemicals called aldehydes,</span><span class="c-zh">對稱為醛類的肥皂化學物敏感</span></div>
+          <div class="chunk m"><span class="c-role">[M] 結果分詞構句</span><span class="c-en">causing their brains to process the herb as unpleasant</span><span class="c-zh">導致大腦將這種香草解讀為令人不快</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 <code>On the one hand... On the other hand...</code> 正反論證雙塔</div>第一段先講先天基因（`On the one hand`），第二段立刻用 <code>On the other hand</code> 切入後天飲食文化，層次分明！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 中翻英秘訣</div>此處的 <code>as</code> 等於 <code>because / since</code>（因為），引導原因副詞子句。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>現在分詞 vs. 過去分詞後位修飾</strong><br/><code>Individuals carrying a specific gene</code>（主動：帶有基因的人）對比 <code>chemicals called aldehydes</code>（被動：被稱為醛類的化學物）。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>同義替換</strong><br/>課文 <code>Some people have a specific gene</code> 換成更正式的 <code>Individuals carrying a specific gene</code>；議論文用 individuals 取代 people，語氣更客觀。</div>
         </div>
       </div>
-
-      <!-- S4 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 4</span>
-          <div style="flex:1;">
-            <div class="sent-en">In conclusion, controversy fuels innovation: Taiwan leads the way in unusual <span class="key-term">products</span> like <span class="key-term">coriander-flavored</span> chips, and a coriander pizza <span class="key-term">released</span> by a Japanese <span class="key-term">chain</span> became <span class="gram-term">such a hit that</span> it returned with <span class="gram-term">twice the amount of</span> the herb, alongside festivals and <span class="key-term">perfumes</span> for <span class="key-term">devoted</span> fans.</div>
-            <div class="sent-zh">總結而言，爭議反而點燃了創新：台灣在香菜口味洋芋片等新奇產品上引領潮流，而日本連鎖店推出的香菜披薩更成為如此熱賣的商品，以致於帶著雙倍分量的香菜回歸，此外還有為忠實粉絲舉辦的節慶與香水。</div>
+          <div class="sent-en">
+            Even its name—called cilantro for leaves in the US <span class="gram-term">while</span> called coriander for both leaves and seeds in the UK—comes from a Greek word for “stink bug.”
+            <div class="sent-zh">就連它的名字——在美國葉子稱為 cilantro，而在英國葉子與種子皆稱為 coriander——也源自希臘文的「臭蟲」。</div>
           </div>
-          <button class="audio-btn" onclick="speak('In conclusion, controversy fuels innovation: Taiwan leads the way in unusual products like coriander-flavored chips, and a coriander pizza released by a Japanese chain became such a hit that it returned with twice the amount of the herb, alongside festivals and perfumes for devoted fans.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Even its name—called cilantro for leaves in the US while called coriander for both leaves and seeds in the UK—comes from a Greek word for “stink bug.”', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Even its name—called cilantro for leaves in the US while called coriander for both leaves and seeds in the UK—comes from a Greek word for “stink bug.”', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹 <code>Even its name (S) comes from (V) a Greek word (O)</code>；兩個破折號中間是插入的補充說明。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在簡單式 <code>comes from</code>：陳述字源事實。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>破折號插入兩個過去分詞片語 <code>called ... in the US</code> 與 <code>called ... in the UK</code>，用 <code>while</code> 對比；<code>for “stink bug”</code> 修飾 word。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>插入語照原位置翻，裡面的地點 in the US / in the UK 提到該段開頭；Even 譯「就連……也」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>Even + 主詞</code>（就連……也）；<code>come from</code>（源自）；while 也能連接分詞片語表對比。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「甚至它的名字——被叫 cilantro 為葉子在美國當被叫 coriander……——來自一個希臘字為臭蟲」，插入語語序全亂。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Even its name</code>（主詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「就連它的名字」，Even 修飾主詞，要搭配後面的「也」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>—called cilantro for leaves in the US</code>（插入語（一））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】in the US 提到最前面，被動 called 中文不必加「被」：「在美國葉子稱為 cilantro」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>while called coriander for both leaves and seeds in the UK—</code>（插入語（二））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】while 譯「而」，in the UK 同樣提前：「而在英國葉子與種子皆稱為 coriander」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>comes from a Greek word for “stink bug.”</code>（動詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「也源自希臘文的『臭蟲』」，補「也」和 Even 呼應。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 破折號 ➔ 語塊 2（地點超車） ➔ 語塊 3（地點超車） ➔ 破折號 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：就連它的名字——【在美國】葉子稱為 cilantro，而【在英國】葉子與種子皆稱為 coriander——也源自希臘文的「臭蟲」。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：Even + 主詞翻「就連……也」；破折號插入語保留原位，裡面的地點提到前面。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">先找主幹：Even its name ... comes from a Greek word，中間兩個破折號夾著的是補充說明。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>看到 Even 放在主詞前，翻成「就連＋主詞＋也……」</strong>：「就連它的名字……也源自希臘文的『臭蟲』」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>插入語裡的 in + 地點，提到該段的最前面</strong>：「在美國葉子稱為 cilantro，而在英國葉子與種子皆稱為 coriander」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：破折號在中文也保留，讀者才看得出這段是插進來的。called 雖然是被動，中文說「稱為」就好。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：就連它的名字——在美國葉子稱為 cilantro，而在英國葉子與種子皆稱為 coriander——也源自希臘文的「臭蟲」。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">—插入語—</span><span class="conj-word-preview">while</span><span class="conj-word-preview">Even</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>破折號插入語</strong>：夾在主詞與動詞之間的補充說明</div>
+              <div>• <strong>對比連接詞</strong>：while 連接兩個過去分詞片語</div>
+              <div>• <strong>焦點副詞</strong>：Even 修飾主詞</div>
+            </div>
+            <div class="conj-title-main">破折號插入語 ＋ while 對比分詞片語</div>
+            <div class="conj-desc">
+              1. 主幹是 <code>Even its name comes from a Greek word for “stink bug”</code>。<br/>2. 兩個破折號中間是插入語，用兩個過去分詞片語說明這個名字：<code>called cilantro ... in the US</code> 與 <code>called coriander ... in the UK</code>，中間用 while 表對比。<br/>3. 插入語拿掉，句子仍然完整，所以動詞 comes 要和主詞 its name 一致用單數。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：主詞後面出現兩個破折號 ➔ 先跳過中間找動詞，主幹確定後再回來翻插入語。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
-          <div class="chunk m"><span class="c-role">[M] 結論轉折</span><span class="c-en">In conclusion, controversy fuels innovation:</span><span class="c-zh">總結而言，爭議點燃創新：</span></div>
-          <div class="chunk s"><span class="c-role">[S1+V1]</span><span class="c-en">Taiwan leads the way in unusual products...,</span><span class="c-zh">台灣在新奇產品引領潮流</span></div>
-          <div class="chunk c"><span class="c-role">[Conj] such ... that</span><span class="c-en">and a coriander pizza ... became such a hit that it returned with twice the amount of the herb</span><span class="c-zh">而日本香菜披薩大賣以致於以雙倍香菜回歸</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">Even its name</span><span class="c-zh">就連它的名字</span></div>
+          <div class="chunk m"><span class="c-role">[M] 插入語（分詞片語）</span><span class="c-en">—called cilantro for leaves in the US while called coriander for both leaves and seeds in the UK—</span><span class="c-zh">——在美國葉子稱為 cilantro，而在英國兩者皆稱為 coriander——</span></div>
+          <div class="chunk v"><span class="c-role">[V+O] 動詞＋受詞</span><span class="c-en">comes from a Greek word for “stink bug.”</span><span class="c-zh">也源自希臘文的「臭蟲」</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 動詞 <code>fuel</code>（作為燃料 $\rightarrow$ 助長、激發、點燃）</div><code>controversy fuels innovation</code>（爭議激發創新）是極具說服力的議論文金句！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 總結轉折詞</div>議論文結尾可用 <strong><code>In conclusion, / To sum up, / All in all,</code></strong>。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>破折號插入語</strong><br/>用 <code>—... while ...—</code> 把美英叫法的對比插進句子中間，主幹 <code>its name comes from ...</code> 不受影響，動詞仍跟主詞 name 一致用單數。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>議論文的補強論據</strong><br/>用 <code>Even its name ...</code> 再加一個例子，說明連名字都帶有「臭」的聯想，替批評者的論點收尾。</div>
+        </div>
+      </div>
+      <div class="para-badge">第二段：文化克服基因、歷史佐證與結論（第 5–7 句）</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 5</span>
+          <div class="sent-en">
+            On the other hand, cultural exposure can overcome genetics, as this negative <span class="key-term">reaction</span> is far less common among people who grew up enjoying its fresh <span class="gram-term">taste</span> in traditional <span class="key-term">cuisines</span>.
+            <div class="sent-zh">另一方面，後天的文化接觸能克服先天基因，因為這種負面反應在從小於傳統料理中享用其清新滋味長大的人當中少見得多。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('On the other hand, cultural exposure can overcome genetics, as this negative reaction is far less common among people who grew up enjoying its fresh taste in traditional cuisines.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('On the other hand, cultural exposure can overcome genetics, as this negative reaction is far less common among people who grew up enjoying its fresh taste in traditional cuisines.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主句 <code>cultural exposure (S) can overcome (V) genetics (O)</code>；<code>as</code> 子句 <code>this negative reaction (S) is (V) far less common (C)</code>；who 子句修飾 people。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在簡單式 <code>can overcome / is</code>：陳述論點與觀察結果；關代子句過去式 <code>grew up</code> 交代成長經驗。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>On the other hand</code> 帶出另一方論點；<code>as</code> ＝ because，引導原因子句；<code>who</code> 主格關代修飾 people。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>among people who ...</code> 整串搬到「少見得多」前；who 子句內 <code>in traditional cuisines</code> 也提到動詞前；cultural exposure / genetics 補「後天」「先天」凸顯對比。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>as</code> 表原因時＝because／since；<code>grow up + V-ing</code>；<code>overcome</code>（克服）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：把 as 翻成「當……時」或「如同」，變成「當這負面反應少見……」，因果關係不見了；who 子句掛在句尾也讀不順。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>On the other hand,</code>（轉承語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「另一方面」，和第一段的 On the one hand 呼應。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>cultural exposure can overcome genetics,</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「後天的文化接觸能克服先天基因」，補「後天」「先天」讓對比更清楚。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>as this negative reaction is far less common</code>（原因子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：as 譯「因為」；主詞「這種負面反應」先翻，「少見得多」留到最後。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>among people</code>（範圍）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】範圍放在結果前：「在……的人當中」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>who grew up enjoying its fresh taste in traditional cuisines</code>（關代子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】修飾 people，搬到「人」前；in traditional cuisines 也提到動詞前：「從小於傳統料理中享用其清新滋味長大的」，its 用書面的「其」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 的「因為這種負面反應」 ➔ 語塊 4＋語塊 5（範圍連同關代子句超車） ➔ 語塊 3 的「少見得多」</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：另一方面，後天的文化接觸能克服先天基因，因為這種負面反應【在從小於傳統料理中享用其清新滋味長大的人當中】少見得多。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：表原因的 as 翻「因為」；among + 人群 + who 子句整串放到比較結果前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">On the other hand 翻「另一方面」，接著主句 cultural exposure can overcome genetics：「後天的文化接觸能克服先天基因」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>as 前面是主張、後面是證據時，as 翻「因為」</strong>：「因為這種負面反應……少見得多」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>比較級後面接 among + 人群 + who 子句時，整串提到比較結果前，who 子句先翻</strong>：「在從小於傳統料理中享用其清新滋味長大的人當中少見得多」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：cultural exposure 和 genetics 中文補上「後天」「先天」，正反對比一目了然。its fresh taste 在議論文用「其清新滋味」比「它的」書面。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：另一方面，後天的文化接觸能克服先天基因，因為這種負面反應在從小於傳統料理中享用其清新滋味長大的人當中少見得多。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">On the other hand</span><span class="conj-word-preview">as</span><span class="conj-word-preview">who</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>轉承語</strong>：On the other hand 帶出另一方論點</div>
+              <div>• <strong>從屬連接詞</strong>：as ＝ because，引導原因子句</div>
+              <div>• <strong>主格關代</strong>：who grew up ... 修飾 people</div>
+            </div>
+            <div class="conj-title-main">as 原因子句 ＋ who 主格關代</div>
+            <div class="conj-desc">
+              1. <code>cultural exposure can overcome genetics</code> 是論點，<code>as this negative reaction is far less common ...</code> 是支持論點的原因，as 等於 because。<br/>2. who 左邊是人 <code>people</code>，右邊 <code>grew up enjoying ...</code> 缺主詞 ➔ 主格關代 who。<br/>3. as 有「因為／當……時／如同」等意思，判斷方法是看前後是不是因果關係。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：as 前面是主張、後面是理由 ➔ as ＝ because，翻「因為」。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 轉承語</span><span class="c-en">On the other hand,</span><span class="c-zh">另一方面，</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 主句</span><span class="c-en">cultural exposure can overcome genetics,</span><span class="c-zh">文化接觸能克服基因</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 原因子句 as</span><span class="c-en">as this negative reaction is far less common among people ...</span><span class="c-zh">因為這種負面反應在……人當中少見得多</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong><code>On the one hand ... On the other hand ...</code> 正反論證</strong><br/>第一段先講先天基因（On the one hand），第二段用 <code>On the other hand</code> 切入後天飲食文化，層次分明。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>中翻英</strong><br/>這裡的 <code>as</code> 等於 <code>because / since</code>（因為），引導原因副詞子句。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 6</span>
+          <div class="sent-en">
+            Historically, its value <span class="key-term">stretches</span> back to 6000 BCE; Romans used it to <span class="key-term">flavor</span> bread and <span class="key-term">preserve</span> meat, and by the Middle Ages, it <span class="gram-term">had</span> <span class="key-term">spread</span> across Europe before <span class="key-term">explorers</span> brought it to Asia.
+            <div class="sent-zh">從歷史來看，它的價值可追溯至西元前 6000 年；羅馬人用它調味麵包並保存肉類，到了中世紀它已傳遍歐洲，隨後探險家將它帶到亞洲。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Historically, its value stretches back to 6000 BCE; Romans used it to flavor bread and preserve meat, and by the Middle Ages, it had spread across Europe before explorers brought it to Asia.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Historically, its value stretches back to 6000 BCE; Romans used it to flavor bread and preserve meat, and by the Middle Ages, it had spread across Europe before explorers brought it to Asia.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>分號前 <code>its value (S) stretches back (V) to 6000 BCE</code>；分號後 <code>Romans (S) used (V) it (O) ...</code>, and <code>it (S) had spread (V) ...</code>，句尾接 before 子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong><code>stretches</code> 現在式（歷史淵源是事實）；<code>used</code> 過去式；<code>had spread</code> 過去完成式，表示在中世紀、也在探險家帶到亞洲之前就已完成；<code>brought</code> 過去式。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>Historically</code> 是觀點副詞；分號連接兩個獨立子句；<code>, and</code> 連接兩個子句；<code>before</code> 引導時間子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>照時間先後順翻；before 子句在句尾，譯「隨後……」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>stretch back to</code>（追溯至）；<code>by + 過去時間 ➔ had p.p.</code>；議論文用 its value（價值）強調香菜的重要性，當作支持論點的歷史證據。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：把 its value stretches back 直翻成「它的價值伸展回去」，或把 before 子句搬到前面，時間順序繞了一圈。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Historically, its value stretches back to 6000 BCE;</code>（分號前子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「從歷史來看，它的價值可追溯至西元前 6000 年；」，Historically 譯「從歷史來看」，value 譯「價值」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>Romans used it to flavor bread and preserve meat,</code>（分號後子句一）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「羅馬人用它調味麵包並保存肉類」，flavor 當動詞「調味」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>and by the Middle Ages, it had spread across Europe</code>（子句二）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「到了中世紀它已傳遍歐洲」，by + 過去時間配 had p.p.。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>before explorers brought it to Asia</code>（時間子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：before 在句尾，照時間先後譯「隨後探險家將它帶到亞洲」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 4（全句照時間順翻）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：從歷史來看，它的價值可追溯至西元前 6000 年；羅馬人用它調味麵包並保存肉類，到了中世紀它已傳遍歐洲，隨後探險家將它帶到亞洲。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：歷史證據照時間先後順翻；Historically 翻「從歷史來看」，句尾 before 翻「隨後……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">Historically 翻「從歷史來看」，議論文在這裡拿歷史當證據：「它的價值可追溯至西元前 6000 年」。</p>
+                <p style="margin: 0 0 0.5rem;">分號後照時間往下說：「羅馬人用它調味麵包並保存肉類」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 by + 過去時間點，配上 had + p.p.，翻成「到了……已……」</strong>：「到了中世紀它已傳遍歐洲」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>before 子句放在句尾、而且是後來才發生的事，直接翻「隨後……」</strong>：「隨後探險家將它帶到亞洲」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：value 翻「價值」，點出香菜長久以來被人重視，正好支持「文化接觸能克服基因」的論點。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：從歷史來看，它的價值可追溯至西元前 6000 年；羅馬人用它調味麵包並保存肉類，到了中世紀它已傳遍歐洲，隨後探險家將它帶到亞洲。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">Historically</span><span class="conj-word-preview">;</span><span class="conj-word-preview">, and</span><span class="conj-word-preview">before</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>觀點副詞</strong>：Historically 修飾全句</div>
+              <div>• <strong>分號</strong>：連接總結與具體經過</div>
+              <div>• <strong>對等連接詞</strong>：, and 連接兩個子句</div>
+              <div>• <strong>從屬連接詞</strong>：before 引導時間子句</div>
+            </div>
+            <div class="conj-title-main">觀點副詞 ＋ 分號 ＋ before 時間子句</div>
+            <div class="conj-desc">
+              1. <code>Historically</code> 表示從歷史角度提出證據，支持香菜有長久的文化價值。<br/>2. 分號前總結 <code>its value stretches back to 6000 BCE</code>，分號後接具體經過。<br/>3. <code>by the Middle Ages, it had spread across Europe before explorers brought it to Asia</code>：had spread 先發生，brought 後發生。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：主句 had p.p. ＋ before + 過去式 ➔ 主句先發生，before 子句在句尾時翻「隨後……」。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 觀點副詞</span><span class="c-en">Historically,</span><span class="c-zh">從歷史來看</span></div>
+          <div class="chunk s"><span class="c-role">[S+V] 分號前子句</span><span class="c-en">its value stretches back to 6000 BCE;</span><span class="c-zh">它的價值可追溯至西元前 6000 年；</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 分號後子句</span><span class="c-en">Romans used it to flavor bread and preserve meat,</span><span class="c-zh">羅馬人用它調味麵包並保存肉類</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 過去完成式＋時間子句</span><span class="c-en">and by the Middle Ages, it had spread across Europe before explorers brought it to Asia</span><span class="c-zh">到了中世紀它已傳遍歐洲，隨後探險家將它帶到亞洲</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>過去完成式 <code>had spread</code> 與過去式 <code>brought</code> 的先後</strong><br/>先傳遍歐洲（<code>had spread</code>），之後探險家才帶到亞洲（<code>before explorers brought it to Asia</code>）。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>議論文的歷史論據</strong><br/>用 <code>Historically, its value stretches back to ...</code> 引用歷史，證明香菜長久受到重視，比單純講個人喜好更有說服力。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 7</span>
+          <div class="sent-en">
+            In conclusion, controversy fuels innovation: Taiwan leads the way in unusual <span class="key-term">products</span> like <span class="key-term">coriander-flavored</span> chips, and a coriander pizza <span class="key-term">released</span> by a Japanese <span class="key-term">chain</span> became <span class="gram-term">such a hit that</span> it returned with <span class="gram-term">twice the amount of</span> the herb, alongside festivals and <span class="key-term">perfumes</span> for <span class="key-term">devoted</span> fans.
+            <div class="sent-zh">總結而言，爭議反而點燃了創新：台灣在香菜口味洋芋片等新奇產品上引領潮流，而日本連鎖店推出的香菜披薩更成為如此熱賣的商品，以致於帶著雙倍分量的香菜回歸，此外還有為忠實粉絲舉辦的節慶與香水。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('In conclusion, controversy fuels innovation: Taiwan leads the way in unusual products like coriander-flavored chips, and a coriander pizza released by a Japanese chain became such a hit that it returned with twice the amount of the herb, alongside festivals and perfumes for devoted fans.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('In conclusion, controversy fuels innovation: Taiwan leads the way in unusual products like coriander-flavored chips, and a coriander pizza released by a Japanese chain became such a hit that it returned with twice the amount of the herb, alongside festivals and perfumes for devoted fans.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>冒號前 <code>controversy (S) fuels (V) innovation (O)</code>；冒號後子句一 <code>Taiwan (S) leads (V) the way</code>，子句二 <code>a coriander pizza (S) became (V) such a hit (C)</code> + that 結果子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong><code>fuels / leads</code> 現在式陳述結論與現況；<code>became / returned</code> 過去式敘述已發生的事件。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>In conclusion</code> 帶出結論；冒號後舉例證明；<code>, and</code> 連接兩個子句；<code>released by ...</code> 過去分詞修飾 pizza；<code>such ... that</code> 表結果；<code>alongside</code> 是介系詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>in ... products like ...</code> 提到「引領潮流」前；<code>released by ...</code> 搬到「香菜披薩」前；alongside 片語另起一句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>fuel</code> 當動詞（助長、點燃）；<code>lead the way in + N</code>；<code>such a + N + that</code>。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：把 controversy fuels innovation 直翻成「爭議加油創新」，把 fuel 當名詞「燃料」理解，句子不通。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>In conclusion, controversy fuels innovation:</code>（結論句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「總結而言，爭議反而點燃了創新：」，fuel 當動詞譯「點燃」，補「反而」點出意外的轉折。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>Taiwan leads the way</code>（子句一主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「台灣……引領潮流」，動詞先保留。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>in unusual products like coriander-flavored chips,</code>（範圍＋舉例）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】範圍放到動詞前，like 舉例提到「產品」前：「在香菜口味洋芋片等新奇產品上引領潮流」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>and a coriander pizza released by a Japanese chain</code>（子句二主詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】released by ... 搬到「披薩」前：「而日本連鎖店推出的香菜披薩」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>became such a hit that it returned with twice the amount of the herb,</code>（such ... that）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「更成為如此熱賣的商品，以致於帶著雙倍分量的香菜回歸」，補「更」承接前一個例子。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 6：<code>alongside festivals and perfumes for devoted fans.</code>（介系詞片語補充）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        另起一句：「此外還有為忠實粉絲舉辦的節慶與香水」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 的「台灣」 ➔ 語塊 3（範圍與舉例超車） ➔ 語塊 2 的「引領潮流」 ➔ 語塊 4（分詞修飾超車） ➔ 語塊 5 ➔ 語塊 6</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：總結而言，爭議反而點燃了創新：台灣【在香菜口味洋芋片等新奇產品上】引領潮流，而【日本連鎖店推出的】香菜披薩更成為如此熱賣的商品，以致於帶著雙倍分量的香菜回歸，此外還有為忠實粉絲舉辦的節慶與香水。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：結論句先下論點、再用冒號舉例；分詞修飾、範圍舉例一律提到名詞或動詞前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">In conclusion 翻「總結而言」，冒號前是全文的結論：controversy fuels innovation，「爭議反而點燃了創新」。</p>
+                <p style="margin: 0 0 0.5rem;">冒號後是兩個證據，用 , and 分開：前面講台灣，後面講日本的披薩。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>動詞後面接 in + 範圍、範圍裡又有 like 舉例時，舉例和範圍一起提到動詞前</strong>：「台灣在香菜口味洋芋片等新奇產品上引領潮流」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>名詞後面接 released / made + by 某人時，先翻「某人推出的」，再翻名詞</strong>：「而日本連鎖店推出的香菜披薩更成為如此熱賣的商品，以致於帶著雙倍分量的香菜回歸」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：fuel 在這裡是動詞「點燃、助長」，補一個「反而」，爭議帶來好處的轉折就出來了。alongside 另起一句翻「此外還有」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：總結而言，爭議反而點燃了創新：台灣在香菜口味洋芋片等新奇產品上引領潮流，而日本連鎖店推出的香菜披薩更成為如此熱賣的商品，以致於帶著雙倍分量的香菜回歸，此外還有為忠實粉絲舉辦的節慶與香水。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">In conclusion</span><span class="conj-word-preview">:</span><span class="conj-word-preview">, and</span><span class="conj-word-preview">such ... that</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>結論轉承語</strong>：In conclusion</div>
+              <div>• <strong>冒號</strong>：先下結論，後舉例證明</div>
+              <div>• <strong>對等連接詞</strong>：, and 連接台灣與日本兩個例子</div>
+              <div>• <strong>結果子句</strong>：such a hit that ...</div>
+            </div>
+            <div class="conj-title-main">冒號舉證 ＋ , and 連接子句 ＋ such ... that</div>
+            <div class="conj-desc">
+              1. 冒號前 <code>controversy fuels innovation</code> 是全文結論，冒號後用兩個例子證明。<br/>2. <code>, and</code> 前後各是完整子句：Taiwan leads ...／a coriander pizza ... became ...。<br/>3. <code>released by a Japanese chain</code> 是過去分詞片語修飾 pizza；<code>such a hit that it returned ...</code> 表結果；<code>alongside</code> 後面只接名詞。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：結論句出現冒號 ➔ 冒號前是論點，冒號後是證據；翻譯時保留冒號，先講論點。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 結論轉承</span><span class="c-en">In conclusion, controversy fuels innovation:</span><span class="c-zh">總結而言，爭議點燃創新：</span></div>
+          <div class="chunk s"><span class="c-role">[S1+V1]</span><span class="c-en">Taiwan leads the way in unusual products ...,</span><span class="c-zh">台灣在新奇產品上引領潮流</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] such ... that</span><span class="c-en">and a coriander pizza ... became such a hit that it returned with twice the amount of the herb</span><span class="c-zh">而日本香菜披薩大賣，以致於帶著雙倍香菜回歸</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>動詞 <code>fuel</code>（作為燃料 → 助長、激發、點燃）</strong><br/><code>controversy fuels innovation</code>（爭議激發創新）是很有說服力的議論文結論句。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>總結轉承語</strong><br/>議論文結尾可用 <code>In conclusion, / To sum up, / All in all,</code>。</div>
         </div>
       </div>
 
@@ -441,6 +1330,27 @@
       siblings.forEach(b => { if (b.getAttribute('onclick').includes(expId)) b.classList.remove('correct', 'wrong'); });
       btn.classList.add(isCorrect ? 'correct' : 'wrong');
       document.getElementById(expId).style.display = 'block';
+    }
+
+    let allMasterTransOpen = false;
+    function toggleAllMasterTrans() {
+      allMasterTransOpen = !allMasterTransOpen;
+      document.querySelectorAll('.sent-card .master-trans-details').forEach(d => { d.open = allMasterTransOpen; });
+      const btn = document.getElementById('btn-toggle-master-trans');
+      if (btn) {
+        btn.textContent = allMasterTransOpen ? '👨‍🏫 一鍵收合名師翻譯拆解' : '👨‍🏫 一鍵展開名師翻譯拆解';
+        btn.classList.toggle('active', allMasterTransOpen);
+      }
+    }
+    let allConjOpen = false;
+    function toggleAllConj() {
+      allConjOpen = !allConjOpen;
+      document.querySelectorAll('.conj-box').forEach(d => { d.open = allConjOpen; });
+      const btn = document.getElementById('toggle-conj-btn');
+      if (btn) {
+        btn.textContent = allConjOpen ? '🔗 一鍵收合所有連接詞解析' : '🔗 一鍵展開所有連接詞解析';
+        btn.classList.toggle('active', allConjOpen);
+      }
     }
   </script>
 </body>
