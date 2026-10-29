@@ -80,6 +80,46 @@
     .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
     .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
     .quiz-exp { display: none; margin-top: 0.45rem; padding: 0.7rem 1rem; border-radius: 10px; background: var(--green-bg); color: #065f46; font-size: 0.88rem; }
+
+    /* V4：正常／慢速雙按鈕（覆蓋舊版 36px 圓形按鈕） */
+    .audio-group { display: flex; gap: 0.35rem; flex-shrink: 0; align-self: flex-start; }
+    .audio-group .audio-btn { width: auto; height: auto; border-radius: 999px; padding: 0.35rem 0.65rem; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+    .audio-group .audio-btn.slow { background: #f1f5f9; color: #475569; }
+
+    /* ===== V4 句卡元件（名師拆解 Step 1~7／連接詞框） ===== */
+    .conj-box { margin-top: 0.75rem; background: #faf5ff; border: 1.5px solid #d8b4fe; border-radius: 10px; padding: 0.55rem 0.9rem; font-size: 0.88rem; }
+    details.conj-box[open] { padding-bottom: 0.85rem; }
+    details.conj-box summary.conj-title { font-weight: 800; color: #6d28d9; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; list-style: none; margin: 0; padding: 0.1rem 0; }
+    details.conj-box summary.conj-title::-webkit-details-marker { display: none; }
+    details.conj-box[open] summary.conj-title { margin-bottom: 0.6rem; border-bottom: 1px dashed #d8b4fe; padding-bottom: 0.45rem; }
+    details.conj-box .conj-arrow { font-size: 0.82rem; color: #7c3aed; display: inline-block; transition: transform 0.2s ease; }
+    details.conj-box[open] .conj-arrow { transform: rotate(180deg); }
+    .conj-word-preview { background: #7c3aed; color: #fff; font-size: 0.75rem; font-family: Consolas, monospace; padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700; }
+    .conj-concept { background: #fff; border: 1px solid #c084fc; border-radius: 8px; padding: 0.65rem 0.85rem; margin-top: 0.5rem; font-size: 0.85rem; color: #4c1d95; line-height: 1.55; box-shadow: 0 2px 6px rgba(124,58,237,0.06); }
+    .conj-concept strong { color: #6b21a8; }
+    .conj-meta-list { margin-bottom: 0.5rem; padding-bottom: 0.45rem; border-bottom: 1px dashed #d8b4fe; font-size: 0.85rem; color: #6b21a8; line-height: 1.6; }
+    .conj-title-main { font-weight: 800; color: #5b21b6; margin-bottom: 0.35rem; font-size: 0.9rem; }
+    .conj-desc { font-size: 0.86rem; color: #334155; line-height: 1.65; margin-bottom: 0.5rem; }
+    .conj-killer-tip { background: #faf5ff; border-left: 3px solid #9333ea; padding: 0.35rem 0.6rem; border-radius: 0 4px 4px 0; font-size: 0.84rem; color: #581c87; }
+    .master-trans-details { margin-top: 0.7rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; overflow: hidden; }
+    .master-trans-details[open] { border-color: #4ade80; box-shadow: 0 4px 12px rgba(34,197,94,0.08); }
+    .master-trans-summary { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem; cursor: pointer; background: #f0fdf4; user-select: none; font-size: 0.88rem; font-weight: 700; color: #166534; list-style: none; }
+    .master-trans-summary:hover { background: #dcfce7; }
+    .master-trans-summary::-webkit-details-marker { display: none; }
+    .master-badge { background: #16a34a; color: #fff; padding: 0.12rem 0.5rem; border-radius: 6px; font-size: 0.74rem; font-weight: 800; white-space: nowrap; }
+    .master-summary-text { flex: 1; }
+    .master-arrow { font-size: 0.75rem; color: #16a34a; display: inline-block; transition: transform 0.2s ease; }
+    .master-trans-details[open] > summary .master-arrow { transform: rotate(180deg); }
+    .master-trans-body { padding: 0.85rem 1rem; background: #fff; border-top: 1px dashed #bbf7d0; font-size: 0.87rem; line-height: 1.65; color: #1e293b; }
+    .master-step { margin-bottom: 0.65rem; padding-left: 0.5rem; border-left: 3px solid #22c55e; }
+    .master-step:last-child { margin-bottom: 0; }
+    .m-step-tag { font-weight: 800; font-size: 0.75rem; padding: 0.1rem 0.4rem; border-radius: 4px; margin-right: 0.35rem; display: inline-block; }
+    .m-step-tag.s1 { background: #dbeafe; color: #1e40af; }
+    .m-step-tag.s2 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s3 { background: #ede9fe; color: #5b21b6; }
+    .m-step-tag.s4 { background: #ffedd5; color: #9a3412; }
+    .m-step-tag.s5 { background: #dcfce7; color: #166534; }
+    @media print { .audio-group, .control-bar { display: none !important; } .sent-card { break-inside: avoid; } }
   </style>
 </head>
 <body>
@@ -180,131 +220,1189 @@
         <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
         <button class="toggle-btn active" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
         <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式</button>
+        <button id="toggle-conj-btn" class="toggle-btn" onclick="toggleAllConj()">🔗 一鍵展開所有連接詞解析</button>
+        <button id="btn-toggle-master-trans" class="toggle-btn" onclick="toggleAllMasterTrans()">👨‍🏫 一鍵展開名師翻譯拆解</button>
       </div>
 
       <!-- S1 -->
+      <div class="para-badge">第一段：抵達歐胡島、健行浮潛與參觀王宮</div>
+
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 1</span>
-          <div style="flex:1;">
-            <div class="sent-en">Last October, I visited my exchange buddy Kai in Oahu, where gentle trade winds <span class="gram-term">kept our afternoons comfortable</span>.</div>
-            <div class="sent-zh">去年十月，我前往歐胡島拜訪我的交換學伴凱，那裡溫和的信風讓我們的午後保持舒適宜人。</div>
+          <div class="sent-en">
+            Last October, I visited my exchange buddy Kai in Oahu, where gentle trade winds <span class="gram-term">kept our afternoons comfortable</span>.
+            <div class="sent-zh">去年十月，我前往歐胡島拜訪我的交換學伴凱（Kai），那裡溫和的信風讓我們的午後保持舒適宜人。</div>
           </div>
-          <button class="audio-btn" onclick="speak('Last October, I visited my exchange buddy Kai in Oahu, where gentle trade winds kept our afternoons comfortable.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Last October, I visited my exchange buddy Kai in Oahu, where gentle trade winds kept our afternoons comfortable.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Last October, I visited my exchange buddy Kai in Oahu, where gentle trade winds kept our afternoons comfortable.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>I (S) visited (V) my exchange buddy Kai (O)</code>；<code>in Oahu</code> 表地點，<code>, where ...</code> 補充 Oahu 的天氣。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>visited / kept</code>：記敘去年十月已經發生的旅行經驗。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>, where</code> 是非限定關係副詞，先行詞 Oahu，後面接完整句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>in Oahu</code> 要提到動作前，譯「前往歐胡島拜訪」；where 子句順翻，用「那裡」接續。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>Last October</code> 前不加 in；<code>keep + O + adj.</code> 過去式 kept；<code>buddy</code>（夥伴）是口語，作文可換 partner。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「我拜訪我的交換夥伴凱在歐胡島，在那裡溫和的信風保持我們的下午舒服」，地點吊在句尾，keep 也直譯。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Last October,</code>（時間副詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「去年十月」，前面不需要「在」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>I visited my exchange buddy Kai</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「我……拜訪我的交換學伴凱（Kai）」，buddy 在學生語境譯「學伴」，名字第一次出現附原文。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>in Oahu,</code>（地點片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】地點放在動作前，補動詞「前往」：「我前往歐胡島拜訪……」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>where gentle trade winds kept our afternoons comfortable.</code>（非限定 where 子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻，where 譯「那裡」：「那裡溫和的信風讓我們的午後保持舒適宜人」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔「我」 ➔ 語塊 3（地點超車） ➔ 語塊 2 的「拜訪……凱」 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：去年十月，我【前往歐胡島】拜訪我的交換學伴凱（Kai），那裡溫和的信風讓我們的午後保持舒適宜人。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：visit 人 in 地點 ➔「前往地點拜訪人」；地點後的 , where 譯「那裡……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">句首 Last October 是時間，先翻「去年十月」。主句 I visited my exchange buddy Kai in Oahu。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 visit + 人 + in + 地點時，先翻地點，用「前往……拜訪」</strong>：「我前往歐胡島拜訪我的交換學伴凱（Kai）」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>地點後面用逗號接 where + 完整句時，翻成「那裡……」接在後面</strong>：「那裡溫和的信風讓我們的午後保持舒適宜人」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：buddy 翻「學伴」，符合交換學生的身分。kept our afternoons comfortable 翻「讓我們的午後保持舒適」，keep 不要翻成「保留」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：去年十月，我前往歐胡島拜訪我的交換學伴凱（Kai），那裡溫和的信風讓我們的午後保持舒適宜人。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">, where</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>非限定關係副詞</strong>：, where 補充 Oahu 的天氣</div>
+            </div>
+            <div class="conj-title-main">主句 ＋ 非限定 where 子句</div>
+            <div class="conj-desc">
+              <code>, where</code> 左邊是地方 Oahu，右邊 <code>gentle trade winds kept our afternoons comfortable</code> 是完整句（主詞、動詞、受詞、補語都有），所以用關係副詞 where，不用 which。前面有逗號，表示只是補充說明。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：地方名詞後接逗號 ＋ 完整句 ➔ where；後面缺主詞或受詞 ➔ which。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
           <div class="chunk m"><span class="c-role">[M] 時間</span><span class="c-en">Last October,</span><span class="c-zh">去年十月</span></div>
-          <div class="chunk s"><span class="c-role">[S+V+O] 主句</span><span class="c-en">I visited my exchange buddy Kai in Oahu,</span><span class="c-zh">我到歐胡島拜訪交換學伴凱</span></div>
-          <div class="chunk c"><span class="c-role">[Conj] 關係副詞子句</span><span class="c-en">where gentle trade winds kept our afternoons comfortable.</span><span class="c-zh">在那裡溫和信風使我們的午後保持舒適</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 主句</span><span class="c-en">I visited my exchange buddy Kai in Oahu,</span><span class="c-zh">我前往歐胡島拜訪交換學伴凱</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 關係副詞子句</span><span class="c-en">where gentle trade winds kept our afternoons comfortable.</span><span class="c-zh">那裡溫和的信風讓我們的午後保持舒適</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 記敘文時態一致：過去簡單式 <code>visited ... kept</code></div>在寫過去經驗的記敘文時，記得將 <code>keep</code> 改為過去式 <code>kept</code>，補語仍維持形容詞 <code>comfortable</code>！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 作文開頭模板</div><code>Last October, I visited [地點], where [氣候/環境描寫]...</code> 一句話交代時間、人物、地點與天氣。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div>在寫過去經驗的記敘文時，記得將 <code>keep</code> 改為過去式 <code>kept</code>，補語仍維持形容詞 <code>comfortable</code>！</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><code>Last October, I visited [地點], where [氣候/環境描寫]...</code> 一句話交代時間、人物、地點與天氣。</div>
         </div>
       </div>
-
-      <!-- S2 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 2</span>
-          <div style="flex:1;">
-            <div class="sent-en"><span class="gram-term">With the summer crowds gone</span>, I immediately felt <span class="key-term">relaxed</span> and experienced the island’s natural <span class="key-term">appeal</span>.</div>
+          <div class="sent-en">
+            <span class="gram-term">With the summer crowds gone</span>, I immediately felt <span class="key-term">relaxed</span> and experienced the island’s natural <span class="key-term">appeal</span>.
             <div class="sent-zh">隨著夏日人潮散去，我立刻感到放鬆，並體驗到這座島嶼的自然魅力。</div>
           </div>
-          <button class="audio-btn" onclick="speak('With the summer crowds gone, I immediately felt relaxed and experienced the island’s natural appeal.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('With the summer crowds gone, I immediately felt relaxed and experienced the island’s natural appeal.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('With the summer crowds gone, I immediately felt relaxed and experienced the island’s natural appeal.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>I (S) felt (V1) relaxed (C) and experienced (V2) the island’s natural appeal (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>felt / experienced</code>：記敘旅行當下的感受。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>句首 <code>with + O + p.p.</code> 附帶狀況；<code>and</code> 連接兩個共用主詞 I 的動詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>全句順翻；and 譯「並」，<code>the island’s natural appeal</code> 譯「這座島嶼的自然魅力」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>feel</code> 是連綴動詞，接形容詞 relaxed；<code>with + O + gone</code> 不寫 ❌ with the crowds went。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：把 With 片語直譯成「和夏天的人群走了」，看不出背景與原因關係。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>With the summer crowds gone,</code>（with 附帶狀況片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「隨著夏日人潮散去」，交代背景。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>I immediately felt relaxed</code>（主句前半）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「我立刻感到放鬆」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>and experienced the island’s natural appeal.</code>（第二個動詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「並體驗到這座島嶼的自然魅力」，experience 譯「體驗到」，appeal 譯「魅力」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3，全句順翻</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：隨著夏日人潮散去，我立刻感到放鬆，並體驗到這座島嶼的自然魅力。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：with + O + p.p. 譯「隨著……」；and 連接兩個動作譯「並」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">句首 With the summer crowds gone 是背景，直接翻「隨著夏日人潮散去」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>句首 with + 名詞 + 分詞時，先翻「隨著……」，再接主句</strong>：「我立刻感到放鬆」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>and 後面直接接動詞、沒有新主詞時，翻成「並……」</strong>：「並體驗到這座島嶼的自然魅力」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：the island’s 翻成「這座島嶼的」，比「島的」更完整。gone 翻「散去」，人潮慢慢變少的感覺就出來了。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：隨著夏日人潮散去，我立刻感到放鬆，並體驗到這座島嶼的自然魅力。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">with + O + p.p.</span><span class="conj-word-preview">and</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>附帶狀況</strong>：With the summer crowds gone</div>
+              <div>• <strong>對等連接詞</strong>：and 連接 felt 與 experienced</div>
+            </div>
+            <div class="conj-title-main">附帶狀況 ＋ and 連接兩個動詞</div>
+            <div class="conj-desc">
+              句首 <code>With the summer crowds gone</code> 沒有時態，是「with + 受詞 + 過去分詞」，表示人潮已經離開的狀態，交代背景。主句的 <code>and experienced</code> 前面沒有新主詞，和 felt 共用 I。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：with ＋ 名詞 ＋ p.p. ➔ 名詞是被動或已完成的狀態；with ＋ 名詞 ＋ V-ing ➔ 名詞主動在做。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
           <div class="chunk m"><span class="c-role">[M] 附帶狀況</span><span class="c-en">With the summer crowds gone,</span><span class="c-zh">隨著夏日人潮散去</span></div>
           <div class="chunk s"><span class="c-role">[S+V1+C] 感受</span><span class="c-en">I immediately felt relaxed</span><span class="c-zh">我立刻感到放鬆</span></div>
           <div class="chunk v"><span class="c-role">[Conj+V2+O] 體驗</span><span class="c-en">and experienced the island’s natural appeal.</span><span class="c-zh">並體驗到島嶼的自然魅力</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 <code>With + O. + p.p.</code> 不受主句時態影響</div>不論主句是現在式 <code>feels</code> 還是過去式 <code>felt</code>，句首附帶狀況 <code>With the summer crowds gone</code> 寫法完全相同！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 搭配詞秘訣</div>「體驗自然魅力」翻成 <strong><code>experience the island’s natural appeal</code></strong>。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div>不論主句是現在式 <code>feels</code> 還是過去式 <code>felt</code>，句首附帶狀況 <code>With the summer crowds gone</code> 寫法完全相同！</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>「體驗自然魅力」翻成 <strong><code>experience the island’s natural appeal</code></strong>。</div>
         </div>
       </div>
-
-      <!-- S3 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 3</span>
-          <div style="flex:1;">
-            <div class="sent-en">On our first morning, we hiked up Diamond Head through a dark <span class="key-term">tunnel</span> to a century-old <span class="key-term">lookout</span>, and later drove <span class="key-term">farther</span> north for <span class="key-term">snorkeling</span>.</div>
+          <div class="sent-en">
+            On our first morning, we hiked up Diamond Head through a dark <span class="key-term">tunnel</span> to a century-old <span class="key-term">lookout</span>, and later drove <span class="key-term">farther</span> north for <span class="key-term">snorkeling</span>.
             <div class="sent-zh">第一天早上，我們穿過一條漆黑的隧道健行登上鑽石頭山的百年瞭望臺，稍後又開車往更北方去浮潛。</div>
           </div>
-          <button class="audio-btn" onclick="speak('On our first morning, we hiked up Diamond Head through a dark tunnel to a century-old lookout, and later drove farther north for snorkeling.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('On our first morning, we hiked up Diamond Head through a dark tunnel to a century-old lookout, and later drove farther north for snorkeling.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('On our first morning, we hiked up Diamond Head through a dark tunnel to a century-old lookout, and later drove farther north for snorkeling.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>we (S) hiked up (V1) Diamond Head ... and later drove (V2) farther north</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>hiked / drove</code>：依時間順序記敘當天行程。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>and later</code> 連接兩個共用主詞的動詞；<code>through...</code>、<code>to...</code>、<code>for snorkeling</code> 都是介系詞片語。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>through a dark tunnel</code>（經過的路徑）要提到「健行」前；<code>to a century-old lookout</code> 併入目的地「鑽石頭山的百年瞭望臺」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>特定某天的早上用 <code>on</code>；<code>for + V-ing</code> 表目的（for snorkeling）；<code>drive-drove-driven</code>。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「我們健行上鑽石頭山通過黑隧道到一個百年瞭望臺，然後後來開車更遠北為了浮潛」，路徑與目的都吊在後面。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>On our first morning,</code>（時間片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「第一天早上」，our 不必譯出。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>we hiked up Diamond Head</code>（主句動作一）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻主詞「我們」；hiked up 譯「健行登上」，等路徑說完再出現。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>through a dark tunnel</code>（路徑片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】經過的路徑放在動作前：「我們穿過一條漆黑的隧道健行登上……」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>to a century-old lookout,</code>（目的地片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】把目的地併到鑽石頭山後面：「鑽石頭山的百年瞭望臺」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>and later drove farther north for snorkeling.</code>（動作二）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「稍後又開車往更北方去浮潛」。later 譯「稍後」，補「又」；for snorkeling 譯「去浮潛」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔「我們」 ➔ 語塊 3（路徑超車） ➔ 語塊 2 的「健行登上鑽石頭山」 ➔ 語塊 4（目的地併入） ➔ 語塊 5</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：第一天早上，我們【穿過一條漆黑的隧道】健行登上鑽石頭山的百年瞭望臺，稍後又開車往更北方去浮潛。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：through 路徑放動作前；and later 譯「稍後又……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">句首 On our first morning 是時間，翻「第一天早上」。主詞 we，第一個動作 hiked up Diamond Head。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>動作後面接 through + 地方時，先翻「穿過……」，再翻動作</strong>：「我們穿過一條漆黑的隧道健行登上……」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>目的地 to + 地點跟在山名後面時，把它接成「山名的地點」</strong>：「鑽石頭山的百年瞭望臺」。</div>
+                <p style="margin: 0 0 0.5rem;">最後 and later drove farther north for snorkeling，「稍後又開車往更北方去浮潛」。</p>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：later 後面補一個「又」，就有一整天行程接連發生的感覺。for snorkeling 翻「去浮潛」，不用翻「為了浮潛」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：第一天早上，我們穿過一條漆黑的隧道健行登上鑽石頭山的百年瞭望臺，稍後又開車往更北方去浮潛。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">and later</span><span class="conj-word-preview">through / to / for</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>對等連接詞</strong>：and later 連接 hiked up 與 drove</div>
+              <div>• <strong>介系詞片語</strong>：through 路徑、to 目的地、for 目的</div>
+            </div>
+            <div class="conj-title-main">and 連接兩段行程 ＋ 介系詞片語</div>
+            <div class="conj-desc">
+              本句主詞只有 we，兩個過去式動詞 <code>hiked up</code> 與 <code>drove</code> 用 <code>and later</code> 連接，表示先後發生的兩件事。路徑、目的地、目的全部用介系詞片語交代，不需要另外的子句。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：and 後直接接動詞（later 只是副詞）➔ 共用主詞；記敘文用 and later / and then 串時間順序。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
-          <div class="chunk m"><span class="c-role">[M] 時間</span><span class="c-en">On our first morning,</span><span class="c-zh">在我們的第一個早晨</span></div>
-          <div class="chunk s"><span class="c-role">[S+V1+M] 早上行程</span><span class="c-en">we hiked up Diamond Head through a dark tunnel to a century-old lookout,</span><span class="c-zh">我們穿過黑隧道登上鑽石頭山瞭望臺</span></div>
-          <div class="chunk c"><span class="c-role">[Conj+V2+M] 下午行程</span><span class="c-en">and later drove farther north for snorkeling.</span><span class="c-zh">稍後並開車往更北方去浮潛</span></div>
+          <div class="chunk m"><span class="c-role">[M] 時間</span><span class="c-en">On our first morning,</span><span class="c-zh">第一天早上</span></div>
+          <div class="chunk s"><span class="c-role">[S+V1+M] 早上行程</span><span class="c-en">we hiked up Diamond Head through a dark tunnel to a century-old lookout,</span><span class="c-zh">我們穿過漆黑隧道登上鑽石頭山的百年瞭望臺</span></div>
+          <div class="chunk c"><span class="c-role">[Conj+V2+M] 稍後行程</span><span class="c-en">and later drove farther north for snorkeling.</span><span class="c-zh">稍後又開車往更北方去浮潛</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 特定某天早上的介系詞必用 <code>On</code>！</div>泛指早上用 <code>in the morning</code>，但只要加上修飾語（如 <code>On our first morning</code> / <code>On October 31</code>），介系詞一律改用 <code>On</code>！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 行程串聯法</div><code>On our first morning, we V1..., and later V2...</code> 讓遊記時間軸清晰流暢。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div>泛指早上用 <code>in the morning</code>，但只要加上修飾語（如 <code>On our first morning</code> / <code>On October 31</code>），介系詞一律改用 <code>On</code>！</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><code>On our first morning, we V1..., and later V2...</code> 讓遊記時間軸清晰流暢。</div>
         </div>
       </div>
-
-      <!-- S4 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 4</span>
-          <div style="flex:1;">
-            <div class="sent-en">Beyond the coastal <span class="key-term">scenery</span>, Kai showed me Honolulu’s ’Iolani Palace, where I learned that King Kalākaua loved new technology <span class="gram-term">so much that</span> he lit the palace with <span class="key-term">electricity</span> in 1887—illuminating its grand koa <span class="key-term">throne</span> room years before the White House.</div>
-            <div class="sent-zh">除了海岸風景外，凱還帶我參觀檀香山的伊奧拉尼宮，在那裡我得知卡拉卡瓦國王如此熱愛新科技，以致於他在 1887 年就用電力點亮王宮——比白宮早了好幾年照亮氣派的相思木王座廳。</div>
+          <div class="sent-en">
+            Beyond the coastal <span class="key-term">scenery</span>, Kai showed me Honolulu’s ’Iolani Palace.
+            <div class="sent-zh">除了海岸風景外，凱還帶我參觀檀香山的伊奧拉尼宮。</div>
           </div>
-          <button class="audio-btn" onclick="speak('Beyond the coastal scenery, Kai showed me Honolulu’s Iolani Palace, where I learned that King Kalakaua loved new technology so much that he lit the palace with electricity in 1887—illuminating its grand koa throne room years before the White House.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Beyond the coastal scenery, Kai showed me Honolulu’s ’Iolani Palace.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Beyond the coastal scenery, Kai showed me Honolulu’s ’Iolani Palace.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>Kai (S) showed (V) me (IO) Honolulu’s ’Iolani Palace (DO)</code>；句首 <code>Beyond...</code> 是介系詞片語。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>showed</code>：記敘旅程中發生的事。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>全句沒有連接詞；<code>show + 人 + 物</code> 是授與動詞的雙受詞句型。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>全句順翻；show 對景點譯「帶……參觀」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>beyond</code> 表「除了……之外（還有）」；<code>scenery</code> 不可數；<code>show sb sth</code> ＝ <code>show sth to sb</code>。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：把 showed me 直譯成「凱給我看檀香山的伊奧拉尼宮」，好像在看照片。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Beyond the coastal scenery,</code>（介系詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「除了海岸風景外」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>Kai showed me</code>（主詞＋授與動詞＋間接受詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻。show 對地方譯「帶我參觀」，補「還」承接 beyond：「凱還帶我參觀」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>Honolulu’s ’Iolani Palace.</code>（直接受詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「檀香山的伊奧拉尼宮」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3，全句順翻</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：除了海岸風景外，凱還帶我參觀檀香山的伊奧拉尼宮。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：show 人 + 地方 ➔「帶人參觀地方」；Beyond 搭「還」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句很短，句首 Beyond the coastal scenery 先翻「除了海岸風景外」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 show + 人 + 地方時，翻成「帶人參觀地方」</strong>：「凱還帶我參觀檀香山的伊奧拉尼宮」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：Beyond 有「還有別的」的意思，主句補一個「還」，前後就接起來了。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：除了海岸風景外，凱還帶我參觀檀香山的伊奧拉尼宮。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">無連接詞</span><span class="conj-word-preview">Beyond</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>單一主句</strong>：主詞 Kai，授與動詞 showed，雙受詞 me / ’Iolani Palace</div>
+              <div>• <strong>介系詞片語</strong>：Beyond the coastal scenery</div>
+            </div>
+            <div class="conj-title-main">Beyond 片語 ＋ 授與動詞句型</div>
+            <div class="conj-desc">
+              本句只有一組主詞動詞 <code>Kai showed</code>。show 後面接兩個受詞：先接人 me，再接物 ’Iolani Palace。句首 <code>Beyond the coastal scenery</code> 總結前面看過的海岸風景，帶出新景點。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：show / give / tell 後面接「人＋物」➔ 雙受詞，不用加介系詞；物在前時要寫 to 人。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
-          <div class="chunk s"><span class="c-role">[S+V+O1+O2] 授與動詞</span><span class="c-en">Kai showed me Honolulu’s ’Iolani Palace,</span><span class="c-zh">凱帶我參觀伊奧拉尼宮</span></div>
-          <div class="chunk c"><span class="c-role">[Conj] 關係子句</span><span class="c-en">where I learned that King Kalākaua loved new technology so much</span><span class="c-zh">在那裡我得知國王如此熱愛新科技</span></div>
-          <div class="chunk o"><span class="c-role">[Conj] 結果子句</span><span class="c-en">that he lit the palace with electricity in 1887...</span><span class="c-zh">以致於他在1887年用電力點亮王宮</span></div>
+          <div class="chunk m"><span class="c-role">[M] 轉折片語</span><span class="c-en">Beyond the coastal scenery,</span><span class="c-zh">除了海岸風景外</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">Kai</span><span class="c-zh">凱</span></div>
+          <div class="chunk v"><span class="c-role">[V+O1] 授與動詞</span><span class="c-en">showed me</span><span class="c-zh">帶我參觀</span></div>
+          <div class="chunk o"><span class="c-role">[O2] 直接受詞</span><span class="c-en">Honolulu’s ’Iolani Palace.</span><span class="c-zh">檀香山的伊奧拉尼宮</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 <code>learn (that) + S. + V.</code>（得知、了解到……）</div>在遊記中要把客觀歷史知識自然融入第一人稱故事，只要加上 <code>I was amazed to learn that...</code> 即可！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 寫作心法</div>把導遊或朋友介紹的古蹟故事寫進作文，能大幅提升文章知性深度。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>show + 人 + 物</code> 為授與動詞句型，也可寫成 <code>show + 物 + to + 人</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><code>Beyond the coastal scenery</code> 是記敘文中自然的轉場，帶出下一個景點。</div>
         </div>
       </div>
-
-      <!-- S5 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 5</span>
-          <div style="flex:1;">
-            <div class="sent-en">That evening at a family luau, I tasted dishes from people who <span class="gram-term">have called Oahu home</span>: <span class="key-term">Native</span> Hawaiian poke with fresh <span class="key-term">raw</span> fish, smoky kalua pork from an underground <span class="key-term">oven</span>, and sweet shave ice brought by Japanese <span class="key-term">immigrants</span>.</div>
-            <div class="sent-zh">那天晚上在家庭傳統宴會上，我品嚐了那些以歐胡島為家的人們的料理：含有新鮮生魚的夏威夷原住民波奇、來自地下烤爐的煙燻卡魯瓦豬肉，以及日本移民帶來的香甜刨冰。</div>
+          <div class="sent-en">
+            I was amazed to learn that King Kalākaua loved new technology <span class="gram-term">so much that</span> he lit the palace with <span class="key-term">electricity</span> in 1887—years before the White House—illuminating its grand koa <span class="key-term">throne</span> room.
+            <div class="sent-zh">得知卡拉卡瓦國王如此熱愛新科技，以致於他在 1887 年就用電力點亮王宮——比白宮還早了好幾年——照亮氣派的相思木王座廳時，我感到驚奇不已。</div>
           </div>
-          <button class="audio-btn" onclick="speak('That evening at a family luau, I tasted dishes from people who have called Oahu home: Native Hawaiian poke with fresh raw fish, smoky kalua pork from an underground oven, and sweet shave ice brought by Japanese immigrants.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('I was amazed to learn that King Kalākaua loved new technology so much that he lit the palace with electricity in 1887—years before the White House—illuminating its grand koa throne room.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('I was amazed to learn that King Kalākaua loved new technology so much that he lit the palace with electricity in 1887—years before the White House—illuminating its grand koa throne room.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>I (S) was (V) amazed (C)</code>；<code>to learn that...</code> 說明驚奇的原因，learn 的受詞是 that 子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>was / loved / lit</code>：記敘旅行時的感受與國王的歷史。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>第一個 <code>that</code> 引導名詞子句作 learn 的受詞；第二個 <code>that</code> 與 so much 搭配成結果子句；<code>illuminating...</code> 是分詞構句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>英文先說感受「我很驚奇」再說原因；中文要把「得知……時」整段提前，感受「我感到驚奇不已」放句尾。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>be amazed to V</code>（因……而驚奇），不定詞表原因；感受用 p.p. 形容詞 amazed，不寫 ❌ amazing；<code>so much that</code> 的 that 不可省略成 so much。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「我很驚訝去得知國王愛新科技很多以致於他點亮王宮……」，感受先講、原因吊在後面，中文讀起來頭重腳輕。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>I was amazed</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】感受放在句尾收束：「我感到驚奇不已」。amazed 譯「驚奇」，補「不已」加強語氣。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>to learn that</code>（原因不定詞＋名詞子句連接詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】不定詞表驚奇的原因，提到最前面：「得知……時」，that 不譯。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>King Kalākaua loved new technology so much</code>（名詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「卡拉卡瓦國王如此熱愛新科技」，so much 譯「如此」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>that he lit the palace with electricity in 1887</code>（結果子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】時間與方法放在動詞前：「以致於他在 1887 年就用電力點亮王宮」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>—years before the White House—</code>（破折號插入）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「——比白宮還早了好幾年——」，保留破折號的插入語氣。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 6：<code>illuminating its grand koa throne room.</code>（分詞構句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「照亮氣派的相思木王座廳」，接著補上「時」，結束整個原因段落。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 2（原因超車到句首） ➔ 語塊 3 ➔ 語塊 4（時間、方法超車） ➔ 語塊 5 ➔ 語塊 6 ➔「時」 ➔ 語塊 1 壓軸</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：【得知】卡拉卡瓦國王如此熱愛新科技，以致於他【在 1887 年就用電力】點亮王宮——比白宮還早了好幾年——照亮氣派的相思木王座廳時，【我感到驚奇不已】。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：be amazed to learn that... ➔「得知……時，我感到驚奇不已」，原因先講、感受收尾。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句英文先講我的感受 I was amazed，再講原因。中文習慣反過來，原因先講，感受收尾。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 be amazed／surprised／happy + to learn／see that 時，先翻「得知／看到……時」，感受留到最後</strong>：「得知……時，我感到驚奇不已」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 so + 副詞 + that 時，前面翻「如此……」，that 翻「以致於」</strong>：「卡拉卡瓦國王如此熱愛新科技，以致於他……」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>動作後面同時有 with + 方法和 in + 年份時，先翻時間，再翻方法，最後才是動作</strong>：「在 1887 年就用電力點亮王宮——比白宮還早了好幾年——照亮氣派的相思木王座廳」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：原因段很長，最後補一個「時」把它收住，再說「我感到驚奇不已」，句子才不會散。amazed 是「我覺得驚奇」，不要寫成 amazing。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：得知卡拉卡瓦國王如此熱愛新科技，以致於他在 1887 年就用電力點亮王宮——比白宮還早了好幾年——照亮氣派的相思木王座廳時，我感到驚奇不已。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">that（名詞子句）</span><span class="conj-word-preview">so...that</span><span class="conj-word-preview">, V-ing</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>名詞子句</strong>：that 引導 learn 的受詞</div>
+              <div>• <strong>結果副詞子句</strong>：so much that</div>
+              <div>• <strong>分詞構句</strong>：illuminating... 補充點燈的結果</div>
+            </div>
+            <div class="conj-title-main">that 名詞子句 ＋ so...that 結果子句</div>
+            <div class="conj-desc">
+              1. 第一個 <code>that</code>：左邊是動詞 learn，右邊是完整句，所以是名詞子句，說明「得知了什麼」。<br/>2. 第二個 <code>that</code>：前面有 so much，後面也是完整句，是結果子句「以致於」。<br/>3. 破折號之後的 <code>illuminating its grand koa throne room</code> 是分詞構句，補充點亮王宮的結果。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：同一句出現兩個 that：左邊是動詞 ➔ 名詞子句；左邊有 so / such ➔ 結果子句。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
-          <div class="chunk m"><span class="c-role">[M] 時間與地點</span><span class="c-en">That evening at a family luau,</span><span class="c-zh">那天晚上在家庭宴會上</span></div>
-          <div class="chunk s"><span class="c-role">[S+V+O] 主句</span><span class="c-en">I tasted dishes from people who have called Oahu home:</span><span class="c-zh">我品嚐了以歐胡島為家的人們的料理：</span></div>
-          <div class="chunk o"><span class="c-role">[O] 三道代表美食</span><span class="c-en">Native Hawaiian poke with fresh raw fish, smoky kalua pork from an underground oven, and sweet shave ice...</span><span class="c-zh">生魚波奇、地下烤爐烤豬與日式刨冰</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+C] 主句</span><span class="c-en">I was amazed</span><span class="c-zh">我感到驚奇不已</span></div>
+          <div class="chunk m"><span class="c-role">[M] 原因不定詞</span><span class="c-en">to learn</span><span class="c-zh">得知……時</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] that 名詞子句</span><span class="c-en">that King Kalākaua loved new technology so much</span><span class="c-zh">卡拉卡瓦國王如此熱愛新科技</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 結果子句</span><span class="c-en">that he lit the palace with electricity in 1887—years before the White House—</span><span class="c-zh">以致於他在 1887 年就用電力點亮王宮，比白宮早好幾年</span></div>
+          <div class="chunk m"><span class="c-role">[M] 分詞構句</span><span class="c-en">illuminating its grand koa throne room.</span><span class="c-zh">照亮氣派的相思木王座廳</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 冒號（<code>:</code>）引出具體清單</div>先用概括名詞 <code>dishes</code>，再用冒號列出三道具體菜色（<code>A, B, and C</code>），條理分明。</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 感官形容詞</div><code>fresh raw fish</code>（鮮生魚）、<code>smoky kalua pork</code>（煙燻烤豬）、<code>sweet shave ice</code>（香甜刨冰）讓味覺躍然紙上。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div>在遊記中要把客觀歷史知識自然融入第一人稱故事，只要加上 <code>I was amazed to learn that...</code> 即可！句中兩個 that 功能不同：第一個是名詞子句，第二個是 so...that 結果子句。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>把導遊或朋友介紹的古蹟故事寫進作文，能大幅提升文章知性深度。</div>
         </div>
       </div>
+      <div class="para-badge">第二段：宴會美食、萬聖夜與旅程收穫</div>
 
-      <!-- S6 -->
-      <div class="sent-card" style="margin-bottom:0;">
+      <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 6</span>
-          <div style="flex:1;">
-            <div class="sent-en">After admiring creative <span class="key-term">costumes</span> during the <span class="key-term">Halloween</span> <span class="key-term">celebration</span> on Kalākaua <span class="key-term">Avenue</span>, Kai—knowing <span class="gram-term">those who love</span> horror movies would enjoy Waipahu’s <span class="key-term">Haunted</span> <span class="key-term">Plantation</span>—took me through its dark village where actors jumped out from the <span class="key-term">shadows</span>, proving that <span class="gram-term">whether</span> I was climbing craters <span class="gram-term">or eating</span> shave ice, Oahu taught me to slow down and settle into island life.</div>
-            <div class="sent-zh">在卡拉卡瓦大道的萬聖節慶典欣賞完創意服裝後，知道喜愛恐怖片的人一定會喜歡瓦伊帕胡鬧鬼莊園的凱，帶我走過演員從暗處跳出來的漆黑村莊，證明無論我是在爬火山口或吃刨冰，歐胡島都教會我放慢腳步融入海島生活。</div>
+          <div class="sent-en">
+            That evening at a family luau, I tasted dishes from people who <span class="gram-term">have called Oahu home</span>: <span class="key-term">Native</span> Hawaiian poke with fresh <span class="key-term">raw</span> fish, smoky kalua pork from an underground <span class="key-term">oven</span>, and sweet shave ice brought by Japanese <span class="key-term">immigrants</span>.
+            <div class="sent-zh">那天晚上在家庭傳統宴會上，我品嚐了那些以歐胡島為家的人們的料理：含有新鮮生魚的夏威夷原住民波奇、來自地下烤爐的煙燻卡魯瓦豬肉，以及日本移民帶來的香甜刨冰。</div>
           </div>
-          <button class="audio-btn" onclick="speak('After admiring creative costumes during the Halloween celebration on Kalakaua Avenue, Kai—knowing those who love horror movies would enjoy Waipahu’s Haunted Plantation—took me through its dark village where actors jumped out from the shadows, proving that whether I was climbing craters or eating shave ice, Oahu taught me to slow down and settle into island life.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('That evening at a family luau, I tasted dishes from people who have called Oahu home: Native Hawaiian poke with fresh raw fish, smoky kalua pork from an underground oven, and sweet shave ice brought by Japanese immigrants.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('That evening at a family luau, I tasted dishes from people who have called Oahu home: Native Hawaiian poke with fresh raw fish, smoky kalua pork from an underground oven, and sweet shave ice brought by Japanese immigrants.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>I (S) tasted (V) dishes (O)</code>；<code>from people who...</code> 修飾 dishes；冒號後列出三道菜。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>主句過去簡單式 <code>tasted</code> 記敘當晚；關代子句現在完成式 <code>have called</code> 表一直以來以此為家。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>who</code> 主格關代，先行詞 people；冒號帶出 dishes 的具體內容；三個名詞片語用 <code>A, B, and C</code> 並列，各自帶 with / from / brought by 修飾。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>from people who...</code> 要提到「料理」前；冒號後每道菜的修飾語也都放到菜名前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>call + 地方 + home</code>；冒號後的列舉與 dishes 同位；<code>brought by</code> 是過去分詞表被動。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「我嚐了料理從人們他們稱歐胡島為家：原住民波奇有新鮮生魚，煙燻豬肉從地下烤爐」，修飾語全部吊在後面。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>That evening at a family luau,</code>（時間＋地點）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「那天晚上在家庭傳統宴會上」，luau 補「傳統宴會」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>I tasted dishes</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「我品嚐了……料理」，「料理」等修飾語說完再出現。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>from people who have called Oahu home:</code>（from 片語＋who 子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】整段修飾 dishes，放到「料理」前：「那些以歐胡島為家的人們的料理」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>Native Hawaiian poke with fresh raw fish,</code>（列舉一）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】with 片語提前：「含有新鮮生魚的夏威夷原住民波奇」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>smoky kalua pork from an underground oven,</code>（列舉二）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】from 片語提前：「來自地下烤爐的煙燻卡魯瓦豬肉」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 6：<code>and sweet shave ice brought by Japanese immigrants.</code>（列舉三）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】分詞片語提前：「以及日本移民帶來的香甜刨冰」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 的「我品嚐了」 ➔ 語塊 3（超車） ➔「料理」 ➔ 冒號 ➔ 語塊 4、5、6（各自修飾語超車）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：那天晚上在家庭傳統宴會上，我品嚐了【那些以歐胡島為家的人們的】料理：【含有新鮮生魚的】夏威夷原住民波奇、【來自地下烤爐的】煙燻卡魯瓦豬肉，以及【日本移民帶來的】香甜刨冰。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：冒號前先總稱、冒號後列舉；每道菜的 with / from / p.p. 修飾都戴到菜名頭上。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">先翻時間地點「那天晚上在家庭傳統宴會上」，主句 I tasted dishes，「我品嚐了……料理」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>名詞後面接 from + 人 + who 子句時，整段先翻，再翻名詞</strong>：「那些以歐胡島為家的人們的料理」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>冒號後列舉的每個名詞後面若有 with／from／p.p. 修飾，都先翻修飾，再翻名詞</strong>：「含有新鮮生魚的夏威夷原住民波奇、來自地下烤爐的煙燻卡魯瓦豬肉，以及日本移民帶來的香甜刨冰」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：三道菜之間用頓號，最後一道前加「以及」，列舉的節奏就清楚了。smoky、sweet 都要翻出來，味道才有畫面。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：那天晚上在家庭傳統宴會上，我品嚐了那些以歐胡島為家的人們的料理：含有新鮮生魚的夏威夷原住民波奇、來自地下烤爐的煙燻卡魯瓦豬肉，以及日本移民帶來的香甜刨冰。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">who</span><span class="conj-word-preview">:</span><span class="conj-word-preview">A, B, and C</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>主格關代</strong>：who 引導形容詞子句，先行詞 people</div>
+              <div>• <strong>冒號</strong>：帶出 dishes 的具體內容</div>
+              <div>• <strong>並列</strong>：三道菜以 A, B, and C 串接</div>
+            </div>
+            <div class="conj-title-main">who 形容詞子句 ＋ 冒號列舉</div>
+            <div class="conj-desc">
+              1. <code>people who have called Oahu home</code>：左邊是名詞 people，右邊缺主詞，who 是主格關代。<br/>2. 冒號後的三個名詞片語都是在說明 dishes 到底是哪些菜，沒有新的動詞。每道菜後面的 <code>with fresh raw fish</code>、<code>from an underground oven</code>、<code>brought by Japanese immigrants</code> 都是後位修飾。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：冒號後只有名詞、沒有動詞 ➔ 列舉前面的總稱；翻譯時用頓號串起來，最後一項前加「以及」。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
-          <div class="chunk m"><span class="c-role">[M] 時間分詞構句</span><span class="c-en">After admiring creative costumes... on Kalākaua Avenue,</span><span class="c-zh">在卡拉卡瓦大道欣賞完創意服裝後</span></div>
-          <div class="chunk s"><span class="c-role">[S+V+O] 主句與插入語</span><span class="c-en">Kai—knowing those who love horror movies...—took me through its dark village</span><span class="c-zh">凱帶我穿過鬧鬼莊園的漆黑村莊</span></div>
-          <div class="chunk c"><span class="c-role">[Conj] 結語感悟</span><span class="c-en">...whether I was climbing craters or eating shave ice, Oahu taught me to slow down and settle into island life.</span><span class="c-zh">無論爬火山或吃刨冰，歐胡島教會我慢活</span></div>
+          <div class="chunk m"><span class="c-role">[M] 時間與地點</span><span class="c-en">That evening at a family luau,</span><span class="c-zh">那天晚上在家庭傳統宴會上</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 主句</span><span class="c-en">I tasted dishes from people who have called Oahu home:</span><span class="c-zh">我品嚐了那些以歐胡島為家的人們的料理：</span></div>
+          <div class="chunk o"><span class="c-role">[O] 三道代表美食</span><span class="c-en">Native Hawaiian poke with fresh raw fish, smoky kalua pork from an underground oven, and sweet shave ice brought by Japanese immigrants.</span><span class="c-zh">生魚波奇、地下烤爐煙燻豬肉與日本移民帶來的刨冰</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 記敘文收尾神句：<code>[地點/經驗] taught me how to...</code></div>學測作文最後一句寫出「這趟旅程教會我的事（<code>Oahu taught me to slow down...</code>）」，立意瞬間昇華！</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 過去進行式對稱省略</div><code>Whether I was climbing craters or [I was] eating shave ice</code> 省略重複的 <code>I was</code>。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div>先用概括名詞 <code>dishes</code>，再用冒號列出三道具體菜色（<code>A, B, and C</code>），條理分明。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><code>fresh raw fish</code>（鮮生魚）、<code>smoky kalua pork</code>（煙燻烤豬）、<code>sweet shave ice</code>（香甜刨冰）讓味覺躍然紙上。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 7</span>
+          <div class="sent-en">
+            On October 31, we joined crowds in creative <span class="key-term">costumes</span> along Kalākaua <span class="key-term">Avenue</span> for a lively <span class="key-term">Halloween</span> <span class="key-term">celebration</span>.
+            <div class="sent-zh">在十月三十一日當天，我們加入卡拉卡瓦大道上身穿創意服裝的人群，參與熱鬧的萬聖節慶典。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('On October 31, we joined crowds in creative costumes along Kalākaua Avenue for a lively Halloween celebration.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('On October 31, we joined crowds in creative costumes along Kalākaua Avenue for a lively Halloween celebration.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>we (S) joined (V) crowds (O)</code>；<code>in creative costumes</code>、<code>along Kalākaua Avenue</code> 修飾 crowds，<code>for...</code> 表目的。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>joined</code>：記敘萬聖節當天的經歷。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>全句沒有連接詞；三個介系詞片語分別表服裝、地點、目的。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>in creative costumes</code> 與 <code>along Kalākaua Avenue</code> 都要提到「人群」前；<code>for</code> 片語順翻成第二個動作「參與……」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>特定日期用 <code>on</code>；<code>in + 服裝</code>（穿著）；<code>join</code> 直接接受詞，不寫 ❌ join in crowds。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「我們加入人群在創意服裝沿著卡拉卡瓦大道為了熱鬧的萬聖節慶祝」，三個介系詞片語都吊在後面。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>On October 31,</code>（時間片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「在十月三十一日當天」，日期用中文數字，補「當天」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>we joined crowds</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「我們加入……人群」，「人群」等修飾語說完再出現。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>in creative costumes</code>（介系詞片語（服裝））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】in 表「穿著」，修飾 crowds：「身穿創意服裝的人群」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>along Kalākaua Avenue</code>（介系詞片語（地點））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】地點放在最前面：「卡拉卡瓦大道上身穿創意服裝的人群」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>for a lively Halloween celebration.</code>（目的片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻成接續動作：「參與熱鬧的萬聖節慶典」，for 不譯「為了」，補動詞「參與」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 的「我們加入」 ➔ 語塊 4（地點超車） ➔ 語塊 3（服裝超車） ➔「人群」 ➔ 語塊 5</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：在十月三十一日當天，我們加入【卡拉卡瓦大道上身穿創意服裝的】人群，參與熱鬧的萬聖節慶典。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：名詞後有兩個修飾片語 ➔ 地點最外層、特徵貼近名詞；for 活動 補動詞「參與」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">句首 On October 31 是日期，翻「在十月三十一日當天」。主句 we joined crowds，「我們加入……人群」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>名詞後面同時有 in + 服裝和 along + 地點時，先翻地點，再翻服裝，最後才是名詞</strong>：「卡拉卡瓦大道上身穿創意服裝的人群」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>句尾 for + 活動表示目的時，補一個動詞接在後面</strong>：「參與熱鬧的萬聖節慶典」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：in creative costumes 的 in 是「穿著」，翻「身穿」最簡潔。for 不要翻「為了」，用「參與」讓兩個動作連起來。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：在十月三十一日當天，我們加入卡拉卡瓦大道上身穿創意服裝的人群，參與熱鬧的萬聖節慶典。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">無連接詞</span><span class="conj-word-preview">in / along / for</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>單一主句</strong>：主詞 we，動詞 joined，受詞 crowds</div>
+              <div>• <strong>介系詞片語</strong>：in 服裝、along 地點、for 目的</div>
+            </div>
+            <div class="conj-title-main">單一主句 ＋ 三個介系詞片語</div>
+            <div class="conj-desc">
+              本句只有一組主詞動詞 <code>we joined</code>。受詞 crowds 後面跟著 <code>in creative costumes</code>（穿什麼）與 <code>along Kalākaua Avenue</code>（在哪裡），句尾 <code>for a lively Halloween celebration</code> 說明加入人群的目的。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：名詞後連著兩個介系詞片語 ➔ 中文都搬到名詞前，地點放最前面；句尾 for ＋ 活動 ➔ 目的。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 時間</span><span class="c-en">On October 31,</span><span class="c-zh">在十月三十一日當天</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O] 主句</span><span class="c-en">we joined crowds</span><span class="c-zh">我們加入人群</span></div>
+          <div class="chunk m"><span class="c-role">[M] 服裝</span><span class="c-en">in creative costumes</span><span class="c-zh">身穿創意服裝的</span></div>
+          <div class="chunk m"><span class="c-role">[M] 地點</span><span class="c-en">along Kalākaua Avenue</span><span class="c-zh">卡拉卡瓦大道上的</span></div>
+          <div class="chunk m"><span class="c-role">[M] 目的</span><span class="c-en">for a lively Halloween celebration.</span><span class="c-zh">參與熱鬧的萬聖節慶典</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div>特定日期前用介系詞 <code>On</code>（On October 31）；<code>in + 服裝</code> 表「穿著……」。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><code>join + 人群 + for + 活動</code>：一句交代參與的對象與目的，記敘文常用。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 8</span>
+          <div class="sent-en">
+            Since Kai knew <span class="gram-term">those who love</span> horror movies would enjoy Waipahu’s <span class="key-term">Haunted</span> <span class="key-term">Plantation</span>, we walked through its dark village, screaming when actors jumped out from the <span class="key-term">shadows</span>!
+            <div class="sent-zh">因為凱知道那些喜愛恐怖片的人一定會喜歡瓦伊帕胡的鬧鬼莊園，我們便走過那座漆黑的村莊，當演員從陰暗處跳出來時嚇得尖叫連連！</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Since Kai knew those who love horror movies would enjoy Waipahu’s Haunted Plantation, we walked through its dark village, screaming when actors jumped out from the shadows!', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Since Kai knew those who love horror movies would enjoy Waipahu’s Haunted Plantation, we walked through its dark village, screaming when actors jumped out from the shadows!', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>we (S) walked through (V) its dark village (O)</code>；句首 Since 子句表原因，句尾 <code>screaming when...</code> 補充反應。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>knew / walked / jumped</code> 記敘經歷；<code>would enjoy</code> 是過去式中的未來（時態一致）。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>Since</code> 原因子句裡，knew 後面省略 that 的名詞子句，名詞子句主詞 <code>those who love horror movies</code> 又帶 who 關代；<code>screaming</code> 是分詞構句；<code>when</code> 時間子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>Since 子句順翻；句尾的 when 子句要提到「尖叫」前：「當……時嚇得尖叫連連」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>since</code> 表原因＝ because；過去式主句後的子句用 <code>would</code>，不用 will；<code>those who + 複數動詞</code>。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「自從凱知道那些愛恐怖片的人會享受鬧鬼莊園，我們走過黑村莊，尖叫當演員跳出來」，since 誤譯成「自從」，when 子句吊在後面。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Since Kai knew</code>（原因子句開頭）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：since 在這裡表原因，譯「因為」，不是「自從」：「因為凱知道」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>those who love horror movies would enjoy Waipahu’s Haunted Plantation,</code>（省略 that 的名詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻，關代子句提到「人」前：「那些喜愛恐怖片的人一定會喜歡瓦伊帕胡的鬧鬼莊園」，would 補成「一定會」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>we walked through its dark village,</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「我們便走過那座漆黑的村莊」，補「便」承接原因；its 譯「那座」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>screaming</code>（分詞構句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻成反應：「嚇得尖叫連連」，補「嚇得」交代尖叫的原因。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>when actors jumped out from the shadows!</code>（when 時間子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】時間放在反應前：「當演員從陰暗處跳出來時嚇得尖叫連連」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 5（時間子句超車） ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：因為凱知道那些喜愛恐怖片的人一定會喜歡瓦伊帕胡的鬧鬼莊園，我們便走過那座漆黑的村莊，【當演員從陰暗處跳出來時】嚇得尖叫連連！
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：since 在句首多半是「因為」；句尾 when 子句提到反應前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">句首 Since 後面接的是原因，不是時間，所以翻「因為凱知道……」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>動詞 know／think 後面直接接一個「主詞＋動詞」時，那是省略 that 的內容，順著翻</strong>：「那些喜愛恐怖片的人一定會喜歡瓦伊帕胡的鬧鬼莊園」。</div>
+                <p style="margin: 0 0 0.5rem;">主句 we walked through its dark village，「我們便走過那座漆黑的村莊」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>分詞構句後面跟著 when 子句時，先翻 when 子句，再翻那個反應</strong>：「當演員從陰暗處跳出來時嚇得尖叫連連」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：主句前補一個「便」，因果就接起來了。screaming 補成「嚇得尖叫連連」，比只翻「尖叫」更生動。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：因為凱知道那些喜愛恐怖片的人一定會喜歡瓦伊帕胡的鬧鬼莊園，我們便走過那座漆黑的村莊，當演員從陰暗處跳出來時嚇得尖叫連連！</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">Since</span><span class="conj-word-preview">(that)</span><span class="conj-word-preview">who</span><span class="conj-word-preview">when</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>原因副詞子句</strong>：Since 引導原因</div>
+              <div>• <strong>省略的名詞子句</strong>：knew (that) ...</div>
+              <div>• <strong>主格關代</strong>：those who love horror movies</div>
+              <div>• <strong>時間副詞子句</strong>：when actors jumped out</div>
+            </div>
+            <div class="conj-title-main">原因子句 ＋ 省略 that 的名詞子句 ＋ 分詞構句</div>
+            <div class="conj-desc">
+              1. <code>Since</code> 後接完整句，主句是過去式，表原因「因為」。<br/>2. <code>knew</code> 後面省略了 that，接名詞子句 <code>those who love horror movies would enjoy...</code>；這個子句的主詞 those 又被 who 子句修飾。<br/>3. 主句後的 <code>screaming</code> 是分詞構句，主詞是 we；<code>when actors jumped out from the shadows</code> 說明尖叫的時間。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：since ＋ 過去式子句、後面沒有 have p.p. 的主句 ➔ 原因「因為」；動詞後面直接接「主詞＋動詞」➔ 省略了名詞子句的 that。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 原因子句</span><span class="c-en">Since Kai knew those who love horror movies would enjoy Waipahu’s Haunted Plantation,</span><span class="c-zh">因為凱知道喜愛恐怖片的人會喜歡鬧鬼莊園</span></div>
+          <div class="chunk s"><span class="c-role">[S+V] 主句</span><span class="c-en">we walked through its dark village,</span><span class="c-zh">我們便走過那座漆黑的村莊</span></div>
+          <div class="chunk m"><span class="c-role">[M] 分詞構句</span><span class="c-en">screaming</span><span class="c-zh">嚇得尖叫連連</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 時間子句</span><span class="c-en">when actors jumped out from the shadows!</span><span class="c-zh">當演員從陰暗處跳出來時</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>knew (that) those who love horror movies would enjoy...</code>：省略 that 的名詞子句中，再包一個 who 關代子句；主句過去式，子句用 would。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><code>, screaming when...</code> 用分詞構句寫出當下的反應，比 and we screamed 更生動。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 9</span>
+          <div class="sent-en">
+            <span class="gram-term">Whether</span> I was climbing craters <span class="gram-term">or eating</span> shave ice at sunset, Oahu taught me how to slow down and settle into island life.
+            <div class="sent-zh">無論我是在攀爬火山口，還是在夕陽下吃著刨冰，歐胡島都教會了我如何放慢腳步、融入海島生活。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Whether I was climbing craters or eating shave ice at sunset, Oahu taught me how to slow down and settle into island life.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Whether I was climbing craters or eating shave ice at sunset, Oahu taught me how to slow down and settle into island life.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>Oahu (S) taught (V) me (IO) how to slow down and settle into island life (DO)</code>；句首 Whether 子句表讓步。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>讓步子句過去進行式 <code>was climbing / eating</code> 描述當時正在做的事；主句過去簡單式 <code>taught</code> 總結收穫。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>Whether A or B</code> 引導讓步副詞子句，or 後省略 I was；<code>how to V</code> 是疑問詞＋不定詞，當 taught 的直接受詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>Whether 子句順翻，<code>at sunset</code> 提到「吃著刨冰」前；主句補「都」承接「無論」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>teach + 人 + how to V</code>，不寫 ❌ teach me to how；<code>whether A or B</code> 兩邊結構對稱。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：把 Whether 譯成「是否」，又把 at sunset 吊在句尾翻成「吃刨冰在日落」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Whether I was climbing craters</code>（Whether 子句前半）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「無論我是在攀爬火山口」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>or eating shave ice at sunset,</code>（Whether 子句後半）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】at sunset 時間放到動作前：「還是在夕陽下吃著刨冰」，進行式譯「吃著」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>Oahu taught me</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「歐胡島都教會了我」，補「都」承接「無論」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>how to slow down and settle into island life.</code>（how to 受詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「如何放慢腳步、融入海島生活」，and 用頓號表示。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2（時間超車到動作前） ➔ 語塊 3 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：無論我是在攀爬火山口，還是【在夕陽下】吃著刨冰，歐胡島都教會了我如何放慢腳步、融入海島生活。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：Whether A or B ➔「無論 A，還是 B，都……」；teach 人 how to V ➔「教會人如何……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">句首 Whether ... or ... 後面接主句，所以 whether 是「無論」，直接從這裡翻。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>看到句首 Whether A or B，後面接主句時，翻成「無論 A，還是 B」，主句補「都」</strong>：「無論我是在攀爬火山口，還是在夕陽下吃著刨冰，歐胡島都……」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>動作後面接 at + 時間時，先翻時間，再翻動作</strong>：「在夕陽下吃著刨冰」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 teach + 人 + how to V 時，翻成「教會人如何……」</strong>：「歐胡島都教會了我如何放慢腳步、融入海島生活」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：was eating 是進行式，翻「吃著」，畫面才是正在吃。slow down 和 settle into 之間用頓號，比用「和」更順。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：無論我是在攀爬火山口，還是在夕陽下吃著刨冰，歐胡島都教會了我如何放慢腳步、融入海島生活。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">Whether ... or</span><span class="conj-word-preview">how to V</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>讓步副詞子句</strong>：Whether I was climbing ... or eating ...</div>
+              <div>• <strong>疑問詞＋不定詞</strong>：how to slow down... 作 taught 的直接受詞</div>
+            </div>
+            <div class="conj-title-main">Whether 讓步子句 ＋ how to V 受詞</div>
+            <div class="conj-desc">
+              <code>Whether I was climbing craters or eating shave ice at sunset</code> 放句首、逗號後接主句，是副詞子句「無論」；or 後面省略了 I was。主句 <code>Oahu taught me how to...</code> 的 teach 有兩個受詞：人 me 和內容 <code>how to slow down and settle into island life</code>。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：whether 在句首、逗號後接主句 ➔「無論」；teach / show / tell + 人 + how to V ➔「教人如何……」。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] Whether 讓步子句</span><span class="c-en">Whether I was climbing craters or eating shave ice at sunset,</span><span class="c-zh">無論我是在攀爬火山口，還是在夕陽下吃著刨冰</span></div>
+          <div class="chunk s"><span class="c-role">[S+V+O1] 主句</span><span class="c-en">Oahu taught me</span><span class="c-zh">歐胡島都教會了我</span></div>
+          <div class="chunk o"><span class="c-role">[O2] 疑問詞＋不定詞</span><span class="c-en">how to slow down and settle into island life.</span><span class="c-zh">如何放慢腳步、融入海島生活</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>Whether I was climbing craters or [I was] eating shave ice</code> 省略重複的 <code>I was</code>；<code>teach + 人 + how to V</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>學測作文最後一句寫出「這趟旅程教會我的事（<code>Oahu taught me how to slow down...</code>）」，立意瞬間昇華！</div>
         </div>
       </div>
 
@@ -546,6 +1644,27 @@
       document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
       document.querySelectorAll('.quiz-exp').forEach(e => { e.style.display = 'none'; delete e.dataset.answered; });
       document.getElementById('quiz-score-text').textContent = '已答對 0 / 15 題';
+    }
+
+    let allMasterTransOpen = false;
+    function toggleAllMasterTrans() {
+      allMasterTransOpen = !allMasterTransOpen;
+      document.querySelectorAll('.sent-card .master-trans-details').forEach(d => { d.open = allMasterTransOpen; });
+      const btn = document.getElementById('btn-toggle-master-trans');
+      if (btn) {
+        btn.textContent = allMasterTransOpen ? '👨‍🏫 一鍵收合名師翻譯拆解' : '👨‍🏫 一鍵展開名師翻譯拆解';
+        btn.classList.toggle('active', allMasterTransOpen);
+      }
+    }
+    let allConjOpen = false;
+    function toggleAllConj() {
+      allConjOpen = !allConjOpen;
+      document.querySelectorAll('.conj-box').forEach(d => { d.open = allConjOpen; });
+      const btn = document.getElementById('toggle-conj-btn');
+      if (btn) {
+        btn.textContent = allConjOpen ? '🔗 一鍵收合所有連接詞解析' : '🔗 一鍵展開所有連接詞解析';
+        btn.classList.toggle('active', allConjOpen);
+      }
     }
   </script>
 </body>
