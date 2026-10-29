@@ -81,6 +81,46 @@
     .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
     .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
     .quiz-exp { display: none; margin-top: 0.45rem; padding: 0.7rem 1rem; border-radius: 10px; background: var(--green-bg); color: #065f46; font-size: 0.88rem; }
+
+    /* V4：正常／慢速雙按鈕（覆蓋舊版 36px 圓形按鈕） */
+    .audio-group { display: flex; gap: 0.35rem; flex-shrink: 0; align-self: flex-start; }
+    .audio-group .audio-btn { width: auto; height: auto; border-radius: 999px; padding: 0.35rem 0.65rem; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+    .audio-group .audio-btn.slow { background: #f1f5f9; color: #475569; }
+
+    /* ===== V4 句卡元件（名師拆解 Step 1~7／連接詞框） ===== */
+    .conj-box { margin-top: 0.75rem; background: #faf5ff; border: 1.5px solid #d8b4fe; border-radius: 10px; padding: 0.55rem 0.9rem; font-size: 0.88rem; }
+    details.conj-box[open] { padding-bottom: 0.85rem; }
+    details.conj-box summary.conj-title { font-weight: 800; color: #6d28d9; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; list-style: none; margin: 0; padding: 0.1rem 0; }
+    details.conj-box summary.conj-title::-webkit-details-marker { display: none; }
+    details.conj-box[open] summary.conj-title { margin-bottom: 0.6rem; border-bottom: 1px dashed #d8b4fe; padding-bottom: 0.45rem; }
+    details.conj-box .conj-arrow { font-size: 0.82rem; color: #7c3aed; display: inline-block; transition: transform 0.2s ease; }
+    details.conj-box[open] .conj-arrow { transform: rotate(180deg); }
+    .conj-word-preview { background: #7c3aed; color: #fff; font-size: 0.75rem; font-family: Consolas, monospace; padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700; }
+    .conj-concept { background: #fff; border: 1px solid #c084fc; border-radius: 8px; padding: 0.65rem 0.85rem; margin-top: 0.5rem; font-size: 0.85rem; color: #4c1d95; line-height: 1.55; box-shadow: 0 2px 6px rgba(124,58,237,0.06); }
+    .conj-concept strong { color: #6b21a8; }
+    .conj-meta-list { margin-bottom: 0.5rem; padding-bottom: 0.45rem; border-bottom: 1px dashed #d8b4fe; font-size: 0.85rem; color: #6b21a8; line-height: 1.6; }
+    .conj-title-main { font-weight: 800; color: #5b21b6; margin-bottom: 0.35rem; font-size: 0.9rem; }
+    .conj-desc { font-size: 0.86rem; color: #334155; line-height: 1.65; margin-bottom: 0.5rem; }
+    .conj-killer-tip { background: #faf5ff; border-left: 3px solid #9333ea; padding: 0.35rem 0.6rem; border-radius: 0 4px 4px 0; font-size: 0.84rem; color: #581c87; }
+    .master-trans-details { margin-top: 0.7rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; overflow: hidden; }
+    .master-trans-details[open] { border-color: #4ade80; box-shadow: 0 4px 12px rgba(34,197,94,0.08); }
+    .master-trans-summary { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem; cursor: pointer; background: #f0fdf4; user-select: none; font-size: 0.88rem; font-weight: 700; color: #166534; list-style: none; }
+    .master-trans-summary:hover { background: #dcfce7; }
+    .master-trans-summary::-webkit-details-marker { display: none; }
+    .master-badge { background: #16a34a; color: #fff; padding: 0.12rem 0.5rem; border-radius: 6px; font-size: 0.74rem; font-weight: 800; white-space: nowrap; }
+    .master-summary-text { flex: 1; }
+    .master-arrow { font-size: 0.75rem; color: #16a34a; display: inline-block; transition: transform 0.2s ease; }
+    .master-trans-details[open] > summary .master-arrow { transform: rotate(180deg); }
+    .master-trans-body { padding: 0.85rem 1rem; background: #fff; border-top: 1px dashed #bbf7d0; font-size: 0.87rem; line-height: 1.65; color: #1e293b; }
+    .master-step { margin-bottom: 0.65rem; padding-left: 0.5rem; border-left: 3px solid #22c55e; }
+    .master-step:last-child { margin-bottom: 0; }
+    .m-step-tag { font-weight: 800; font-size: 0.75rem; padding: 0.1rem 0.4rem; border-radius: 4px; margin-right: 0.35rem; display: inline-block; }
+    .m-step-tag.s1 { background: #dbeafe; color: #1e40af; }
+    .m-step-tag.s2 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s3 { background: #ede9fe; color: #5b21b6; }
+    .m-step-tag.s4 { background: #ffedd5; color: #9a3412; }
+    .m-step-tag.s5 { background: #dcfce7; color: #166534; }
+    @media print { .audio-group, .control-bar { display: none !important; } .sent-card { break-inside: avoid; } }
   </style>
 </head>
 <body>
@@ -181,110 +221,929 @@
         <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
         <button class="toggle-btn active" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
         <button class="toggle-btn" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式</button>
+        <button id="toggle-conj-btn" class="toggle-btn" onclick="toggleAllConj()">🔗 一鍵展開所有連接詞解析</button>
+        <button id="btn-toggle-master-trans" class="toggle-btn" onclick="toggleAllMasterTrans()">👨‍🏫 一鍵展開名師翻譯拆解</button>
       </div>
 
       <!-- S1 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 1</span>
-          <div style="flex:1;">
-            <div class="sent-en">With her latest album <em>petal</em> released during a major world tour, <span class="key-term">award</span>-winning pop star Ariana Grande appears <span class="key-term">unstoppable</span>.</div>
+          <div class="sent-en">
+            With her latest album <em>petal</em> released during a major world tour, <span class="key-term">award</span>-winning pop star Ariana Grande appears <span class="key-term">unstoppable</span>.
             <div class="sent-zh">隨著最新專輯《petal》在大型世界巡演期間發行，獲獎無數的流行巨星亞莉安娜看來勢不可擋。</div>
           </div>
-          <button class="audio-btn" onclick="speak('With her latest album petal released during a major world tour, award-winning pop star Ariana Grande appears unstoppable.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('With her latest album petal released during a major world tour, award-winning pop star Ariana Grande appears unstoppable.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('With her latest album petal released during a major world tour, award-winning pop star Ariana Grande appears unstoppable.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>award-winning pop star Ariana Grande (S) appears (V) unstoppable (C)</code>；句首 <code>With ...</code> 是附帶狀況片語。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>主句現在簡單式 <code>appears</code>：描述她目前給人的印象。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>本句無連接詞；<code>With + O + p.p.</code> 附帶狀況，專輯是「被發行」，所以用過去分詞 released。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>during a major world tour</code> 要提到「發行」前；附帶狀況 With 譯「隨著」放句首。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>appear + adj.</code> 是連綴動詞，不接副詞；<code>award-winning</code> 複合形容詞；附帶狀況 With 的受詞補語不可寫成 ❌ releasing。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「和她最新的專輯 petal 被發行在一個大型世界巡迴期間」，With 直譯成「和」，時間吊在後面。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>With her latest album <em>petal</em> released</code>（附帶狀況片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        With + O + p.p. 交代主句的背景，譯「隨著……發行」，不譯「和」。專輯名保留原文加書名號。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>during a major world tour,</code>（時間片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】修飾 released，中文時間在動作前：「在大型世界巡演期間發行」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>award-winning pop star Ariana Grande</code>（主詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「獲獎無數的流行巨星亞莉安娜」。<code>award-winning</code> 譯「獲獎無數的」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>appears unstoppable</code>（連綴動詞＋補語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻。<code>appears</code> 譯「看來」；<code>unstoppable</code> 用成語「勢不可擋」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 的「隨著最新專輯《petal》」 ➔ 語塊 2（時間超車） ➔ 語塊 1 的「發行」 ➔ 語塊 3 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：隨著最新專輯《petal》【在大型世界巡演期間】發行，獲獎無數的流行巨星亞莉安娜看來勢不可擋。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：With + O + p.p. 翻「隨著……」；during 時間放動作前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">主句在逗號後面：Ariana Grande appears unstoppable。前面的 With 片語是背景，中文背景先講，所以從 With 開始翻。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 With + 名詞 + p.p. 開頭時，翻成「隨著……」，片語裡的時間先翻，動作放最後</strong>：「隨著最新專輯《petal》在大型世界巡演期間發行」。</div>
+                <p style="margin: 0 0 0.5rem;">主句順著翻：「獲獎無數的流行巨星亞莉安娜看來勢不可擋」。</p>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：這裡的 With 不是「和」，是「隨著」。unstoppable 直接用「勢不可擋」，比「無法阻擋的」俐落。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：隨著最新專輯《petal》在大型世界巡演期間發行，獲獎無數的流行巨星亞莉安娜看來勢不可擋。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">With + O + p.p.</span><span class="conj-word-preview">無子句</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>附帶狀況</strong>：With her latest album released...</div>
+              <div>• <strong>主句</strong>：Ariana Grande appears unstoppable</div>
+            </div>
+            <div class="conj-title-main">With 附帶狀況 ＋ 連綴動詞主句</div>
+            <div class="conj-desc">
+              本句沒有連接詞。<code>With</code> 後面接受詞 <code>her latest album petal</code>，再接受詞補語 <code>released</code>：專輯和 release 是被動關係，所以用過去分詞。整個 With 片語當副詞，交代主句的背景。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：With + 名詞 + V-ing／p.p. ➔ 附帶狀況；名詞主動做 ➔ V-ing，被動 ➔ p.p.。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
           <div class="chunk m"><span class="c-role">[M] 附帶狀況 (With+O+OC)</span><span class="c-en">With her latest album petal released during a major world tour,</span><span class="c-zh">隨著最新專輯《petal》在大型世巡期間被發行</span></div>
           <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">award-winning pop star Ariana Grande</span><span class="c-zh">獲獎無數的流行巨星亞莉安娜</span></div>
           <div class="chunk v"><span class="c-role">[V+C] 連綴動詞+補語</span><span class="c-en">appears unstoppable</span><span class="c-zh">看來勢不可擋</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 附帶狀況句型：<code>With + O. + p.p.</code></div>因為專輯是「被發行」，受詞補語使用過去分詞 <code>released</code>；<code>appears unstoppable</code> 同義替換原課文的 <code>seems truly unstoppable</code>。</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>原課文 <code>in the middle of a major world tour</code> 換成更精煉的 <strong><code>during a major world tour</code></strong>。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>附帶狀況句型 <code>With + O. + p.p.</code></strong>：因為專輯是「被發行」，受詞補語使用過去分詞 <code>released</code>；<code>appears unstoppable</code> 同義替換原課文的 <code>seems truly unstoppable</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>原課文 <code>in the middle of a major world tour</code> 換成更精煉的 <strong><code>during a major world tour</code></strong>。</div>
         </div>
       </div>
-
-      <!-- S2 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 2</span>
-          <div style="flex:1;">
-            <div class="sent-en">Beginning her career at age 20 with <em>Yours Truly</em> and the hit single “Problem,” her <span class="key-term">popularity</span> soared.</div>
+          <div class="sent-en">
+            Beginning her career at age 20 with <em>Yours Truly</em> and the hit single “Problem,” her <span class="key-term">popularity</span> soared.
             <div class="sent-zh">她 20 歲以《Yours Truly》和暢銷單曲〈Problem〉展開職涯，人氣急速飆升。</div>
           </div>
-          <button class="audio-btn" onclick="speak('Beginning her career at age 20 with Yours Truly and the hit single Problem, her popularity soared.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Beginning her career at age 20 with Yours Truly and the hit single “Problem,” her popularity soared.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Beginning her career at age 20 with Yours Truly and the hit single “Problem,” her popularity soared.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>her popularity (S) soared (V)</code>；句首 <code>Beginning her career...</code> 是分詞片語。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>soared</code>：敘述出道後已發生的人氣上升。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>本句無連接詞；<code>Beginning ...</code> 是現在分詞片語，交代起點與背景。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>at age 20</code>、<code>with Yours Truly and...</code> 都要提到「展開職涯」前；中文補主詞「她」讓分詞片語有人做動作。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>嚴格說分詞片語的主詞應與主句相同，這裡主句是 her popularity，寫作時改成 <code>Beginning her career..., she quickly became popular</code> 更穩；<code>soar</code>（飆升）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「開始她的職涯在 20 歲用《Yours Truly》和熱門單曲，她的人氣飛高」，年齡、作品都吊在動作後。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Beginning her career</code>（分詞片語（動作））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「展開職涯」；中文補上主詞「她」，讓句子有人做動作。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>at age 20</code>（時間片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】年齡放到動作前：「她 20 歲……展開職涯」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>with <em>Yours Truly</em> and the hit single “Problem,”</code>（介系詞片語（憑藉））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】with 表示憑藉的作品，放到動作前：「以《Yours Truly》和暢銷單曲〈Problem〉」。<code>hit single</code> 譯「暢銷單曲」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>her popularity soared</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻。主詞「她的」可省，直接說「人氣」；<code>soared</code> 譯「急速飆升」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 2（年齡超車） ➔ 語塊 3（憑藉超車） ➔ 語塊 1 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：她 【20 歲】【以《Yours Truly》和暢銷單曲〈Problem〉】展開職涯，人氣急速飆升。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：分詞片語補主詞；年齡、憑藉都放動作前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">主句只有 her popularity soared，前面一長串分詞片語交代起點，中文也先講起點。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>分詞片語裡同時有年齡和 with + 作品時，先翻年齡，再翻憑藉，最後翻動作</strong>：「她 20 歲以《Yours Truly》和暢銷單曲〈Problem〉展開職涯」。</div>
+                <p style="margin: 0 0 0.5rem;">主句接著翻：「人氣急速飆升」。</p>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：分詞片語沒有主詞，中文開頭補「她」才順。soared 本來是「高飛」，用在人氣上翻「飆升」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：她 20 歲以《Yours Truly》和暢銷單曲〈Problem〉展開職涯，人氣急速飆升。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">V-ing 分詞片語</span><span class="conj-word-preview">無子句</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>分詞片語</strong>：Beginning her career at age 20...</div>
+              <div>• <strong>主句</strong>：her popularity soared</div>
+            </div>
+            <div class="conj-title-main">現在分詞片語 ＋ 不及物動詞主句</div>
+            <div class="conj-desc">
+              本句沒有連接詞。<code>Beginning her career at age 20 with ...</code> 是現在分詞片語，交代人氣上升的起點；主句 <code>her popularity soared</code> 只有主詞和不及物動詞，非常精簡。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：句首 V-ing 片語接逗號 ➔ 分詞片語，先翻片語交代背景，再翻主句。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
           <div class="chunk m"><span class="c-role">[M] 分詞片語</span><span class="c-en">Beginning her career at age 20 with Yours Truly and the hit single “Problem,”</span><span class="c-zh">20 歲以《Yours Truly》與暢銷單曲展開職涯</span></div>
           <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">her popularity</span><span class="c-zh">她的人氣</span></div>
           <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">soared</span><span class="c-zh">急速飆升</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 學測高頻動詞：<code>soar</code>（暴漲、高飛）</div>原課文 <code>caused her popularity to grow fast</code> 可濃縮為 <strong><code>her popularity soared / skyrocketed</code></strong>。</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>「在 20 歲時」除了 <code>at the age of 20</code>，也可簡寫為 <strong><code>at age 20</code></strong>。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>學測高頻動詞 <code>soar</code>（暴漲、高飛）</strong>：原課文 <code>caused her popularity to grow fast</code> 可濃縮為 <strong><code>her popularity soared / skyrocketed</code></strong>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>「在 20 歲時」除了 <code>at the age of 20</code>，也可簡寫為 <strong><code>at age 20</code></strong>。</div>
         </div>
       </div>
-
-      <!-- S3 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 3</span>
-          <div style="flex:1;">
-            <div class="sent-en">However, just as her career was <span class="gram-term">going from strength to strength</span>, <span class="key-term">tragedy</span> struck three times in 2017: an attacker <span class="gram-term">set</span> a <span class="key-term">bomb</span> <span class="gram-term">off</span> at a Manchester <span class="key-term">stadium</span>, a close friend passed away, and her <span class="key-term">engagement</span> <span class="gram-term">came to a sudden end</span>.</div>
+          <div class="sent-en">
+            However, just as her career was <span class="gram-term">going from strength to strength</span>, <span class="key-term">tragedy</span> struck three times in 2017: an attacker <span class="gram-term">set</span> a <span class="key-term">bomb</span> <span class="gram-term">off</span> at a Manchester <span class="key-term">stadium</span>, a close friend passed away, and her <span class="key-term">engagement</span> <span class="gram-term">came to a sudden end</span>.
             <div class="sent-zh">然而，正當她的事業蒸蒸日上時，悲劇在 2017 年接連發生了三次：攻擊者在曼徹斯特體育館引爆炸彈、摯友離世，以及婚約突然告終。</div>
           </div>
-          <button class="audio-btn" onclick="speak('However, just as her career was going from strength to strength, tragedy struck three times in 2017: an attacker set a bomb off at a Manchester stadium, a close friend passed away, and her engagement came to a sudden end.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('However, just as her career was going from strength to strength, tragedy struck three times in 2017: an attacker set a bomb off at a Manchester stadium, a close friend passed away, and her engagement came to a sudden end.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('However, just as her career was going from strength to strength, tragedy struck three times in 2017: an attacker set a bomb off at a Manchester stadium, a close friend passed away, and her engagement came to a sudden end.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>tragedy (S) struck (V) three times</code>；冒號後是三個平行子句列舉事件。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>子句過去進行式 <code>was going</code> 表背景；主句與冒號後的事件都是過去簡單式。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>just as</code> 引導時間子句；冒號後用 <code>A, B, and C</code> 列出三個完整子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>in 2017</code>、<code>at a Manchester stadium</code> 要提到動作前；<code>sudden</code> 轉成副詞放「告終」前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>go from strength to strength</code>（蒸蒸日上）；<code>set a bomb off</code>（引爆炸彈）；冒號前先總括，冒號後列舉。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「悲劇打擊三次在 2017 年：一個攻擊者放炸彈離開在曼徹斯特體育館」，時間、地點都吊在後面，set off 被拆開。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>However, just as her career was going from strength to strength,</code>（時間子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻。<code>just as</code> 譯「正當……時」；固定片語譯「蒸蒸日上」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>tragedy struck three times</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        <code>strike</code> 用於災難譯「發生」；補「接連」表現三次連續發生。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>in 2017:</code>（時間片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】年份放到動作前：「悲劇在 2017 年接連發生了三次」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>an attacker set a bomb off at a Manchester stadium,</code>（第一個事件）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】地點放動作前：「攻擊者在曼徹斯特體育館引爆炸彈」。<code>set ... off</code> 合成「引爆」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>a close friend passed away,</code>（第二個事件）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「摯友離世」。<code>pass away</code> 是委婉語。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 6：<code>and her engagement came to a sudden end</code>（第三個事件）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】形容詞 sudden 轉成副詞，放到「告終」前：「以及婚約突然告終」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 主詞 ➔ 語塊 3（年份超車） ➔ 語塊 2 動作 ➔ 語塊 4（地點超車） ➔ 語塊 5 ➔ 語塊 6</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：然而，正當她的事業蒸蒸日上時，悲劇【在 2017 年】接連發生了三次：攻擊者【在曼徹斯特體育館】引爆炸彈、摯友離世，以及婚約【突然】告終。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：just as 翻「正當……時」；冒號後列舉用頓號串起來。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">句首 However 和 just as 子句都是背景，照順序翻：「然而，正當她的事業蒸蒸日上時」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>主句句尾有 in + 年份時，年份提到動作前</strong>：「悲劇在 2017 年接連發生了三次」。</div>
+                <p style="margin: 0 0 0.5rem;">冒號後面是三件事，一件一件翻，用頓號串起來。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>列舉的子句裡有 at + 地點時，先翻地點，再翻動作</strong>：「攻擊者在曼徹斯特體育館引爆炸彈、摯友離世」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 come to a sudden end 時，把 sudden 轉成副詞放在動詞前</strong>：「以及婚約突然告終」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：最後一項前面的 and 翻「以及」，列舉才有收尾感。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：然而，正當她的事業蒸蒸日上時，悲劇在 2017 年接連發生了三次：攻擊者在曼徹斯特體育館引爆炸彈、摯友離世，以及婚約突然告終。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">just as</span><span class="conj-word-preview">冒號列舉</span><span class="conj-word-preview">and</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>時間連接詞</strong>：just as 引導背景子句</div>
+              <div>• <strong>冒號</strong>：總括後列舉三件事</div>
+              <div>• <strong>對等連接詞</strong>：A, B, and C 的 and</div>
+            </div>
+            <div class="conj-title-main">just as 時間子句 ＋ 冒號列舉三個平行子句</div>
+            <div class="conj-desc">
+              1. <code>just as her career was going...</code>：just as 後接進行式子句，表示「正當……的時候」。<br/>2. 冒號前 <code>tragedy struck three times</code> 先總括，冒號後用 <code>A, B, and C</code> 列出三個完整子句，各自有主詞與動詞。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：冒號前說「幾次／幾點」 ➔ 冒號後就是逐項列舉，中文用頓號串連。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
           <div class="chunk c"><span class="c-role">[Conj] 時間子句</span><span class="c-en">However, just as her career was going from strength to strength,</span><span class="c-zh">然而正當她的事業蒸蒸日上時</span></div>
           <div class="chunk s"><span class="c-role">[S+V] 主句</span><span class="c-en">tragedy struck three times in 2017:</span><span class="c-zh">悲劇在 2017 年降臨三次：</span></div>
           <div class="chunk o"><span class="c-role">[Conj] 冒號平行子句</span><span class="c-en">an attacker set a bomb off..., a close friend passed away, and her engagement came to a sudden end.</span><span class="c-zh">引爆炸彈、摯友離世，且婚約突然告終。</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 冒號（Colon）引出三大平行事件</div>在科普或新聞報導中，先用總括句 <code>tragedy struck three times:</code> 再用三個平行子句列舉細節，邏輯極度清晰。</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 核心片語複習</div><strong><code>go from strength to strength</code></strong>（蒸蒸日上）、<strong><code>set a bomb off</code></strong>（引爆炸彈）、<strong><code>come to a sudden end</code></strong>（突然告終）。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>冒號（Colon）引出三大平行事件</strong>：在科普或新聞報導中，先用總括句 <code>tragedy struck three times:</code> 再用三個平行子句列舉細節，邏輯極度清晰。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><strong>核心片語複習</strong>：<code>go from strength to strength</code>（蒸蒸日上）、<code>set a bomb off</code>（引爆炸彈）、<code>come to a sudden end</code>（突然告終）。</div>
         </div>
       </div>
-
-      <!-- S4 -->
       <div class="sent-card">
         <div class="sent-top">
           <span class="sent-num">句 4</span>
-          <div style="flex:1;">
-            <div class="sent-en">Grande <span class="gram-term">was left deeply shaken</span>, and although she seemed to <span class="key-term">bounce</span> back, she recently <span class="key-term">admitted</span> that she <span class="gram-term">considered</span> <span class="key-term">quitting</span> music <span class="gram-term">for good</span> in 2022.</div>
+          <div class="sent-en">
+            Grande <span class="gram-term">was left deeply shaken</span>, and although she seemed to <span class="key-term">bounce</span> back, she recently <span class="key-term">admitted</span> that she <span class="gram-term">considered</span> <span class="key-term">quitting</span> music <span class="gram-term">for good</span> in 2022.
             <div class="sent-zh">亞莉安娜因而深受震驚打擊，儘管表面看似振作，她最近坦承曾在 2022 年考慮永遠退出樂壇。</div>
           </div>
-          <button class="audio-btn" onclick="speak('Grande was left deeply shaken, and although she seemed to bounce back, she recently admitted that she considered quitting music for good in 2022.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Grande was left deeply shaken, and although she seemed to bounce back, she recently admitted that she considered quitting music for good in 2022.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Grande was left deeply shaken, and although she seemed to bounce back, she recently admitted that she considered quitting music for good in 2022.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>兩個主幹：<code>Grande (S) was left (V) deeply shaken (C)</code>, and <code>she (S) recently admitted (V) + that 子句 (O)</code>；中間插入 although 讓步子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式敘述；<code>was left shaken</code> 被動形式表示事件留下的狀態。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>and</code> 連接兩個主句；<code>although</code> 引導讓步子句；<code>that</code> 引導 admitted 的受詞子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>in 2022</code> 與 <code>for good</code> 都要提到「退出」前；因果補一個「因而」承接上一句的悲劇。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>consider + V-ing</code>；<code>for good</code>（永遠）；<code>bounce back</code>（振作）；although 與 but 不並用。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「她最近承認她考慮退出音樂為了好在 2022 年」，for good 誤譯，年份吊在句尾。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Grande was left deeply shaken,</code>（第一個主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        <code>be left + 狀態</code> 表示被事件弄成某種狀態；補「因而」承接上句的悲劇：「亞莉安娜因而深受震驚打擊」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>and although she seemed to bounce back,</code>（讓步子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻。<code>although</code> 譯「儘管」；<code>seemed to</code> 譯「看似」，補「表面」強調只是外表；<code>bounce back</code> 譯「振作」。and 不必翻出。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>she recently admitted that</code>（第二個主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「她最近坦承」，that 不譯。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>she considered quitting music</code>（that 子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「曾考慮……退出樂壇」，「曾」表過去。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>for good</code>（副詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】固定片語「永遠」，放到「退出」前。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 6：<code>in 2022</code>（時間片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】年份放到「考慮」前：「曾在 2022 年考慮」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 6（年份超車） ➔ 語塊 4 的「考慮」 ➔ 語塊 5（永遠超車） ➔ 退出樂壇</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：亞莉安娜因而深受震驚打擊，儘管表面看似振作，她最近坦承曾【在 2022 年】考慮【永遠】退出樂壇。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：句尾的年份和 for good 都要提到動作前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">第一個主句 Grande was left deeply shaken 先翻，補「因而」接上前面的悲劇：「亞莉安娜因而深受震驚打擊」。</p>
+                <p style="margin: 0 0 0.5rem;">接著 although 子句，照順序翻：「儘管表面看似振作」，再接主句「她最近坦承」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>that 子句句尾同時有年份和 for good 時，年份放到動詞前，for good 放到被修飾的動作前</strong>：「曾在 2022 年考慮永遠退出樂壇」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：for good 是「永遠」，不是「為了好」。considered 是過去式，用「曾」表現。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：亞莉安娜因而深受震驚打擊，儘管表面看似振作，她最近坦承曾在 2022 年考慮永遠退出樂壇。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">and</span><span class="conj-word-preview">although</span><span class="conj-word-preview">that</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>對等連接詞</strong>：and 連接兩個主句</div>
+              <div>• <strong>讓步連接詞</strong>：although 子句插在 and 後面</div>
+              <div>• <strong>名詞子句</strong>：that 引導 admitted 的受詞</div>
+            </div>
+            <div class="conj-title-main">and 對等 ＋ although 讓步 ＋ that 名詞子句</div>
+            <div class="conj-desc">
+              1. <code>Grande was left deeply shaken, and ... she recently admitted ...</code>：and 連接兩個主句。<br/>2. <code>although she seemed to bounce back</code> 插在第二個主句前，表示讓步；英文不能再加 but。<br/>3. <code>admitted that she considered...</code>：admit 後接完整句，用 that 引導名詞子句。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：and 後面緊接 although ➔ 讓步子句插入，先找後面真正的主句 she recently admitted。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
           <div class="chunk s"><span class="c-role">[S+V+C] 被動狀態</span><span class="c-en">Grande was left deeply shaken,</span><span class="c-zh">亞莉安娜深受震驚打擊</span></div>
           <div class="chunk c"><span class="c-role">[Conj] 讓步子句</span><span class="c-en">and although she seemed to bounce back,</span><span class="c-zh">且儘管她看似振作起來</span></div>
           <div class="chunk v"><span class="c-role">[S+V+O] 坦承內容</span><span class="c-en">she recently admitted that she considered quitting music for good in 2022.</span><span class="c-zh">她最近坦承曾在 2022 年考慮永遠退出樂壇。</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 兩大核心句型同句串聯</div>前半句溫習 <strong><code>be left + p.p.</code>（<code>was left deeply shaken</code>）</strong>，後半句溫習 <strong><code>consider + V-ing</code>（<code>considered quitting</code>）</strong>。</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>原課文 <code>appeared to bounce back</code> 與 <strong><code>seemed to bounce back</code></strong> 完全等義。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>兩大核心句型同句串聯</strong>：前半句溫習 <code>be left + p.p.</code>（<code>was left deeply shaken</code>），後半句溫習 <code>consider + V-ing</code>（<code>considered quitting</code>）。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>原課文 <code>appeared to bounce back</code> 與 <strong><code>seemed to bounce back</code></strong> 完全等義。</div>
         </div>
       </div>
-
-      <!-- S5 & S6 -->
-      <div class="sent-card" style="margin-bottom:0;">
+      <div class="sent-card">
         <div class="sent-top">
-          <span class="sent-num">句 5–7</span>
-          <div style="flex:1;">
-            <div class="sent-en"><span class="key-term">Ironically</span>, portraying the confident good <span class="key-term">witch</span> Glinda in the film <em>Wicked</em> <span class="gram-term">may have ended up</span> saving her musical passion. The character's self-assurance began to <span class="gram-term">rub off on</span> Grande, inspiring a <span class="key-term">bold</span> shift: she decided to <span class="gram-term">leave behind</span> exhausting tours and <span class="gram-term">press events</span> to make the <span class="key-term">creative</span> process her primary <span class="key-term">focus</span> <span class="gram-term">on her own terms</span>. This renewal produced the chart-topping <em>eternal sunshine</em> (2024) and <em>petal</em>, a <span class="key-term">daring</span> new work that <span class="key-term">delights</span> fans in her vibrant new musical <span class="key-term">era</span>.</div>
-            <div class="sent-zh">諷刺的是，在電影《魔法壞女巫》中飾演自信的好女巫葛琳達，最終可能拯救了她的音樂熱情。該角色的自信開始感染了亞莉安娜，啟發了一項大膽轉變：她決定拋下累人的巡演與媒體活動，按照自己的步調將創作過程作為首要重心。這場重生孕育了冠軍專輯《eternal sunshine》（2024）以及《petal》，一部在她充滿活力的全新音樂時代中令樂迷欣喜的大膽創新之作。</div>
+          <span class="sent-num">句 5</span>
+          <div class="sent-en">
+            <span class="key-term">Ironically</span>, portraying the confident good <span class="key-term">witch</span> Glinda in the film <em>Wicked</em> <span class="gram-term">may have ended up</span> saving her musical passion.
+            <div class="sent-zh">諷刺的是，在電影《魔法壞女巫》中飾演自信的好女巫葛琳達，最終可能拯救了她的音樂熱情。</div>
           </div>
-          <button class="audio-btn" onclick="speak('Ironically, portraying the confident good witch Glinda in the film Wicked may have ended up saving her musical passion. The characters self-assurance began to rub off on Grande, inspiring a bold shift: she decided to leave behind exhausting tours and press events to make the creative process her primary focus on her own terms. This renewal produced the chart-topping eternal sunshine and petal, a daring new work that delights fans in her vibrant new musical era.')">🔊 朗讀</button>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Ironically, portraying the confident good witch Glinda in the film Wicked may have ended up saving her musical passion.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Ironically, portraying the confident good witch Glinda in the film Wicked may have ended up saving her musical passion.', 0.75)">🐢 慢速</button>
+          </div>
         </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>portraying the confident good witch Glinda (S) may have ended up saving (V) her musical passion (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong><code>may have + p.p.</code>：對過去的推測，語氣保留。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>本句無連接詞；主詞是動名詞片語 <code>portraying ... in the film Wicked</code>，動名詞當主詞視為單數。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>動名詞主詞裡的 <code>in the film Wicked</code> 要提到「飾演」前；主詞很長，中文用逗號和後面隔開。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>portray</code>（飾演、描繪）；<code>end up + V-ing</code>（最終……）；動名詞主詞後接單數動詞。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「諷刺地，飾演自信的好女巫葛琳達在電影魔法壞女巫可能已經結束起來拯救她的音樂熱情」，ended up 誤譯成「結束」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Ironically,</code>（評論副詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「諷刺的是」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>portraying the confident good witch Glinda</code>（動名詞主詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「飾演自信的好女巫葛琳達」，動名詞直接當事件主詞，中文不用補「這件事」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>in the film <em>Wicked</em></code>（介系詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】場合放到動作前：「在電影《魔法壞女巫》中飾演」。片名用台灣譯名。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>may have ended up saving her musical passion</code>（動詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻。<code>may have ended up V-ing</code> 譯「最終可能……了」；<code>musical passion</code> 譯「音樂熱情」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 3（場合超車） ➔ 語塊 2 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：諷刺的是，【在電影《魔法壞女巫》中】飾演自信的好女巫葛琳達，最終可能拯救了她的音樂熱情。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：動名詞當主詞直接翻成事件；may have ended up 翻「最終可能……了」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">Ironically 先翻「諷刺的是」。接著要找主詞：portraying 一路到 Wicked 都是主詞，動詞是 may have ended up saving。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到動名詞主詞裡有 in + 場合時，先翻場合，再翻動作</strong>：「在電影《魔法壞女巫》中飾演自信的好女巫葛琳達」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 may have ended up + V-ing 時，翻「最終可能……了」</strong>：「最終可能拯救了她的音樂熱情」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：主詞很長，中文在主詞後面加逗號，讀起來才喘得過氣。ended up 不是「結束」，是「最後落得」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：諷刺的是，在電影《魔法壞女巫》中飾演自信的好女巫葛琳達，最終可能拯救了她的音樂熱情。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">動名詞主詞</span><span class="conj-word-preview">無子句</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>動名詞主詞</strong>：portraying ... Glinda in the film Wicked</div>
+              <div>• <strong>過去推測</strong>：may have ended up saving</div>
+            </div>
+            <div class="conj-title-main">動名詞片語當主詞</div>
+            <div class="conj-desc">
+              本句沒有連接詞。主詞不是人，而是一件事 <code>portraying the confident good witch Glinda in the film Wicked</code>，用動名詞片語當主詞；動詞 <code>may have ended up saving</code> 說明這件事可能帶來的結果。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：句首（Ironically 之後）出現 V-ing 一路接到動詞 ➔ 動名詞主詞，不是分詞構句。
+            </div>
+          </div>
+        </details>
         <div class="chunk-row">
           <div class="chunk s"><span class="c-role">[S] 動名詞主詞</span><span class="c-en">portraying the confident good witch Glinda in the film Wicked</span><span class="c-zh">在片中飾演自信的好女巫葛琳達</span></div>
           <div class="chunk v"><span class="c-role">[V+O] 過去推測</span><span class="c-en">may have ended up saving her musical passion.</span><span class="c-zh">最終可能拯救了她的音樂熱情。</span></div>
-          <div class="chunk m"><span class="c-role">[S+V+M] 特質感染與轉變</span><span class="c-en">The character's self-assurance began to rub off on Grande, inspiring a bold shift...</span><span class="c-zh">角色的自信開始感染她，啟發了大膽轉變……</span></div>
         </div>
         <div class="insight-grid">
-          <div class="insight-box grammar"><div class="insight-title">💡 動名詞片語作主詞：<code>Portraying Glinda...</code></div>動詞 <code>portray</code>（飾演、描繪）對應原課文的 <code>whom Grande plays in the movie</code>；名詞 <code>self-assurance</code> 對應 <code>self-confident</code>。</div>
-          <div class="insight-box trans"><div class="insight-title">🎯 同義替換秘訣</div>原課文 <code>went straight to number one</code> 可換成複合形容詞 <strong><code>chart-topping</code>（奪下排行榜冠軍的）</strong>。</div>
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>動名詞片語作主詞 <code>Portraying Glinda...</code></strong>：動詞 <code>portray</code>（飾演、描繪）對應原課文的 <code>whom Grande plays in the movie</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><code>may have ended up + V-ing</code> 是推測過去的高分句型，作文寫「回頭看，某事最後可能……」時直接套用。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 6</span>
+          <div class="sent-en">
+            The character's self-assurance began to <span class="gram-term">rub off on</span> Grande, inspiring a <span class="key-term">bold</span> shift: she decided to <span class="gram-term">leave behind</span> exhausting tours and <span class="gram-term">press events</span> to make the <span class="key-term">creative</span> process her primary <span class="key-term">focus</span> <span class="gram-term">on her own terms</span>.
+            <div class="sent-zh">該角色的自信開始感染了亞莉安娜，啟發了一項大膽轉變：她決定拋下累人的巡演與媒體活動，按照自己的步調將創作過程作為首要重心。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('The character\'s self-assurance began to rub off on Grande, inspiring a bold shift: she decided to leave behind exhausting tours and press events to make the creative process her primary focus on her own terms.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('The character\'s self-assurance began to rub off on Grande, inspiring a bold shift: she decided to leave behind exhausting tours and press events to make the creative process her primary focus on her own terms.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>The character's self-assurance (S) began (V) to rub off on Grande (O)</code>；後接分詞片語 <code>inspiring a bold shift</code>，冒號後說明轉變內容。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>began / decided</code>：敘述已發生的轉變。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>inspiring</code> 是分詞構句，表示前面主句帶來的結果；冒號後 <code>she decided to ...</code> 解釋 shift；<code>to make</code> 是目的不定詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>on her own terms</code> 吊在句尾，要提到「將創作過程作為……」前；<code>make A B</code> 譯「將 A 作為 B」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>rub off on + 人</code>（感染某人）；<code>leave behind</code>（拋下）；<code>make + O + N</code>（使……成為）；self-assurance ＝ self-confidence。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「她決定留下在後面累人的巡演和記者活動去使創作過程她主要的焦點在她自己的條件」，on her own terms 直譯成「條件」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>The character's self-assurance began to rub off on Grande,</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「該角色的自信開始感染了亞莉安娜」。<code>rub off on</code> 譯「感染」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>inspiring a bold shift:</code>（分詞構句（結果））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「啟發了一項大膽轉變」，分詞表示前面帶來的結果。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>she decided to leave behind exhausting tours and press events</code>（冒號後說明）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「她決定拋下累人的巡演與媒體活動」。<code>exhausting</code> 譯「累人的」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>to make the creative process her primary focus</code>（目的不定詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        <code>make A B</code> 譯「將 A 作為 B」：「將創作過程作為首要重心」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>on her own terms</code>（介系詞片語（方式））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】方式放到動作前：「按照自己的步調」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 5（方式超車） ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：該角色的自信開始感染了亞莉安娜，啟發了一項大膽轉變：她決定拋下累人的巡演與媒體活動，【按照自己的步調】將創作過程作為首要重心。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：句尾分詞翻結果；on one's own terms 放動作前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">主句先翻：「該角色的自信開始感染了亞莉安娜」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>主句後面接逗號加 V-ing 時，順著翻成主句帶來的結果</strong>：「啟發了一項大膽轉變」。</div>
+                <p style="margin: 0 0 0.5rem;">冒號後面說明轉變內容：「她決定拋下累人的巡演與媒體活動」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>句尾出現 on one's own terms 這類方式片語時，先翻方式，再翻動作</strong>：「按照自己的步調將創作過程作為首要重心」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：rub off on 是「感染、影響」，不是「擦掉」。make A B 翻「將 A 作為 B」，比「使 A 成為 B」更書面。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：該角色的自信開始感染了亞莉安娜，啟發了一項大膽轉變：她決定拋下累人的巡演與媒體活動，按照自己的步調將創作過程作為首要重心。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">inspiring（分詞構句）</span><span class="conj-word-preview">冒號</span><span class="conj-word-preview">to V</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>分詞構句</strong>：inspiring a bold shift 表結果</div>
+              <div>• <strong>冒號</strong>：後面解釋 shift 的內容</div>
+              <div>• <strong>目的不定詞</strong>：to make ... her primary focus</div>
+            </div>
+            <div class="conj-title-main">分詞構句表結果 ＋ 冒號說明</div>
+            <div class="conj-desc">
+              1. <code>, inspiring a bold shift</code>：主句後面接逗號＋V-ing，表示主句帶來的結果，等於 <code>and it inspired a bold shift</code>。<br/>2. 冒號後的 <code>she decided to leave behind ...</code> 具體說明是什麼轉變。<br/>3. <code>to make the creative process her primary focus</code>：不定詞表目的。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：主句後面「, V-ing」 ➔ 結果，翻「……，啟發／導致了……」；冒號後 ➔ 具體說明。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">The character's self-assurance</span><span class="c-zh">該角色的自信</span></div>
+          <div class="chunk v"><span class="c-role">[V+O] 動詞片語</span><span class="c-en">began to rub off on Grande,</span><span class="c-zh">開始感染了亞莉安娜</span></div>
+          <div class="chunk m"><span class="c-role">[M] 分詞構句（結果）</span><span class="c-en">inspiring a bold shift:</span><span class="c-zh">啟發了一項大膽轉變：</span></div>
+          <div class="chunk o"><span class="c-role">[S+V+O] 冒號說明</span><span class="c-en">she decided to leave behind exhausting tours and press events</span><span class="c-zh">她決定拋下累人的巡演與媒體活動</span></div>
+          <div class="chunk m"><span class="c-role">[M] 目的不定詞＋方式</span><span class="c-en">to make the creative process her primary focus on her own terms.</span><span class="c-zh">按照自己的步調將創作過程作為首要重心。</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>同義替換</strong>：名詞 <code>self-assurance</code> 對應原課文 <code>self-confident</code>；<code>, inspiring ...</code> 分詞構句表結果，等於 <code>and it inspired ...</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><code>make + O + 名詞</code>（將……作為……）與 <code>on one's own terms</code>（按自己的方式）都是作文描述人生轉折的好用片語。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">句 7</span>
+          <div class="sent-en">
+            This renewal produced the chart-topping <em>eternal sunshine</em> (2024) and <em>petal</em>, a <span class="key-term">daring</span> new work that <span class="key-term">delights</span> fans in her vibrant new musical <span class="key-term">era</span>.
+            <div class="sent-zh">這場重生孕育了冠軍專輯《eternal sunshine》（2024）以及《petal》，一部在她充滿活力的全新音樂時代中令樂迷欣喜的大膽創新之作。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('This renewal produced the chart-topping eternal sunshine (2024) and petal, a daring new work that delights fans in her vibrant new musical era.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('This renewal produced the chart-topping eternal sunshine (2024) and petal, a daring new work that delights fans in her vibrant new musical era.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹為 <code>This renewal (S) produced (V) eternal sunshine and petal (O)</code>；<code>a daring new work</code> 是 petal 的同位語。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 <code>produced</code> 總結成果；<code>delights</code> 現在式描述作品目前帶給樂迷的感受。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>that</code> 引導限定關代子句修飾 work；<code>chart-topping</code> 是複合形容詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>同位語裡的 that 子句 <code>that delights fans in her vibrant new musical era</code> 要整個搬到「之作」前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>chart-topping</code>（奪冠的）；<code>delight</code> 當動詞是「使欣喜」；that 子句的動詞要和先行詞 work 一致用單數 delights。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：照順序翻成「一部大膽的新作品，它讓樂迷高興在她充滿活力的新音樂時代」，關代子句吊在後面，修飾關係斷掉。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>This renewal produced</code>（主句主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「這場重生孕育了」。<code>renewal</code> 譯「重生」，<code>produce</code> 用「孕育」呼應重生。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>the chart-topping <em>eternal sunshine</em> (2024) and <em>petal</em>,</code>（受詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        順翻：「冠軍專輯《eternal sunshine》（2024）以及《petal》」。<code>chart-topping</code> 譯「冠軍」，補「專輯」讓讀者知道是什麼。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>a daring new work</code>（同位語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「一部……大膽創新之作」，接在《petal》後面補充說明。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>that delights fans in her vibrant new musical era</code>（限定關代子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】修飾 work，搬到名詞前：「在她充滿活力的全新音樂時代中令樂迷欣喜的」。子句裡的 in 片語也放在動作前。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 的「一部」 ➔ 語塊 4（關代子句超車） ➔ 語塊 3 的「大膽創新之作」</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：這場重生孕育了冠軍專輯《eternal sunshine》（2024）以及《petal》，一部【在她充滿活力的全新音樂時代中令樂迷欣喜的】大膽創新之作。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：同位語接在名詞後補充；that 子句整塊搬到名詞前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">主句很短：「這場重生孕育了冠軍專輯《eternal sunshine》（2024）以及《petal》」。</p>
+                <p style="margin: 0 0 0.5rem;">逗號後面的 a daring new work 是同位語，補充說明《petal》，翻「一部……之作」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>同位語後面又接 that 子句時，先翻 that 子句，再翻同位語的名詞</strong>：「一部在她充滿活力的全新音樂時代中令樂迷欣喜的大膽創新之作」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：chart-topping 翻「冠軍」最精簡；renewal 配 produced，用「重生孕育了」，意象前後一致。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：這場重生孕育了冠軍專輯《eternal sunshine》（2024）以及《petal》，一部在她充滿活力的全新音樂時代中令樂迷欣喜的大膽創新之作。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">同位語</span><span class="conj-word-preview">that</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• <strong>同位語</strong>：petal, a daring new work</div>
+              <div>• <strong>主格關代</strong>：that delights fans ... 修飾 work</div>
+            </div>
+            <div class="conj-title-main">同位語 ＋ that 限定關代子句</div>
+            <div class="conj-desc">
+              1. <code>petal, a daring new work</code>：逗號後的名詞片語補充說明 petal，是同位語。<br/>2. <code>work that delights fans in her vibrant new musical era</code>：先行詞 work 是物，右邊 <code>delights fans</code> 缺主詞，用主格關代 that；動詞配合 work 用單數。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：名詞, a / an + 名詞 ➔ 同位語；物＋缺主詞的子句 ➔ that / which。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">This renewal</span><span class="c-zh">這場重生</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">produced</span><span class="c-zh">孕育了</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">the chart-topping eternal sunshine (2024) and petal,</span><span class="c-zh">冠軍專輯《eternal sunshine》（2024）以及《petal》</span></div>
+          <div class="chunk m"><span class="c-role">[M] 同位語＋關代子句</span><span class="c-en">a daring new work that delights fans in her vibrant new musical era.</span><span class="c-zh">一部令樂迷欣喜的大膽創新之作</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><strong>複合形容詞 <code>chart-topping</code></strong>（奪下排行榜冠軍的）：原課文 <code>went straight to number one</code> 可濃縮成這個字；<code>delight</code> 當動詞是「使欣喜」。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>用「名詞, a + adj. + N + that ...」的同位語結構補充說明作品，一句就能同時介紹名稱與評價。</div>
         </div>
       </div>
     </div>
@@ -504,6 +1363,27 @@
       done.add(n);
       p.querySelector('.quiz-exp').style.display = 'block';
       document.getElementById('score-text').textContent = `🏆 目前得分：${sc} / 15（已答 ${done.size} 題）`;
+    }
+
+    let allMasterTransOpen = false;
+    function toggleAllMasterTrans() {
+      allMasterTransOpen = !allMasterTransOpen;
+      document.querySelectorAll('.sent-card .master-trans-details').forEach(d => { d.open = allMasterTransOpen; });
+      const btn = document.getElementById('btn-toggle-master-trans');
+      if (btn) {
+        btn.textContent = allMasterTransOpen ? '👨‍🏫 一鍵收合名師翻譯拆解' : '👨‍🏫 一鍵展開名師翻譯拆解';
+        btn.classList.toggle('active', allMasterTransOpen);
+      }
+    }
+    let allConjOpen = false;
+    function toggleAllConj() {
+      allConjOpen = !allConjOpen;
+      document.querySelectorAll('.conj-box').forEach(d => { d.open = allConjOpen; });
+      const btn = document.getElementById('toggle-conj-btn');
+      if (btn) {
+        btn.textContent = allConjOpen ? '🔗 一鍵收合所有連接詞解析' : '🔗 一鍵展開所有連接詞解析';
+        btn.classList.toggle('active', allConjOpen);
+      }
     }
   </script>
 </body>
