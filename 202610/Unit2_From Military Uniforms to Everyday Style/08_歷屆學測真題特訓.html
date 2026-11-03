@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unit 2 學測題型仿真 ＆ 補教名師變形特訓（15 題全題型）</title>
+  <style>
+    :root {
+      --primary: #d97706;
+      --primary-dark: #b45309;
+      --primary-light: #fef3c7;
+      --navy: #1e293b;
+      --text: #334155;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --correct: #16a34a;
+      --correct-bg: #f0fdf4;
+      --wrong: #dc2626;
+      --wrong-bg: #fef2f2;
+      --purple: #7c3aed;
+      --purple-bg: #f5f3ff;
+      --blue: #2563eb;
+      --blue-bg: #eff6ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 5rem;
+    }
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
+    /* Top Nav */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      background: #fff;
+      padding: 0.9rem 1.4rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      background: #f1f5f9;
+      color: var(--navy);
+      transition: all 0.15s;
+      border: 1px solid var(--border);
+    }
+    .nav-btn:hover {
+      background: #e2e8f0;
+      color: var(--primary-dark);
+    }
+    .nav-btn.primary {
+      background: var(--blue-bg);
+      color: var(--blue);
+      border-color: #bfdbfe;
+    }
+    .nav-btn.primary:hover {
+      background: #dbeafe;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #fff;
+      padding: 2.2rem 1.8rem;
+      border-radius: 16px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 25px -5px rgba(15,23,42,0.25);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(217, 119, 6, 0.25);
+      border: 1px solid #f59e0b;
+      color: #fde68a;
+      padding: 0.3rem 0.8rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.8rem;
+    }
+    .hero-title {
+      font-size: 1.75rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+    .hero-desc {
+      font-size: 0.96rem;
+      color: #cbd5e1;
+      max-width: 820px;
+      line-height: 1.6;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 1.4rem;
+      flex-wrap: wrap;
+    }
+    .stat-pill {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 0.4rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .stat-pill strong { color: #fde68a; font-size: 1rem; }
+
+    /* Score Sticky Float Bar */
+    .score-bar {
+      position: sticky;
+      top: 1rem;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 0.8rem 1.4rem;
+      border-radius: 12px;
+      border: 2px solid #f59e0b;
+      box-shadow: 0 4px 20px rgba(217,119,6,0.18);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+    }
+    .score-info {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .score-badge {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+    }
+    .score-progress {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .action-tools {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-tool {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      color: var(--navy);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-tool:hover {
+      background: #e2e8f0;
+    }
+    .btn-tool.accent {
+      background: var(--primary-light);
+      border-color: #fcd34d;
+      color: var(--primary-dark);
+    }
+
+    /* Section Card */
+    .module-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+    }
+    .module-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding-bottom: 1rem;
+      margin-bottom: 1.4rem;
+      border-bottom: 2px solid #f1f5f9;
+    }
+    .module-icon {
+      font-size: 1.6rem;
+      background: var(--primary-light);
+      padding: 0.5rem 0.7rem;
+      border-radius: 10px;
+      line-height: 1;
+    }
+    .module-title-wrap h2 {
+      font-size: 1.28rem;
+      color: var(--navy);
+      font-weight: 800;
+    }
+    .module-title-wrap p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    /* Question Card */
+    .q-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1.4rem;
+      margin-bottom: 1.4rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .q-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+    }
+    .q-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+    }
+    .q-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #475569;
+    }
+    .q-tag.gsat {
+      background: #fff7ed;
+      border-color: #fdba74;
+      color: #c2410c;
+    }
+    .q-tag.reform {
+      background: #faf5ff;
+      border-color: #d8b4fe;
+      color: #7e22ce;
+    }
+    .q-target-neutral {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #475569;
+      background: #f1f5f9;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+    }
+    .q-prompt {
+      font-size: 1.05rem;
+      color: var(--navy);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    .q-prompt .blank {
+      display: inline-block;
+      min-width: 60px;
+      border-bottom: 2px solid var(--primary);
+      text-align: center;
+      font-weight: 800;
+      color: var(--primary-dark);
+      padding: 0 0.3rem;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .opt-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: 1.5px solid #e2e8f0;
+      background: #fff;
+      font-size: 0.95rem;
+      color: var(--navy);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+      font-weight: 600;
+      width: 100%;
+    }
+    .opt-btn:hover:not(:disabled) {
+      border-color: #94a3b8;
+      background: #f8fafc;
+      transform: translateY(-1px);
+    }
+    .opt-btn .opt-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #64748b;
+      flex-shrink: 0;
+    }
+    .opt-btn.correct {
+      background: var(--correct-bg) !important;
+      border-color: var(--correct) !important;
+      color: var(--correct) !important;
+    }
+    .opt-btn.correct .opt-badge {
+      background: var(--correct);
+      color: #fff;
+    }
+    .opt-btn.wrong {
+      background: var(--wrong-bg) !important;
+      border-color: var(--wrong) !important;
+      color: var(--wrong) !important;
+      text-decoration: line-through;
+    }
+    .opt-btn.wrong .opt-badge {
+      background: var(--wrong);
+      color: #fff;
+    }
+
+    /* Master Explanation Details */
+    .master-details {
+      background: #fcfcfd;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 0.8rem;
+      transition: border-color 0.2s;
+    }
+    .master-details[open] {
+      border-style: solid;
+      border-color: #f59e0b;
+      background: #fff;
+      box-shadow: 0 4px 14px rgba(245,158,11,0.08);
+    }
+    .master-summary {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #92400e;
+      background: #fffbeb;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .master-summary .exam-arrow {
+      display: inline-block;
+      transition: transform 0.2s ease;
+      font-size: 0.85rem;
+      color: #92400e;
+    }
+    .master-details[open] .master-summary .exam-arrow {
+      transform: rotate(180deg);
+    }
+    .master-summary:hover {
+      background: #fef3c7;
+    }
+    .master-body {
+      padding: 1.2rem;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: #334155;
+    }
+    .hit-badge-box {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border-left: 4px solid #2563eb;
+      padding: 0.7rem 1rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1rem;
+    }
+    .hit-badge-title {
+      color: #1e40af;
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+    .hit-badge-desc {
+      color: #1e3a8a;
+      font-size: 0.9rem;
+    }
+    .exp-item {
+      margin-bottom: 0.9rem;
+      padding-left: 0.4rem;
+      border-left: 3px solid #f59e0b;
+    }
+    .exp-title {
+      font-weight: 800;
+      font-size: 0.94rem;
+      margin-bottom: 0.2rem;
+      color: #78350f;
+    }
+    .exp-content {
+      color: #475569;
+    }
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.4rem;
+    }
+    .vocab-pill {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.85rem;
+    }
+    .vocab-pill strong { color: var(--navy); }
+
+    /* Translation Interactive Box */
+    .trans-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .trans-zh {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.8rem;
+    }
+    .trans-input {
+      width: 100%;
+      min-height: 70px;
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: 1.5px solid #cbd5e1;
+      font-family: inherit;
+      font-size: 0.95rem;
+      resize: vertical;
+      margin-bottom: 0.6rem;
+    }
+    .trans-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+    }
+    .trans-btn-reveal {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .trans-btn-reveal:hover {
+      background: #1e40af;
+    }
+    .trans-model-ans {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1.5px solid #93c5fd;
+    }
+
+    @media (max-width: 640px) {
+      .hero-title { font-size: 1.4rem; }
+      .options-grid { grid-template-columns: 1fr; }
+      .score-bar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Top Nav -->
+    <div class="top-nav">
+      <div class="nav-links">
+        <a href="../../index.html" class="nav-btn">⬅️ 返回講義總覽</a>
+        <a href="./03_互動圖文學習講義.html" class="nav-btn primary">📖 返回 Unit 2 主講義</a>
+      </div>
+      <div class="nav-links">
+        <a href="#part1" class="nav-btn">① 詞彙題</a>
+        <a href="#part2" class="nav-btn">② 克漏字題</a>
+        <a href="#part3" class="nav-btn">③ 中譯英題</a>
+        <a href="#part4" class="nav-btn">④ 名師魔改題</a>
+      </div>
+    </div>
+
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <div class="hero-badge">🏛️ TAIWAN GSAT PRACTICE</div>
+      <h1 class="hero-title">Unit 2 學測題型仿真 ＆ 補教名師變形特訓</h1>
+      <p class="hero-desc">
+        真正的大考怎麼考？依學測題型，針對本單元核心單字與句型編寫 <strong>15 題完整題組（5+3+3+4）</strong>，題目抬頭不暴雷，作答後點開名師解析對照本課命中考點！
+      </p>
+      <div class="hero-stats">
+        <div class="stat-pill">🎯 總題數：<strong>15 題</strong></div>
+        <div class="stat-pill">📚 學測題型仿真：<strong>11 題</strong>（詞彙 5 + 克漏 3 + 翻譯 3）</div>
+        <div class="stat-pill">⚡ 名師魔改題：<strong>4 題</strong>（防死記·全新情境）</div>
+      </div>
+    </div>
+
+    <!-- Score Sticky Float Bar -->
+    <div class="score-bar" id="score-bar">
+      <div class="score-info">
+        <div class="score-badge">🏆 得分：<span id="current-score">0</span> / 15</div>
+        <div class="score-progress" id="score-progress">（已作答 0 題）</div>
+      </div>
+      <div class="action-tools">
+        <button class="btn-tool accent" onclick="toggleAllExplanations()">👨‍🏫 一鍵展開所有名師考點解析</button>
+        <button class="btn-tool" onclick="resetAll()">🔄 重測全部</button>
+      </div>
+    </div>
+
+    <div class="module-card" id="part1">
+      <div class="module-header">
+        <div class="module-icon">🎯</div>
+        <div class="module-title-wrap">
+          <h2>第一關：【學測第 1～15 題】高頻詞彙題型秒殺（5 題）</h2>
+          <p>依學測詞彙題型編寫，檢驗本課核心單字在學測大考中的考法與搭配詞！（不預告考點，請先作答）</p>
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="q-card" id="card-q1">
+        <div class="q-meta">
+          <span class="q-tag gsat">【學測詞彙題型・仿真】</span>
+          <span class="q-target-neutral">🔍 題型：文意字彙測驗</span>
+        </div>
+        <div class="q-prompt">
+          1. The government announced that it would <span class="blank" id="blank-q1">______</span> new rules next year to reduce plastic waste in restaurants.
+        </div>
+        <div class="options-grid" id="opts-q1">
+          <button class="opt-btn" onclick="checkChoice('q1', 'A', true)"><span class="opt-badge">A</span> introduce</button>
+          <button class="opt-btn" onclick="checkChoice('q1', 'B', false)"><span class="opt-badge">B</span> protect</button>
+          <button class="opt-btn" onclick="checkChoice('q1', 'C', false)"><span class="opt-badge">C</span> remind</button>
+          <button class="opt-btn" onclick="checkChoice('q1', 'D', false)"><span class="opt-badge">D</span> struggle</button>
+        </div>
+        <details class="master-details">
+          <summary class="master-summary"><span>👨‍🏫 補教名師「學測考點秒殺解析」</span><span class="exam-arrow">▼</span></summary>
+          <div class="master-body">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題命中課文核心單字】：</div>
+              <div class="hit-badge-desc">
+                命中 Unit 2 核心單字：<strong>introduce</strong> [͵ɪntrəˋdjus] (v.) 推出；引進
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【大考破題眼】：看受詞 new rules 與 next year</div>
+              <div class="exp-content">政府「推出、實施」新規定 → <strong>introduce</strong> new rules。introduce 還能指推出產品、介紹人。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📝【全句翻譯】：</div>
+              <div class="exp-content">政府宣布明年將推出新規定，以減少餐廳的塑膠垃圾。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課課文連結】：</div>
+              <div class="exp-content">👈 對應課文：<em>"around 1950 the US Air Force <strong>introduced</strong> the MA-1 jacket."</em></div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🔍【四選項除錯與搭配詞擴充】：</div>
+              <div class="vocab-grid">
+                <div class="vocab-pill"><strong>(A) introduce</strong> (v.) 推出（正解）</div>
+                <div class="vocab-pill"><strong>(B) protect</strong> (v.) 保護</div>
+                <div class="vocab-pill"><strong>(C) remind</strong> (v.) 提醒</div>
+                <div class="vocab-pill"><strong>(D) struggle</strong> (v.) 奮鬥</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q2 -->
+      <div class="q-card" id="card-q2">
+        <div class="q-meta">
+          <span class="q-tag gsat">【學測詞彙題型・仿真】</span>
+          <span class="q-target-neutral">🔍 題型：文意字彙測驗</span>
+        </div>
+        <div class="q-prompt">
+          2. Regular exercise and a balanced diet can help <span class="blank" id="blank-q2">______</span> your body against many common diseases.
+        </div>
+        <div class="options-grid" id="opts-q2">
+          <button class="opt-btn" onclick="checkChoice('q2', 'A', true)"><span class="opt-badge">A</span> protect</button>
+          <button class="opt-btn" onclick="checkChoice('q2', 'B', false)"><span class="opt-badge">B</span> introduce</button>
+          <button class="opt-btn" onclick="checkChoice('q2', 'C', false)"><span class="opt-badge">C</span> loosen</button>
+          <button class="opt-btn" onclick="checkChoice('q2', 'D', false)"><span class="opt-badge">D</span> signify</button>
+        </div>
+        <details class="master-details">
+          <summary class="master-summary"><span>👨‍🏫 補教名師「學測考點秒殺解析」</span><span class="exam-arrow">▼</span></summary>
+          <div class="master-body">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題命中課文核心單字】：</div>
+              <div class="hit-badge-desc">
+                命中 Unit 2 核心單字：<strong>protect</strong> [prəˋtɛkt] (v.) 保護
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【大考破題眼】：看搭配 ___ ... against</div>
+              <div class="exp-content"><code>protect A against B</code>（保護 A 免受 B 傷害）是固定搭配，運動與飲食能「保護」身體抵抗疾病。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📝【全句翻譯】：</div>
+              <div class="exp-content">規律運動和均衡飲食能幫助保護你的身體，抵抗許多常見疾病。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課課文連結】：</div>
+              <div class="exp-content">👈 對應課文：<em>"...to cover the whole eye area and <strong>protect</strong> against strong light."</em></div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🔍【四選項除錯與搭配詞擴充】：</div>
+              <div class="vocab-grid">
+                <div class="vocab-pill"><strong>(A) protect</strong> (v.) 保護（正解）</div>
+                <div class="vocab-pill"><strong>(B) introduce</strong> (v.) 推出</div>
+                <div class="vocab-pill"><strong>(C) loosen</strong> (v.) 鬆開</div>
+                <div class="vocab-pill"><strong>(D) signify</strong> (v.) 表示</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q3 -->
+      <div class="q-card" id="card-q3">
+        <div class="q-meta">
+          <span class="q-tag gsat">【學測詞彙題型・仿真】</span>
+          <span class="q-target-neutral">🔍 題型：文意字彙測驗</span>
+        </div>
+        <div class="q-prompt">
+          3. There has been a <span class="blank" id="blank-q3">______</span> increase in the number of students studying abroad, almost doubling in five years.
+        </div>
+        <div class="options-grid" id="opts-q3">
+          <button class="opt-btn" onclick="checkChoice('q3', 'A', true)"><span class="opt-badge">A</span> significant</button>
+          <button class="opt-btn" onclick="checkChoice('q3', 'B', false)"><span class="opt-badge">B</span> loose</button>
+          <button class="opt-btn" onclick="checkChoice('q3', 'C', false)"><span class="opt-badge">C</span> military</button>
+          <button class="opt-btn" onclick="checkChoice('q3', 'D', false)"><span class="opt-badge">D</span> functional</button>
+        </div>
+        <details class="master-details">
+          <summary class="master-summary"><span>👨‍🏫 補教名師「學測考點秒殺解析」</span><span class="exam-arrow">▼</span></summary>
+          <div class="master-body">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題命中課文核心單字】：</div>
+              <div class="hit-badge-desc">
+                命中 Unit 2 核心單字：<strong>significant</strong> [sɪgˋnɪfəkənt] (adj.) 顯著的
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【大考破題眼】：看補充說明 almost doubling</div>
+              <div class="exp-content">五年內幾乎翻倍，是「顯著的」增加 → <strong>significant</strong> increase。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📝【全句翻譯】：</div>
+              <div class="exp-content">出國留學的學生人數顯著增加，五年內幾乎翻倍。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課課文連結】：</div>
+              <div class="exp-content">👈 對應課文：<em>"military history has had a <strong>significant</strong> influence on modern fashion."</em></div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🔍【四選項除錯與搭配詞擴充】：</div>
+              <div class="vocab-grid">
+                <div class="vocab-pill"><strong>(A) significant</strong> (adj.) 顯著的（正解）</div>
+                <div class="vocab-pill"><strong>(B) loose</strong> (adj.) 寬鬆的</div>
+                <div class="vocab-pill"><strong>(C) military</strong> (adj.) 軍事的</div>
+                <div class="vocab-pill"><strong>(D) functional</strong> (adj.) 實用的</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q4 -->
+      <div class="q-card" id="card-q4">
+        <div class="q-meta">
+          <span class="q-tag gsat">【學測詞彙題型・仿真】</span>
+          <span class="q-target-neutral">🔍 題型：文意字彙測驗</span>
+        </div>
+        <div class="q-prompt">
+          4. Because the bus was crowded, the company added <span class="blank" id="blank-q4">______</span> buses during rush hour to carry more passengers.
+        </div>
+        <div class="options-grid" id="opts-q4">
+          <button class="opt-btn" onclick="checkChoice('q4', 'A', true)"><span class="opt-badge">A</span> extra</button>
+          <button class="opt-btn" onclick="checkChoice('q4', 'B', false)"><span class="opt-badge">B</span> loose</button>
+          <button class="opt-btn" onclick="checkChoice('q4', 'C', false)"><span class="opt-badge">C</span> original</button>
+          <button class="opt-btn" onclick="checkChoice('q4', 'D', false)"><span class="opt-badge">D</span> significant</button>
+        </div>
+        <details class="master-details">
+          <summary class="master-summary"><span>👨‍🏫 補教名師「學測考點秒殺解析」</span><span class="exam-arrow">▼</span></summary>
+          <div class="master-body">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題命中課文核心單字】：</div>
+              <div class="hit-badge-desc">
+                命中 Unit 2 核心單字：<strong>extra</strong> [ˋɛkstrə] (adj.) 額外的
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【大考破題眼】：看動詞 added 與目的 carry more passengers</div>
+              <div class="exp-content">因為擁擠而「加開」的公車 → <strong>extra</strong> buses（額外的公車）。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📝【全句翻譯】：</div>
+              <div class="exp-content">因為公車很擁擠，公司在尖峰時段加開了額外的班次以載運更多乘客。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課課文連結】：</div>
+              <div class="exp-content">👈 對應課文：<em>"Soldiers needed the <strong>extra</strong> pockets to carry various items..."</em></div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🔍【四選項除錯與搭配詞擴充】：</div>
+              <div class="vocab-grid">
+                <div class="vocab-pill"><strong>(A) extra</strong> (adj.) 額外的（正解）</div>
+                <div class="vocab-pill"><strong>(B) loose</strong> (adj.) 鬆的</div>
+                <div class="vocab-pill"><strong>(C) original</strong> (adj.) 原本的</div>
+                <div class="vocab-pill"><strong>(D) significant</strong> (adj.) 重要的</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q5 -->
+      <div class="q-card" id="card-q5">
+        <div class="q-meta">
+          <span class="q-tag gsat">【學測詞彙題型・仿真】</span>
+          <span class="q-target-neutral">🔍 題型：文意字彙測驗</span>
+        </div>
+        <div class="q-prompt">
+          5. This song was <span class="blank" id="blank-q5">______</span> written for a movie, but it later became a hit on the radio.
+        </div>
+        <div class="options-grid" id="opts-q5">
+          <button class="opt-btn" onclick="checkChoice('q5', 'A', true)"><span class="opt-badge">A</span> originally</button>
+          <button class="opt-btn" onclick="checkChoice('q5', 'B', false)"><span class="opt-badge">B</span> loosely</button>
+          <button class="opt-btn" onclick="checkChoice('q5', 'C', false)"><span class="opt-badge">C</span> significantly</button>
+          <button class="opt-btn" onclick="checkChoice('q5', 'D', false)"><span class="opt-badge">D</span> extra</button>
+        </div>
+        <details class="master-details">
+          <summary class="master-summary"><span>👨‍🏫 補教名師「學測考點秒殺解析」</span><span class="exam-arrow">▼</span></summary>
+          <div class="master-body">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題命中課文核心單字】：</div>
+              <div class="hit-badge-desc">
+                命中 Unit 2 核心單字：<strong>originally</strong> [əˋrɪdʒənḷɪ] (adv.) 最初、原本
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【大考破題眼】：看 but 前後的對比：最初 vs. 後來</div>
+              <div class="exp-content">but it later became... 與前面對比「原本」為電影而寫 → <strong>originally</strong>。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📝【全句翻譯】：</div>
+              <div class="exp-content">這首歌原本是為一部電影而寫，後來卻在電台上爆紅。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課課文連結】：</div>
+              <div class="exp-content">👈 對應課文：<em>"aviator sunglasses were <strong>originally</strong> made to help pilots."</em></div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🔍【四選項除錯與搭配詞擴充】：</div>
+              <div class="vocab-grid">
+                <div class="vocab-pill"><strong>(A) originally</strong> (adv.) 原本（正解）</div>
+                <div class="vocab-pill"><strong>(B) loosely</strong> (adv.) 鬆散地</div>
+                <div class="vocab-pill"><strong>(C) significantly</strong> (adv.) 顯著地</div>
+                <div class="vocab-pill"><strong>(D) extra</strong> (adj.) 額外的</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="module-card" id="part2">
+      <div class="module-header">
+        <div class="module-icon">📑</div>
+        <div class="module-title-wrap">
+          <h2>第二關：【學測綜合測驗】克漏字語法題型（3 題）</h2>
+          <p>學測克漏字語境！檢驗篇章脈絡中的文法判斷與連接詞選擇。（先作答再開解析）</p>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="q-card" id="card-q6">
+        <div class="q-meta">
+          <span class="q-tag gsat">【學測綜合測驗題型・仿真】</span>
+          <span class="q-target-neutral">🔍 題型：連綴動詞判斷</span>
+        </div>
+        <div class="q-prompt">
+          6. After a good night's sleep, you will look <span class="blank" id="blank-q6">______</span> and feel more energetic.
+        </div>
+        <div class="options-grid" id="opts-q6">
+          <button class="opt-btn" onclick="checkChoice('q6', 'A', true)"><span class="opt-badge">A</span> fresh</button>
+          <button class="opt-btn" onclick="checkChoice('q6', 'B', false)"><span class="opt-badge">B</span> freshly</button>
+          <button class="opt-btn" onclick="checkChoice('q6', 'C', false)"><span class="opt-badge">C</span> freshness</button>
+          <button class="opt-btn" onclick="checkChoice('q6', 'D', false)"><span class="opt-badge">D</span> to freshen</button>
+        </div>
+        <details class="master-details">
+          <summary class="master-summary"><span>👨‍🏫 補教名師「學測考點秒殺解析」</span><span class="exam-arrow">▼</span></summary>
+          <div class="master-body">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題命中課文核心句型】：</div>
+              <div class="hit-badge-desc">
+                命中句型：<strong>連綴動詞 look + Adj.</strong>
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【大考破題眼】：看 look 後面接什麼詞性</div>
+              <div class="exp-content">look 是連綴動詞「看起來」，後面接形容詞 <strong>fresh</strong>；和後面的 feel more energetic 對稱。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📝【全句翻譯】：</div>
+              <div class="exp-content">睡了一夜好覺後，你會看起來神清氣爽，也會覺得更有活力。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課課文連結】：</div>
+              <div class="exp-content">👈 對應課文：<em>"people wear them simply because they <strong>look good</strong>."</em></div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🔍【四選項除錯與搭配詞擴充】：</div>
+              <div class="vocab-grid">
+                <div class="vocab-pill"><strong>fresh</strong> (adj.)（正解）</div>
+                <div class="vocab-pill"><strong>freshly</strong> (adv.)</div>
+                <div class="vocab-pill"><strong>freshness</strong> (n.)</div>
+                <div class="vocab-pill"><strong>to freshen</strong> (不定詞)</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q7 -->
+      <div class="q-card" id="card-q7">
+        <div class="q-meta">
+          <span class="q-tag gsat">【學測綜合測驗題型・仿真】</span>
+          <span class="q-target-neutral">🔍 題型：make + O + O.C. 判斷</span>
+        </div>
+        <div class="q-prompt">
+          7. The coach's encouraging words made the players <span class="blank" id="blank-q7">______</span> before the big game.
+        </div>
+        <div class="options-grid" id="opts-q7">
+          <button class="opt-btn" onclick="checkChoice('q7', 'A', true)"><span class="opt-badge">A</span> confident</button>
+          <button class="opt-btn" onclick="checkChoice('q7', 'B', false)"><span class="opt-badge">B</span> confidently</button>
+          <button class="opt-btn" onclick="checkChoice('q7', 'C', false)"><span class="opt-badge">C</span> confidence</button>
+          <button class="opt-btn" onclick="checkChoice('q7', 'D', false)"><span class="opt-badge">D</span> to be confident</button>
+        </div>
+        <details class="master-details">
+          <summary class="master-summary"><span>👨‍🏫 補教名師「學測考點秒殺解析」</span><span class="exam-arrow">▼</span></summary>
+          <div class="master-body">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題命中課文核心句型】：</div>
+              <div class="hit-badge-desc">
+                命中句型：<strong>make + O + Adj.</strong>
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【大考破題眼】：看 make + the players + ___</div>
+              <div class="exp-content">make 後接受詞 the players，再接形容詞當受詞補語 → <strong>confident</strong>。make 不接 to be。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📝【全句翻譯】：</div>
+              <div class="exp-content">教練鼓勵的話讓球員們在大賽前充滿信心。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課課文連結】：</div>
+              <div class="exp-content">👈 對應課文：<em>"this <strong>made them very fashionable</strong>."</em></div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🔍【四選項除錯與搭配詞擴充】：</div>
+              <div class="vocab-grid">
+                <div class="vocab-pill"><strong>confident</strong> (adj.)（正解）</div>
+                <div class="vocab-pill"><strong>confidently</strong> (adv.)</div>
+                <div class="vocab-pill"><strong>confidence</strong> (n.)</div>
+                <div class="vocab-pill"><strong>to be confident</strong>（make 不接）</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q8 -->
+      <div class="q-card" id="card-q8">
+        <div class="q-meta">
+          <span class="q-tag gsat">【學測綜合測驗題型・仿真】</span>
+          <span class="q-target-neutral">🔍 題型：the next time 用法判斷</span>
+        </div>
+        <div class="q-prompt">
+          8. <span class="blank" id="blank-q8">______</span> you visit the museum, don't forget to see the new exhibition on the second floor.
+        </div>
+        <div class="options-grid" id="opts-q8">
+          <button class="opt-btn" onclick="checkChoice('q8', 'A', true)"><span class="opt-badge">A</span> The next time</button>
+          <button class="opt-btn" onclick="checkChoice('q8', 'B', false)"><span class="opt-badge">B</span> The next time when</button>
+          <button class="opt-btn" onclick="checkChoice('q8', 'C', false)"><span class="opt-badge">C</span> Next time when</button>
+          <button class="opt-btn" onclick="checkChoice('q8', 'D', false)"><span class="opt-badge">D</span> At the next time</button>
+        </div>
+        <details class="master-details">
+          <summary class="master-summary"><span>👨‍🏫 補教名師「學測考點秒殺解析」</span><span class="exam-arrow">▼</span></summary>
+          <div class="master-body">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題命中課文核心句型】：</div>
+              <div class="hit-badge-desc">
+                命中句型：<strong>the next time S + V</strong>（下次……的時候）
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【大考破題眼】：看空格後面是完整子句</div>
+              <div class="exp-content"><strong>the next time</strong> 本身就有連接詞功能，引導時間子句，前面或後面都不可再加 when。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📝【全句翻譯】：</div>
+              <div class="exp-content">下次你參觀博物館時，別忘了去看二樓的新展覽。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課課文連結】：</div>
+              <div class="exp-content">👈 對應課文：<em>"<strong>The next time</strong> you wear one of these pieces, remember that..."</em></div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🔍【四選項除錯與搭配詞擴充】：</div>
+              <div class="vocab-grid">
+                <div class="vocab-pill"><strong>The next time</strong> + S + V（正解）</div>
+                <div class="vocab-pill"><strong>The next time when</strong>（× 多了 when）</div>
+                <div class="vocab-pill"><strong>Next time when</strong>（×）</div>
+                <div class="vocab-pill"><strong>At the next time</strong>（×）</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="module-card" id="part3">
+      <div class="module-header">
+        <div class="module-icon">✍️</div>
+        <div class="module-title-wrap">
+          <h2>第三關：【學測非選題】中譯英手寫題型（3 題）</h2>
+          <p>大考非選每題 4 分！請先在輸入框鍵入你的翻譯，再展開名師採分點與頂標範文對照。</p>
+        </div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="q-card" id="card-q9">
+        <div class="q-meta">
+          <span class="q-tag gsat">【學測中譯英題型・仿真】</span>
+          <span class="q-target-neutral">🔍 題型：中譯英非選題（滿分 4 分）</span>
+        </div>
+        <div class="trans-box">
+          <div class="trans-zh">9. 這款熱門的應用程式一開始只是一個學校專題。</div>
+          <textarea class="trans-input" id="trans-input-q9" placeholder="請試著在電腦上鍵入你的英文翻譯..."></textarea>
+          <button class="trans-btn-reveal" onclick="revealTrans('q9')">👁️ 顯示名師採分點與頂標範文</button>
+          <div class="trans-model-ans" id="ans-q9">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題命中課文核心詞彙與文法】：</div>
+              <div class="hit-badge-desc">
+                命中 Unit 2 句型：<strong>start out as N</strong>（起初是……）
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🏆【滿分頂標示範句】：</div>
+              <div class="exp-content"><strong>This popular app started out as a school project.</strong><br>（亦可：This popular app began as just a school project.）</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【大考中心採分標準拆解（滿分 4 分）】：</div>
+              <div class="exp-content">• <strong>這款熱門的應用程式（1 分）</strong>：➔ This popular app<br>
+                • <strong>一開始只是（2 分）</strong>：➔ started out as / began as<br>
+                • <strong>一個學校專題（1 分）</strong>：➔ a school project</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">⚠️【常犯中式英文地雷 (Chinglish Alert)】：</div>
+              <div class="exp-content">❌ <code>started out a school project</code>：start out 後接名詞要加 as。<br>
+                ❌ <code>was started out as</code>：這裡用主動語態。<br>
+                ❌ <code>at first is</code>：時態要用過去式。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課對照】：</div>
+              <div class="exp-content">👈 對應課文：<em>"Some of the world's most recognizable everyday styles <strong>started out as</strong> functional military gear."</em></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="q-card" id="card-q10">
+        <div class="q-meta">
+          <span class="q-tag gsat">【學測中譯英題型・仿真】</span>
+          <span class="q-target-neutral">🔍 題型：中譯英非選題（滿分 4 分）</span>
+        </div>
+        <div class="trans-box">
+          <div class="trans-zh">10. 這件外套看起來很重，但穿起來很輕。</div>
+          <textarea class="trans-input" id="trans-input-q10" placeholder="請試著在電腦上鍵入你的英文翻譯..."></textarea>
+          <button class="trans-btn-reveal" onclick="revealTrans('q10')">👁️ 顯示名師採分點與頂標範文</button>
+          <div class="trans-model-ans" id="ans-q10">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題命中課文核心詞彙與文法】：</div>
+              <div class="hit-badge-desc">
+                命中 Unit 2 句型：<strong>連綴動詞 look / feel + Adj.</strong>
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🏆【滿分頂標示範句】：</div>
+              <div class="exp-content"><strong>This jacket looks heavy, but it feels light when you wear it.</strong><br>（亦可：This jacket looks heavy, but it is light to wear.）</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【大考中心採分標準拆解（滿分 4 分）】：</div>
+              <div class="exp-content">• <strong>這件外套看起來很重（2 分）</strong>：➔ This jacket looks heavy<br>
+                • <strong>但（1 分）</strong>：➔ , but<br>
+                • <strong>穿起來很輕（1 分）</strong>：➔ it feels light (when you wear it)</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">⚠️【常犯中式英文地雷 (Chinglish Alert)】：</div>
+              <div class="exp-content">❌ <code>looks heavily</code>：連綴動詞後接形容詞。<br>
+                ❌ <code>looks like heavy</code>：look like 後接名詞。<br>
+                ❌ <code>wears light</code>：wear 不是連綴動詞，要用 feel light。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課對照】：</div>
+              <div class="exp-content">👈 對應課文：<em>"people wear them simply because they <strong>look good</strong>."</em></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q11 -->
+      <div class="q-card" id="card-q11">
+        <div class="q-meta">
+          <span class="q-tag gsat">【學測中譯英題型・仿真】</span>
+          <span class="q-target-neutral">🔍 題型：中譯英非選題（滿分 4 分）</span>
+        </div>
+        <div class="trans-box">
+          <div class="trans-zh">11. 網路對年輕人的生活有重大的影響。</div>
+          <textarea class="trans-input" id="trans-input-q11" placeholder="請試著在電腦上鍵入你的英文翻譯..."></textarea>
+          <button class="trans-btn-reveal" onclick="revealTrans('q11')">👁️ 顯示名師採分點與頂標範文</button>
+          <div class="trans-model-ans" id="ans-q11">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題命中課文核心詞彙與文法】：</div>
+              <div class="hit-badge-desc">
+                命中 Unit 2 單字與句型：<strong>have a significant influence on</strong>
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🏆【滿分頂標示範句】：</div>
+              <div class="exp-content"><strong>The Internet has a significant influence on young people's lives.</strong><br>（亦可：The Internet has significantly influenced the lives of young people.）</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【大考中心採分標準拆解（滿分 4 分）】：</div>
+              <div class="exp-content">• <strong>網路（1 分）</strong>：➔ The Internet<br>
+                • <strong>對……有重大的影響（2 分）</strong>：➔ has a significant influence on<br>
+                • <strong>年輕人的生活（1 分）</strong>：➔ young people's lives</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">⚠️【常犯中式英文地雷 (Chinglish Alert)】：</div>
+              <div class="exp-content">❌ <code>influence to</code>：influence 搭配 on。<br>
+                ❌ <code>young people's life</code>：多人的生活用複數 lives。<br>
+                ❌ <code>has a significant influence in</code>：介系詞錯誤。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課對照】：</div>
+              <div class="exp-content">👈 對應課文：<em>"military history has had a <strong>significant influence on</strong> modern fashion."</em></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-card" id="part4">
+      <div class="module-header">
+        <div class="module-icon">⚡</div>
+        <div class="module-title-wrap">
+          <h2>第四關：【補教名師魔改題】最新時事變形挑戰（4 題）</h2>
+          <p>拒絕死背考古題！名師將本課高頻字詞與文法句型置入全新情境，驗證你是否真正融會貫通！（不預告答案，請先作答）</p>
+        </div>
+      </div>
+
+      <!-- Q12 -->
+      <div class="q-card" id="card-q12">
+        <div class="q-meta">
+          <span class="q-tag reform">【名師魔改・時事變形】</span>
+          <span class="q-target-neutral">🔍 題型：come across 用法判斷</span>
+        </div>
+        <div class="q-prompt">
+          12. While scrolling through social media last night, Amy <span class="blank" id="blank-q12">______</span> a video that showed how a famous jacket was first made for pilots.
+        </div>
+        <div class="options-grid" id="opts-q12">
+          <button class="opt-btn" onclick="checkChoice('q12', 'A', true)"><span class="opt-badge">A</span> came across</button>
+          <button class="opt-btn" onclick="checkChoice('q12', 'B', false)"><span class="opt-badge">B</span> came across with</button>
+          <button class="opt-btn" onclick="checkChoice('q12', 'C', false)"><span class="opt-badge">C</span> came it across</button>
+          <button class="opt-btn" onclick="checkChoice('q12', 'D', false)"><span class="opt-badge">D</span> was come across</button>
+        </div>
+        <details class="master-details">
+          <summary class="master-summary"><span>👨‍🏫 補教名師「學測考點秒殺解析」</span><span class="exam-arrow">▼</span></summary>
+          <div class="master-body">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題變形考點】：</div>
+              <div class="hit-badge-desc">
+                變形考點：<strong>come across + N</strong>（偶然看到）
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【名師破題點】：看主詞 Amy 與受詞 a video</div>
+              <div class="exp-content"><code>come across</code> 是不可分的及物片語，直接接受詞：<strong>came across a video</strong>。不加 with，也沒有被動。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📝【全句翻譯】：</div>
+              <div class="exp-content">昨晚滑社群媒體時，艾咪偶然看到一支影片，介紹一件知名夾克最初是如何為飛行員製作的。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課課文連結】：</div>
+              <div class="exp-content">👈 對應課文：<em>"You have probably <strong>come across</strong> clothes that remind you of the military while shopping."</em></div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🔍【四選項除錯與搭配詞擴充】：</div>
+              <div class="vocab-grid">
+                <div class="vocab-pill"><strong>came across</strong> + N（✓）</div>
+                <div class="vocab-pill"><strong>came across with</strong>（× 多 with）</div>
+                <div class="vocab-pill"><strong>came it across</strong>（× 不可分）</div>
+                <div class="vocab-pill"><strong>was come across</strong>（× 無被動）</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q13 -->
+      <div class="q-card" id="card-q13">
+        <div class="q-meta">
+          <span class="q-tag reform">【名師魔改・時事變形】</span>
+          <span class="q-target-neutral">🔍 題型：keep + O + Adj. 判斷</span>
+        </div>
+        <div class="q-prompt">
+          13. During the record-breaking heat wave this summer, many office workers used small portable fans to keep themselves <span class="blank" id="blank-q13">______</span>.
+        </div>
+        <div class="options-grid" id="opts-q13">
+          <button class="opt-btn" onclick="checkChoice('q13', 'A', true)"><span class="opt-badge">A</span> cool</button>
+          <button class="opt-btn" onclick="checkChoice('q13', 'B', false)"><span class="opt-badge">B</span> coolly</button>
+          <button class="opt-btn" onclick="checkChoice('q13', 'C', false)"><span class="opt-badge">C</span> coolness</button>
+          <button class="opt-btn" onclick="checkChoice('q13', 'D', false)"><span class="opt-badge">D</span> to cool</button>
+        </div>
+        <details class="master-details">
+          <summary class="master-summary"><span>👨‍🏫 補教名師「學測考點秒殺解析」</span><span class="exam-arrow">▼</span></summary>
+          <div class="master-body">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題變形考點】：</div>
+              <div class="hit-badge-desc">
+                變形考點：<strong>keep + O + Adj.</strong>（使保持某狀態）
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【名師破題點】：看 keep + themselves + ___</div>
+              <div class="exp-content">keep 後接受詞，再接形容詞當補語 → keep themselves <strong>cool</strong>（讓自己保持涼爽）。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📝【全句翻譯】：</div>
+              <div class="exp-content">今年夏天破紀錄的熱浪期間，許多上班族用小型手持風扇讓自己保持涼爽。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課課文連結】：</div>
+              <div class="exp-content">👈 對應課文：<em>"This material <strong>kept pilots warm and dry</strong>."</em></div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🔍【四選項除錯與搭配詞擴充】：</div>
+              <div class="vocab-grid">
+                <div class="vocab-pill"><strong>cool</strong> (adj.)（正解）</div>
+                <div class="vocab-pill"><strong>coolly</strong> (adv.)</div>
+                <div class="vocab-pill"><strong>coolness</strong> (n.)</div>
+                <div class="vocab-pill"><strong>to cool</strong>（keep 不接 to V）</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q14 -->
+      <div class="q-card" id="card-q14">
+        <div class="q-meta">
+          <span class="q-tag reform">【名師魔改・時事變形】</span>
+          <span class="q-target-neutral">🔍 題型：while + V-ing 判斷</span>
+        </div>
+        <div class="q-prompt">
+          14. Many students listen to podcasts <span class="blank" id="blank-q14">______</span> on the MRT, using the time to practice English.
+        </div>
+        <div class="options-grid" id="opts-q14">
+          <button class="opt-btn" onclick="checkChoice('q14', 'A', true)"><span class="opt-badge">A</span> while riding</button>
+          <button class="opt-btn" onclick="checkChoice('q14', 'B', false)"><span class="opt-badge">B</span> while ride</button>
+          <button class="opt-btn" onclick="checkChoice('q14', 'C', false)"><span class="opt-badge">C</span> while rode</button>
+          <button class="opt-btn" onclick="checkChoice('q14', 'D', false)"><span class="opt-badge">D</span> while they riding</button>
+        </div>
+        <details class="master-details">
+          <summary class="master-summary"><span>👨‍🏫 補教名師「學測考點秒殺解析」</span><span class="exam-arrow">▼</span></summary>
+          <div class="master-body">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題變形考點】：</div>
+              <div class="hit-badge-desc">
+                變形考點：<strong>while + V-ing</strong>（省略主詞與 be 動詞）
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【名師破題點】：看主詞 Many students 與空格後的地點</div>
+              <div class="exp-content"><code>while they are riding</code> 省略主詞與 be 後變成 <strong>while riding</strong>；(D) 只省 be 不省主詞是錯的。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📝【全句翻譯】：</div>
+              <div class="exp-content">許多學生搭捷運時會聽 podcast，利用這段時間練習英文。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課課文連結】：</div>
+              <div class="exp-content">👈 對應課文：<em>"...clothes that remind you of the military <strong>while shopping</strong>."</em></div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🔍【四選項除錯與搭配詞擴充】：</div>
+              <div class="vocab-grid">
+                <div class="vocab-pill"><strong>while riding</strong>（✓）</div>
+                <div class="vocab-pill"><strong>while ride</strong>（× 原形）</div>
+                <div class="vocab-pill"><strong>while rode</strong>（× 過去式）</div>
+                <div class="vocab-pill"><strong>while they riding</strong>（× 缺 be）</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q15 -->
+      <div class="q-card" id="card-q15">
+        <div class="q-meta">
+          <span class="q-tag reform">【名師魔改・時事變形】</span>
+          <span class="q-target-neutral">🔍 題型：begin as / start out as 判斷</span>
+        </div>
+        <div class="q-prompt">
+          15. The popular online fashion brand <span class="blank" id="blank-q15">______</span> a small shop run by two university students in 2019.
+        </div>
+        <div class="options-grid" id="opts-q15">
+          <button class="opt-btn" onclick="checkChoice('q15', 'A', true)"><span class="opt-badge">A</span> started out as</button>
+          <button class="opt-btn" onclick="checkChoice('q15', 'B', false)"><span class="opt-badge">B</span> started out from</button>
+          <button class="opt-btn" onclick="checkChoice('q15', 'C', false)"><span class="opt-badge">C</span> was started out</button>
+          <button class="opt-btn" onclick="checkChoice('q15', 'D', false)"><span class="opt-badge">D</span> started out to</button>
+        </div>
+        <details class="master-details">
+          <summary class="master-summary"><span>👨‍🏫 補教名師「學測考點秒殺解析」</span><span class="exam-arrow">▼</span></summary>
+          <div class="master-body">
+            <div class="hit-badge-box">
+              <div class="hit-badge-title">🎯【本題變形考點】：</div>
+              <div class="hit-badge-desc">
+                變形考點：<strong>start out as N</strong>（起初是……）
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🎯【名師破題點】：看空格後的名詞 a small shop</div>
+              <div class="exp-content">start out 後面接名詞表「起初的身分」要用 <strong>as</strong>：started out as a small shop。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📝【全句翻譯】：</div>
+              <div class="exp-content">這個熱門的網路時尚品牌，起初只是 2019 年兩位大學生經營的一間小店。</div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">📚【本課課文連結】：</div>
+              <div class="exp-content">👈 對應課文：<em>"many well-known fashion items <strong>began as</strong> functional uniforms..."</em>／<em>"...<strong>started out as</strong> functional military gear."</em></div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-title">🔍【四選項除錯與搭配詞擴充】：</div>
+              <div class="vocab-grid">
+                <div class="vocab-pill"><strong>started out as</strong> + N（✓）</div>
+                <div class="vocab-pill"><strong>started out from</strong>（×）</div>
+                <div class="vocab-pill"><strong>was started out</strong>（× 被動）</div>
+                <div class="vocab-pill"><strong>started out to</strong>（×）</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const userAnswers = {};
+    let answeredCount = 0;
+    let score = 0;
+    const totalQuestions = 15;
+
+    function checkChoice(qId, choice, isCorrect) {
+      if (userAnswers[qId] !== undefined) return; // Prevent re-answering
+      userAnswers[qId] = isCorrect;
+      answeredCount++;
+
+      const optsContainer = document.getElementById('opts-' + qId);
+      const buttons = optsContainer.querySelectorAll('.opt-btn');
+      
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        const text = btn.innerText.trim();
+        if (text.startsWith(choice)) {
+          if (isCorrect) {
+            btn.classList.add('correct');
+          } else {
+            btn.classList.add('wrong');
+          }
+        }
+      });
+
+      // Show correct answer if wrong
+      if (!isCorrect) {
+        buttons.forEach(btn => {
+          const onclickAttr = btn.getAttribute('onclick');
+          if (onclickAttr && onclickAttr.includes('true')) {
+            btn.classList.add('correct');
+          }
+        });
+      }
+
+      if (isCorrect) {
+        score++;
+      }
+
+      // Update score display
+      document.getElementById('current-score').innerText = score;
+      document.getElementById('score-progress').innerText = `（已作答 ${answeredCount} / ${totalQuestions} 題）`;
+
+      // Auto expand explanation for learning feedback
+      const card = document.getElementById('card-' + qId);
+      if (card) {
+        const details = card.querySelector('details');
+        if (details) details.open = true;
+      }
+    }
+
+    function revealTrans(qId) {
+      const ansBox = document.getElementById('ans-' + qId);
+      if (ansBox) {
+        if (ansBox.style.display === 'block') {
+          ansBox.style.display = 'none';
+        } else {
+          ansBox.style.display = 'block';
+          if (userAnswers[qId] === undefined) {
+            userAnswers[qId] = true;
+            answeredCount++;
+            score++; // Auto count 1 point for practicing translation
+            document.getElementById('current-score').innerText = score;
+            document.getElementById('score-progress').innerText = `（已作答 ${answeredCount} / ${totalQuestions} 題）`;
+          }
+        }
+      }
+    }
+
+    function toggleAllExplanations() {
+      const allDetails = document.querySelectorAll('details.master-details');
+      const anyClosed = Array.from(allDetails).some(d => !d.open);
+      allDetails.forEach(d => d.open = anyClosed);
+    }
+
+    function resetAll() {
+      window.location.reload();
+    }
+  </script>
+</body>
+</html>
