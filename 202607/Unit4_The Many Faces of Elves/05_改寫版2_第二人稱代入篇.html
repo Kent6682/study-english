@@ -1,0 +1,2541 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>202607 Unit 4｜改寫版2 第二人稱代入篇</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --ink: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --blue: #2563eb;
+      --blue-bg: #eff6ff;
+      --blue-border: #bfdbfe;
+      --orange: #ea580c;
+      --orange-bg: #fff7ed;
+      --orange-border: #fed7aa;
+      --green: #059669;
+      --green-bg: #ecfdf5;
+      --green-border: #a7f3d0;
+      --purple: #7c3aed;
+      --purple-bg: #f5f3ff;
+      --purple-border: #ddd6fe;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --yellow-hl: #fef08a;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      padding-bottom: 4rem;
+    }
+
+    /* HERO HEADER */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 60%, #6366f1 100%);
+      color: #fff;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+    .pill {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.25rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .pill.gold {
+      background: #fbbf24;
+      color: #1e293b;
+    }
+    .hero h1 {
+      margin: 0.2rem 0;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+    .hero h2 {
+      margin: 0.3rem 0 0;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 500;
+      color: #e0e7ff;
+    }
+
+    /* STICKY NAV */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 12px rgba(15,23,42,0.05);
+    }
+    .nav-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .nav-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      transform: translateY(-1px);
+    }
+    .nav-btn.primary {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.4rem;
+      font-weight: 900;
+      margin: 2.2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid var(--blue);
+      color: #0f172a;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+    }
+
+    /* 4-PANEL COMIC STORYBOARD */
+    .infographic-img {
+      width: 100%;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .storyboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .story-panel {
+      border-radius: 14px;
+      padding: 1.1rem;
+      position: relative;
+      border: 2px solid transparent;
+    }
+    .story-panel.p1 { background: var(--blue-bg); border-color: var(--blue-border); }
+    .story-panel.p2 { background: var(--orange-bg); border-color: var(--orange-border); }
+    .story-panel.p3 { background: var(--red-bg); border-color: #fecaca; }
+    .story-panel.p4 { background: var(--green-bg); border-color: var(--green-border); }
+    .panel-step {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.15rem 0.55rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+      background: rgba(255,255,255,0.8);
+    }
+    .panel-icon {
+      font-size: 2rem;
+      float: right;
+      line-height: 1;
+    }
+    .story-panel h4 {
+      margin: 0.2rem 0 0.4rem;
+      font-size: 1.08rem;
+      font-weight: 800;
+    }
+    .story-panel p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #334155;
+    }
+    .eng-tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: #fff;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      font-family: "Segoe UI", monospace;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--blue);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    /* SENTENCE CHUNKING & COLOR BLOCKS */
+    .control-bar {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: center;
+      background: #f8fafc;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      margin-bottom: 1.2rem;
+      border: 1px solid var(--border);
+    }
+    .toggle-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .toggle-btn.active {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .para-badge {
+      display: inline-block;
+      background: #1e293b;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.25rem 0.8rem;
+      border-radius: 8px;
+      margin: 1rem 0 0.8rem;
+    }
+
+    .sent-card {
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 1.2rem;
+      background: #fff;
+      transition: all 0.2s;
+    }
+    .sent-card:hover {
+      border-color: #93c5fd;
+    }
+    .sent-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+    .sent-num {
+      background: var(--blue-bg);
+      color: var(--blue);
+      font-weight: 900;
+      font-size: 0.85rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 8px;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+    .sent-en {
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: #0f172a;
+      flex: 1;
+      line-height: 1.6;
+    }
+    .sent-zh {
+      margin-top: 0.45rem;
+      font-size: 1rem;
+      color: #475569;
+      padding-left: 0.5rem;
+      border-left: 3px solid #cbd5e1;
+    }
+    body.hide-zh .sent-zh { display: none; }
+
+    /* Cloze Mask Mode */
+    .key-term {
+      background: var(--yellow-hl);
+      padding: 0 5px;
+      border-radius: 5px;
+      font-weight: 800;
+      color: #9a3412;
+      transition: all 0.2s;
+    }
+    body.cloze-mode .key-term {
+      background: #cbd5e1;
+      color: transparent;
+      cursor: pointer;
+      user-select: none;
+    }
+    body.cloze-mode .key-term:hover {
+      background: var(--yellow-hl);
+      color: #9a3412;
+    }
+
+    .audio-btn {
+      border: none;
+      background: var(--blue-bg);
+      color: var(--blue);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 1.05rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .audio-btn:hover {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    /* VISUAL SENTENCE BLOCKS (積木拆句) */
+    .chunk-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.9rem 0;
+      align-items: stretch;
+    }
+    .chunk {
+      border-radius: 10px;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid transparent;
+    }
+    .chunk .c-role {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 0.15rem;
+      opacity: 0.85;
+    }
+    .chunk .c-en {
+      font-weight: 800;
+      font-family: "Segoe UI", sans-serif;
+    }
+    .chunk .c-zh {
+      font-size: 0.8rem;
+      margin-top: 0.1rem;
+    }
+    .chunk.s { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .chunk.v { background: #fff1f2; border-color: #fecdd3; color: #be123c; }
+    .chunk.o { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .chunk.m { background: #f5f3ff; border-color: #ddd6fe; color: #6d28d9; }
+    .chunk.c { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+
+    /* GRAMMAR & TRANSLATION TIPS GRID */
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 0.85rem;
+      margin-top: 0.8rem;
+    }
+    .insight-box {
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.92rem;
+    }
+    .insight-box.grammar {
+      background: #f8fafc;
+      border-left: 4px solid var(--blue);
+    }
+    .insight-box.trans {
+      background: #fffbeb;
+      border-left: 4px solid var(--orange);
+    }
+    .insight-title {
+      font-weight: 800;
+      font-size: 0.88rem;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* VISUAL GRAMMAR DIAGRAMS */
+    .diagram-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.2rem;
+    }
+    .diagram-card {
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.3rem;
+      background: #fff;
+    }
+    .formula-box {
+      background: #1e293b;
+      color: #fff;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      font-family: "Segoe UI", monospace;
+      font-size: 0.95rem;
+      margin: 0.75rem 0;
+      text-align: center;
+      font-weight: 700;
+    }
+    .formula-box span.hi {
+      color: #fbbf24;
+    }
+    .vs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin-top: 0.6rem;
+    }
+    .vs-table th, .vs-table td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+    }
+    .vs-table th {
+      background: #f1f5f9;
+      font-weight: 800;
+    }
+
+    /* VOCABULARY VISUAL CARDS */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.2rem;
+    }
+    .v-card {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .v-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+    }
+    .v-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+    .v-word {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--blue);
+    }
+    .v-kk {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-family: "Lucida Sans Unicode", sans-serif;
+    }
+    .v-meaning {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+    }
+    .v-pos {
+      background: var(--purple-bg);
+      color: var(--purple);
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      margin-right: 0.4rem;
+    }
+    .v-hook {
+      background: var(--orange-bg);
+      border: 1px dashed var(--orange);
+      border-radius: 10px;
+      padding: 0.65rem 0.8rem;
+      font-size: 0.88rem;
+      margin: 0.6rem 0;
+    }
+    .v-colloc {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 0.65rem 0.8rem;
+      font-size: 0.86rem;
+    }
+
+    /* QUIZ */
+    .quiz-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.8rem 1rem;
+      margin: 0.45rem 0;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .quiz-btn:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
+    .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
+    .quiz-exp {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      background: var(--green-bg);
+      color: #065f46;
+      font-size: 0.9rem;
+    }
+    /* FULL TEXT IMMERSIVE READER */
+    .reader-card {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 1.8rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+    }
+    .reader-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 1.4rem;
+    }
+    .reader-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: #f1f5f9;
+      padding: 0.35rem;
+      border-radius: 12px;
+    }
+    .reader-tab {
+      border: none;
+      background: transparent;
+      padding: 0.5rem 1rem;
+      border-radius: 9px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .reader-tab.active {
+      background: #fff;
+      color: var(--blue);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .reader-tools {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .reader-panel { display: none; }
+    .reader-panel.active { display: block; }
+    .reader-para {
+      margin-bottom: 1.4rem;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      background: #fafcff;
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s;
+    }
+    .reader-para:hover {
+      background: #f0f7ff;
+      border-color: #bfdbfe;
+    }
+    .reader-en {
+      font-size: var(--reader-font-size, 1.14rem);
+      line-height: 1.85;
+      color: #0f172a;
+      font-weight: 500;
+    }
+    .reader-zh {
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px dashed #cbd5e1;
+      color: #475569;
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+    body.hide-reader-zh .reader-zh { display: none; }
+  
+    /* CONJUNCTION / CLAUSE BOX (COLLAPSIBLE) */
+    details.conj-box {
+      margin-top: 0.75rem;
+      background: #faf5ff;
+      border: 1.5px solid #d8b4fe;
+      border-radius: 10px;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.88rem;
+    }
+    details.conj-box[open] {
+      padding-bottom: 0.85rem;
+    }
+    details.conj-box summary.conj-title {
+      font-weight: 800;
+      color: #6d28d9;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      list-style: none;
+      margin: 0;
+      padding: 0.1rem 0;
+    }
+    details.conj-box summary.conj-title::-webkit-details-marker {
+      display: none;
+    }
+    details.conj-box[open] summary.conj-title {
+      margin-bottom: 0.6rem;
+      border-bottom: 1px dashed #d8b4fe;
+      padding-bottom: 0.45rem;
+    }
+        details.conj-box .conj-arrow {
+      font-size: 0.82rem;
+      color: #7c3aed;
+      font-weight: 600;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    details.conj-box[open] .conj-arrow {
+      transform: rotate(180deg);
+    }
+    .conj-word-preview {
+      background: #7c3aed;
+      color: #fff;
+      font-size: 0.75rem;
+      font-family: Consolas, monospace;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .conj-item {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed #e9d5ff;
+    }
+    .conj-item:first-of-type {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+    .conj-word {
+      font-family: Consolas, monospace;
+      font-weight: 800;
+      color: #7c3aed;
+      background: #ede9fe;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      height: fit-content;
+    }
+    .conj-type {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #5b21b6;
+      background: #f3e8ff;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 0.25rem;
+    }
+    .conj-concept {
+      background: #ffffff;
+      border: 1px solid #c084fc;
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #4c1d95;
+      line-height: 1.55;
+      box-shadow: 0 2px 6px rgba(124, 58, 237, 0.06);
+    }
+    .conj-concept strong {
+      color: #6b21a8;
+    }
+
+    /* MASTER TEACHER TRANSLATION WALKTHROUGH */
+    .master-trans-details {
+      margin-top: 0.7rem;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .master-trans-details[open] {
+      border-color: #4ade80;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.08);
+    }
+    .master-trans-summary {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.9rem;
+      cursor: pointer;
+      background: #f0fdf4;
+      user-select: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #166534;
+    }
+    .master-trans-summary:hover {
+      background: #dcfce7;
+    }
+    .master-trans-summary::-webkit-details-marker {
+      display: none;
+    }
+    .master-badge {
+      background: #16a34a;
+      color: #ffffff;
+      padding: 0.12rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .master-summary-text {
+      flex: 1;
+    }
+        .master-arrow {
+      font-size: 0.75rem;
+      color: #16a34a;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    .master-trans-details[open] .master-arrow {
+      transform: rotate(180deg);
+    }
+    .master-trans-body {
+      padding: 0.85rem 1rem;
+      background: #ffffff;
+      border-top: 1px dashed #bbf7d0;
+      font-size: 0.87rem;
+      line-height: 1.65;
+      color: #1e293b;
+    }
+    .master-step {
+      margin-bottom: 0.65rem;
+      padding-left: 0.5rem;
+      border-left: 3px solid #22c55e;
+    }
+    .master-step:last-child {
+      margin-bottom: 0;
+    }
+    .m-step-tag {
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      margin-right: 0.35rem;
+      display: inline-block;
+    }
+    .m-step-tag.s1 { background: #dbeafe; color: #1e40af; }
+    .m-step-tag.s2 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s3 { background: #ede9fe; color: #5b21b6; }
+    .m-step-tag.s4 { background: #ffedd5; color: #9a3412; }
+    .m-step-tag.s5 { background: #dcfce7; color: #166534; }
+    .m-step-tag.s6 { background: #fee2e2; color: #991b1b; }
+
+    /* Concept Banner Details */
+    .concept-banner-details {
+      background: #f5f3ff !important;
+      border: 1.5px solid #c4b5fd !important;
+      border-radius: 12px !important;
+      margin-bottom: 1.2rem !important;
+    }
+    .concept-banner-details[open] {
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.12) !important;
+    }
+    .concept-banner-summary {
+      background: #ede9fe !important;
+      color: #5b21b6 !important;
+      font-size: 0.95rem !important;
+      font-weight: 800 !important;
+      padding: 0.75rem 1.1rem !important;
+    }
+    .concept-banner-body {
+      background: #ffffff !important;
+      border-top: 1px dashed #c4b5fd !important;
+      padding: 1.2rem !important;
+      font-size: 0.9rem !important;
+      line-height: 1.65 !important;
+    }
+
+  
+    /* CROSS-VERSION SWITCHER */
+    .rewrite-bar {
+      background: #fff;
+      border: 2px solid #bae6fd;
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      align-items: center;
+    }
+    .rewrite-pill {
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 700;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: #0f172a;
+      transition: all 0.15s;
+    }
+    .rewrite-pill:hover {
+      background: #2563eb;
+      color: #fff;
+      border-color: #2563eb;
+    }
+    @media print { .rewrite-bar { display: none !important; } }
+
+    /* V4：正常／慢速雙按鈕（覆蓋舊版 36px 圓形按鈕） */
+    .audio-group { display: flex; gap: 0.35rem; flex-shrink: 0; align-self: flex-start; }
+    .audio-group .audio-btn { width: auto; height: auto; border-radius: 999px; padding: 0.35rem 0.65rem; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+    .audio-group .audio-btn.slow { background: #f1f5f9; color: #475569; }
+  
+    /* V4：正常／慢速雙按鈕（覆蓋舊版 36px 圓形按鈕） */
+    .audio-group { display: flex; gap: 0.35rem; flex-shrink: 0; align-self: flex-start; }
+    .audio-group .audio-btn { width: auto; height: auto; border-radius: 999px; padding: 0.35rem 0.65rem; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+    .audio-group .audio-btn.slow { background: #f1f5f9; color: #475569; }
+
+    /* ===== V4 句卡元件（名師拆解 Step 1~7／連接詞框） ===== */
+    .conj-box { margin-top: 0.75rem; background: #faf5ff; border: 1.5px solid #d8b4fe; border-radius: 10px; padding: 0.55rem 0.9rem; font-size: 0.88rem; }
+    details.conj-box[open] { padding-bottom: 0.85rem; }
+    details.conj-box summary.conj-title { font-weight: 800; color: #6d28d9; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; list-style: none; margin: 0; padding: 0.1rem 0; }
+    details.conj-box summary.conj-title::-webkit-details-marker { display: none; }
+    details.conj-box[open] summary.conj-title { margin-bottom: 0.6rem; border-bottom: 1px dashed #d8b4fe; padding-bottom: 0.45rem; }
+    details.conj-box .conj-arrow { font-size: 0.82rem; color: #7c3aed; display: inline-block; transition: transform 0.2s ease; }
+    details.conj-box[open] .conj-arrow { transform: rotate(180deg); }
+    .conj-word-preview { background: #7c3aed; color: #fff; font-size: 0.75rem; font-family: Consolas, monospace; padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700; }
+    .conj-concept { background: #fff; border: 1px solid #c084fc; border-radius: 8px; padding: 0.65rem 0.85rem; margin-top: 0.5rem; font-size: 0.85rem; color: #4c1d95; line-height: 1.55; box-shadow: 0 2px 6px rgba(124,58,237,0.06); }
+    .conj-concept strong { color: #6b21a8; }
+    .conj-meta-list { margin-bottom: 0.5rem; padding-bottom: 0.45rem; border-bottom: 1px dashed #d8b4fe; font-size: 0.85rem; color: #6b21a8; line-height: 1.6; }
+    .conj-title-main { font-weight: 800; color: #5b21b6; margin-bottom: 0.35rem; font-size: 0.9rem; }
+    .conj-desc { font-size: 0.86rem; color: #334155; line-height: 1.65; margin-bottom: 0.5rem; }
+    .conj-killer-tip { background: #faf5ff; border-left: 3px solid #9333ea; padding: 0.35rem 0.6rem; border-radius: 0 4px 4px 0; font-size: 0.84rem; color: #581c87; }
+    .master-trans-details { margin-top: 0.7rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; overflow: hidden; }
+    .master-trans-details[open] { border-color: #4ade80; box-shadow: 0 4px 12px rgba(34,197,94,0.08); }
+    .master-trans-summary { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem; cursor: pointer; background: #f0fdf4; user-select: none; font-size: 0.88rem; font-weight: 700; color: #166534; list-style: none; }
+    .master-trans-summary:hover { background: #dcfce7; }
+    .master-trans-summary::-webkit-details-marker { display: none; }
+    .master-badge { background: #16a34a; color: #fff; padding: 0.12rem 0.5rem; border-radius: 6px; font-size: 0.74rem; font-weight: 800; white-space: nowrap; }
+    .master-summary-text { flex: 1; }
+    .master-arrow { font-size: 0.75rem; color: #16a34a; display: inline-block; transition: transform 0.2s ease; }
+    .master-trans-details[open] > summary .master-arrow { transform: rotate(180deg); }
+    .master-trans-body { padding: 0.85rem 1rem; background: #fff; border-top: 1px dashed #bbf7d0; font-size: 0.87rem; line-height: 1.65; color: #1e293b; }
+    .master-step { margin-bottom: 0.65rem; padding-left: 0.5rem; border-left: 3px solid #22c55e; }
+    .master-step:last-child { margin-bottom: 0; }
+    .m-step-tag { font-weight: 800; font-size: 0.75rem; padding: 0.1rem 0.4rem; border-radius: 4px; margin-right: 0.35rem; display: inline-block; }
+    .m-step-tag.s1 { background: #dbeafe; color: #1e40af; }
+    .m-step-tag.s2 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s3 { background: #ede9fe; color: #5b21b6; }
+    .m-step-tag.s4 { background: #ffedd5; color: #9a3412; }
+    .m-step-tag.s5 { background: #dcfce7; color: #166534; }
+    @media print { .audio-group, .control-bar { display: none !important; } .sent-card { break-inside: avoid; } }
+
+    /* ===== Unit 1 新頁補充 ===== */
+    .gram-term { background: #ede9fe; color: #5b21b6; padding: 0 0.15rem; border-radius: 3px; font-weight: 700; }
+    .hl-v { background: #fef08a; padding: 0 0.15rem; border-radius: 3px; }
+    .hl-g { background: #ede9fe; padding: 0 0.15rem; border-radius: 3px; }
+    .img-placeholder { display: none; align-items: center; justify-content: center; aspect-ratio: 16 / 9; width: 100%; border: 2px dashed #cbd5e1; border-radius: 12px; background: #f8fafc; color: #64748b; font-weight: 800; font-size: 1.05rem; margin-bottom: 1rem; }
+    .para-audio { margin-top: 0.5rem; }
+    .para-audio button { font-size: 0.8rem; padding: 0.25rem 0.7rem; border-radius: 999px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer; font-weight: 700; color: #334155; }
+    .quiz-q { margin-bottom: 0.4rem; }
+    .quiz-btn:disabled { cursor: default; }
+    .score-bar { position: sticky; bottom: 0.8rem; display: flex; justify-content: center; gap: 0.8rem; align-items: center; margin-top: 1.5rem; padding: 0.7rem 1rem; background: #0f172a; color: #fff; border-radius: 999px; font-weight: 800; box-shadow: 0 6px 18px rgba(15,23,42,0.25); }
+    .score-bar button { background: #fff; color: #0f172a; border: none; border-radius: 999px; padding: 0.3rem 0.9rem; font-weight: 800; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badges">
+      <span class="pill gold">進階改寫版二｜第二人稱 you 代入文體</span>
+      <span class="pill">UNIT 4 情境假設特訓</span>
+    </div>
+    <h1>Do You Really Know Elves?</h1>
+    <h2>你真的認識精靈嗎？（第二人稱讀者代入視角）</h2>
+  </header>
+
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../../index.html">🏠 首頁目錄</a>
+    <a class="nav-btn" href="./03_互動圖文學習講義.html">📖 原版主講義</a>
+    <a class="nav-btn" href="./04_改寫版1_客觀科普報導篇.html">📰 1. 客觀報導</a>
+    <a class="nav-btn" href="./05_改寫版2_第二人稱代入篇.html" style="background:#0f172a;color:#fff;border-color:#0f172a;">💬 2. 第二人稱</a>
+    <a class="nav-btn" href="./06_改寫版3_高中生故事記敘篇.html">🧑‍🎓 3. 高中生故事</a>
+    <a class="nav-btn" href="./07_改寫版4_正反論證議論文篇.html">⚖️ 4. 正反議論文</a>
+    <a class="nav-btn primary" href="#sec-story">🎨 1. 四格圖解</a>
+    <a class="nav-btn" href="#sec-fulltext">📖 2. 完整課文</a>
+    <a class="nav-btn" href="#sec-reading">🧩 3. 積木拆句</a>
+    <a class="nav-btn" href="#sec-quiz">🎯 4. 15題實戰</a>
+    <a class="nav-btn" href="./08_歷屆學測真題特訓.html" target="_blank" style="border-color:#f59e0b;color:#b45309;font-weight:800;background:#fffbeb;">🏛️ 學測15題特訓 ↗</a>
+  </nav>
+
+  <div class="container">
+
+    <div id="sec-story" class="section-title">🎨 一、30 秒看懂改寫架構：第二人稱代入四格圖解</div>
+    <div class="card">
+      <img src="./03_AI_視覺圖解講義.jpg" alt="Do You Really Know Elves? 四格圖解" class="infographic-img" onerror="this.style.display='none'; document.getElementById('img-ph').style.display='flex';" />
+      <div id="img-ph" class="img-placeholder">🖼️ 四格分鏡圖解製作中</div>
+
+      <div class="storyboard">
+        <div class="story-panel p1">
+          <span class="panel-icon">🎬</span>
+          <span class="panel-step">開場 · 你腦中的精靈</span>
+          <h4>1. 電影裡的優雅弓箭手</h4>
+          <p>你想到精靈時，腦中浮現的高挑弓箭手，其實大多是托爾金的創作。</p>
+          <span class="eng-tag">largely the creation of J. R. R. Tolkien</span>
+        </div>
+        <div class="story-panel p2">
+          <span class="panel-icon">🛖</span>
+          <span class="panel-step">穿越一 · 北歐村莊</span>
+          <h4>2. 有的賜福、有的害你生病</h4>
+          <p>如果你住在千年前的北歐村莊，會聽到精靈有好有壞，還可能把黑暗精靈和矮人搞混。</p>
+          <span class="eng-tag">If you lived ..., you would hear ...</span>
+        </div>
+        <div class="story-panel p3">
+          <span class="panel-icon">🌾</span>
+          <span class="panel-step">穿越二 · 英格蘭與愛爾蘭</span>
+          <h4>3. 隱形箭與淹死旅人</h4>
+          <p>當中世紀農民的你側腹刺痛，鄰居會說是精靈射你；在愛爾蘭旅行可得有禮貌。</p>
+          <span class="eng-tag">an invisible elf had shot you</span>
+        </div>
+        <div class="story-panel p4">
+          <span class="panel-icon">🗺️</span>
+          <span class="panel-step">收尾 · 回到今天</span>
+          <h4>4. 英雄背後的長長隊伍</h4>
+          <p>今天去冰島會看到為精靈岩石轉彎的路；下次看奇幻電影，記得英雄背後站著一長串更古老的精靈。</p>
+          <span class="eng-tag">behind that hero stands a long line of older elves</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-fulltext" class="section-title">📖 二、完整課文沉浸閱讀（Do You Really Know Elves?）</div>
+    <div class="reader-card">
+      <div class="reader-header">
+        <div style="font-weight:800;color:var(--ink);font-size:1rem;">
+          💬 文體：第二人稱 you 代入｜重點：提問開場、假設情境（If you ...）、穿越時空、提醒收尾
+        </div>
+        <div class="reader-tools">
+          <button class="toggle-btn" id="btn-full-audio" onclick="toggleFullAudio()">🔊 播放全文朗讀</button>
+          <button class="toggle-btn active" id="btn-reader-zh" onclick="toggleReaderZh()">👁️ 顯示中文對照</button>
+          <button class="toggle-btn" onclick="changeFontSize(1)">A+ 放大</button>
+          <button class="toggle-btn" onclick="changeFontSize(-1)">A- 縮小</button>
+        </div>
+      </div>
+
+      <div class="reader-para">
+        <div class="reader-en">
+          When you picture an elf, you probably see a tall, elegant archer from a <strong class="hl-v">fantasy</strong> movie. But did you know that this image is largely the <strong class="hl-v">creation</strong> of J. R. R. Tolkien, whose vision filmmakers later <strong class="hl-v">adopted</strong>?
+        </div>
+        <div class="reader-zh">
+          當你想像精靈時，你腦中大概會浮現奇幻電影裡的一位高挑優雅的弓箭手。但你知道嗎？這個形象大體上是 J. R. R. 托爾金的創作，電影人後來採用了他的構想。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(0)">🔊 朗讀本段</button></div>
+      </div>
+      <div class="reader-para">
+        <div class="reader-en">
+          <strong class="hl-g">If you lived</strong> in a Norse village a thousand years ago, <strong class="hl-g">you would hear</strong> very different stories. <strong class="hl-g">Some</strong> elves might <strong class="hl-v">bless</strong> your family with good <strong class="hl-v">crops</strong>, while <strong class="hl-g">others</strong> could make you sick. You might even <strong class="hl-g">mix up</strong> dark elves <strong class="hl-g">with</strong> dwarves, since both lived underground.
+        </div>
+        <div class="reader-zh">
+          如果你住在千年前的北歐村莊，你會聽到截然不同的故事。有些精靈可能會讓你家豐收，有些則可能害你生病。你甚至可能會把黑暗精靈和矮人搞混，因為兩者都住在地底下。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(1)">🔊 朗讀本段</button></div>
+      </div>
+      <div class="reader-para">
+        <div class="reader-en">
+          Now imagine that you are a farmer in medieval England and you feel a sharp pain in your side. Your neighbors would probably say that an <strong class="hl-v">invisible</strong> elf had shot you for fun. If you traveled through Ireland, you had better be polite, because fairy folk with <strong class="hl-v">cruel</strong> <strong class="hl-v">behavior</strong> might <strong class="hl-v">drown</strong> rude travelers.
+        </div>
+        <div class="reader-zh">
+          現在想像一下，你是中世紀英格蘭的一位農民，而你的側腹突然一陣刺痛。你的鄰居大概會說，是一個隱形的精靈只是為了好玩才射了你。如果你在愛爾蘭旅行，你最好有禮貌一點，因為行為殘忍的精靈一族可能會把無禮的旅人淹死。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(2)">🔊 朗讀本段</button></div>
+      </div>
+      <div class="reader-para" style="margin-bottom:0;">
+        <div class="reader-en">
+          Today, if you visit Iceland, you may see roads that curve to <strong class="hl-g">avoid</strong> <strong class="hl-v">disturbing</strong> elf rocks. So next time you watch a <strong class="hl-v">fantasy</strong> film, remember that <strong class="hl-g">behind that hero stands</strong> a long line of older elves.
+        </div>
+        <div class="reader-zh">
+          如今，如果你去冰島，你可能會看到為了避免打擾精靈岩石而轉彎的道路。所以下次你看奇幻電影時，別忘了：在那位英雄背後，站著一長串更古老的精靈。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(3)">🔊 朗讀本段</button></div>
+      </div>
+    </div>
+
+    <div id="sec-reading" class="section-title">🧩 三、課文「積木拆句」＋ 逐句名師翻譯拆解</div>
+    <div class="card">
+      <div class="control-bar">
+        <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
+        <button class="toggle-btn active" id="btn-zh" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
+        <button class="toggle-btn" id="btn-cloze" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式（遮住黃底考點）</button>
+        <button id="toggle-conj-btn" class="toggle-btn" onclick="toggleAllConj()">🔗 一鍵展開所有連接詞解析</button>
+        <button id="btn-toggle-master-trans" class="toggle-btn" onclick="toggleAllMasterTrans()">👨‍🏫 一鍵展開名師翻譯拆解</button>
+        <span style="font-size:0.82rem;color:var(--muted);margin-left:auto;">💡 積木顏色：<strong style="color:#1e40af;">藍=主詞</strong>｜<strong style="color:#be123c;">紅=動詞</strong>｜<strong style="color:#047857;">綠=受詞/補語</strong>｜<strong style="color:#6d28d9;">紫=修飾/介片</strong>｜<strong style="color:#b45309;">黃=連接詞/子句</strong></span>
+      </div>
+
+      <details class="master-trans-details concept-banner-details" style="margin-bottom: 1.2rem;">
+        <summary class="master-trans-summary" style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border: 1.5px solid #a855f7;">
+          <span style="display: flex; align-items: center; gap: 0.5rem; flex: 1;">
+            <span style="font-size: 1.1rem;">🎓</span>
+            <span style="font-weight: 800; color: #6b21a8;">補教名師觀念大打通：</span>
+            <span style="color: #4c1d95; font-weight: 700;">為什麼有時候用「名詞子句」，有時候用「關代（形容詞子句）」？</span>
+          </span>
+          <span class="master-arrow">▼</span>
+        </summary>
+        <div class="concept-banner-body">
+          <p style="margin: 0 0 0.8rem 0; font-size: 0.95rem; font-weight: 700; color: #4c1d95;">
+            💡 判斷口訣：<strong>「左邊看有沒有先行詞名詞，右邊看子句缺不缺成分」</strong>
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+            <div style="background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 10px; padding: 0.9rem;">
+              <div style="font-weight: 800; color: #1e40af; margin-bottom: 0.4rem; font-size: 0.95rem;">📘 1. 名詞子句（Noun Clause）</div>
+              <ul style="margin: 0; padding-left: 1.2rem; color: #1e3a8a; font-size: 0.88rem; line-height: 1.6;">
+                <li><strong>左邊：</strong>動詞（say／find／believe），沒有先行詞名詞。</li>
+                <li><strong>右邊：</strong>that 後面是主詞動詞齊全的完整句。</li>
+                <li><strong>本篇：</strong><code>did you know that this image is ...</code>（know 後接完整句）／<code>imagine that you are a farmer ...</code>／<code>remember that behind that hero stands ...</code></li>
+              </ul>
+            </div>
+            <div style="background: #fdf2f8; border: 1.5px solid #f472b6; border-radius: 10px; padding: 0.9rem;">
+              <div style="font-weight: 800; color: #9d174d; margin-bottom: 0.4rem; font-size: 0.95rem;">📕 2. 關係代名詞（形容詞子句）</div>
+              <ul style="margin: 0; padding-left: 1.2rem; color: #831843; font-size: 0.88rem; line-height: 1.6;">
+                <li><strong>左邊：</strong>一定有被修飾的名詞（先行詞）。</li>
+                <li><strong>右邊：</strong>缺主詞／受詞，或用 whose 接名詞表所有。</li>
+                <li><strong>本篇：</strong><code>Tolkien, whose vision filmmakers later adopted</code>（whose＋名詞，當 adopted 的受詞）／<code>roads that curve to avoid ...</code>（缺主詞，主格關代）</li>
+              </ul>
+            </div>
+          </div>
+          <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px; padding: 0.7rem 0.9rem; font-size: 0.88rem; color: #166534;">
+            <strong>⚡ 三秒判定：</strong>動詞後面接「一件事」➔ 名詞子句 that＋完整句；名詞後面補充「哪一個、什麼樣的」➔ 關代＋不完整句。
+          </div>
+        </div>
+      </details>
+
+      <div class="para-badge">開場：你腦中的精靈</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S01</span>
+          <div class="sent-en">
+            When you picture an elf, you probably see a tall, elegant archer from a <span class="key-term">fantasy</span> movie.
+            <div class="sent-zh">當你想像精靈時，你腦中大概會浮現奇幻電影裡的一位高挑優雅的弓箭手。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('When you picture an elf, you probably see a tall, elegant archer from a fantasy movie.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('When you picture an elf, you probably see a tall, elegant archer from a fantasy movie.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>前半是 when 子句 <code>you (S) + picture (V) + an elf (O)</code>；主句 <code>you (S) + probably see (V) + a tall, elegant archer (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在簡單式 picture／see：描述讀者「每次想到就會」的普遍情況。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>When 引導時間副詞子句；<code>from a fantasy movie</code> 修飾 archer。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>時間子句在前順翻；from 片語搬到 archer 前：「奇幻電影裡的」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>picture</code> 作動詞＝想像、在腦中描繪；<code>probably</code> 放在一般動詞前。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「當你圖片一個精靈，你可能看到一個高的、優雅的弓箭手從一部幻想電影」，picture 譯成名詞、from 照順序放句尾。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>When you picture an elf,</code>（When 時間子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「當你想像精靈時」。picture 當動詞是「在腦中描繪」，譯「想像」或「想到」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>you probably see a tall, elegant archer</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你腦中大概會浮現……一位高挑優雅的弓箭手」。see 在這裡是腦中畫面，譯「浮現」比「看到」貼切；probably 譯「大概」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>from a fantasy movie.</code>（介系詞片語（來源））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】搬到 archer 前：「奇幻電影裡的」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（當你想像精靈時）➔ 語塊 2（你腦中大概會浮現）➔ 語塊 3 超車（奇幻電影裡的）➔「一位高挑優雅的弓箭手」</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：當你想像精靈時，你腦中大概會浮現【奇幻電影裡的】一位高挑優雅的弓箭手。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：picture 當動詞 ➔「想像」；from＋來源修飾名詞 ➔ 戴帽子。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句從 When 子句開始順著翻，交代情境後再說畫面。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「名詞＋from＋作品」時，先翻作品，再翻名詞：</strong>「奇幻電影裡的一位高挑優雅的弓箭手」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：see 在這裡是腦中畫面，譯「浮現」更生動。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：picture 當動詞譯「想像」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：當你想像精靈時，你腦中大概會浮現奇幻電影裡的一位高挑優雅的弓箭手。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">When（時間副詞子句）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複雜句，When 子句修飾主句。</div>
+              <div>• 大考命題點：picture 名詞轉動詞；when 子句用現在式表普遍情況。</div>
+            </div>
+            <div class="conj-title-main">When 先搭場景，主句再出畫面</div>
+            <div class="conj-desc">
+              👉 <code>When</code>：右邊 <code>you picture an elf</code> 是完整句，when 是時間副詞子句的連接詞，交代「什麼時候」。<br/>這是第二人稱文體最常見的開場：用 <code>When you ...</code> 把讀者拉進情境，再用主句說出他腦中的畫面。<br/>小提醒：<code>picture</code> 在這裡是動詞（you picture），不要因為它常當名詞就看錯詞性。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：When＋完整句 ➔ 時間子句；主詞後面接的字就是動詞，picture 也不例外。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 時間子句</span><span class="c-en">When you picture an elf,</span><span class="c-zh">當你想像精靈時</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">probably see</span><span class="c-zh">腦中大概會浮現</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">a tall, elegant archer</span><span class="c-zh">一位高挑優雅的弓箭手</span></div>
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語</span><span class="c-en">from a fantasy movie.</span><span class="c-zh">奇幻電影裡的</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div>名詞轉動詞：<code>picture</code>（想像）、<code>book</code>（預訂）、<code>water</code>（澆水）。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>第二人稱開場：<em>When you think of ..., you probably imagine ...</em></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S02</span>
+          <div class="sent-en">
+            But did you know that this image is largely the <span class="key-term">creation</span> of J. R. R. Tolkien, whose vision filmmakers later <span class="key-term">adopted</span>?
+            <div class="sent-zh">但你知道嗎？這個形象大體上是 J. R. R. 托爾金的創作，電影人後來採用了他的構想。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('But did you know that this image is largely the creation of J. R. R. Tolkien, whose vision filmmakers later adopted?', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('But did you know that this image is largely the creation of J. R. R. Tolkien, whose vision filmmakers later adopted?', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹 <code>did you know (V+S) + that ... (O)</code>；名詞子句 <code>this image (S) + is (V) + largely the creation (C)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去式問句 did you know：口語慣用「你知道嗎」；子句現在式 is：現在仍成立的事實；adopted 過去式。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>that 名詞子句當 know 的受詞；<code>whose vision filmmakers later adopted</code> 是所有格關代子句，whose vision 當 adopted 的受詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>問句結構中文用「你知道……嗎？」；whose 子句改成「他的構想後來被電影人採用」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>Did you know that ...?</code>：你知道……嗎（引起興趣）；whose＋名詞也可以當受詞。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「但你知道那這個形象大大地是托爾金的創造，他的願景電影人後來採用嗎？」，whose 子句語序全亂。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>But did you know that</code>（問句主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「但你知道嗎？」或把「嗎」放句尾。這裡內容長，先說「但你知道嗎？」再接內容最順。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>this image is largely the creation of J. R. R. Tolkien,</code>（名詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「這個形象大體上是 J. R. R. 托爾金的創作」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>whose vision filmmakers later adopted?</code>（所有格關代子句（whose＋N 當受詞））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】子句內語序是 OSV：whose vision（O）＋filmmakers（S）＋adopted（V）。中文改成主動「電影人後來採用了他的構想」，把主詞拉到前面。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（但你知道嗎）➔ 語塊 2（這個形象大體上是托爾金的創作）➔ 語塊 3 調序（電影人後來採用了他的構想）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：但你知道嗎？這個形象大體上是 J. R. R. 托爾金的創作，【電影人後來採用了他的構想】。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：Did you know that ...? ➔ 先說「你知道嗎？」再接內容；whose＋N 當受詞 ➔ 還原成主動句。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句是問句，先用「但你知道嗎？」抓住讀者，再說內容。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 Did you know that＋長子句時，先翻「你知道嗎？」，再把子句內容獨立說出：</strong>「但你知道嗎？這個形象大體上是托爾金的創作」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 whose＋N＋S＋V 時，還原成「S＋V＋他的 N」：</strong>「電影人後來採用了他的構想」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：vision 譯「構想」，不要翻成「視力」或「視野」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：但你知道嗎？這個形象大體上是 J. R. R. 托爾金的創作，電影人後來採用了他的構想。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">that（名詞子句）</span><span class="conj-word-preview">whose（所有格關代）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複雜句，問句的受詞是 that 名詞子句，句尾 whose 子句修飾 Tolkien。</div>
+              <div>• 大考命題點：whose＋名詞可當子句受詞；問句中的名詞子句仍用直述語序。</div>
+            </div>
+            <div class="conj-title-main">whose vision 被搬到子句最前面，主詞反而排第二</div>
+            <div class="conj-desc">
+              👉 <code>that</code>：左邊是 <code>know</code>，右邊是完整句 ➔ 名詞子句。注意問句只在主句倒裝（did you know），that 子句仍是直述句。<br/>👉 <code>whose</code>：左邊是 Tolkien＋逗號；右邊 <code>vision filmmakers later adopted</code>——whose vision 後面又出現一個主詞 filmmakers，代表 whose vision 是 adopted 的「受詞」，被搬到子句開頭。還原成正常語序就是 <code>filmmakers later adopted his vision</code>。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：whose＋N 後面若又出現主詞 ➔ whose＋N 是受詞，還原成「S＋V＋his N」。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 轉折</span><span class="c-en">But</span><span class="c-zh">但</span></div>
+          <div class="chunk v"><span class="c-role">[V] 助動詞＋動詞</span><span class="c-en">did you know</span><span class="c-zh">你知道嗎</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 名詞子句</span><span class="c-en">that this image is largely the creation of J. R. R. Tolkien,</span><span class="c-zh">這個形象大體上是托爾金的創作</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 所有格關代</span><span class="c-en">whose vision filmmakers later adopted?</span><span class="c-zh">電影人後來採用了他的構想</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>adopt one's vision／idea</code>：採用某人的構想；whose 子句也可寫成 <code>whose vision was later adopted by filmmakers</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><code>Did you know that ...?</code> 是第二人稱文章引起好奇的經典句。</div>
+        </div>
+      </div>
+      <div class="para-badge">穿越一：北歐村莊</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S03</span>
+          <div class="sent-en">
+            <span class="gram-term">If you lived</span> in a Norse village a thousand years ago, <span class="gram-term">you would hear</span> very different stories.
+            <div class="sent-zh">如果你住在千年前的北歐村莊，你會聽到截然不同的故事。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('If you lived in a Norse village a thousand years ago, you would hear very different stories.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('If you lived in a Norse village a thousand years ago, you would hear very different stories.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主句 <code>you (S) + would hear (V) + very different stories (O)</code>；If 子句 <code>you (S) + lived (V)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>與現在事實相反的假設（Language Notes 1(b)）：If＋過去式 lived，主句 would＋V。讀者現在不可能住在千年前的村莊。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>If 引導假設語氣的條件子句；in a Norse village、a thousand years ago 修飾 lived。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>條件在前順翻；地點、時間在 lived 後面，中文改成「住在千年前的北歐村莊」，時間要提到地點前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>假設語氣 be 動詞用 were；本句用一般動詞 lived，主句 would hear 表假設結果。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「如果你住在一個北歐村莊一千年前，你會聽到非常不同的故事」，時間副詞卡在句尾。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>If you lived in a Norse village a thousand years ago,</code>（If 假設子句（與現在事實相反））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「如果你住在千年前的北歐村莊」。a thousand years ago 【需調序超車】提到地點前當定語「千年前的」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>you would hear very different stories.</code>（主句（would＋V））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你會聽到截然不同的故事」。would 譯「會」；very different 譯「截然不同」更有力。順翻。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（如果你住在【千年前的】北歐村莊）➔ 語塊 2（你會聽到截然不同的故事）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：如果你住在【千年前的】北歐村莊，你會聽到截然不同的故事。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：If＋過去式, S＋would＋V ➔「如果……，就會……」；時間 ago 提到地點前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句是假設語氣，條件在前、結果在後，順著翻。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「地點＋時間 ago」同時出現在動詞後面時，先翻時間，再翻地點：</strong>「住在千年前的北歐村莊」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 If＋過去式、主句 would 時，譯成「如果……，你會……」：</strong>「你會聽到截然不同的故事」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：very different 譯「截然不同」，語氣比「很不同」強。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：如果你住在千年前的北歐村莊，你會聽到截然不同的故事。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">If（假設語氣條件子句）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複雜句，If 子句表與現在事實相反的假設。</div>
+              <div>• 大考命題點：If＋S＋過去式（were）, S＋would／could／might＋V。</div>
+            </div>
+            <div class="conj-title-main">這個 If 是「穿越時空」的假設</div>
+            <div class="conj-desc">
+              👉 <code>If</code>：右邊 <code>you lived in a Norse village a thousand years ago</code>——你現在不可能住在一千年前，這是與現在事實相反的想像。所以 If 子句用過去式 lived，主句用 <code>would hear</code>。<br/>和課文的 <code>If someone felt a sharp pain ..., people might say ...</code> 比較：那句是描述過去「真的流傳」的情況（直說法）；這句是「不可能」的想像（假設語氣）。時態長得一樣，判斷靠語意。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：If 子句內容不可能或違反現況 ➔ 假設語氣；描述過去真實習慣 ➔ 直說法。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 假設子句</span><span class="c-en">If you lived in a Norse village a thousand years ago,</span><span class="c-zh">如果你住在千年前的北歐村莊</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">would hear</span><span class="c-zh">會聽到</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">very different stories.</span><span class="c-zh">截然不同的故事</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div>Language Notes 1(b)：<em>If Amy were more careful, she could make fewer mistakes.</em></div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><code>If you lived in ..., you would ...</code> 是第二人稱文章「帶讀者穿越」的萬用句。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S04</span>
+          <div class="sent-en">
+            <span class="gram-term">Some</span> elves might <span class="key-term">bless</span> your family with good <span class="key-term">crops</span>, while <span class="gram-term">others</span> could make you sick.
+            <div class="sent-zh">有些精靈可能會讓你家豐收，有些則可能害你生病。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Some elves might bless your family with good crops, while others could make you sick.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Some elves might bless your family with good crops, while others could make you sick.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>前半 <code>Some elves (S) + might bless (V) + your family (O)</code>；後半 <code>others (S) + could make (V) + you (O) + sick (C)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>might／could：承接上一句的假設情境，表「可能會」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>Some ... while others ...</code> 列舉＋while 對比；<code>make + O + Adj.</code> 使役結構。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>順翻；bless A with B 譯「賜予 A 某物」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>bless A with B</code>；<code>make sb sick</code>：讓某人生病（make＋O＋形容詞）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「一些精靈可能祝福你的家庭用好的作物，當其他的可以使你生病」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Some elves might bless your family with good crops,</code>（some 子句（bless A with B））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「有些精靈可能會讓你家豐收」。bless your family with good crops 意譯「讓你家豐收」最口語，符合第二人稱語氣。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>while others could make you sick.</code>（while 對比子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「有些則可能害你生病」。make you sick 譯「害你生病」帶出負面語氣。順翻。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（有些精靈可能會讓你家豐收）➔ 語塊 2（有些則可能害你生病）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：有些精靈可能會讓你家豐收，有些則可能害你生病。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：some ..., while others ... ➔「有些……，有些則……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句是一好一壞的對比，順著翻。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 bless your family with good crops 時，可以直接譯成結果「讓你家豐收」：</strong>「有些精靈可能會讓你家豐收」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 Some ..., while others ... 時，後半翻「有些則」：</strong>「有些則可能害你生病」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：make you sick 用「害你」帶出負面語氣，比「使你」口語。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：有些精靈可能會讓你家豐收，有些則可能害你生病。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">Some ... others（列舉）</span><span class="conj-word-preview">while（對比）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複合句，while 連接兩個對比子句。</div>
+              <div>• 大考命題點：some ... others ...；make＋O＋Adj.。</div>
+            </div>
+            <div class="conj-title-main">一個賜福、一個害人，while 擺在中間</div>
+            <div class="conj-desc">
+              👉 <code>Some ... others</code>：精靈種類不限，用 others。<br/>👉 <code>while</code>：左邊是好事、右邊是壞事，while 是對比「而」。<br/>👉 <code>make you sick</code>：make 後面先接受詞 you，再接形容詞 sick，是使役結構，不是連接詞，但寫作很常用：<em>The news made me happy.</em>
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：while 前後好壞相反 ➔ 對比用法。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">Some elves</span><span class="c-zh">有些精靈</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">might bless</span><span class="c-zh">可能會賜予</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">your family</span><span class="c-zh">你家</span></div>
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語</span><span class="c-en">with good crops,</span><span class="c-zh">豐收</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對比</span><span class="c-en">while others</span><span class="c-zh">有些則</span></div>
+          <div class="chunk v"><span class="c-role">[V] 使役</span><span class="c-en">could make</span><span class="c-zh">可能害</span></div>
+          <div class="chunk o"><span class="c-role">[O+C] 受詞＋補語</span><span class="c-en">you sick.</span><span class="c-zh">你生病</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>make + O + Adj.</code>：make you sick／make me nervous。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>第二人稱寫正反：<em>Some friends might help you, while others could hurt you.</em></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S05</span>
+          <div class="sent-en">
+            You might even <span class="gram-term">mix up</span> dark elves <span class="gram-term">with</span> dwarves, since both lived underground.
+            <div class="sent-zh">你甚至可能會把黑暗精靈和矮人搞混，因為兩者都住在地底下。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('You might even mix up dark elves with dwarves, since both lived underground.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('You might even mix up dark elves with dwarves, since both lived underground.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹 <code>You (S) + might mix up (V) + dark elves (O)</code>；since 子句 <code>both (S) + lived (V)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>might：推測「你可能會」；since 子句過去式 lived：神話中的情況。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>mix up A with B</code>；since 是原因副詞子句「因為」，不是「自從」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>主句先說結果、since 再說原因，中文可照順序「……，因為……」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>since</code>：(1) 自從（配完成式）(2) 既然、因為（本句）；both 在此當代名詞「兩者」。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「你可能甚至混合黑暗精靈和矮人，自從兩者住在地下」，since 誤譯「自從」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>You might even mix up dark elves with dwarves,</code>（主句（mix up A with B））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你甚至可能會把黑暗精靈和矮人搞混」。mix up A with B 用「把 A 和 B 搞混」；even 譯「甚至」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>since both lived underground.</code>（since 原因子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「因為兩者都住在地底下」。since 在這裡表原因，不是「自從」；both 補「都」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（你甚至可能會把黑暗精靈和矮人搞混）➔ 語塊 2（因為兩者都住在地底下）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：你甚至可能會把黑暗精靈和矮人搞混，因為兩者都住在地底下。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：mix up A with B ➔「把 A 和 B 搞混」；since 無完成式 ➔「因為」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句先說結果再說原因，中文照順序翻。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 mix up A with B 時，用「把 A 和 B 搞混」：</strong>「你甚至可能會把黑暗精靈和矮人搞混」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 since 而主句不是完成式時，譯成「因為」：</strong>「因為兩者都住在地底下」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：both 後面補「都」，中文才完整。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：你甚至可能會把黑暗精靈和矮人搞混，因為兩者都住在地底下。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">since（原因副詞子句）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複雜句，since 引導原因副詞子句。</div>
+              <div>• 大考命題點：since 兩種意思判斷；mix up A with B。</div>
+            </div>
+            <div class="conj-title-main">since 不一定是「自從」，看主句時態</div>
+            <div class="conj-desc">
+              👉 <code>since</code>：眼睛往左看——主句是 <code>might mix up</code>，不是完成式；往右看——<code>both lived underground</code> 是一個理由。主句沒有完成式、子句在交代原因 ➔ since＝because／as，譯「因為、既然」。<br/>如果主句是 <code>have／has p.p.</code>、子句是過去時間點，since 才是「自從」。<br/>學測克漏字常用這招：since 的意思要看前後時態決定。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：主句完成式＋since 過去時間 ➔「自從」；其他情況多半是「因為、既然」。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">You</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">might even mix up</span><span class="c-zh">甚至可能會搞混</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">dark elves</span><span class="c-zh">黑暗精靈</span></div>
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語</span><span class="c-en">with dwarves,</span><span class="c-zh">和矮人</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 原因子句</span><span class="c-en">since both lived underground.</span><span class="c-zh">因為兩者都住在地底下</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>since</code>＝because 時多放句首或句中，語氣比 because 輕。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>第二人稱提醒常見錯誤：<em>You might mix up A with B, since ...</em></div>
+        </div>
+      </div>
+      <div class="para-badge">穿越二：英格蘭與愛爾蘭</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S06</span>
+          <div class="sent-en">
+            Now imagine that you are a farmer in medieval England and you feel a sharp pain in your side.
+            <div class="sent-zh">現在想像一下，你是中世紀英格蘭的一位農民，而你的側腹突然一陣刺痛。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Now imagine that you are a farmer in medieval England and you feel a sharp pain in your side.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Now imagine that you are a farmer in medieval England and you feel a sharp pain in your side.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹 <code>imagine (V，祈使句) + that ... (O)</code>；名詞子句內 and 連接 <code>you are a farmer</code> 與 <code>you feel a sharp pain</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>祈使句 imagine；子句現在式 are／feel：把讀者放進「此刻正在」的想像情境。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>that 名詞子句當 imagine 的受詞；and 連接兩個對等子句；in medieval England 修飾 farmer。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>祈使句「現在想像一下」放句首；in medieval England 搬到 farmer 前；in your side 搬到「刺痛」前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>Now imagine that ...</code>：第二人稱帶入情境的固定開頭；<code>a sharp pain in one's side</code>：側腹刺痛。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「現在想像那你是一個農夫在中世紀英格蘭而且你感覺一個尖的痛在你的側邊」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Now imagine that</code>（祈使句主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「現在想像一下」。祈使句補「一下」語氣更自然。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>you are a farmer in medieval England</code>（名詞子句①）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你是中世紀英格蘭的一位農民」。in medieval England 【需調序超車】搬到 farmer 前當定語。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>and you feel a sharp pain in your side.</code>（名詞子句②）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「而你的側腹突然一陣刺痛」。in your side 【需調序超車】提前成主詞「你的側腹」；sharp pain 譯「一陣刺痛」，補「突然」讓情境更有畫面。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（現在想像一下）➔ 語塊 2（你是【中世紀英格蘭的】一位農民）➔ 語塊 3（而【你的側腹】突然一陣刺痛）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：現在想像一下，你是【中世紀英格蘭的】一位農民，而【你的側腹】突然一陣刺痛。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：imagine that ... ➔「想像一下，……」；feel a pain in one's side ➔「某人的側腹一陣刺痛」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句是祈使句，把讀者帶進新情境。先翻「現在想像一下」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「名詞＋in＋地方」時，先翻地方，再翻名詞：</strong>「你是中世紀英格蘭的一位農民」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 feel a pain in one's side 時，把身體部位提前當主詞：</strong>「而你的側腹突然一陣刺痛」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：補「突然」讓情境更有畫面感，符合代入式文體。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：現在想像一下，你是中世紀英格蘭的一位農民，而你的側腹突然一陣刺痛。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">that（名詞子句）</span><span class="conj-word-preview">and（對等連接詞）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：祈使句，that 名詞子句當受詞，子句內 and 連接兩個子句。</div>
+              <div>• 大考命題點：imagine (that)＋子句；and 連接的兩個子句都在 that 底下。</div>
+            </div>
+            <div class="conj-title-main">imagine 後面的 that 掛了兩件事</div>
+            <div class="conj-desc">
+              👉 <code>that</code>：左邊是祈使動詞 <code>imagine</code>，右邊是完整句 ➔ 名詞子句。<br/>👉 <code>and</code>：and 後面是 <code>you feel ...</code>，又一個完整句。兩個子句都在 imagine 的想像範圍內：你是農民，而且你側腹痛。<br/>imagine 也可以接 V-ing：<code>Imagine being a farmer ...</code>，但接 that 子句能放進更多細節。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：imagine／suppose 後接完整句 ➔ that 名詞子句，and 後面的句子通常也在同一個想像裡。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">Now imagine</span><span class="c-zh">現在想像一下</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 名詞子句①</span><span class="c-en">that you are a farmer in medieval England</span><span class="c-zh">你是中世紀英格蘭的一位農民</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 名詞子句②</span><span class="c-en">and you feel a sharp pain in your side.</span><span class="c-zh">而你的側腹突然一陣刺痛</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>Imagine that S + V</code>＝<code>Imagine V-ing</code>：Imagine living without the Internet.</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>第二人稱轉場：<em>Now imagine that you are ...</em>，一句換場景。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S07</span>
+          <div class="sent-en">
+            Your neighbors would probably say that an <span class="key-term">invisible</span> elf had shot you for fun.
+            <div class="sent-zh">你的鄰居大概會說，是一個隱形的精靈只是為了好玩才射了你。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Your neighbors would probably say that an invisible elf had shot you for fun.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Your neighbors would probably say that an invisible elf had shot you for fun.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹 <code>Your neighbors (S) + would probably say (V) + that ... (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>would：承接想像情境的推測；子句過去完成式 had shot：「射你」發生在「說」之前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>that 名詞子句當 say 的受詞；for fun 表目的、原因。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>順翻；for fun 譯「只是為了好玩」，放在動詞前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>invisible</code>：隱形的；<code>for fun</code>：為了好玩（＝play tricks）；had p.p. 表更早發生。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「你的鄰居會可能說那一個看不見的精靈已經射你為了樂趣」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Your neighbors would probably say</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你的鄰居大概會說」。would probably 譯「大概會」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>that an invisible elf had shot you</code>（名詞子句（過去完成式））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「是一個隱形的精靈射了你」。補「是」強調原因，呼應「怪罪」；had shot 用「射了」即可。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>for fun.</code>（介系詞片語（目的））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】放到動詞前：「只是為了好玩才射了你」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（你的鄰居大概會說）➔ 語塊 2 主詞（是一個隱形的精靈）➔ 語塊 3 超車（只是為了好玩）➔ 語塊 2 動詞（才射了你）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：你的鄰居大概會說，是一個隱形的精靈【只是為了好玩】才射了你。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：for fun 表目的 ➔ 提到動詞前「為了好玩才……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句延續上一句的想像，主句是「你的鄰居大概會說」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 for fun、for money 這種表目的的介系詞片語時，提到動詞前，用「為了……才……」：</strong>「只是為了好玩才射了你」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：子句前補「是」，「是一個隱形的精靈……射了你」，強調是誰幹的。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：你的鄰居大概會說，是一個隱形的精靈只是為了好玩才射了你。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">that（名詞子句）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複雜句，that 名詞子句當 say 的受詞。</div>
+              <div>• 大考命題點：say that＋過去完成式（時間先後）。</div>
+            </div>
+            <div class="conj-title-main">that 掛著鄰居說的一整件事</div>
+            <div class="conj-desc">
+              👉 <code>that</code>：左邊是 <code>say</code>，右邊 <code>an invisible elf had shot you</code> 是完整句 ➔ 名詞子句。<br/>時態重點：鄰居「說」在後，精靈「射你」在前，所以子句用過去完成式 <code>had shot</code>，和課文 <code>they had been struck by an elf-shot</code> 同一個邏輯，只是這裡改成主動。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：say that 子句裡，比「說」更早的事 ➔ had p.p.。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">Your neighbors</span><span class="c-zh">你的鄰居</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">would probably say</span><span class="c-zh">大概會說</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 名詞子句</span><span class="c-en">that an invisible elf had shot you</span><span class="c-zh">是一個隱形的精靈射了你</span></div>
+          <div class="chunk m"><span class="c-role">[M] 目的</span><span class="c-en">for fun.</span><span class="c-zh">只是為了好玩</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div>原文被動 <code>they had been struck by an elf-shot</code> ➔ 本句主動 <code>an invisible elf had shot you</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><code>for fun</code>＝<code>for a joke</code>；<code>make fun of sb</code>：取笑某人。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S08</span>
+          <div class="sent-en">
+            If you traveled through Ireland, you had better be polite, because fairy folk with <span class="key-term">cruel</span> <span class="key-term">behavior</span> might <span class="key-term">drown</span> rude travelers.
+            <div class="sent-zh">如果你在愛爾蘭旅行，你最好有禮貌一點，因為行為殘忍的精靈一族可能會把無禮的旅人淹死。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('If you traveled through Ireland, you had better be polite, because fairy folk with cruel behavior might drown rude travelers.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('If you traveled through Ireland, you had better be polite, because fairy folk with cruel behavior might drown rude travelers.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主句 <code>you (S) + had better be (V) + polite (C)</code>；If 子句 <code>you (S) + traveled (V)</code>；because 子句 <code>fairy folk (S) + might drown (V) + rude travelers (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>If 子句過去式 traveled 表假設（讀者不是真的在古代愛爾蘭旅行）；主句 had better 表建議；because 子句 might 表可能。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>If 條件子句＋主句＋because 原因子句；<code>with cruel behavior</code> 修飾 fairy folk。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>條件、建議、原因依序順翻；with 片語搬到 fairy folk 前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>had better + V</code>：最好……（帶警告語氣）；<code>behavior</code> 不可數；<code>drown</code>：淹死。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「如果你旅行通過愛爾蘭，你有比較好有禮貌，因為精靈族帶著殘忍的行為可能淹死無禮的旅行者」，had better 被拆開亂翻。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>If you traveled through Ireland,</code>（If 條件子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「如果你在愛爾蘭旅行」。through 譯「在……各地」即可。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>you had better be polite,</code>（主句（had better））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你最好有禮貌一點」。had better 是固定用法「最好」，帶警告語氣；補「一點」更口語。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>because fairy folk with cruel behavior</code>（because 子句主詞＋with 片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】with 片語搬到 fairy folk 前：「行為殘忍的精靈一族」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>might drown rude travelers.</code>（because 子句動詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「可能會把無禮的旅人淹死」。用「把」字句讓動作更鮮明。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（如果你在愛爾蘭旅行）➔ 語塊 2（你最好有禮貌一點）➔ 語塊 3 超車（因為行為殘忍的精靈一族）➔ 語塊 4（可能會把無禮的旅人淹死）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：如果你在愛爾蘭旅行，你最好有禮貌一點，因為【行為殘忍的】精靈一族可能會把無禮的旅人淹死。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：had better ➔「最好」；with＋特徵 ➔ 名詞前「……的」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句有條件、建議、原因三段，中文照順序翻。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 had better＋V 時，譯「最好……」：</strong>「你最好有禮貌一點」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到名詞後接 with＋特徵時，先翻特徵，再翻名詞：</strong>「行為殘忍的精靈一族」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：might drown rude travelers 用「把」字句：「可能會把無禮的旅人淹死」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：如果你在愛爾蘭旅行，你最好有禮貌一點，因為行為殘忍的精靈一族可能會把無禮的旅人淹死。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">If（條件子句）</span><span class="conj-word-preview">because（原因子句）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複雜句，If 子句＋主句＋because 子句。</div>
+              <div>• 大考命題點：had better＋原形動詞；with＋N 修飾名詞。</div>
+            </div>
+            <div class="conj-title-main">If 先給情境，because 補上警告理由</div>
+            <div class="conj-desc">
+              👉 <code>If</code>：右邊 <code>you traveled through Ireland</code> 是想像情境（過去式），引出建議。<br/>👉 <code>because</code>：右邊 <code>fairy folk ... might drown rude travelers</code> 是完整句，交代「為什麼要有禮貌」。<br/>👉 <code>with cruel behavior</code>：不是連接詞，是貼在 fairy folk 後面的外掛背包。<br/>注意 <code>had better</code> 後面直接接原形動詞 be，✗ had better to be、✗ had better being。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：had better 後接原形；否定是 had better not＋V。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 條件子句</span><span class="c-en">If you traveled through Ireland,</span><span class="c-zh">如果你在愛爾蘭旅行</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">had better be</span><span class="c-zh">最好</span></div>
+          <div class="chunk o"><span class="c-role">[C] 補語</span><span class="c-en">polite,</span><span class="c-zh">有禮貌一點</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 原因子句</span><span class="c-en">because fairy folk</span><span class="c-zh">因為精靈一族</span></div>
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語</span><span class="c-en">with cruel behavior</span><span class="c-zh">行為殘忍的</span></div>
+          <div class="chunk v"><span class="c-role">[V] 子句動詞</span><span class="c-en">might drown</span><span class="c-zh">可能會淹死</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">rude travelers.</span><span class="c-zh">無禮的旅人</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>had better + V</code>（最好）＝<code>should</code>，但語氣更強、帶警告。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>第二人稱給建議：<em>If you ..., you had better ..., because ...</em></div>
+        </div>
+      </div>
+      <div class="para-badge">收尾：回到今天</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S09</span>
+          <div class="sent-en">
+            Today, if you visit Iceland, you may see roads that curve to <span class="gram-term">avoid</span> <span class="key-term">disturbing</span> elf rocks.
+            <div class="sent-zh">如今，如果你去冰島，你可能會看到為了避免打擾精靈岩石而轉彎的道路。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Today, if you visit Iceland, you may see roads that curve to avoid disturbing elf rocks.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Today, if you visit Iceland, you may see roads that curve to avoid disturbing elf rocks.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主句 <code>you (S) + may see (V) + roads (O)</code>；if 子句 <code>you (S) + visit (V) + Iceland (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在式 visit＋may see：真實可能發生的條件（直說法），讀者今天真的可以去冰島。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>if 條件子句；<code>that curve to avoid disturbing elf rocks</code> 是主格關代子句修飾 roads，內含不定詞表目的。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>Today、if 子句放句首順翻；that 子句搬到 roads 前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>curve</code>（動詞）：彎曲、轉彎；<code>avoid + V-ing</code>；<code>disturb</code>：打擾。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「今天，如果你拜訪冰島，你可能看到道路那彎曲去避免打擾精靈岩石」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Today, if you visit Iceland,</code>（時間＋if 條件子句（直說法））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「如今，如果你去冰島」。visit 譯「去」比「拜訪」口語。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>you may see roads</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你可能會看到……道路」。中心語 roads 放最後。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>that curve to avoid disturbing elf rocks.</code>（主格關代子句＋目的）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】搬到 roads 前：「為了避免打擾精靈岩石而轉彎的」。子句內的目的 to avoid 也要提到 curve 前。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（如今，如果你去冰島）➔ 語塊 2（你可能會看到）➔ 語塊 3 超車（為了避免打擾精靈岩石而轉彎的）➔「道路」</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：如今，如果你去冰島，你可能會看到【為了避免打擾精靈岩石而轉彎的】道路。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：that 子句戴帽子；子句內的 to V 目的再提到動詞前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句回到現在，從 Today 和 if 子句開始順著翻。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到名詞後接 that 子句、子句裡又有 to V 目的時，整塊搬到名詞前，目的再放在動作前：</strong>「為了避免打擾精靈岩石而轉彎的道路」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：Today 在這裡譯「如今」，表示和前面的古代對照。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：如今，如果你去冰島，你可能會看到為了避免打擾精靈岩石而轉彎的道路。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">if（條件子句）</span><span class="conj-word-preview">that（主格關代）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複雜句，if 條件子句＋主句，that 引導形容詞子句修飾 roads。</div>
+              <div>• 大考命題點：if 現在式表真實條件；主格關代＋複數動詞 curve。</div>
+            </div>
+            <div class="conj-title-main">if 是真的可以去的條件，that 是貼在 roads 上的說明</div>
+            <div class="conj-desc">
+              👉 <code>if</code>：右邊 <code>you visit Iceland</code> 用現在式，表示真實可能發生的情況，主句用 may see。對比第 3 句 <code>If you lived ...</code> 是不可能的假設。<br/>👉 <code>that</code>：左邊是名詞 <code>roads</code>；右邊 <code>curve to avoid ...</code> 缺主詞 ➔ 主格關代。動詞 curve 跟著 roads 用複數。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：if＋現在式 ➔ 真實條件；if＋過去式（無過去時間）➔ 假設。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 時間</span><span class="c-en">Today,</span><span class="c-zh">如今</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 條件子句</span><span class="c-en">if you visit Iceland,</span><span class="c-zh">如果你去冰島</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">may see</span><span class="c-zh">可能會看到</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">roads</span><span class="c-zh">道路</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 主格關代</span><span class="c-en">that curve to avoid disturbing elf rocks.</span><span class="c-zh">為了避免打擾精靈岩石而轉彎的</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div>原文 <code>roads ... have been redirected</code> ➔ 本句 <code>roads that curve</code>，主動描寫畫面。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>旅遊推薦句：<em>If you visit ..., you may see ...</em></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S10</span>
+          <div class="sent-en">
+            So next time you watch a <span class="key-term">fantasy</span> film, remember that <span class="gram-term">behind that hero stands</span> a long line of older elves.
+            <div class="sent-zh">所以下次你看奇幻電影時，別忘了：在那位英雄背後，站著一長串更古老的精靈。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('So next time you watch a fantasy film, remember that behind that hero stands a long line of older elves.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('So next time you watch a fantasy film, remember that behind that hero stands a long line of older elves.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹 <code>remember (V，祈使) + that ... (O)</code>；名詞子句內是倒裝句 <code>behind that hero (地方副詞) + stands (V) + a long line of older elves (S)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在式 watch／stands：提醒讀者未來每一次都適用的道理。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>next time you watch ...</code> 是時間副詞子句（next time 當連接詞）；that 名詞子句內含地方副詞置首倒裝。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>next time 子句放句首順翻；倒裝句中文「在……背後，站著……」順翻。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>next time S + V</code>：下次……時；<code>a long line of + 複數 N</code> 視為單數 ➔ stands。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「所以下次你看一部幻想電影，記得那在那個英雄後面站一條長的線的更老的精靈」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>So next time you watch a fantasy film,</code>（時間副詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「所以下次你看奇幻電影時」。next time 直接當連接詞用，中文補「時」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>remember that</code>（祈使句主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「別忘了」。remember 祈使句譯「記得」或「別忘了」，提醒語氣。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>behind that hero stands</code>（地方副詞置首＋動詞（倒裝））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「在那位英雄背後，站著」。中文存現句「在……，站著……」與英文倒裝順序一致，順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>a long line of older elves.</code>（主詞（倒裝在後））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「一長串更古老的精靈」。a long line 譯「一長串、一整排」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（所以下次你看奇幻電影時）➔ 語塊 2（別忘了）➔ 語塊 3（在那位英雄背後，站著）➔ 語塊 4（一長串更古老的精靈）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：所以下次你看奇幻電影時，別忘了：在那位英雄背後，站著一長串更古老的精靈。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：next time S V ➔「下次……時」；倒裝句 ➔「在……，站著……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句是全文收尾的提醒，從 next time 子句開始翻。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 next time＋子句時，譯「下次……時」：</strong>「所以下次你看奇幻電影時」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「地方片語＋stands＋主詞」的倒裝時，譯「在……，站著……」：</strong>「在那位英雄背後，站著一長串更古老的精靈」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：remember that 用「別忘了」加冒號，提醒語氣更強。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：所以下次你看奇幻電影時，別忘了：在那位英雄背後，站著一長串更古老的精靈。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">next time（時間子句）</span><span class="conj-word-preview">that（名詞子句）</span><span class="conj-word-preview">倒裝（地方副詞置首）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複雜句，next time 時間子句＋祈使句，that 名詞子句內含倒裝。</div>
+              <div>• 大考命題點：next time 當連接詞；地方副詞倒裝＋主詞單數。</div>
+            </div>
+            <div class="conj-title-main">名詞子句裡也能倒裝</div>
+            <div class="conj-desc">
+              👉 <code>next time</code>：右邊 <code>you watch a fantasy film</code> 是完整句，next time 在這裡等於 when，引導時間子句，前面不加 when。<br/>👉 <code>that</code>：左邊是 <code>remember</code>，右邊是完整句 ➔ 名詞子句。<br/>👉 倒裝：子句內 <code>behind that hero</code> 是地方副詞片語放最前，動詞 <code>stands</code> 先出，主詞 <code>a long line of older elves</code> 最後。a long line 是單數，所以動詞用 stands。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：倒裝句的動詞看後面的主詞：a line of＋複數 N ➔ 單數動詞。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 時間子句</span><span class="c-en">So next time you watch a fantasy film,</span><span class="c-zh">所以下次你看奇幻電影時</span></div>
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">remember</span><span class="c-zh">別忘了</span></div>
+          <div class="chunk m"><span class="c-role">[M] 地方副詞（倒裝置首）</span><span class="c-en">that behind that hero</span><span class="c-zh">在那位英雄背後</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞（倒裝）</span><span class="c-en">stands</span><span class="c-zh">站著</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞（倒裝）</span><span class="c-en">a long line of older elves.</span><span class="c-zh">一長串更古老的精靈</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div>Language Notes 倒裝：<em>At the corner of the street stood a tall boy ...</em></div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>第二人稱結尾：<em>So next time you ..., remember that ...</em></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-quiz" class="section-title">🎯 四、15 題大考實戰檢測（針對本篇第二人稱代入改寫版）</div>
+    <div class="card">
+
+      <div class="para-badge" style="background:var(--blue);margin-top:0;">Part A｜第一部分：克漏字綜合測驗 (Cloze Test, 第 1–5 題)</div>
+      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:1.2rem;font-size:1.02rem;line-height:1.85;">
+        Have you ever watched a <strong><u>(1)</u></strong> movie about elves? If you <strong><u>(2)</u></strong> in old Iceland, you would hear that elves lived in rocks. <strong><u>(3)</u></strong> elves were friendly, while others were not. You might even mix <strong><u>(4)</u></strong> them with dwarves. Today, if you visit Iceland, you may see roads that curve to avoid <strong><u>(5)</u></strong> elf rocks.
+      </div>
+      <div class="quiz-q">
+        <p><strong>1. 請選出最適合填入 <u>(1)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(A) creation</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 1)">(B) fantasy</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(C) behavior</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(D) crop</button>
+        <div id="q1-exp" class="quiz-exp">✅ <strong>正解 (B) fantasy</strong>！<code>a fantasy movie</code>：奇幻電影；fantasy 可置於名詞前修飾。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>2. 請選出最適合填入 <u>(2)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(A) have lived</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(B) live</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(C) will live</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 2)">(D) lived</button>
+        <div id="q2-exp" class="quiz-exp">✅ <strong>正解 (D) lived</strong>！與現在事實相反的假設：<code>If you lived ..., you would hear ...</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>3. 請選出最適合填入 <u>(3)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 3)">(A) Some</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(B) The other</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(C) Another</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(D) Every</button>
+        <div id="q3-exp" class="quiz-exp">✅ <strong>正解 (A) Some</strong>！後半是 <code>while others</code>，前面配 <code>Some</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>4. 請選出最適合填入 <u>(4)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(A) out</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(B) on</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 4)">(C) up</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(D) off</button>
+        <div id="q4-exp" class="quiz-exp">✅ <strong>正解 (C) up</strong>！<code>mix up A with B</code>：把 A 和 B 搞混；代名詞 them 放中間。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>5. 請選出最適合填入 <u>(5)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(A) disturbed</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(B) to disturb</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(C) disturb</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 5)">(D) disturbing</button>
+        <div id="q5-exp" class="quiz-exp">✅ <strong>正解 (D) disturbing</strong>！<code>avoid + V-ing</code>。</div>
+      </div>
+      <div class="para-badge" style="background:var(--purple);margin-top:2rem;">Part B｜第二部分：文意字彙與片語搭配 (第 6–9 題)</div>
+      <div class="quiz-q">
+        <p><strong>6. If you are rude to the old woman in the story, she might ________ you with bad luck.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 6)">(A) curse</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(B) bless</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(C) adopt</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(D) lure</button>
+        <div id="q6-exp" class="quiz-exp">✅ <strong>正解 (A) curse</strong>！壞運氣要用 <code>curse sb with</code>（詛咒）；bless 只接好東西。本題延伸 bless 的反義字。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>7. You had better wear a jacket. The wind ________ almost everyone on the beach today.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(A) adopted</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(B) blessed</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 7)">(C) disturbed</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(D) drowned</button>
+        <div id="q7-exp" class="quiz-exp">✅ <strong>正解 (C) disturbed</strong>！<code>disturb</code>：干擾、使不安；強風干擾了海灘上的人。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>8. If your dog's ________ suddenly changes, you should take it to the vet.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(A) version</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 8)">(B) behavior</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(C) creation</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(D) fantasy</button>
+        <div id="q8-exp" class="quiz-exp">✅ <strong>正解 (B) behavior</strong>！<code>behavior</code>：行為；寵物行為改變要看獸醫。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>9. Imagine that you are a farmer and your ________ fail because of the dry weather.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(A) fantasies</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(B) versions</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(C) creations</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 9)">(D) crops</button>
+        <div id="q9-exp" class="quiz-exp">✅ <strong>正解 (D) crops</strong>！<code>crops fail</code>：農作物歉收。</div>
+      </div>
+      <div class="para-badge" style="background:var(--orange);margin-top:2rem;">Part C｜第三部分：重要文法與中翻英除錯 (第 10–12 題)</div>
+      <div class="quiz-q">
+        <p><strong>10. 下列哪一句文法正確？</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 10)">(A) If you lived in Norway, you would see snow every winter.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(B) If you live in Norway, you would see snow every winter.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(C) If you lived in Norway, you will see snow every winter.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(D) If you would live in Norway, you saw snow every winter.</button>
+        <div id="q10-exp" class="quiz-exp">✅ <strong>正解 (A) If you lived in Norway, you would see snow every winter.</strong>！與現在事實相反：<code>If + 過去式, S + would + V</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>11. 下列哪一句文法正確？</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(A) You had better to be polite.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(B) You had better being polite.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 11)">(C) You had better be polite.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(D) You better had be polite.</button>
+        <div id="q11-exp" class="quiz-exp">✅ <strong>正解 (C) You had better be polite.</strong>！<code>had better + 原形動詞</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>12. 「下次你去冰島時，記得看看那些轉彎的道路。」最佳英譯是：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(A) Next time when will you visit Iceland, remember looking at the roads.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 12)">(B) Next time you visit Iceland, remember to look at the roads that curve.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(C) The next time you will visit Iceland, remember look at the roads curve.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(D) Next time you visited Iceland, remember to looking at the roads.</button>
+        <div id="q12-exp" class="quiz-exp">✅ <strong>正解 (B) Next time you visit Iceland, remember to look at the roads that curve.</strong>！next time 當連接詞，子句用現在式代替未來；remember to V：記得去做。</div>
+      </div>
+      <div class="para-badge" style="background:var(--green);margin-top:2rem;">Part D｜第四部分：大考閱讀測驗 (第 13–15 題)</div>
+      <div class="quiz-q">
+        <p><strong>13. According to the passage, why might you mix up dark elves with dwarves?</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(A) Because both came from Tolkien.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(B) Because both were tall archers.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(C) Because both blessed families.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 13)">(D) Because both lived underground.</button>
+        <div id="q13-exp" class="quiz-exp">✅ <strong>正解 (D) Because both lived underground.</strong>！<em>since both lived underground</em>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>14. In medieval England, what would your neighbors say if you felt a sharp pain?</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 14)">(A) An invisible elf had shot you.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(B) You had eaten bad food.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(C) A dwarf had hit you.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(D) You were too rude to travelers.</button>
+        <div id="q14-exp" class="quiz-exp">✅ <strong>正解 (A) An invisible elf had shot you.</strong>！<em>Your neighbors would probably say that an invisible elf had shot you for fun.</em></div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>15. What does the writer want you to remember when you watch a fantasy film?</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(A) Tolkien never wrote about elves.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(B) Elves are only found in Iceland.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 15)">(C) Modern elves come from many older stories.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(D) Fantasy films are not worth watching.</button>
+        <div id="q15-exp" class="quiz-exp">✅ <strong>正解 (C) Modern elves come from many older stories.</strong>！<em>behind that hero stands a long line of older elves.</em></div>
+      </div>
+
+      <div class="score-bar"><span id="score-text">得分：0 / 15</span><button onclick="resetQuiz()">🔄 重新作答</button></div>
+    </div>
+
+  </div>
+
+  <script>
+    const paras = [
+      "When you picture an elf, you probably see a tall, elegant archer from a fantasy movie. But did you know that this image is largely the creation of J. R. R. Tolkien, whose vision filmmakers later adopted?",
+      "If you lived in a Norse village a thousand years ago, you would hear very different stories. Some elves might bless your family with good crops, while others could make you sick. You might even mix up dark elves with dwarves, since both lived underground.",
+      "Now imagine that you are a farmer in medieval England and you feel a sharp pain in your side. Your neighbors would probably say that an invisible elf had shot you for fun. If you traveled through Ireland, you had better be polite, because fairy folk with cruel behavior might drown rude travelers.",
+      "Today, if you visit Iceland, you may see roads that curve to avoid disturbing elf rocks. So next time you watch a fantasy film, remember that behind that hero stands a long line of older elves."
+    ];
+    let isFullAudioPlaying = false;
+    let currentFontSize = 1.14;
+
+    function toggleReaderZh() {
+      document.body.classList.toggle('hide-reader-zh');
+      document.getElementById('btn-reader-zh').classList.toggle('active');
+    }
+
+    function changeFontSize(delta) {
+      currentFontSize = Math.max(0.9, Math.min(1.6, currentFontSize + delta * 0.1));
+      document.documentElement.style.setProperty('--reader-font-size', currentFontSize + 'rem');
+    }
+
+    function resetFullBtn() {
+      isFullAudioPlaying = false;
+      const btn = document.getElementById('btn-full-audio');
+      if (btn) { btn.innerHTML = '🔊 播放全文朗讀'; btn.classList.remove('active'); }
+    }
+
+    function toggleFullAudio() {
+      if (!('speechSynthesis' in window)) return;
+      if (isFullAudioPlaying) { window.speechSynthesis.cancel(); resetFullBtn(); return; }
+      window.speechSynthesis.cancel();
+      paras.forEach((t, i) => {
+        const u = new SpeechSynthesisUtterance(t);
+        u.lang = 'en-US';
+        u.rate = 0.9;
+        if (i === paras.length - 1) { u.onend = resetFullBtn; }
+        u.onerror = resetFullBtn;
+        window.speechSynthesis.speak(u);
+      });
+      isFullAudioPlaying = true;
+      const btn = document.getElementById('btn-full-audio');
+      btn.innerHTML = '⏹️ 停止朗讀';
+      btn.classList.add('active');
+    }
+
+    function speak(text, rate) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      resetFullBtn();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.rate = rate || 0.95;
+      window.speechSynthesis.speak(u);
+    }
+
+    function speakPara(i) { speak(paras[i], 0.9); }
+
+    const answered = {};
+    let score = 0;
+    function checkAns(btn, isCorrect, qNum) {
+      if (answered[qNum]) return;
+      answered[qNum] = true;
+      const box = btn.closest('.quiz-q');
+      box.querySelectorAll('.quiz-btn').forEach(b => {
+        b.disabled = true;
+        if ((b.getAttribute('onclick') || '').includes('true')) b.classList.add('correct');
+      });
+      if (isCorrect) { score++; } else { btn.classList.add('wrong'); }
+      document.getElementById('q' + qNum + '-exp').style.display = 'block';
+      document.getElementById('score-text').textContent = '得分：' + score + ' / 15';
+    }
+
+    function resetQuiz() {
+      for (const k in answered) delete answered[k];
+      score = 0;
+      document.querySelectorAll('.quiz-btn').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+      document.querySelectorAll('.quiz-exp').forEach(e => { e.style.display = 'none'; });
+      document.getElementById('score-text').textContent = '得分：0 / 15';
+    }
+
+    let allMasterTransOpen = false;
+    function toggleAllMasterTrans() {
+      allMasterTransOpen = !allMasterTransOpen;
+      document.querySelectorAll('.sent-card .master-trans-details').forEach(d => { d.open = allMasterTransOpen; });
+      const btn = document.getElementById('btn-toggle-master-trans');
+      if (btn) {
+        btn.textContent = allMasterTransOpen ? '👨‍🏫 一鍵收合名師翻譯拆解' : '👨‍🏫 一鍵展開名師翻譯拆解';
+        btn.classList.toggle('active', allMasterTransOpen);
+      }
+    }
+    let allConjOpen = false;
+    function toggleAllConj() {
+      allConjOpen = !allConjOpen;
+      document.querySelectorAll('.conj-box').forEach(d => { d.open = allConjOpen; });
+      const btn = document.getElementById('toggle-conj-btn');
+      if (btn) {
+        btn.textContent = allConjOpen ? '🔗 一鍵收合所有連接詞解析' : '🔗 一鍵展開所有連接詞解析';
+        btn.classList.toggle('active', allConjOpen);
+      }
+    }
+  </script>
+</body>
+</html>
