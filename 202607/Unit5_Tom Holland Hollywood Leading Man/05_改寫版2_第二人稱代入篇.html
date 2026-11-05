@@ -1,0 +1,2648 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>202607 Unit 5｜改寫版2 第二人稱代入篇</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --ink: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --blue: #2563eb;
+      --blue-bg: #eff6ff;
+      --blue-border: #bfdbfe;
+      --orange: #ea580c;
+      --orange-bg: #fff7ed;
+      --orange-border: #fed7aa;
+      --green: #059669;
+      --green-bg: #ecfdf5;
+      --green-border: #a7f3d0;
+      --purple: #7c3aed;
+      --purple-bg: #f5f3ff;
+      --purple-border: #ddd6fe;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --yellow-hl: #fef08a;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      padding-bottom: 4rem;
+    }
+
+    /* HERO HEADER */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 60%, #6366f1 100%);
+      color: #fff;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+    .pill {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.25rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .pill.gold {
+      background: #fbbf24;
+      color: #1e293b;
+    }
+    .hero h1 {
+      margin: 0.2rem 0;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+    .hero h2 {
+      margin: 0.3rem 0 0;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 500;
+      color: #e0e7ff;
+    }
+
+    /* STICKY NAV */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 12px rgba(15,23,42,0.05);
+    }
+    .nav-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .nav-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      transform: translateY(-1px);
+    }
+    .nav-btn.primary {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.4rem;
+      font-weight: 900;
+      margin: 2.2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid var(--blue);
+      color: #0f172a;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+    }
+
+    /* 4-PANEL COMIC STORYBOARD */
+    .infographic-img {
+      width: 100%;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .storyboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .story-panel {
+      border-radius: 14px;
+      padding: 1.1rem;
+      position: relative;
+      border: 2px solid transparent;
+    }
+    .story-panel.p1 { background: var(--blue-bg); border-color: var(--blue-border); }
+    .story-panel.p2 { background: var(--orange-bg); border-color: var(--orange-border); }
+    .story-panel.p3 { background: var(--red-bg); border-color: #fecaca; }
+    .story-panel.p4 { background: var(--green-bg); border-color: var(--green-border); }
+    .panel-step {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.15rem 0.55rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+      background: rgba(255,255,255,0.8);
+    }
+    .panel-icon {
+      font-size: 2rem;
+      float: right;
+      line-height: 1;
+    }
+    .story-panel h4 {
+      margin: 0.2rem 0 0.4rem;
+      font-size: 1.08rem;
+      font-weight: 800;
+    }
+    .story-panel p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #334155;
+    }
+    .eng-tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: #fff;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      font-family: "Segoe UI", monospace;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--blue);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    /* SENTENCE CHUNKING & COLOR BLOCKS */
+    .control-bar {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: center;
+      background: #f8fafc;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      margin-bottom: 1.2rem;
+      border: 1px solid var(--border);
+    }
+    .toggle-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .toggle-btn.active {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .para-badge {
+      display: inline-block;
+      background: #1e293b;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.25rem 0.8rem;
+      border-radius: 8px;
+      margin: 1rem 0 0.8rem;
+    }
+
+    .sent-card {
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 1.2rem;
+      background: #fff;
+      transition: all 0.2s;
+    }
+    .sent-card:hover {
+      border-color: #93c5fd;
+    }
+    .sent-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+    .sent-num {
+      background: var(--blue-bg);
+      color: var(--blue);
+      font-weight: 900;
+      font-size: 0.85rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 8px;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+    .sent-en {
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: #0f172a;
+      flex: 1;
+      line-height: 1.6;
+    }
+    .sent-zh {
+      margin-top: 0.45rem;
+      font-size: 1rem;
+      color: #475569;
+      padding-left: 0.5rem;
+      border-left: 3px solid #cbd5e1;
+    }
+    body.hide-zh .sent-zh { display: none; }
+
+    /* Cloze Mask Mode */
+    .key-term {
+      background: var(--yellow-hl);
+      padding: 0 5px;
+      border-radius: 5px;
+      font-weight: 800;
+      color: #9a3412;
+      transition: all 0.2s;
+    }
+    body.cloze-mode .key-term {
+      background: #cbd5e1;
+      color: transparent;
+      cursor: pointer;
+      user-select: none;
+    }
+    body.cloze-mode .key-term:hover {
+      background: var(--yellow-hl);
+      color: #9a3412;
+    }
+
+    .audio-btn {
+      border: none;
+      background: var(--blue-bg);
+      color: var(--blue);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 1.05rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .audio-btn:hover {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    /* VISUAL SENTENCE BLOCKS (積木拆句) */
+    .chunk-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.9rem 0;
+      align-items: stretch;
+    }
+    .chunk {
+      border-radius: 10px;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid transparent;
+    }
+    .chunk .c-role {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 0.15rem;
+      opacity: 0.85;
+    }
+    .chunk .c-en {
+      font-weight: 800;
+      font-family: "Segoe UI", sans-serif;
+    }
+    .chunk .c-zh {
+      font-size: 0.8rem;
+      margin-top: 0.1rem;
+    }
+    .chunk.s { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .chunk.v { background: #fff1f2; border-color: #fecdd3; color: #be123c; }
+    .chunk.o { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .chunk.m { background: #f5f3ff; border-color: #ddd6fe; color: #6d28d9; }
+    .chunk.c { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+
+    /* GRAMMAR & TRANSLATION TIPS GRID */
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 0.85rem;
+      margin-top: 0.8rem;
+    }
+    .insight-box {
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.92rem;
+    }
+    .insight-box.grammar {
+      background: #f8fafc;
+      border-left: 4px solid var(--blue);
+    }
+    .insight-box.trans {
+      background: #fffbeb;
+      border-left: 4px solid var(--orange);
+    }
+    .insight-title {
+      font-weight: 800;
+      font-size: 0.88rem;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* VISUAL GRAMMAR DIAGRAMS */
+    .diagram-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.2rem;
+    }
+    .diagram-card {
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.3rem;
+      background: #fff;
+    }
+    .formula-box {
+      background: #1e293b;
+      color: #fff;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      font-family: "Segoe UI", monospace;
+      font-size: 0.95rem;
+      margin: 0.75rem 0;
+      text-align: center;
+      font-weight: 700;
+    }
+    .formula-box span.hi {
+      color: #fbbf24;
+    }
+    .vs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin-top: 0.6rem;
+    }
+    .vs-table th, .vs-table td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+    }
+    .vs-table th {
+      background: #f1f5f9;
+      font-weight: 800;
+    }
+
+    /* VOCABULARY VISUAL CARDS */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.2rem;
+    }
+    .v-card {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .v-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+    }
+    .v-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+    .v-word {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--blue);
+    }
+    .v-kk {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-family: "Lucida Sans Unicode", sans-serif;
+    }
+    .v-meaning {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+    }
+    .v-pos {
+      background: var(--purple-bg);
+      color: var(--purple);
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      margin-right: 0.4rem;
+    }
+    .v-hook {
+      background: var(--orange-bg);
+      border: 1px dashed var(--orange);
+      border-radius: 10px;
+      padding: 0.65rem 0.8rem;
+      font-size: 0.88rem;
+      margin: 0.6rem 0;
+    }
+    .v-colloc {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 0.65rem 0.8rem;
+      font-size: 0.86rem;
+    }
+
+    /* QUIZ */
+    .quiz-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.8rem 1rem;
+      margin: 0.45rem 0;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .quiz-btn:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
+    .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
+    .quiz-exp {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      background: var(--green-bg);
+      color: #065f46;
+      font-size: 0.9rem;
+    }
+    /* FULL TEXT IMMERSIVE READER */
+    .reader-card {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 1.8rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+    }
+    .reader-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 1.4rem;
+    }
+    .reader-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: #f1f5f9;
+      padding: 0.35rem;
+      border-radius: 12px;
+    }
+    .reader-tab {
+      border: none;
+      background: transparent;
+      padding: 0.5rem 1rem;
+      border-radius: 9px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .reader-tab.active {
+      background: #fff;
+      color: var(--blue);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .reader-tools {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .reader-panel { display: none; }
+    .reader-panel.active { display: block; }
+    .reader-para {
+      margin-bottom: 1.4rem;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      background: #fafcff;
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s;
+    }
+    .reader-para:hover {
+      background: #f0f7ff;
+      border-color: #bfdbfe;
+    }
+    .reader-en {
+      font-size: var(--reader-font-size, 1.14rem);
+      line-height: 1.85;
+      color: #0f172a;
+      font-weight: 500;
+    }
+    .reader-zh {
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px dashed #cbd5e1;
+      color: #475569;
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+    body.hide-reader-zh .reader-zh { display: none; }
+  
+    /* CONJUNCTION / CLAUSE BOX (COLLAPSIBLE) */
+    details.conj-box {
+      margin-top: 0.75rem;
+      background: #faf5ff;
+      border: 1.5px solid #d8b4fe;
+      border-radius: 10px;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.88rem;
+    }
+    details.conj-box[open] {
+      padding-bottom: 0.85rem;
+    }
+    details.conj-box summary.conj-title {
+      font-weight: 800;
+      color: #6d28d9;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      list-style: none;
+      margin: 0;
+      padding: 0.1rem 0;
+    }
+    details.conj-box summary.conj-title::-webkit-details-marker {
+      display: none;
+    }
+    details.conj-box[open] summary.conj-title {
+      margin-bottom: 0.6rem;
+      border-bottom: 1px dashed #d8b4fe;
+      padding-bottom: 0.45rem;
+    }
+        details.conj-box .conj-arrow {
+      font-size: 0.82rem;
+      color: #7c3aed;
+      font-weight: 600;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    details.conj-box[open] .conj-arrow {
+      transform: rotate(180deg);
+    }
+    .conj-word-preview {
+      background: #7c3aed;
+      color: #fff;
+      font-size: 0.75rem;
+      font-family: Consolas, monospace;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .conj-item {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed #e9d5ff;
+    }
+    .conj-item:first-of-type {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+    .conj-word {
+      font-family: Consolas, monospace;
+      font-weight: 800;
+      color: #7c3aed;
+      background: #ede9fe;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      height: fit-content;
+    }
+    .conj-type {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #5b21b6;
+      background: #f3e8ff;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 0.25rem;
+    }
+    .conj-concept {
+      background: #ffffff;
+      border: 1px solid #c084fc;
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #4c1d95;
+      line-height: 1.55;
+      box-shadow: 0 2px 6px rgba(124, 58, 237, 0.06);
+    }
+    .conj-concept strong {
+      color: #6b21a8;
+    }
+
+    /* MASTER TEACHER TRANSLATION WALKTHROUGH */
+    .master-trans-details {
+      margin-top: 0.7rem;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .master-trans-details[open] {
+      border-color: #4ade80;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.08);
+    }
+    .master-trans-summary {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.9rem;
+      cursor: pointer;
+      background: #f0fdf4;
+      user-select: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #166534;
+    }
+    .master-trans-summary:hover {
+      background: #dcfce7;
+    }
+    .master-trans-summary::-webkit-details-marker {
+      display: none;
+    }
+    .master-badge {
+      background: #16a34a;
+      color: #ffffff;
+      padding: 0.12rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .master-summary-text {
+      flex: 1;
+    }
+        .master-arrow {
+      font-size: 0.75rem;
+      color: #16a34a;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    .master-trans-details[open] .master-arrow {
+      transform: rotate(180deg);
+    }
+    .master-trans-body {
+      padding: 0.85rem 1rem;
+      background: #ffffff;
+      border-top: 1px dashed #bbf7d0;
+      font-size: 0.87rem;
+      line-height: 1.65;
+      color: #1e293b;
+    }
+    .master-step {
+      margin-bottom: 0.65rem;
+      padding-left: 0.5rem;
+      border-left: 3px solid #22c55e;
+    }
+    .master-step:last-child {
+      margin-bottom: 0;
+    }
+    .m-step-tag {
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      margin-right: 0.35rem;
+      display: inline-block;
+    }
+    .m-step-tag.s1 { background: #dbeafe; color: #1e40af; }
+    .m-step-tag.s2 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s3 { background: #ede9fe; color: #5b21b6; }
+    .m-step-tag.s4 { background: #ffedd5; color: #9a3412; }
+    .m-step-tag.s5 { background: #dcfce7; color: #166534; }
+    .m-step-tag.s6 { background: #fee2e2; color: #991b1b; }
+
+    /* Concept Banner Details */
+    .concept-banner-details {
+      background: #f5f3ff !important;
+      border: 1.5px solid #c4b5fd !important;
+      border-radius: 12px !important;
+      margin-bottom: 1.2rem !important;
+    }
+    .concept-banner-details[open] {
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.12) !important;
+    }
+    .concept-banner-summary {
+      background: #ede9fe !important;
+      color: #5b21b6 !important;
+      font-size: 0.95rem !important;
+      font-weight: 800 !important;
+      padding: 0.75rem 1.1rem !important;
+    }
+    .concept-banner-body {
+      background: #ffffff !important;
+      border-top: 1px dashed #c4b5fd !important;
+      padding: 1.2rem !important;
+      font-size: 0.9rem !important;
+      line-height: 1.65 !important;
+    }
+
+  
+    /* CROSS-VERSION SWITCHER */
+    .rewrite-bar {
+      background: #fff;
+      border: 2px solid #bae6fd;
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      align-items: center;
+    }
+    .rewrite-pill {
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 700;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: #0f172a;
+      transition: all 0.15s;
+    }
+    .rewrite-pill:hover {
+      background: #2563eb;
+      color: #fff;
+      border-color: #2563eb;
+    }
+    @media print { .rewrite-bar { display: none !important; } }
+
+    /* V4：正常／慢速雙按鈕（覆蓋舊版 36px 圓形按鈕） */
+    .audio-group { display: flex; gap: 0.35rem; flex-shrink: 0; align-self: flex-start; }
+    .audio-group .audio-btn { width: auto; height: auto; border-radius: 999px; padding: 0.35rem 0.65rem; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+    .audio-group .audio-btn.slow { background: #f1f5f9; color: #475569; }
+  
+    /* V4：正常／慢速雙按鈕（覆蓋舊版 36px 圓形按鈕） */
+    .audio-group { display: flex; gap: 0.35rem; flex-shrink: 0; align-self: flex-start; }
+    .audio-group .audio-btn { width: auto; height: auto; border-radius: 999px; padding: 0.35rem 0.65rem; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+    .audio-group .audio-btn.slow { background: #f1f5f9; color: #475569; }
+
+    /* ===== V4 句卡元件（名師拆解 Step 1~7／連接詞框） ===== */
+    .conj-box { margin-top: 0.75rem; background: #faf5ff; border: 1.5px solid #d8b4fe; border-radius: 10px; padding: 0.55rem 0.9rem; font-size: 0.88rem; }
+    details.conj-box[open] { padding-bottom: 0.85rem; }
+    details.conj-box summary.conj-title { font-weight: 800; color: #6d28d9; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; list-style: none; margin: 0; padding: 0.1rem 0; }
+    details.conj-box summary.conj-title::-webkit-details-marker { display: none; }
+    details.conj-box[open] summary.conj-title { margin-bottom: 0.6rem; border-bottom: 1px dashed #d8b4fe; padding-bottom: 0.45rem; }
+    details.conj-box .conj-arrow { font-size: 0.82rem; color: #7c3aed; display: inline-block; transition: transform 0.2s ease; }
+    details.conj-box[open] .conj-arrow { transform: rotate(180deg); }
+    .conj-word-preview { background: #7c3aed; color: #fff; font-size: 0.75rem; font-family: Consolas, monospace; padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700; }
+    .conj-concept { background: #fff; border: 1px solid #c084fc; border-radius: 8px; padding: 0.65rem 0.85rem; margin-top: 0.5rem; font-size: 0.85rem; color: #4c1d95; line-height: 1.55; box-shadow: 0 2px 6px rgba(124,58,237,0.06); }
+    .conj-concept strong { color: #6b21a8; }
+    .conj-meta-list { margin-bottom: 0.5rem; padding-bottom: 0.45rem; border-bottom: 1px dashed #d8b4fe; font-size: 0.85rem; color: #6b21a8; line-height: 1.6; }
+    .conj-title-main { font-weight: 800; color: #5b21b6; margin-bottom: 0.35rem; font-size: 0.9rem; }
+    .conj-desc { font-size: 0.86rem; color: #334155; line-height: 1.65; margin-bottom: 0.5rem; }
+    .conj-killer-tip { background: #faf5ff; border-left: 3px solid #9333ea; padding: 0.35rem 0.6rem; border-radius: 0 4px 4px 0; font-size: 0.84rem; color: #581c87; }
+    .master-trans-details { margin-top: 0.7rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; overflow: hidden; }
+    .master-trans-details[open] { border-color: #4ade80; box-shadow: 0 4px 12px rgba(34,197,94,0.08); }
+    .master-trans-summary { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem; cursor: pointer; background: #f0fdf4; user-select: none; font-size: 0.88rem; font-weight: 700; color: #166534; list-style: none; }
+    .master-trans-summary:hover { background: #dcfce7; }
+    .master-trans-summary::-webkit-details-marker { display: none; }
+    .master-badge { background: #16a34a; color: #fff; padding: 0.12rem 0.5rem; border-radius: 6px; font-size: 0.74rem; font-weight: 800; white-space: nowrap; }
+    .master-summary-text { flex: 1; }
+    .master-arrow { font-size: 0.75rem; color: #16a34a; display: inline-block; transition: transform 0.2s ease; }
+    .master-trans-details[open] > summary .master-arrow { transform: rotate(180deg); }
+    .master-trans-body { padding: 0.85rem 1rem; background: #fff; border-top: 1px dashed #bbf7d0; font-size: 0.87rem; line-height: 1.65; color: #1e293b; }
+    .master-step { margin-bottom: 0.65rem; padding-left: 0.5rem; border-left: 3px solid #22c55e; }
+    .master-step:last-child { margin-bottom: 0; }
+    .m-step-tag { font-weight: 800; font-size: 0.75rem; padding: 0.1rem 0.4rem; border-radius: 4px; margin-right: 0.35rem; display: inline-block; }
+    .m-step-tag.s1 { background: #dbeafe; color: #1e40af; }
+    .m-step-tag.s2 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s3 { background: #ede9fe; color: #5b21b6; }
+    .m-step-tag.s4 { background: #ffedd5; color: #9a3412; }
+    .m-step-tag.s5 { background: #dcfce7; color: #166534; }
+    @media print { .audio-group, .control-bar { display: none !important; } .sent-card { break-inside: avoid; } }
+
+    /* ===== Unit 1 新頁補充 ===== */
+    .gram-term { background: #ede9fe; color: #5b21b6; padding: 0 0.15rem; border-radius: 3px; font-weight: 700; }
+    .hl-v { background: #fef08a; padding: 0 0.15rem; border-radius: 3px; }
+    .hl-g { background: #ede9fe; padding: 0 0.15rem; border-radius: 3px; }
+    .img-placeholder { display: none; align-items: center; justify-content: center; aspect-ratio: 16 / 9; width: 100%; border: 2px dashed #cbd5e1; border-radius: 12px; background: #f8fafc; color: #64748b; font-weight: 800; font-size: 1.05rem; margin-bottom: 1rem; }
+    .para-audio { margin-top: 0.5rem; }
+    .para-audio button { font-size: 0.8rem; padding: 0.25rem 0.7rem; border-radius: 999px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer; font-weight: 700; color: #334155; }
+    .quiz-q { margin-bottom: 0.4rem; }
+    .quiz-btn:disabled { cursor: default; }
+    .score-bar { position: sticky; bottom: 0.8rem; display: flex; justify-content: center; gap: 0.8rem; align-items: center; margin-top: 1.5rem; padding: 0.7rem 1rem; background: #0f172a; color: #fff; border-radius: 999px; font-weight: 800; box-shadow: 0 6px 18px rgba(15,23,42,0.25); }
+    .score-bar button { background: #fff; color: #0f172a; border: none; border-radius: 999px; padding: 0.3rem 0.9rem; font-weight: 800; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badges">
+      <span class="pill gold">進階改寫版二｜You 對話視角</span>
+      <span class="pill">UNIT 5 讀者代入特訓</span>
+    </div>
+    <h1>What Can You Learn from Tom Holland?</h1>
+    <h2>你能從湯姆・霍蘭德身上學到什麼？（第二人稱代入視角）</h2>
+  </header>
+
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../../index.html">🏠 首頁目錄</a>
+    <a class="nav-btn" href="./03_互動圖文學習講義.html">📖 原版主講義</a>
+    <a class="nav-btn" href="./04_改寫版1_客觀科普報導篇.html">📰 1. 客觀報導</a>
+    <a class="nav-btn" href="./05_改寫版2_第二人稱代入篇.html" style="background:#0f172a;color:#fff;border-color:#0f172a;">💬 2. 第二人稱</a>
+    <a class="nav-btn" href="./06_改寫版3_高中生故事記敘篇.html">🧑‍🎓 3. 高中生故事</a>
+    <a class="nav-btn" href="./07_改寫版4_正反論證議論文篇.html">⚖️ 4. 正反議論文</a>
+    <a class="nav-btn primary" href="#sec-story">🎨 1. 四格圖解</a>
+    <a class="nav-btn" href="#sec-fulltext">📖 2. 完整課文</a>
+    <a class="nav-btn" href="#sec-reading">🧩 3. 積木拆句</a>
+    <a class="nav-btn" href="#sec-quiz">🎯 4. 15題實戰</a>
+    <a class="nav-btn" href="./08_歷屆學測真題特訓.html" target="_blank" style="border-color:#f59e0b;color:#b45309;font-weight:800;background:#fffbeb;">🏛️ 學測15題特訓 ↗</a>
+  </nav>
+
+  <div class="container">
+
+    <div id="sec-story" class="section-title">🎨 一、30 秒看懂改寫架構：第二人稱代入四格圖解</div>
+    <div class="card">
+      <img src="./03_AI_視覺圖解講義.jpg" alt="What Can You Learn from Tom Holland? 四格圖解" class="infographic-img" onerror="this.style.display='none'; document.getElementById('img-ph').style.display='flex';" />
+      <div id="img-ph" class="img-placeholder">🖼️ 四格分鏡圖解製作中</div>
+
+      <div class="storyboard">
+        <div class="story-panel p1">
+          <span class="panel-icon">📚</span>
+          <span class="panel-step">起 · 想像你是他</span>
+          <h4>1. 讀書讓你沮喪的每一天</h4>
+          <p>想像你每天都覺得讀書拼字很挫折；霍蘭德也曾這樣，但從不讓讀寫障礙與過動症定義自己。</p>
+          <span class="eng-tag">finds reading and spelling frustrating</span>
+        </div>
+        <div class="story-panel p2">
+          <span class="panel-icon">🔥</span>
+          <span class="panel-step">承 · 換個角度</span>
+          <h4>2. 把精力變成創造力</h4>
+          <p>他學會把靜不下來的精力看作創造力來源；你也可以試著接下一開始看起來很難的任務。</p>
+          <span class="eng-tag">take on tasks that seem difficult at first</span>
+        </div>
+        <div class="story-panel p3">
+          <span class="panel-icon">🎥</span>
+          <span class="panel-step">轉 · 成功的真相</span>
+          <h4>3. 不是運氣，是投入</h4>
+          <p>鏡頭前充滿活力的年輕演員，背後是多年練習與對演藝專業的投入。</p>
+          <span class="eng-tag">a deep commitment to his craft, not just luck</span>
+        </div>
+        <div class="story-panel p4">
+          <span class="panel-icon">🌱</span>
+          <span class="panel-step">合 · 你也可以</span>
+          <h4>4. 善良、堅持，成為別人的榜樣</h4>
+          <p>地位不是成功唯一的標準；保持善良、持續前進，你也能成為身邊人的榜樣。</p>
+          <span class="eng-tag">remain an inspiration to the people around you</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-fulltext" class="section-title">📖 二、完整課文沉浸閱讀（What Can You Learn from Tom Holland?）</div>
+    <div class="reader-card">
+      <div class="reader-header">
+        <div style="font-weight:800;color:var(--ink);font-size:1rem;">
+          💬 文體：第二人稱 you 代入｜重點：Imagine 開場、Like you 共鳴、If 條件建議、Remember 收尾
+        </div>
+        <div class="reader-tools">
+          <button class="toggle-btn" id="btn-full-audio" onclick="toggleFullAudio()">🔊 播放全文朗讀</button>
+          <button class="toggle-btn active" id="btn-reader-zh" onclick="toggleReaderZh()">👁️ 顯示中文對照</button>
+          <button class="toggle-btn" onclick="changeFontSize(1)">A+ 放大</button>
+          <button class="toggle-btn" onclick="changeFontSize(-1)">A- 縮小</button>
+        </div>
+      </div>
+
+      <div class="reader-para">
+        <div class="reader-en">
+          Imagine you are a teenager <strong class="hl-g">who finds</strong> reading and spelling <strong class="hl-v">frustrating</strong> every single day. You might feel <strong class="hl-g">that</strong> these challenges will decide your future, <strong class="hl-g">but</strong> Tom Holland's story shows you a different path. Like you, he struggled at school, <strong class="hl-g">yet</strong> he never <strong class="hl-g">let</strong> dyslexia or ADHD <strong class="hl-g">define</strong> him.
+        </div>
+        <div class="reader-zh">
+          想像一下，你是個每一天都覺得閱讀和拼字很挫折的青少年。你也許會覺得這些挑戰將決定你的未來，但湯姆・霍蘭德的故事讓你看到另一條路。和你一樣，他在學校也過得很辛苦，但他從不讓讀寫障礙或過動症定義自己。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(0)">🔊 朗讀本段</button></div>
+      </div>
+      <div class="reader-para">
+        <div class="reader-en">
+          <strong class="hl-g">Instead</strong>, he learned to <strong class="hl-g">see</strong> his restless energy <strong class="hl-g">as</strong> a source of <strong class="hl-v">creativity</strong>. <strong class="hl-g">If</strong> you want to grow, try to <strong class="hl-g">take on</strong> tasks <strong class="hl-g">that seem</strong> difficult at first. That is exactly <strong class="hl-g">what</strong> Holland did <strong class="hl-g">when</strong> he <strong class="hl-v">expanded</strong> his range beyond superhero films. Picture the young actor <strong class="hl-g">standing</strong> in front of the camera, full of <strong class="hl-v">dynamic</strong> energy. His success <strong class="hl-v">reflects</strong> years of practice and a deep <strong class="hl-g">commitment to</strong> his <strong class="hl-v">craft</strong>, not just luck.
+        </div>
+        <div class="reader-zh">
+          相反地，他學會把自己靜不下來的精力看作創造力的來源。如果你想成長，就試著接下一開始看起來很難的任務。霍蘭德把戲路拓展到超級英雄電影之外時，正是這麼做的。想像一下站在鏡頭前的那位年輕演員，渾身充滿活力。他的成功不只是靠運氣，而是反映了多年的練習，以及對演藝專業的深厚投入。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(1)">🔊 朗讀本段</button></div>
+      </div>
+      <div class="reader-para" style="margin-bottom:0;">
+        <div class="reader-en">
+          You can also help others, <strong class="hl-g">just as</strong> Holland supports <strong class="hl-v">charity</strong> work and hopes to <strong class="hl-g">set up</strong> a free school. Remember <strong class="hl-g">that</strong> <strong class="hl-v">status</strong> is not the only measure of success, even for a star of his <strong class="hl-v">generation</strong>. <strong class="hl-g">If</strong> you stay kind and keep going, you can <strong class="hl-g">remain</strong> an <strong class="hl-v">inspiration</strong> to the people around you.
+        </div>
+        <div class="reader-zh">
+          就像霍蘭德支持慈善工作、並希望創辦一所免費學校一樣，你也可以幫助別人。記住，地位並不是衡量成功的唯一標準，即使對他這樣的世代巨星也是如此。只要你保持善良、持續前進，你也能一直是身邊的人的榜樣。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(2)">🔊 朗讀本段</button></div>
+      </div>
+    </div>
+
+    <div id="sec-reading" class="section-title">🧩 三、課文「積木拆句」＋ 逐句名師翻譯拆解</div>
+    <div class="card">
+      <div class="control-bar">
+        <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
+        <button class="toggle-btn active" id="btn-zh" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
+        <button class="toggle-btn" id="btn-cloze" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式（遮住黃底考點）</button>
+        <button id="toggle-conj-btn" class="toggle-btn" onclick="toggleAllConj()">🔗 一鍵展開所有連接詞解析</button>
+        <button id="btn-toggle-master-trans" class="toggle-btn" onclick="toggleAllMasterTrans()">👨‍🏫 一鍵展開名師翻譯拆解</button>
+        <span style="font-size:0.82rem;color:var(--muted);margin-left:auto;">💡 積木顏色：<strong style="color:#1e40af;">藍=主詞</strong>｜<strong style="color:#be123c;">紅=動詞</strong>｜<strong style="color:#047857;">綠=受詞/補語</strong>｜<strong style="color:#6d28d9;">紫=修飾/介片</strong>｜<strong style="color:#b45309;">黃=連接詞/子句</strong></span>
+      </div>
+
+      <details class="master-trans-details concept-banner-details" style="margin-bottom: 1.2rem;">
+        <summary class="master-trans-summary" style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border: 1.5px solid #a855f7;">
+          <span style="display: flex; align-items: center; gap: 0.5rem; flex: 1;">
+            <span style="font-size: 1.1rem;">🎓</span>
+            <span style="font-weight: 800; color: #6b21a8;">補教名師觀念大打通：</span>
+            <span style="color: #4c1d95; font-weight: 700;">為什麼有時候用「名詞子句」，有時候用「關代（形容詞子句）」？</span>
+          </span>
+          <span class="master-arrow">▼</span>
+        </summary>
+        <div class="concept-banner-body">
+          <p style="margin: 0 0 0.8rem 0; font-size: 0.95rem; font-weight: 700; color: #4c1d95;">
+            💡 判斷口訣：<strong>「左邊看有沒有先行詞名詞，右邊看子句缺不缺成分」</strong>
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+            <div style="background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 10px; padding: 0.9rem;">
+              <div style="font-weight: 800; color: #1e40af; margin-bottom: 0.4rem; font-size: 0.95rem;">📘 1. 名詞子句（Noun Clause）</div>
+              <ul style="margin: 0; padding-left: 1.2rem; color: #1e3a8a; font-size: 0.88rem; line-height: 1.6;">
+                <li><strong>左邊：</strong>動詞（say／find／believe），沒有先行詞名詞。</li>
+                <li><strong>右邊：</strong>that 後面是主詞動詞齊全的完整句。</li>
+                <li><strong>本篇：</strong><code>You might feel that these challenges will decide ...</code>（feel 後接完整句）／<code>That is exactly what Holland did</code>（what＝the thing that，缺受詞）／<code>Remember that status is not ...</code></li>
+              </ul>
+            </div>
+            <div style="background: #fdf2f8; border: 1.5px solid #f472b6; border-radius: 10px; padding: 0.9rem;">
+              <div style="font-weight: 800; color: #9d174d; margin-bottom: 0.4rem; font-size: 0.95rem;">📕 2. 關係代名詞（形容詞子句）</div>
+              <ul style="margin: 0; padding-left: 1.2rem; color: #831843; font-size: 0.88rem; line-height: 1.6;">
+                <li><strong>左邊：</strong>一定有被修飾的名詞（先行詞）。</li>
+                <li><strong>右邊：</strong>缺主詞／受詞，或用 whose 接名詞表所有。</li>
+                <li><strong>本篇：</strong><code>a teenager who finds reading ... frustrating</code>（缺主詞）／<code>tasks that seem difficult</code>（缺主詞）／<code>the young actor standing in front of the camera</code>（＝who is standing，省略成 V-ing）</li>
+              </ul>
+            </div>
+          </div>
+          <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px; padding: 0.7rem 0.9rem; font-size: 0.88rem; color: #166534;">
+            <strong>⚡ 三秒判定：</strong>動詞後面接「一件事」➔ 名詞子句 that＋完整句；名詞後面補充「哪一個、什麼樣的」➔ 關代＋不完整句。
+          </div>
+        </div>
+      </details>
+
+      <div class="para-badge">第一段：想像你是他</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S01</span>
+          <div class="sent-en">
+            Imagine you are a teenager <span class="gram-term">who finds</span> reading and spelling <span class="key-term">frustrating</span> every single day.
+            <div class="sent-zh">想像一下，你是個每一天都覺得閱讀和拼字很挫折的青少年。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Imagine you are a teenager who finds reading and spelling frustrating every single day.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Imagine you are a teenager who finds reading and spelling frustrating every single day.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是祈使句 <code>Imagine (V) + (that) you are a teenager (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在簡單式 are／finds：假想情境用現在式，拉近讀者。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>Imagine</code> 後省略 that，接名詞子句；<code>who finds ...</code> 是主格關代子句修飾 teenager。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>英文「想像 ➔ 你是青少年 ➔ 什麼樣的青少年」，中文把 who 子句提到「青少年」前，或改成「你是個……的青少年」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>find + O + Adj.</code>（覺得……很……）；frustrating 修飾事物；<code>every single day</code> 加強語氣，比 every day 更強調。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「想像你是一個青少年誰發現閱讀和拼字令人沮喪每一個單一的天」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Imagine you are a teenager</code>（祈使句＋名詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「想像一下，你是個……的青少年」。Imagine 開場直接對讀者說話，補「一下」語氣更自然。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>who finds reading and spelling frustrating</code>（主格關代子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】修飾 teenager，放到「青少年」前：「覺得閱讀和拼字很挫折的青少年」。find＋O＋Adj. 譯「覺得……很……」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>every single day.</code>（時間副詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】頻率放到動作前：「每一天都覺得……」。single 加強語氣，用「都」表現。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（想像一下，你是個）➔ 語塊 3 提前（每一天都）➔ 語塊 2（覺得閱讀和拼字很挫折的）➔ 青少年</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：想像一下，你是個【每一天都覺得閱讀和拼字很挫折的】青少年。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：Imagine 開場；who 子句連同頻率副詞一起提到名詞前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">Imagine 開場直接翻「想像一下，你是個……的青少年」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「a / an + 人 + who + 子句」而且子句不長時，先翻 who 子句，再翻人：</strong>「每一天都覺得閱讀和拼字很挫折的青少年」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：every single day 用「每一天都」，把強調放在「都」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：想像一下，你是個每一天都覺得閱讀和拼字很挫折的青少年。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">(that)（名詞子句，省略）</span><span class="conj-word-preview">who（主格關代）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：祈使句＋省略 that 的名詞子句，子句內含 who 形容詞子句。</div>
+              <div>• 大考命題點：Imagine (that) S + V；主格關代 who；find＋O＋Adj.。</div>
+            </div>
+            <div class="conj-title-main">兩層結構：省略的 that 接事情，who 修飾人</div>
+            <div class="conj-desc">
+              👉 第一層 <code>(that)</code>：往左看——<code>Imagine</code> 是動詞，往右看——<code>you are a teenager</code> 完整句。動詞後接一件事 ➔ 名詞子句，that 省略了。<br/>👉 第二層 <code>who</code>：往左看——前面是名詞 <code>a teenager</code>（人），往右看——<code>___ finds reading ... frustrating</code> 缺主詞 ➔ 主格關代 who。<br/>動詞 finds 加 s，因為先行詞 a teenager 是單數。第二人稱文章常用 Imagine 開場，讓讀者馬上進入情境。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：動詞後完整句 ➔ (that)；人後面缺主詞 ➔ who，動詞看先行詞。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">Imagine</span><span class="c-zh">想像一下</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 名詞子句（省略 that）</span><span class="c-en">you are a teenager</span><span class="c-zh">你是個青少年</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 主格關代子句</span><span class="c-en">who finds reading and spelling frustrating</span><span class="c-zh">覺得閱讀和拼字很挫折的</span></div>
+          <div class="chunk m"><span class="c-role">[M] 時間副詞</span><span class="c-en">every single day.</span><span class="c-zh">每一天都</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>Imagine (that) S + V</code>；<code>find + O + frustrating／difficult</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>第二人稱開場：<code>Imagine you are ...</code> 學測作文立刻抓住讀者。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S02</span>
+          <div class="sent-en">
+            You might feel <span class="gram-term">that</span> these challenges will decide your future, <span class="gram-term">but</span> Tom Holland's story shows you a different path.
+            <div class="sent-zh">你也許會覺得這些挑戰將決定你的未來，但湯姆・霍蘭德的故事讓你看到另一條路。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('You might feel that these challenges will decide your future, but Tom Holland\'s story shows you a different path.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('You might feel that these challenges will decide your future, but Tom Holland\'s story shows you a different path.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹有兩組：<code>You (S) + might feel (V) + that ... (O)</code>，<code>but</code> <code>Tom Holland's story (S) + shows (V) + you (IO) + a different path (DO)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>might 表推測；will decide 是名詞子句內的未來；shows 是現在簡單式，陳述故事帶來的啟示。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>that 引導名詞子句當 feel 的受詞；but 連接兩個對等子句；shows you a path 是雙受詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>英文先講讀者的擔心，再用 but 翻轉；中文照順序。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>feel that S + V</code>（覺得……）；<code>show sb sth</code>＝show sth to sb；<code>decide one's future</code>（決定未來）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「你可能感覺那這些挑戰將決定你的未來，但湯姆・霍蘭德的故事顯示你一條不同的路」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>You might feel that</code>（主句一＋名詞子句引導詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你也許會覺得」。might 譯「也許會」；that 不翻。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>these challenges will decide your future,</code>（名詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「這些挑戰將決定你的未來」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>but Tom Holland's story shows you a different path.</code>（主句二（雙受詞））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「但湯姆・霍蘭德的故事讓你看到另一條路」。show sb sth 譯「讓某人看到」；a different path 譯「另一條路」。順翻。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（你也許會覺得）➔ 語塊 2（這些挑戰將決定你的未來）➔ 語塊 3（但湯姆・霍蘭德的故事讓你看到另一條路）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：你也許會覺得這些挑戰將決定你的未來，但湯姆・霍蘭德的故事讓你看到另一條路。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：show sb sth ➔「讓某人看到……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">前半句是讀者的擔心，照順序翻「你也許會覺得……」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「show + 人 + 物」雙受詞時，翻成「讓某人看到某物」：</strong>「讓你看到另一條路」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：might 譯「也許會」，語氣比「可能」更貼近對話。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：你也許會覺得這些挑戰將決定你的未來，但湯姆・霍蘭德的故事讓你看到另一條路。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">that（名詞子句）</span><span class="conj-word-preview">but（對等連接詞）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：並列複合句，前句含 that 名詞子句，but 帶出轉折。</div>
+              <div>• 大考命題點：feel that＋子句；show sb sth 雙受詞。</div>
+            </div>
+            <div class="conj-title-main">that 接擔心，but 翻轉成希望</div>
+            <div class="conj-desc">
+              👉 <code>that</code>：往左看是動詞 <code>feel</code>，往右看 <code>these challenges will decide your future</code> 完整句 ➔ 名詞子句。<br/>👉 <code>but</code>：前面是讀者的擔心，後面給出另一種可能。第二人稱文章常用這種「你可能以為……但其實……」的結構，先同理、再翻轉。<br/>後半的 <code>shows you a different path</code>：show 後面接兩個受詞，先人（you）後物（a path）；改成介系詞要說 <code>shows a different path to you</code>。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：feel／think／believe + that 子句；show 人 物＝show 物 to 人。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">You</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">might feel</span><span class="c-zh">也許會覺得</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 名詞子句</span><span class="c-en">that these challenges will decide your future,</span><span class="c-zh">這些挑戰將決定你的未來</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對等連接詞</span><span class="c-en">but</span><span class="c-zh">但</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">Tom Holland's story</span><span class="c-zh">湯姆・霍蘭德的故事</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">shows</span><span class="c-zh">讓……看到</span></div>
+          <div class="chunk o"><span class="c-role">[O] 雙受詞</span><span class="c-en">you a different path.</span><span class="c-zh">你另一條路</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>show sb sth</code>＝<code>show sth to sb</code>；<code>feel that S + V</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>先同理再翻轉：<code>You might feel that ..., but ...</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S03</span>
+          <div class="sent-en">
+            Like you, he struggled at school, <span class="gram-term">yet</span> he never <span class="gram-term">let</span> dyslexia or ADHD <span class="gram-term">define</span> him.
+            <div class="sent-zh">和你一樣，他在學校也過得很辛苦，但他從不讓讀寫障礙或過動症定義自己。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Like you, he struggled at school, yet he never let dyslexia or ADHD define him.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Like you, he struggled at school, yet he never let dyslexia or ADHD define him.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹有兩組：<code>he (S) + struggled (V) + at school</code>，<code>yet</code> <code>he (S) + never let (V) + dyslexia or ADHD (O) + define him</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 struggled／let：敘述霍蘭德過去的求學經驗。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>Like you</code> 是介系詞片語；yet 是對等連接詞（然而），比 but 更有轉折感；<code>let + O + 原形 V</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>英文照順序，中文也照順序：「和你一樣，他……，但他從不讓……定義自己」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>let + O + 原形</code>（不加 to），對照 <code>allow + O + to V</code>；<code>Like you</code>（像你一樣），like 是介系詞。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「像你，他掙扎在學校，然而他從不讓讀寫障礙或過動症定義他」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Like you,</code>（介系詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「和你一樣」。Like 是介系詞，建立讀者與霍蘭德的共鳴。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>he struggled at school,</code>（主句一）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「他在學校也過得很辛苦」。struggle 譯「辛苦、吃力」；at school 譯「在學校」放動作前。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>yet he never let dyslexia or ADHD define him.</code>（主句二）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「但他從不讓讀寫障礙或過動症定義自己」。yet 譯「但」；let＋O＋V 譯「讓……」；him 回指主詞譯「自己」。順翻。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（和你一樣）➔ 語塊 2（他在學校也過得很辛苦）➔ 語塊 3（但他從不讓讀寫障礙或過動症定義自己）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：和你一樣，他在學校也過得很辛苦，但他從不讓讀寫障礙或過動症定義自己。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：let + O + 原形 ➔「讓……」；Like you ➔「和你一樣」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">Like you 先翻「和你一樣」，讓讀者有共鳴。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「never let + sth + V」時，翻成「從不讓……」：</strong>「但他從不讓讀寫障礙或過動症定義自己」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：yet 在兩句之間就是「但」，補「也」到前半句（他在學校也過得很辛苦）呼應 Like you。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：和你一樣，他在學校也過得很辛苦，但他從不讓讀寫障礙或過動症定義自己。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">yet（對等連接詞：然而）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：並列複合句，yet 連接兩個主句。</div>
+              <div>• 大考命題點：let＋O＋原形 vs. allow＋O＋to V；yet 當連接詞。</div>
+            </div>
+            <div class="conj-title-main">yet 放在兩句中間是連接詞「然而」</div>
+            <div class="conj-desc">
+              👉 <code>yet</code>：在句中連接兩個完整句時，意思和 but 一樣是「然而、但是」，語氣更強調出乎意料。不要跟「還、尚未」（not yet）搞混。<br/>👉 後半的 <code>let ... define him</code>：let 是使役動詞，後面受詞接<strong>原形動詞</strong>，不加 to。對照原課文 <code>never allowed those challenges to define him</code>：allow 要加 to。<br/>同一個意思，換一個動詞，結構就不同，學測改錯最愛考。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：let／make／have + O + 原形；allow／want／ask + O + to V。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語</span><span class="c-en">Like you,</span><span class="c-zh">和你一樣</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">he</span><span class="c-zh">他</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">struggled at school,</span><span class="c-zh">在學校也過得很辛苦</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對等連接詞</span><span class="c-en">yet</span><span class="c-zh">但</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">he</span><span class="c-zh">他</span></div>
+          <div class="chunk v"><span class="c-role">[V] 使役動詞</span><span class="c-en">never let</span><span class="c-zh">從不讓</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">dyslexia or ADHD</span><span class="c-zh">讀寫障礙或過動症</span></div>
+          <div class="chunk v"><span class="c-role">[V] 原形動詞</span><span class="c-en">define him.</span><span class="c-zh">定義自己</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>let + O + V</code>＝<code>allow + O + to V</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>共鳴句：<code>Like you, I ..., yet I never let ...</code></div>
+        </div>
+      </div>
+      <div class="para-badge">第二段：換個角度看自己</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S04</span>
+          <div class="sent-en">
+            <span class="gram-term">Instead</span>, he learned to <span class="gram-term">see</span> his restless energy <span class="gram-term">as</span> a source of <span class="key-term">creativity</span>.
+            <div class="sent-zh">相反地，他學會把自己靜不下來的精力看作創造力的來源。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Instead, he learned to see his restless energy as a source of creativity.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Instead, he learned to see his restless energy as a source of creativity.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>he (S) + learned (V) + to see his restless energy as a source of creativity (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>過去簡單式 learned：過去逐漸學會的態度。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>沒有連接詞；<code>Instead</code> 是轉折副詞；<code>see A as B</code>（把 A 看作 B）。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>英文照順序，中文也照順序：「相反地，他學會把……看作……」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>learn to V</code>（學會……）；<code>see A as B</code>；restless（靜不下來的）；Instead 放句首表「反而、相反地」。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「代替地，他學了去看他不休息的能量作為一個來源的創造力」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Instead,</code>（轉折副詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「相反地」。Instead 承接上一句「沒讓狀況定義他」，表示改做別的事。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>he learned to see his restless energy</code>（主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「他學會把自己靜不下來的精力」。learn to V 譯「學會」；see A as B 用「把 A 看作 B」；restless energy 譯「靜不下來的精力」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>as a source of creativity.</code>（受詞補語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「看作創造力的來源」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（相反地）➔ 語塊 2（他學會把自己靜不下來的精力）➔ 語塊 3（看作創造力的來源）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：相反地，他學會把自己靜不下來的精力看作創造力的來源。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：see A as B ➔「把 A 看作 B」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">Instead 先翻「相反地」，承接上一句。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「see / view A as B」時，翻成「把 A 看作 B」：</strong>「把自己靜不下來的精力看作創造力的來源」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：restless energy 譯「靜不下來的精力」，正好呼應過動症的特質。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：相反地，他學會把自己靜不下來的精力看作創造力的來源。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">無連接詞·單一主句</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：單一主要子句，句首轉折副詞 Instead。</div>
+              <div>• 大考命題點：Instead（副詞）vs. instead of（介系詞）；see A as B。</div>
+            </div>
+            <div class="conj-title-main">沒有連接詞，Instead 是副詞，不能連接兩個句子</div>
+            <div class="conj-desc">
+              這句開頭 <code>Instead,</code> 是轉折副詞，後面接完整句。<br/>👉 它不是連接詞，所以不能寫成 <code>He didn't give up, instead he learned ...</code>（兩個句子只用逗號接，是 comma splice）。要嘛用句號分開，要嘛改 <code>; instead,</code>。<br/>👉 <code>instead of</code> 是介系詞，後面接名詞或 V-ing：<code>Instead of hiding his energy, he used it.</code>
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：Instead, ＋完整句（前面要句號或分號）；instead of ＋N／V-ing。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 轉折副詞</span><span class="c-en">Instead,</span><span class="c-zh">相反地</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">he</span><span class="c-zh">他</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">learned to see</span><span class="c-zh">學會看作</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">his restless energy</span><span class="c-zh">自己靜不下來的精力</span></div>
+          <div class="chunk o"><span class="c-role">[C] 受詞補語</span><span class="c-en">as a source of creativity.</span><span class="c-zh">創造力的來源</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>Instead, S + V</code>；<code>instead of + N／V-ing</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>轉念寫法：<code>Instead, I learned to see my ... as a strength.</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S05</span>
+          <div class="sent-en">
+            <span class="gram-term">If</span> you want to grow, try to <span class="gram-term">take on</span> tasks <span class="gram-term">that seem</span> difficult at first.
+            <div class="sent-zh">如果你想成長，就試著接下一開始看起來很難的任務。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('If you want to grow, try to take on tasks that seem difficult at first.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('If you want to grow, try to take on tasks that seem difficult at first.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是祈使句 <code>try (V) + to take on tasks (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>If 子句用現在簡單式 want，主句是祈使句，表一般建議。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>If you want to grow</code> 是條件副詞子句；<code>that seem difficult at first</code> 是主格關代子句修飾 tasks。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>英文 If 子句在前，中文照順序；that 子句短，提到 tasks 前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>take on a task</code>（接下任務，Language Notes 2a）；<code>seem + Adj.</code> 連綴動詞；<code>at first</code>（起初）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「如果你想要成長，嘗試去拿上任務那看起來困難在最初」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>If you want to grow,</code>（條件副詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「如果你想成長」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>try to take on tasks</code>（主句（祈使句））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「就試著接下……的任務」。祈使句前補「就」呼應 If；take on 譯「接下」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>that seem difficult at first.</code>（主格關代子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】修飾 tasks，放到「任務」前：「一開始看起來很難的任務」。seem＋Adj. 譯「看起來」；at first 譯「一開始」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（如果你想成長）➔ 語塊 2 動詞（就試著接下）➔ 語塊 3 提前（一開始看起來很難的）➔ 任務</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：如果你想成長，就試著接下【一開始看起來很難的】任務。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：If ..., 祈使句 ➔「如果……，就……」；短 that 子句提前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">If 子句先翻「如果你想成長」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「If 條件, 祈使句」時，主句前加「就」：</strong>「就試著接下……的任務」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「名詞 + that + 短子句」時，先翻子句，再翻名詞：</strong>「一開始看起來很難的任務」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：take on tasks 譯「接下任務」，不是「承擔工作」那麼正式。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：如果你想成長，就試著接下一開始看起來很難的任務。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">If（條件副詞子句）</span><span class="conj-word-preview">that（主格關代）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複合句，If 條件子句＋祈使主句，主句內含 that 形容詞子句。</div>
+              <div>• 大考命題點：take on；seem＋Adj.；主格關代 that。</div>
+            </div>
+            <div class="conj-title-main">If 掛條件，that 修飾任務</div>
+            <div class="conj-desc">
+              👉 <code>If</code>：句首、後面逗號接主句 ➔ 條件副詞子句。<br/>👉 <code>that</code>：往左看——名詞 <code>tasks</code>；往右看——<code>___ seem difficult at first</code> 缺主詞 ➔ 主格關代。動詞 seem 不加 s，因為 tasks 是複數。<br/>子句裡的 <code>seem difficult</code>：seem 是連綴動詞，後接形容詞，✗ seem difficultly。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：名詞後＋缺主詞 ➔ that／which；動詞跟著先行詞的單複數。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 條件子句</span><span class="c-en">If you want to grow,</span><span class="c-zh">如果你想成長</span></div>
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">try to take on</span><span class="c-zh">就試著接下</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">tasks</span><span class="c-zh">任務</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 主格關代子句</span><span class="c-en">that seem difficult at first.</span><span class="c-zh">一開始看起來很難的</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>take on a task／a challenge</code>；<code>seem + Adj.</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>建議句：<code>If you want to ..., try to ...</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S06</span>
+          <div class="sent-en">
+            That is exactly <span class="gram-term">what</span> Holland did <span class="gram-term">when</span> he <span class="key-term">expanded</span> his range beyond superhero films.
+            <div class="sent-zh">霍蘭德把戲路拓展到超級英雄電影之外時，正是這麼做的。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('That is exactly what Holland did when he expanded his range beyond superhero films.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('That is exactly what Holland did when he expanded his range beyond superhero films.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>That (S) + is (V) + exactly what Holland did (C)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在簡單式 is 點出結論；did、expanded 是過去式，敘述霍蘭德過去的行動。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>what Holland did</code> 是名詞子句當補語（what＝the thing that）；<code>when he expanded ...</code> 是時間副詞子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>英文「那正是霍蘭德做的事 ➔ 在什麼時候」，中文把 when 子句提到前面：「霍蘭德在……時，正是這麼做的」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>what</code> 本身含先行詞，後面子句缺受詞（did ___）；<code>expand one's range</code>（拓展戲路）；<code>beyond N</code>（超出……）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「那是確切地什麼霍蘭德做了當他擴大他的範圍超越超級英雄電影」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>That is exactly what Holland did</code>（主幹＋what 名詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「霍蘭德……時，正是這麼做的」。That 回指上一句的建議；exactly what Holland did 譯「正是這麼做的」，比「正是霍蘭德做的事」流暢。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>when he expanded his range</code>（時間副詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】時間提到前面：「霍蘭德把戲路拓展到……時」。range 譯「戲路」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>beyond superhero films.</code>（介系詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「超級英雄電影之外」。beyond 搭配 expand 譯「拓展到……之外」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 2＋3 提前（霍蘭德把戲路拓展到超級英雄電影之外時）➔ 語塊 1（正是這麼做的）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：【霍蘭德把戲路拓展到超級英雄電影之外時】，正是這麼做的。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：That is exactly what S did when ... ➔「S 在……時，正是這麼做的」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句要先找 when 子句，把時間背景拉到前面。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「That is exactly what S did when ...」時，先翻 when 的時間，再說「正是這麼做的」：</strong>「霍蘭德把戲路拓展到超級英雄電影之外時，正是這麼做的」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：That 回指上一句的建議，「這麼做」就把它接住了。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：霍蘭德把戲路拓展到超級英雄電影之外時，正是這麼做的。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">what（名詞子句）</span><span class="conj-word-preview">when（時間副詞子句）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複合句，what 名詞子句當補語＋when 時間子句。</div>
+              <div>• 大考命題點：what＝the thing that（子句缺受詞）；when 副詞子句。</div>
+            </div>
+            <div class="conj-title-main">what 自帶先行詞；when 掛時間</div>
+            <div class="conj-desc">
+              👉 <code>what</code>：往左看——前面是 <code>is exactly</code>，沒有名詞可以當先行詞；往右看——<code>Holland did ___</code>，did 缺受詞。<br/>沒有先行詞＋後面缺成分 ➔ what，等於 <code>the thing that</code>。如果前面已經有名詞（the thing），就要用 that／which，不能再用 what。<br/>👉 <code>when</code>：後面 <code>he expanded his range</code> 完整句，表示時間，副詞子句。<br/>學測克漏字常考 what vs. that：看前面有沒有名詞、後面缺不缺東西。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：前無名詞＋後缺受詞 ➔ what；前有名詞＋後缺 ➔ that；前無名詞＋後完整 ➔ that 名詞子句。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">That</span><span class="c-zh">那</span></div>
+          <div class="chunk v"><span class="c-role">[V] be 動詞</span><span class="c-en">is</span><span class="c-zh">正是</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] what 名詞子句（補語）</span><span class="c-en">exactly what Holland did</span><span class="c-zh">霍蘭德這麼做的</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 時間副詞子句</span><span class="c-en">when he expanded his range</span><span class="c-zh">他拓展戲路時</span></div>
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語</span><span class="c-en">beyond superhero films.</span><span class="c-zh">到超級英雄電影之外</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>what＝the thing(s) that</code>，後面子句缺受詞或主詞。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>舉例呼應：<code>That is exactly what ... did when ...</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S07</span>
+          <div class="sent-en">
+            Picture the young actor <span class="gram-term">standing</span> in front of the camera, full of <span class="key-term">dynamic</span> energy.
+            <div class="sent-zh">想像一下站在鏡頭前的那位年輕演員，渾身充滿活力。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Picture the young actor standing in front of the camera, full of dynamic energy.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Picture the young actor standing in front of the camera, full of dynamic energy.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是祈使句 <code>Picture (V) + the young actor (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>祈使句現在式 Picture：請讀者在腦中想像畫面。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>沒有連接詞；<code>standing in front of the camera</code> 是 V-ing 分詞片語修飾 actor；<code>full of dynamic energy</code> 是形容詞片語，補充說明 actor 的狀態。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>英文「想像 ➔ 演員 ➔ 站在鏡頭前 ➔ 充滿活力」，中文把 standing 片語提到「演員」前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>picture</code> 當動詞是「想像、在腦中描繪」；<code>the actor standing ...</code>＝the actor who is standing ...（Language Notes 1）；<code>full of N</code>（充滿……）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「圖片這個年輕演員站在前面的鏡頭，滿的動態的能量」，picture 被翻成名詞。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Picture the young actor</code>（祈使句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「想像一下……的年輕演員」。picture 在句首當動詞「想像」；第二人稱文章用它帶讀者看畫面。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>standing in front of the camera,</code>（分詞片語（修飾 actor））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】V-ing 片語修飾 actor，放到「年輕演員」前：「站在鏡頭前的年輕演員」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>full of dynamic energy.</code>（形容詞片語（補充））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「渾身充滿活力」。逗號後補充說明，順翻接在後面；dynamic energy 譯「活力」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 動詞（想像一下）➔ 語塊 2 提前（站在鏡頭前的）➔ 語塊 1 名詞（那位年輕演員）➔ 語塊 3（渾身充滿活力）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：想像一下【站在鏡頭前的】那位年輕演員，渾身充滿活力。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：N＋V-ing 片語 ➔ 片語提前；逗號後的形容詞片語順翻補充。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">Picture 開頭是祈使句，翻「想像一下」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「the + N + V-ing + 地點」時，先翻 V-ing 片語，再翻名詞：</strong>「站在鏡頭前的那位年輕演員」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：picture 放句首、後面接名詞，就是動詞「想像」，不是「圖片」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：想像一下站在鏡頭前的那位年輕演員，渾身充滿活力。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">standing（分詞片語＝省略 who is）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：祈使句，受詞後接分詞片語與形容詞片語。</div>
+              <div>• 大考命題點：N＋V-ing（Language Notes 1）；picture 當動詞。</div>
+            </div>
+            <div class="conj-title-main">名詞後的 standing：省略了 who is</div>
+            <div class="conj-desc">
+              👉 眼睛往左看——<code>standing</code> 緊貼名詞 <code>the young actor</code>，中間沒有逗號，是修飾名詞的分詞片語，還原成 <code>the young actor who is standing in front of the camera</code>。<br/>👉 逗號後 <code>full of dynamic energy</code> 是形容詞片語，同樣是省略了 who is，用來補充描寫。<br/>這兩個結構讓一個簡短的祈使句變成一幅完整畫面，作文描寫人物很好用。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：名詞＋V-ing／Adj. 片語 ➔ 省略 who is，描寫更精簡。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">Picture</span><span class="c-zh">想像一下</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">the young actor</span><span class="c-zh">那位年輕演員</span></div>
+          <div class="chunk m"><span class="c-role">[M] 分詞片語（修飾 actor）</span><span class="c-en">standing in front of the camera,</span><span class="c-zh">站在鏡頭前的</span></div>
+          <div class="chunk m"><span class="c-role">[M] 形容詞片語</span><span class="c-en">full of dynamic energy.</span><span class="c-zh">渾身充滿活力</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>the actor standing ...</code>＝<code>the actor who is standing ...</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>畫面描寫：<code>Picture a girl sitting by the window, full of hope.</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S08</span>
+          <div class="sent-en">
+            His success <span class="key-term">reflects</span> years of practice and a deep <span class="gram-term">commitment to</span> his <span class="key-term">craft</span>, not just luck.
+            <div class="sent-zh">他的成功不只是靠運氣，而是反映了多年的練習，以及對演藝專業的深厚投入。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('His success reflects years of practice and a deep commitment to his craft, not just luck.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('His success reflects years of practice and a deep commitment to his craft, not just luck.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>His success (S) + reflects (V) + years of practice and a deep commitment (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在簡單式 reflects：陳述一般評論。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>沒有連接詞；<code>to his craft</code> 修飾 commitment；<code>not just luck</code> 是對比補充。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>英文先說「反映的是什麼」，最後用 not just luck 否定；中文可改成「不只是靠運氣，而是反映了……」，把否定提前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>reflect</code>（反映）；<code>commitment to N</code>；<code>A, not (just) B</code>（是 A 而不只是 B）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「他的成功反映多年的練習和一個深的承諾給他的手藝，不只是運氣」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>His success reflects</code>（主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「他的成功……反映了」。reflect 譯「反映」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>years of practice and a deep commitment to his craft,</code>（受詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「多年的練習，以及對演藝專業的深厚投入」。to his craft 提到「投入」前；deep 譯「深厚」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>not just luck.</code>（對比片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】中文習慣先否定再肯定：「不只是靠運氣，而是反映了……」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 主詞（他的成功）➔ 語塊 3 提前（不只是靠運氣）➔ 語塊 1 動詞（而是反映了）➔ 語塊 2（多年的練習，以及對演藝專業的深厚投入）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：他的成功【不只是靠運氣】，而是反映了多年的練習，以及對演藝專業的深厚投入。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：A, not just B ➔ 中文改成「不只是 B，而是 A」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">主詞「他的成功」先翻，接著先處理句尾的 not just luck。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「A, not just B」時，先翻「不只是 B」，再用「而是」帶出 A：</strong>「不只是靠運氣，而是反映了多年的練習……」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：luck 補「靠」字：「不只是靠運氣」更口語。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：他的成功不只是靠運氣，而是反映了多年的練習，以及對演藝專業的深厚投入。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">無連接詞·單一主句</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：單一主要子句，句尾 not just 對比片語。</div>
+              <div>• 大考命題點：reflect；commitment to N；A, not B 對比。</div>
+            </div>
+            <div class="conj-title-main">沒有連接詞，句尾的 not just 是對比補充</div>
+            <div class="conj-desc">
+              骨架 <code>His success reflects years of practice and a commitment</code>，句尾 <code>, not just luck</code> 用逗號補一個對比：是努力，不只是運氣。<br/>👉 英文習慣「先肯定、再否定」（A, not B），中文習慣「先否定、再肯定」（不是 B，而是 A），翻譯時要倒過來。<br/>👉 <code>commitment to his craft</code>：to 是介系詞，後接名詞。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：英文 A, not B ➔ 中文「不是 B，而是 A」。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">His success</span><span class="c-zh">他的成功</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">reflects</span><span class="c-zh">反映了</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">years of practice and a deep commitment</span><span class="c-zh">多年的練習以及深厚投入</span></div>
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語</span><span class="c-en">to his craft,</span><span class="c-zh">對演藝專業的</span></div>
+          <div class="chunk m"><span class="c-role">[M] 對比片語</span><span class="c-en">not just luck.</span><span class="c-zh">不只是靠運氣</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>A, not (just) B</code>＝<code>not (just) B but A</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>破除迷思：<code>Her success reflects hard work, not just talent.</code></div>
+        </div>
+      </div>
+      <div class="para-badge">第三段：你也可以</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S09</span>
+          <div class="sent-en">
+            You can also help others, <span class="gram-term">just as</span> Holland supports <span class="key-term">charity</span> work and hopes to <span class="gram-term">set up</span> a free school.
+            <div class="sent-zh">就像霍蘭德支持慈善工作、並希望創辦一所免費學校一樣，你也可以幫助別人。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('You can also help others, just as Holland supports charity work and hopes to set up a free school.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('You can also help others, just as Holland supports charity work and hopes to set up a free school.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>You (S) + can also help (V) + others (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在簡單式 supports／hopes：陳述霍蘭德目前在做的事；can help 是給讀者的可能性。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>just as</code> 是從屬連接詞（正如），引導比較子句；子句內 and 連接 supports 和 hopes 兩個動詞；<code>to set up</code> 是 hope 的不定詞受詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>英文「你可以幫助別人 ➔ 正如霍蘭德……」，中文把 just as 子句提前：「就像霍蘭德……一樣，你也可以……」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>just as S + V</code>（正如……）；<code>hope to V</code>；<code>set up a school</code>（創辦學校，Language Notes 1a）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「你也可以幫助其他人，就如同霍蘭德支持慈善工作和希望去設立一間免費學校」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>You can also help others,</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你也可以幫助別人」。順翻，但要放到最後。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>just as Holland supports charity work</code>（比較副詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】just as 子句提前：「就像霍蘭德支持慈善工作……一樣」。中文習慣先舉榜樣，再說你也可以。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>and hopes to set up a free school.</code>（比較子句的第二個動詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「並希望創辦一所免費學校」。set up 譯「創辦」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 2＋3 提前（就像霍蘭德支持慈善工作、並希望創辦一所免費學校一樣）➔ 語塊 1（你也可以幫助別人）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：【就像霍蘭德支持慈善工作、並希望創辦一所免費學校一樣】，你也可以幫助別人。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：just as 比較子句提前：「就像……一樣，你也……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句要先把榜樣霍蘭德說出來，再回到你。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到句尾「just as + 子句」時，先翻「就像……一樣」，再翻主句：</strong>「就像霍蘭德支持慈善工作、並希望創辦一所免費學校一樣，你也可以幫助別人」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：主句的 also 用「也」，正好和「就像……一樣」呼應。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：就像霍蘭德支持慈善工作、並希望創辦一所免費學校一樣，你也可以幫助別人。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">just as（比較副詞子句）</span><span class="conj-word-preview">and（連接兩個動詞）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複合句，主句＋just as 比較子句。</div>
+              <div>• 大考命題點：just as＋S＋V；set up 創辦；hope to V。</div>
+            </div>
+            <div class="conj-title-main">just as 後面接完整句：「正如」</div>
+            <div class="conj-desc">
+              👉 <code>just as</code>：往右看——<code>Holland supports charity work and hopes to ...</code> 有主詞有動詞，是完整子句，just as 在這裡是連接詞「正如、就像」。<br/>👉 如果 as 後面只有名詞（just as a friend），就是介系詞「作為」。<br/>👉 子句裡的 and 只連接兩個動詞 supports、hopes，共用主詞 Holland，兩個都要加 s。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：just as + S + V ➔「正如」；as + N ➔「作為」。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">You</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">can also help</span><span class="c-zh">也可以幫助</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">others,</span><span class="c-zh">別人</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 比較子句</span><span class="c-en">just as Holland supports charity work</span><span class="c-zh">就像霍蘭德支持慈善工作</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對等連接詞＋動詞</span><span class="c-en">and hopes to set up a free school.</span><span class="c-zh">並希望創辦一所免費學校一樣</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>just as S + V</code>＝<code>in the same way that S + V</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>榜樣呼應：<code>You can ..., just as X does.</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S10</span>
+          <div class="sent-en">
+            Remember <span class="gram-term">that</span> <span class="key-term">status</span> is not the only measure of success, even for a star of his <span class="key-term">generation</span>.
+            <div class="sent-zh">記住，地位並不是衡量成功的唯一標準，即使對他這樣的世代巨星也是如此。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Remember that status is not the only measure of success, even for a star of his generation.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Remember that status is not the only measure of success, even for a star of his generation.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是祈使句 <code>Remember (V) + that ... (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在簡單式 is：陳述一般道理。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>that 引導名詞子句當 Remember 的受詞；<code>even for a star of his generation</code> 是讓步補充。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>英文照順序，中文也照順序：「記住，……，即使對……也是如此」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>the only measure of N</code>（唯一的衡量標準）；status（地位）；<code>even for N</code>（即使對……而言）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「記得那地位不是唯一的測量的成功，甚至為一個明星的他的世代」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Remember that</code>（祈使句＋名詞子句引導詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「記住，」。that 不翻。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>status is not the only measure of success,</code>（名詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「地位並不是衡量成功的唯一標準」。measure of success 譯「衡量成功的標準」；of 片語放在「標準」前。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>even for a star of his generation.</code>（讓步補充）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「即使對他這樣的世代巨星也是如此」。even for 譯「即使對……也」；補「也是如此」讓補充句完整。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（記住）➔ 語塊 2（地位並不是衡量成功的唯一標準）➔ 語塊 3（即使對他這樣的世代巨星也是如此）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：記住，地位並不是衡量成功的唯一標準，即使對他這樣的世代巨星也是如此。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：even for N ➔ 接在後面補「即使對……也是如此」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">Remember 先翻「記住」，接著直接說內容。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到句尾的「even for + N」時，接在最後補「即使對……也是如此」：</strong>「即使對他這樣的世代巨星也是如此」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：a star of his generation 譯「世代巨星」，比「他那一代的明星」更精簡。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：記住，地位並不是衡量成功的唯一標準，即使對他這樣的世代巨星也是如此。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">that（名詞子句）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：祈使句＋that 名詞子句。</div>
+              <div>• 大考命題點：Remember that＋子句；the only measure of N。</div>
+            </div>
+            <div class="conj-title-main">that 往左看是 Remember ➔ 名詞子句</div>
+            <div class="conj-desc">
+              👉 眼睛往左看——<code>Remember</code> 是動詞；往右看——<code>status is not the only measure of success</code> 完整句 ➔ 名詞子句，that 可省。<br/>👉 對比 <code>remember to V</code>（記得去做）／<code>remember V-ing</code>（記得做過）／<code>remember that S + V</code>（記住一件事）三種用法。<br/>第二人稱文章結尾很常用 <code>Remember that ...</code> 直接給讀者一句提醒。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：remember to V／V-ing／that 子句，三種意思不同。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">Remember</span><span class="c-zh">記住</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 名詞子句</span><span class="c-en">that status is not the only measure of success,</span><span class="c-zh">地位並不是衡量成功的唯一標準</span></div>
+          <div class="chunk m"><span class="c-role">[M] 讓步補充</span><span class="c-en">even for a star of his generation.</span><span class="c-zh">即使對他這樣的世代巨星也是如此</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>the only measure of N</code>；<code>remember that S + V</code>（記住一件事）。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>提醒讀者：<code>Remember that ... is not the only ...</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S11</span>
+          <div class="sent-en">
+            <span class="gram-term">If</span> you stay kind and keep going, you can <span class="gram-term">remain</span> an <span class="key-term">inspiration</span> to the people around you.
+            <div class="sent-zh">只要你保持善良、持續前進，你也能一直是身邊的人的榜樣。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('If you stay kind and keep going, you can remain an inspiration to the people around you.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('If you stay kind and keep going, you can remain an inspiration to the people around you.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>you (S) + can remain (V) + an inspiration (C)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>If 子句用現在簡單式 stay／keep，表一般條件；can remain 表可能。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>If you stay kind and keep going</code> 是條件副詞子句；<code>to the people around you</code> 修飾 inspiration。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>英文 If 在前，中文照順序；to the people around you 提到「榜樣」前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>remain + N</code>、<code>stay + Adj.</code> 都是連綴動詞；<code>keep V-ing</code>（持續做）；<code>an inspiration to sb</code>（某人的榜樣）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「如果你保持善良和保持去，你可以保持一個啟發給在你周圍的人們」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>If you stay kind and keep going,</code>（條件副詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「只要你保持善良、持續前進」。If 在勉勵語氣中譯「只要」更有力；stay kind 譯「保持善良」；keep going 譯「持續前進」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>you can remain an inspiration</code>（主句（連綴動詞））</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你也能一直是……的榜樣」。remain 譯「一直是」；補「也」呼應全文的霍蘭德。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>to the people around you.</code>（介系詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】放到「榜樣」前：「身邊的人的榜樣」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1（只要你保持善良、持續前進）➔ 語塊 2 前半（你也能一直是）➔ 語塊 3 提前（身邊的人的）➔ 榜樣</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：只要你保持善良、持續前進，你也能一直是【身邊的人的】榜樣。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：If 勉勵句譯「只要……就／也能……」；an inspiration to sb ➔「某人的榜樣」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">If 子句先翻，勉勵語氣用「只要」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到「an inspiration to + 人」時，先翻人，再翻「榜樣」：</strong>「身邊的人的榜樣」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：remain 在這裡譯「一直是」，強調持續；主句補「也」把讀者和霍蘭德連起來。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：只要你保持善良、持續前進，你也能一直是身邊的人的榜樣。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">If（條件副詞子句）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複合句，If 條件子句＋主句。</div>
+              <div>• 大考命題點：stay／remain 連綴動詞；keep V-ing；an inspiration to sb。</div>
+            </div>
+            <div class="conj-title-main">If 子句裡兩個動詞，主句一個連綴動詞</div>
+            <div class="conj-desc">
+              👉 <code>If</code>：句首條件子句，子句內 and 連接 <code>stay kind</code> 和 <code>keep going</code>。<br/>👉 <code>stay kind</code>、<code>remain an inspiration</code>：stay、remain 都是連綴動詞，後面接形容詞或名詞，不接副詞：✗ stay kindly。<br/>👉 <code>keep going</code>：keep 後接 V-ing（持續做），✗ keep to go。<br/>一句話三個學測考點，作文結尾直接套用。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：stay／remain + Adj.／N；keep + V-ing。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 條件子句</span><span class="c-en">If you stay kind and keep going,</span><span class="c-zh">只要你保持善良、持續前進</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 連綴動詞</span><span class="c-en">can remain</span><span class="c-zh">也能一直是</span></div>
+          <div class="chunk o"><span class="c-role">[C] 補語</span><span class="c-en">an inspiration</span><span class="c-zh">榜樣</span></div>
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語</span><span class="c-en">to the people around you.</span><span class="c-zh">身邊的人的</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>stay／remain／keep + Adj.</code>；<code>keep + V-ing</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>勵志結尾：<code>If you ..., you can remain an inspiration to ...</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-quiz" class="section-title">🎯 四、15 題大考實戰檢測（針對本篇第二人稱代入改寫版）</div>
+    <div class="card">
+
+      <div class="para-badge" style="background:var(--blue);margin-top:0;">Part A｜第一部分：克漏字綜合測驗 (Cloze Test, 第 1–5 題)</div>
+      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:1.2rem;font-size:1.02rem;line-height:1.85;">
+        Imagine you are asked to give a speech in front of the whole school. You might find it <strong><u>(1)</u></strong> at first, but don't give up. Think of the students <strong><u>(2)</u></strong> in the audience as friends, not judges. Practicing every day will <strong><u>(3)</u></strong> your confidence. Next time, you may even want to <strong><u>(4)</u></strong> a bigger challenge. Remember that hard work, not luck, is what <strong><u>(5)</u></strong> real progress.
+      </div>
+      <div class="quiz-q">
+        <p><strong>1. 請選出最適合填入 <u>(1)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(A) frustrate</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(B) frustrated</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 1)">(C) frustrating</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(D) frustration</button>
+        <div id="q1-exp" class="quiz-exp">✅ <strong>正解 (C) frustrating</strong>！<code>find it + Adj.</code>：it 指演講這件事 ➔ frustrating（令人挫折的）。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>2. 請選出最適合填入 <u>(2)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 2)">(A) sitting</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(B) sat</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(C) to sit</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(D) sits</button>
+        <div id="q2-exp" class="quiz-exp">✅ <strong>正解 (A) sitting</strong>！N＋V-ing：<code>the students (who are) sitting in the audience</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>3. 請選出最適合填入 <u>(3)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(A) rise</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(B) remain</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(C) reflect</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 3)">(D) expand</button>
+        <div id="q3-exp" class="quiz-exp">✅ <strong>正解 (D) expand</strong>！<code>expand your confidence</code>：讓信心擴大。remain、rise 不及物，不接受詞。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>4. 請選出最適合填入 <u>(4)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(A) set up</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 4)">(B) take on</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(C) give up</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(D) call off</button>
+        <div id="q4-exp" class="quiz-exp">✅ <strong>正解 (B) take on</strong>！<code>take on a challenge</code>：接下挑戰；give up 和前文「別放棄」矛盾。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>5. 請選出最適合填入 <u>(5)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(A) reflecting</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(B) reflect</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 5)">(C) reflects</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(D) is reflected</button>
+        <div id="q5-exp" class="quiz-exp">✅ <strong>正解 (C) reflects</strong>！<code>what reflects real progress</code>：what 子句缺主詞，動詞用單數 reflects。</div>
+      </div>
+      <div class="para-badge" style="background:var(--purple);margin-top:2rem;">Part B｜第二部分：文意字彙與片語搭配 (第 6–9 題)</div>
+      <div class="quiz-q">
+        <p><strong>6. Many people of my parents' ________ grew up without smartphones.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(A) charity</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(B) status</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(C) craft</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 6)">(D) generation</button>
+        <div id="q6-exp" class="quiz-exp">✅ <strong>正解 (D) generation</strong>！<code>people of one's generation</code>：某一世代的人。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>7. The painter spent thirty years improving her ________, and her works are now in major museums.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(A) status</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 7)">(B) craft</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(C) generation</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(D) charity</button>
+        <div id="q7-exp" class="quiz-exp">✅ <strong>正解 (B) craft</strong>！藝術家磨練「技藝」：<code>improve one's craft</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>8. Our club held a bake sale and gave all the money to a local ________.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 8)">(A) charity</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(B) craft</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(C) status</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(D) generation</button>
+        <div id="q8-exp" class="quiz-exp">✅ <strong>正解 (A) charity</strong>！把錢捐給「慈善團體」：<code>a local charity</code>（可數）。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>9. The teacher encouraged us to use our ________ and design a new kind of school bag.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(A) generation</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(B) status</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 9)">(C) creativity</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(D) commitment</button>
+        <div id="q9-exp" class="quiz-exp">✅ <strong>正解 (C) creativity</strong>！設計新書包需要「創造力」：<code>use one's creativity</code>。</div>
+      </div>
+      <div class="para-badge" style="background:var(--orange);margin-top:2rem;">Part C｜第三部分：重要文法與中翻英除錯 (第 10–12 題)</div>
+      <div class="quiz-q">
+        <p><strong>10. 下列哪一句文法正確？</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(A) My parents never let me giving up.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(B) My parents never let me to give up.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(C) My parents never allowed me give up.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 10)">(D) My parents never let me give up.</button>
+        <div id="q10-exp" class="quiz-exp">✅ <strong>正解 (D) My parents never let me give up.</strong>！<code>let + O + 原形</code>；allow 才要接 to V。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>11. 下列哪一句文法正確？</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 11)">(A) That is exactly what I needed.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(B) That is exactly that I needed.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(C) That is exactly which I needed.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(D) That is exactly the thing what I needed.</button>
+        <div id="q11-exp" class="quiz-exp">✅ <strong>正解 (A) That is exactly what I needed.</strong>！前面沒有名詞、needed 缺受詞 ➔ <code>what</code>（＝the thing that）。已有 the thing 就不能再用 what。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>12. 「如果你想成長，就試著接下一開始看起來很難的任務。」最佳英譯是：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(A) If you will want to grow, try to take on tasks that seem difficult at first.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 12)">(B) If you want to grow, try to take on tasks that seem difficult at first.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(C) If you want to grow, try to take on tasks that seem difficultly at first.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(D) If you want to grow, try to take tasks on that seems difficult at first.</button>
+        <div id="q12-exp" class="quiz-exp">✅ <strong>正解 (B) If you want to grow, try to take on tasks that seem difficult at first.</strong>！條件句用現在式；seem 是連綴動詞接形容詞；tasks 複數用 seem。</div>
+      </div>
+      <div class="para-badge" style="background:var(--green);margin-top:2rem;">Part D｜第四部分：大考閱讀測驗 (第 13–15 題)</div>
+      <div class="quiz-q">
+        <p><strong>13. According to the passage, how did Holland see his restless energy?</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(A) As a problem for his parents.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(B) As a reason to stop acting.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(C) As something to hide.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 13)">(D) As a source of creativity.</button>
+        <div id="q13-exp" class="quiz-exp">✅ <strong>正解 (D) As a source of creativity.</strong>！<em>he learned to see his restless energy as a source of creativity.</em></div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>14. What does the writer say about Holland's success?</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(A) It depended only on his status.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(B) It came mostly from good luck.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 14)">(C) It reflects practice and commitment, not just luck.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(D) It started after he set up a school.</button>
+        <div id="q14-exp" class="quiz-exp">✅ <strong>正解 (C) It reflects practice and commitment, not just luck.</strong>！<em>His success reflects years of practice and a deep commitment to his craft, not just luck.</em></div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>15. What is the main purpose of this passage?</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(A) To list all of Holland's films.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 15)">(B) To encourage readers to grow by learning from Holland.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(C) To explain how to become a movie star.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(D) To criticize superhero films.</button>
+        <div id="q15-exp" class="quiz-exp">✅ <strong>正解 (B) To encourage readers to grow by learning from Holland.</strong>！全文用 you 引導讀者從霍蘭德的經歷學習成長，結尾 <em>you can remain an inspiration</em>。</div>
+      </div>
+
+      <div class="score-bar"><span id="score-text">得分：0 / 15</span><button onclick="resetQuiz()">🔄 重新作答</button></div>
+    </div>
+
+  </div>
+
+  <script>
+    const paras = [
+      "Imagine you are a teenager who finds reading and spelling frustrating every single day. You might feel that these challenges will decide your future, but Tom Holland's story shows you a different path. Like you, he struggled at school, yet he never let dyslexia or ADHD define him.",
+      "Instead, he learned to see his restless energy as a source of creativity. If you want to grow, try to take on tasks that seem difficult at first. That is exactly what Holland did when he expanded his range beyond superhero films. Picture the young actor standing in front of the camera, full of dynamic energy. His success reflects years of practice and a deep commitment to his craft, not just luck.",
+      "You can also help others, just as Holland supports charity work and hopes to set up a free school. Remember that status is not the only measure of success, even for a star of his generation. If you stay kind and keep going, you can remain an inspiration to the people around you."
+    ];
+    let isFullAudioPlaying = false;
+    let currentFontSize = 1.14;
+
+    function toggleReaderZh() {
+      document.body.classList.toggle('hide-reader-zh');
+      document.getElementById('btn-reader-zh').classList.toggle('active');
+    }
+
+    function changeFontSize(delta) {
+      currentFontSize = Math.max(0.9, Math.min(1.6, currentFontSize + delta * 0.1));
+      document.documentElement.style.setProperty('--reader-font-size', currentFontSize + 'rem');
+    }
+
+    function resetFullBtn() {
+      isFullAudioPlaying = false;
+      const btn = document.getElementById('btn-full-audio');
+      if (btn) { btn.innerHTML = '🔊 播放全文朗讀'; btn.classList.remove('active'); }
+    }
+
+    function toggleFullAudio() {
+      if (!('speechSynthesis' in window)) return;
+      if (isFullAudioPlaying) { window.speechSynthesis.cancel(); resetFullBtn(); return; }
+      window.speechSynthesis.cancel();
+      paras.forEach((t, i) => {
+        const u = new SpeechSynthesisUtterance(t);
+        u.lang = 'en-US';
+        u.rate = 0.9;
+        if (i === paras.length - 1) { u.onend = resetFullBtn; }
+        u.onerror = resetFullBtn;
+        window.speechSynthesis.speak(u);
+      });
+      isFullAudioPlaying = true;
+      const btn = document.getElementById('btn-full-audio');
+      btn.innerHTML = '⏹️ 停止朗讀';
+      btn.classList.add('active');
+    }
+
+    function speak(text, rate) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      resetFullBtn();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.rate = rate || 0.95;
+      window.speechSynthesis.speak(u);
+    }
+
+    function speakPara(i) { speak(paras[i], 0.9); }
+
+    const answered = {};
+    let score = 0;
+    function checkAns(btn, isCorrect, qNum) {
+      if (answered[qNum]) return;
+      answered[qNum] = true;
+      const box = btn.closest('.quiz-q');
+      box.querySelectorAll('.quiz-btn').forEach(b => {
+        b.disabled = true;
+        if ((b.getAttribute('onclick') || '').includes('true')) b.classList.add('correct');
+      });
+      if (isCorrect) { score++; } else { btn.classList.add('wrong'); }
+      document.getElementById('q' + qNum + '-exp').style.display = 'block';
+      document.getElementById('score-text').textContent = '得分：' + score + ' / 15';
+    }
+
+    function resetQuiz() {
+      for (const k in answered) delete answered[k];
+      score = 0;
+      document.querySelectorAll('.quiz-btn').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+      document.querySelectorAll('.quiz-exp').forEach(e => { e.style.display = 'none'; });
+      document.getElementById('score-text').textContent = '得分：0 / 15';
+    }
+
+    let allMasterTransOpen = false;
+    function toggleAllMasterTrans() {
+      allMasterTransOpen = !allMasterTransOpen;
+      document.querySelectorAll('.sent-card .master-trans-details').forEach(d => { d.open = allMasterTransOpen; });
+      const btn = document.getElementById('btn-toggle-master-trans');
+      if (btn) {
+        btn.textContent = allMasterTransOpen ? '👨‍🏫 一鍵收合名師翻譯拆解' : '👨‍🏫 一鍵展開名師翻譯拆解';
+        btn.classList.toggle('active', allMasterTransOpen);
+      }
+    }
+    let allConjOpen = false;
+    function toggleAllConj() {
+      allConjOpen = !allConjOpen;
+      document.querySelectorAll('.conj-box').forEach(d => { d.open = allConjOpen; });
+      const btn = document.getElementById('toggle-conj-btn');
+      if (btn) {
+        btn.textContent = allConjOpen ? '🔗 一鍵收合所有連接詞解析' : '🔗 一鍵展開所有連接詞解析';
+        btn.classList.toggle('active', allConjOpen);
+      }
+    }
+  </script>
+</body>
+</html>
