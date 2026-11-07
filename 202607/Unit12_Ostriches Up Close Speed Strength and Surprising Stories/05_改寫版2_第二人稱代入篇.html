@@ -1,0 +1,2903 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>202607 Unit 12｜改寫版2 第二人稱代入篇</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --ink: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --blue: #2563eb;
+      --blue-bg: #eff6ff;
+      --blue-border: #bfdbfe;
+      --orange: #ea580c;
+      --orange-bg: #fff7ed;
+      --orange-border: #fed7aa;
+      --green: #059669;
+      --green-bg: #ecfdf5;
+      --green-border: #a7f3d0;
+      --purple: #7c3aed;
+      --purple-bg: #f5f3ff;
+      --purple-border: #ddd6fe;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --yellow-hl: #fef08a;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      padding-bottom: 4rem;
+    }
+
+    /* HERO HEADER */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 60%, #6366f1 100%);
+      color: #fff;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+    .pill {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.25rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .pill.gold {
+      background: #fbbf24;
+      color: #1e293b;
+    }
+    .hero h1 {
+      margin: 0.2rem 0;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+    .hero h2 {
+      margin: 0.3rem 0 0;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 500;
+      color: #e0e7ff;
+    }
+
+    /* STICKY NAV */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 12px rgba(15,23,42,0.05);
+    }
+    .nav-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .nav-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      transform: translateY(-1px);
+    }
+    .nav-btn.primary {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.4rem;
+      font-weight: 900;
+      margin: 2.2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid var(--blue);
+      color: #0f172a;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+    }
+
+    /* 4-PANEL COMIC STORYBOARD */
+    .infographic-img {
+      width: 100%;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .storyboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .story-panel {
+      border-radius: 14px;
+      padding: 1.1rem;
+      position: relative;
+      border: 2px solid transparent;
+    }
+    .story-panel.p1 { background: var(--blue-bg); border-color: var(--blue-border); }
+    .story-panel.p2 { background: var(--orange-bg); border-color: var(--orange-border); }
+    .story-panel.p3 { background: var(--red-bg); border-color: #fecaca; }
+    .story-panel.p4 { background: var(--green-bg); border-color: var(--green-border); }
+    .panel-step {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.15rem 0.55rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+      background: rgba(255,255,255,0.8);
+    }
+    .panel-icon {
+      font-size: 2rem;
+      float: right;
+      line-height: 1;
+    }
+    .story-panel h4 {
+      margin: 0.2rem 0 0.4rem;
+      font-size: 1.08rem;
+      font-weight: 800;
+    }
+    .story-panel p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #334155;
+    }
+    .eng-tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: #fff;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      font-family: "Segoe UI", monospace;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--blue);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    /* SENTENCE CHUNKING & COLOR BLOCKS */
+    .control-bar {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: center;
+      background: #f8fafc;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      margin-bottom: 1.2rem;
+      border: 1px solid var(--border);
+    }
+    .toggle-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .toggle-btn.active {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .para-badge {
+      display: inline-block;
+      background: #1e293b;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.25rem 0.8rem;
+      border-radius: 8px;
+      margin: 1rem 0 0.8rem;
+    }
+
+    .sent-card {
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 1.2rem;
+      background: #fff;
+      transition: all 0.2s;
+    }
+    .sent-card:hover {
+      border-color: #93c5fd;
+    }
+    .sent-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+    .sent-num {
+      background: var(--blue-bg);
+      color: var(--blue);
+      font-weight: 900;
+      font-size: 0.85rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 8px;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+    .sent-en {
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: #0f172a;
+      flex: 1;
+      line-height: 1.6;
+    }
+    .sent-zh {
+      margin-top: 0.45rem;
+      font-size: 1rem;
+      color: #475569;
+      padding-left: 0.5rem;
+      border-left: 3px solid #cbd5e1;
+    }
+    body.hide-zh .sent-zh { display: none; }
+
+    /* Cloze Mask Mode */
+    .key-term {
+      background: var(--yellow-hl);
+      padding: 0 5px;
+      border-radius: 5px;
+      font-weight: 800;
+      color: #9a3412;
+      transition: all 0.2s;
+    }
+    body.cloze-mode .key-term {
+      background: #cbd5e1;
+      color: transparent;
+      cursor: pointer;
+      user-select: none;
+    }
+    body.cloze-mode .key-term:hover {
+      background: var(--yellow-hl);
+      color: #9a3412;
+    }
+
+    .audio-btn {
+      border: none;
+      background: var(--blue-bg);
+      color: var(--blue);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 1.05rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .audio-btn:hover {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    /* VISUAL SENTENCE BLOCKS (積木拆句) */
+    .chunk-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.9rem 0;
+      align-items: stretch;
+    }
+    .chunk {
+      border-radius: 10px;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid transparent;
+    }
+    .chunk .c-role {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 0.15rem;
+      opacity: 0.85;
+    }
+    .chunk .c-en {
+      font-weight: 800;
+      font-family: "Segoe UI", sans-serif;
+    }
+    .chunk .c-zh {
+      font-size: 0.8rem;
+      margin-top: 0.1rem;
+    }
+    .chunk.s { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .chunk.v { background: #fff1f2; border-color: #fecdd3; color: #be123c; }
+    .chunk.o { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .chunk.m { background: #f5f3ff; border-color: #ddd6fe; color: #6d28d9; }
+    .chunk.c { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+
+    /* GRAMMAR & TRANSLATION TIPS GRID */
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 0.85rem;
+      margin-top: 0.8rem;
+    }
+    .insight-box {
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.92rem;
+    }
+    .insight-box.grammar {
+      background: #f8fafc;
+      border-left: 4px solid var(--blue);
+    }
+    .insight-box.trans {
+      background: #fffbeb;
+      border-left: 4px solid var(--orange);
+    }
+    .insight-title {
+      font-weight: 800;
+      font-size: 0.88rem;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* VISUAL GRAMMAR DIAGRAMS */
+    .diagram-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.2rem;
+    }
+    .diagram-card {
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.3rem;
+      background: #fff;
+    }
+    .formula-box {
+      background: #1e293b;
+      color: #fff;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      font-family: "Segoe UI", monospace;
+      font-size: 0.95rem;
+      margin: 0.75rem 0;
+      text-align: center;
+      font-weight: 700;
+    }
+    .formula-box span.hi {
+      color: #fbbf24;
+    }
+    .vs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin-top: 0.6rem;
+    }
+    .vs-table th, .vs-table td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+    }
+    .vs-table th {
+      background: #f1f5f9;
+      font-weight: 800;
+    }
+
+    /* VOCABULARY VISUAL CARDS */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.2rem;
+    }
+    .v-card {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .v-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+    }
+    .v-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+    .v-word {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--blue);
+    }
+    .v-kk {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-family: "Lucida Sans Unicode", sans-serif;
+    }
+    .v-meaning {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+    }
+    .v-pos {
+      background: var(--purple-bg);
+      color: var(--purple);
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      margin-right: 0.4rem;
+    }
+    .v-hook {
+      background: var(--orange-bg);
+      border: 1px dashed var(--orange);
+      border-radius: 10px;
+      padding: 0.65rem 0.8rem;
+      font-size: 0.88rem;
+      margin: 0.6rem 0;
+    }
+    .v-colloc {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 0.65rem 0.8rem;
+      font-size: 0.86rem;
+    }
+
+    /* QUIZ */
+    .quiz-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.8rem 1rem;
+      margin: 0.45rem 0;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .quiz-btn:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
+    .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
+    .quiz-exp {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      background: var(--green-bg);
+      color: #065f46;
+      font-size: 0.9rem;
+    }
+    /* FULL TEXT IMMERSIVE READER */
+    .reader-card {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 1.8rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+    }
+    .reader-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 1.4rem;
+    }
+    .reader-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: #f1f5f9;
+      padding: 0.35rem;
+      border-radius: 12px;
+    }
+    .reader-tab {
+      border: none;
+      background: transparent;
+      padding: 0.5rem 1rem;
+      border-radius: 9px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .reader-tab.active {
+      background: #fff;
+      color: var(--blue);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .reader-tools {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .reader-panel { display: none; }
+    .reader-panel.active { display: block; }
+    .reader-para {
+      margin-bottom: 1.4rem;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      background: #fafcff;
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s;
+    }
+    .reader-para:hover {
+      background: #f0f7ff;
+      border-color: #bfdbfe;
+    }
+    .reader-en {
+      font-size: var(--reader-font-size, 1.14rem);
+      line-height: 1.85;
+      color: #0f172a;
+      font-weight: 500;
+    }
+    .reader-zh {
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px dashed #cbd5e1;
+      color: #475569;
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+    body.hide-reader-zh .reader-zh { display: none; }
+  
+    /* CONJUNCTION / CLAUSE BOX (COLLAPSIBLE) */
+    details.conj-box {
+      margin-top: 0.75rem;
+      background: #faf5ff;
+      border: 1.5px solid #d8b4fe;
+      border-radius: 10px;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.88rem;
+    }
+    details.conj-box[open] {
+      padding-bottom: 0.85rem;
+    }
+    details.conj-box summary.conj-title {
+      font-weight: 800;
+      color: #6d28d9;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      list-style: none;
+      margin: 0;
+      padding: 0.1rem 0;
+    }
+    details.conj-box summary.conj-title::-webkit-details-marker {
+      display: none;
+    }
+    details.conj-box[open] summary.conj-title {
+      margin-bottom: 0.6rem;
+      border-bottom: 1px dashed #d8b4fe;
+      padding-bottom: 0.45rem;
+    }
+        details.conj-box .conj-arrow {
+      font-size: 0.82rem;
+      color: #7c3aed;
+      font-weight: 600;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    details.conj-box[open] .conj-arrow {
+      transform: rotate(180deg);
+    }
+    .conj-word-preview {
+      background: #7c3aed;
+      color: #fff;
+      font-size: 0.75rem;
+      font-family: Consolas, monospace;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .conj-item {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed #e9d5ff;
+    }
+    .conj-item:first-of-type {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+    .conj-word {
+      font-family: Consolas, monospace;
+      font-weight: 800;
+      color: #7c3aed;
+      background: #ede9fe;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      height: fit-content;
+    }
+    .conj-type {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #5b21b6;
+      background: #f3e8ff;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 0.25rem;
+    }
+    .conj-concept {
+      background: #ffffff;
+      border: 1px solid #c084fc;
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #4c1d95;
+      line-height: 1.55;
+      box-shadow: 0 2px 6px rgba(124, 58, 237, 0.06);
+    }
+    .conj-concept strong {
+      color: #6b21a8;
+    }
+
+    /* MASTER TEACHER TRANSLATION WALKTHROUGH */
+    .master-trans-details {
+      margin-top: 0.7rem;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .master-trans-details[open] {
+      border-color: #4ade80;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.08);
+    }
+    .master-trans-summary {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.9rem;
+      cursor: pointer;
+      background: #f0fdf4;
+      user-select: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #166534;
+    }
+    .master-trans-summary:hover {
+      background: #dcfce7;
+    }
+    .master-trans-summary::-webkit-details-marker {
+      display: none;
+    }
+    .master-badge {
+      background: #16a34a;
+      color: #ffffff;
+      padding: 0.12rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .master-summary-text {
+      flex: 1;
+    }
+        .master-arrow {
+      font-size: 0.75rem;
+      color: #16a34a;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    .master-trans-details[open] .master-arrow {
+      transform: rotate(180deg);
+    }
+    .master-trans-body {
+      padding: 0.85rem 1rem;
+      background: #ffffff;
+      border-top: 1px dashed #bbf7d0;
+      font-size: 0.87rem;
+      line-height: 1.65;
+      color: #1e293b;
+    }
+    .master-step {
+      margin-bottom: 0.65rem;
+      padding-left: 0.5rem;
+      border-left: 3px solid #22c55e;
+    }
+    .master-step:last-child {
+      margin-bottom: 0;
+    }
+    .m-step-tag {
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      margin-right: 0.35rem;
+      display: inline-block;
+    }
+    .m-step-tag.s1 { background: #dbeafe; color: #1e40af; }
+    .m-step-tag.s2 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s3 { background: #ede9fe; color: #5b21b6; }
+    .m-step-tag.s4 { background: #ffedd5; color: #9a3412; }
+    .m-step-tag.s5 { background: #dcfce7; color: #166534; }
+    .m-step-tag.s6 { background: #fee2e2; color: #991b1b; }
+
+    /* Concept Banner Details */
+    .concept-banner-details {
+      background: #f5f3ff !important;
+      border: 1.5px solid #c4b5fd !important;
+      border-radius: 12px !important;
+      margin-bottom: 1.2rem !important;
+    }
+    .concept-banner-details[open] {
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.12) !important;
+    }
+    .concept-banner-summary {
+      background: #ede9fe !important;
+      color: #5b21b6 !important;
+      font-size: 0.95rem !important;
+      font-weight: 800 !important;
+      padding: 0.75rem 1.1rem !important;
+    }
+    .concept-banner-body {
+      background: #ffffff !important;
+      border-top: 1px dashed #c4b5fd !important;
+      padding: 1.2rem !important;
+      font-size: 0.9rem !important;
+      line-height: 1.65 !important;
+    }
+
+  
+    /* CROSS-VERSION SWITCHER */
+    .rewrite-bar {
+      background: #fff;
+      border: 2px solid #bae6fd;
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      align-items: center;
+    }
+    .rewrite-pill {
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 700;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: #0f172a;
+      transition: all 0.15s;
+    }
+    .rewrite-pill:hover {
+      background: #2563eb;
+      color: #fff;
+      border-color: #2563eb;
+    }
+    @media print { .rewrite-bar { display: none !important; } }
+
+    /* V4：正常／慢速雙按鈕（覆蓋舊版 36px 圓形按鈕） */
+    .audio-group { display: flex; gap: 0.35rem; flex-shrink: 0; align-self: flex-start; }
+    .audio-group .audio-btn { width: auto; height: auto; border-radius: 999px; padding: 0.35rem 0.65rem; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+    .audio-group .audio-btn.slow { background: #f1f5f9; color: #475569; }
+      @media (max-width: 640px) { .sent-top { flex-wrap: wrap; } .audio-group { margin-left: auto; } }
+    @media (max-width: 640px) { .insight-grid { grid-template-columns: minmax(0, 1fr); } .insight-box { overflow-wrap: anywhere; } }
+    @media (max-width: 640px) { .diagram-grid, .vocab-grid, .ln-grid { grid-template-columns: minmax(0, 1fr); } [style*="grid-template-columns: repeat(auto-"] { grid-template-columns: minmax(0, 1fr) !important; } .control-bar > div { flex-wrap: wrap; } a[style*="nowrap"], .toggle-btn { white-space: normal !important; } .diagram-card, .ln-card, .vocab-card, .v-card, .formula-box, .ln-formula, .vs-table th, .vs-table td, .compare-table th, .compare-table td { overflow-wrap: anywhere; } .vs-table th, .vs-table td { padding-left: 0.4rem; padding-right: 0.4rem; } }
+  
+    /* V4：正常／慢速雙按鈕（覆蓋舊版 36px 圓形按鈕） */
+    .audio-group { display: flex; gap: 0.35rem; flex-shrink: 0; align-self: flex-start; }
+    .audio-group .audio-btn { width: auto; height: auto; border-radius: 999px; padding: 0.35rem 0.65rem; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+    .audio-group .audio-btn.slow { background: #f1f5f9; color: #475569; }
+    @media (max-width: 640px) { .sent-top { flex-wrap: wrap; } .audio-group { margin-left: auto; } }
+    @media (max-width: 640px) { .insight-grid { grid-template-columns: minmax(0, 1fr); } .insight-box { overflow-wrap: anywhere; } }
+    @media (max-width: 640px) { .diagram-grid, .vocab-grid, .ln-grid { grid-template-columns: minmax(0, 1fr); } [style*="grid-template-columns: repeat(auto-"] { grid-template-columns: minmax(0, 1fr) !important; } .control-bar > div { flex-wrap: wrap; } a[style*="nowrap"], .toggle-btn { white-space: normal !important; } .diagram-card, .ln-card, .vocab-card, .v-card, .formula-box, .ln-formula, .vs-table th, .vs-table td, .compare-table th, .compare-table td { overflow-wrap: anywhere; } .vs-table th, .vs-table td { padding-left: 0.4rem; padding-right: 0.4rem; } }
+
+    /* ===== V4 句卡元件（名師拆解 Step 1~7／連接詞框） ===== */
+    .conj-box { margin-top: 0.75rem; background: #faf5ff; border: 1.5px solid #d8b4fe; border-radius: 10px; padding: 0.55rem 0.9rem; font-size: 0.88rem; }
+    details.conj-box[open] { padding-bottom: 0.85rem; }
+    details.conj-box summary.conj-title { font-weight: 800; color: #6d28d9; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; list-style: none; margin: 0; padding: 0.1rem 0; }
+    details.conj-box summary.conj-title::-webkit-details-marker { display: none; }
+    details.conj-box[open] summary.conj-title { margin-bottom: 0.6rem; border-bottom: 1px dashed #d8b4fe; padding-bottom: 0.45rem; }
+    details.conj-box .conj-arrow { font-size: 0.82rem; color: #7c3aed; display: inline-block; transition: transform 0.2s ease; }
+    details.conj-box[open] .conj-arrow { transform: rotate(180deg); }
+    .conj-word-preview { background: #7c3aed; color: #fff; font-size: 0.75rem; font-family: Consolas, monospace; padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700; }
+    .conj-concept { background: #fff; border: 1px solid #c084fc; border-radius: 8px; padding: 0.65rem 0.85rem; margin-top: 0.5rem; font-size: 0.85rem; color: #4c1d95; line-height: 1.55; box-shadow: 0 2px 6px rgba(124,58,237,0.06); }
+    .conj-concept strong { color: #6b21a8; }
+    .conj-meta-list { margin-bottom: 0.5rem; padding-bottom: 0.45rem; border-bottom: 1px dashed #d8b4fe; font-size: 0.85rem; color: #6b21a8; line-height: 1.6; }
+    .conj-title-main { font-weight: 800; color: #5b21b6; margin-bottom: 0.35rem; font-size: 0.9rem; }
+    .conj-desc { font-size: 0.86rem; color: #334155; line-height: 1.65; margin-bottom: 0.5rem; }
+    .conj-killer-tip { background: #faf5ff; border-left: 3px solid #9333ea; padding: 0.35rem 0.6rem; border-radius: 0 4px 4px 0; font-size: 0.84rem; color: #581c87; }
+    .master-trans-details { margin-top: 0.7rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; overflow: hidden; }
+    .master-trans-details[open] { border-color: #4ade80; box-shadow: 0 4px 12px rgba(34,197,94,0.08); }
+    .master-trans-summary { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem; cursor: pointer; background: #f0fdf4; user-select: none; font-size: 0.88rem; font-weight: 700; color: #166534; list-style: none; }
+    .master-trans-summary:hover { background: #dcfce7; }
+    .master-trans-summary::-webkit-details-marker { display: none; }
+    .master-badge { background: #16a34a; color: #fff; padding: 0.12rem 0.5rem; border-radius: 6px; font-size: 0.74rem; font-weight: 800; white-space: nowrap; }
+    .master-summary-text { flex: 1; }
+    .master-arrow { font-size: 0.75rem; color: #16a34a; display: inline-block; transition: transform 0.2s ease; }
+    .master-trans-details[open] > summary .master-arrow { transform: rotate(180deg); }
+    .master-trans-body { padding: 0.85rem 1rem; background: #fff; border-top: 1px dashed #bbf7d0; font-size: 0.87rem; line-height: 1.65; color: #1e293b; }
+    .master-step { margin-bottom: 0.65rem; padding-left: 0.5rem; border-left: 3px solid #22c55e; }
+    .master-step:last-child { margin-bottom: 0; }
+    .m-step-tag { font-weight: 800; font-size: 0.75rem; padding: 0.1rem 0.4rem; border-radius: 4px; margin-right: 0.35rem; display: inline-block; }
+    .m-step-tag.s1 { background: #dbeafe; color: #1e40af; }
+    .m-step-tag.s2 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s3 { background: #ede9fe; color: #5b21b6; }
+    .m-step-tag.s4 { background: #ffedd5; color: #9a3412; }
+    .m-step-tag.s5 { background: #dcfce7; color: #166534; }
+    @media print { .audio-group, .control-bar { display: none !important; } .sent-card { break-inside: avoid; } }
+
+    /* ===== Unit 1 新頁補充 ===== */
+    .gram-term { background: #ede9fe; color: #5b21b6; padding: 0 0.15rem; border-radius: 3px; font-weight: 700; }
+    .hl-v { background: #fef08a; padding: 0 0.15rem; border-radius: 3px; }
+    .hl-g { background: #ede9fe; padding: 0 0.15rem; border-radius: 3px; }
+    .img-placeholder { display: none; align-items: center; justify-content: center; aspect-ratio: 16 / 9; width: 100%; border: 2px dashed #cbd5e1; border-radius: 12px; background: #f8fafc; color: #64748b; font-weight: 800; font-size: 1.05rem; margin-bottom: 1rem; }
+    .para-audio { margin-top: 0.5rem; }
+    .para-audio button { font-size: 0.8rem; padding: 0.25rem 0.7rem; border-radius: 999px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer; font-weight: 700; color: #334155; }
+    .quiz-q { margin-bottom: 0.4rem; }
+    .quiz-btn:disabled { cursor: default; }
+    .score-bar { position: sticky; bottom: 0.8rem; display: flex; justify-content: center; gap: 0.8rem; align-items: center; margin-top: 1.5rem; padding: 0.7rem 1rem; background: #0f172a; color: #fff; border-radius: 999px; font-weight: 800; box-shadow: 0 6px 18px rgba(15,23,42,0.25); }
+    .score-bar button { background: #fff; color: #0f172a; border: none; border-radius: 999px; padding: 0.3rem 0.9rem; font-weight: 800; cursor: pointer; }
+    @media (max-width: 640px) { .sent-top { flex-wrap: wrap; } .audio-group { margin-left: auto; } }
+    @media (max-width: 640px) { .insight-grid { grid-template-columns: minmax(0, 1fr); } .insight-box { overflow-wrap: anywhere; } }
+    @media (max-width: 640px) { .diagram-grid, .vocab-grid, .ln-grid { grid-template-columns: minmax(0, 1fr); } [style*="grid-template-columns: repeat(auto-"] { grid-template-columns: minmax(0, 1fr) !important; } .control-bar > div { flex-wrap: wrap; } a[style*="nowrap"], .toggle-btn { white-space: normal !important; } .diagram-card, .ln-card, .vocab-card, .v-card, .formula-box, .ln-formula, .vs-table th, .vs-table td, .compare-table th, .compare-table td { overflow-wrap: anywhere; } .vs-table th, .vs-table td { padding-left: 0.4rem; padding-right: 0.4rem; } }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badges">
+      <span class="pill gold">進階改寫版二｜第二人稱 you 視角</span>
+      <span class="pill">UNIT 12 讀者代入特訓</span>
+    </div>
+    <h1>If You Met an Ostrich</h1>
+    <h2>如果你遇見一隻鴕鳥（第二人稱代入視角）</h2>
+  </header>
+
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../../index.html">🏠 首頁目錄</a>
+    <a class="nav-btn" href="./03_互動圖文學習講義.html">📖 原版主講義</a>
+    <a class="nav-btn" href="./04_改寫版1_客觀科普報導篇.html">📰 1. 客觀報導</a>
+    <a class="nav-btn" href="./05_改寫版2_第二人稱代入篇.html" style="background:#0f172a;color:#fff;border-color:#0f172a;">💬 2. 第二人稱</a>
+    <a class="nav-btn" href="./06_改寫版3_高中生故事記敘篇.html">🧑‍🎓 3. 高中生故事</a>
+    <a class="nav-btn" href="./07_改寫版4_正反論證議論文篇.html">⚖️ 4. 正反議論文</a>
+    <a class="nav-btn primary" href="#sec-story">🎨 1. 四格圖解</a>
+    <a class="nav-btn" href="#sec-fulltext">📖 2. 完整課文</a>
+    <a class="nav-btn" href="#sec-reading">🧩 3. 積木拆句</a>
+    <a class="nav-btn" href="#sec-quiz">🎯 4. 15題實戰</a>
+    <a class="nav-btn" href="./08_歷屆學測真題特訓.html" target="_blank" style="border-color:#f59e0b;color:#b45309;font-weight:800;background:#fffbeb;">🏛️ 學測15題特訓 ↗</a>
+  </nav>
+
+  <div class="container">
+
+    <div id="sec-story" class="section-title">🎨 一、30 秒看懂改寫架構：第二人稱代入四格圖解</div>
+    <div class="card">
+      <img src="./03_AI_視覺圖解講義.jpg" alt="If You Met an Ostrich 四格圖解" class="infographic-img" onerror="this.style.display='none'; document.getElementById('img-ph').style.display='flex';" />
+      <div id="img-ph" class="img-placeholder">🖼️ 四格分鏡圖解製作中</div>
+
+      <div class="storyboard">
+        <div class="story-panel p1">
+          <span class="panel-icon">👀</span>
+          <span class="panel-step">情境 · 想像站在牠面前</span>
+          <h4>1. 近距離遇見鴕鳥</h4>
+          <p>想像你站在一隻 2.7 公尺高的鴕鳥旁，你以為牠不會飛就很弱，其實牠跑得飛快。</p>
+          <span class="eng-tag">what it lacks in flight</span>
+        </div>
+        <div class="story-panel p2">
+          <span class="panel-icon">🦶</span>
+          <span class="panel-step">細看 · 腳和眼睛</span>
+          <h4>2. 看看牠的腿、腳與眼</h4>
+          <p>兩個膝蓋骨、馬蹄般的腳、致命的踢擊與大眼睛，都值得你保持距離細看。</p>
+          <span class="eng-tag">Keep your distance</span>
+        </div>
+        <div class="story-panel p3">
+          <span class="panel-icon">⏳</span>
+          <span class="panel-step">回到過去 · 羽毛與傳說</span>
+          <h4>3. 如果你住在古埃及</h4>
+          <p>你的心臟會和羽毛一起秤重；你聽過的埋頭傳說，則是對鴕鳥的誤解。</p>
+          <span class="eng-tag">you have misunderstood them</span>
+        </div>
+        <div class="story-panel p4">
+          <span class="panel-icon">💡</span>
+          <span class="panel-step">帶走 · 下一次</span>
+          <h4>4. 記住真實的鴕鳥</h4>
+          <p>下次被神話吸引時，記得鴕鳥不需要神話也很了不起。</p>
+          <span class="eng-tag">needs no myth to be remarkable</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-fulltext" class="section-title">📖 二、完整課文沉浸閱讀（If You Met an Ostrich）</div>
+    <div class="reader-card">
+      <div class="reader-header">
+        <div style="font-weight:800;color:var(--ink);font-size:1rem;">
+          💬 文體：第二人稱 you｜重點：想像句、祈使句、條件句、直接對讀者說話
+        </div>
+        <div class="reader-tools">
+          <button class="toggle-btn" id="btn-full-audio" onclick="toggleFullAudio()">🔊 播放全文朗讀</button>
+          <button class="toggle-btn active" id="btn-reader-zh" onclick="toggleReaderZh()">👁️ 顯示中文對照</button>
+          <button class="toggle-btn" onclick="changeFontSize(1)">A+ 放大</button>
+          <button class="toggle-btn" onclick="changeFontSize(-1)">A- 縮小</button>
+        </div>
+      </div>
+
+      <div class="reader-para">
+        <div class="reader-en">
+          Imagine you are standing <strong class="hl-g">up close</strong> to an <strong class="hl-v">ostrich</strong>, a bird <strong class="hl-g">like no other</strong> <strong class="hl-g">that</strong> can grow <strong class="hl-g">up to</strong> 2.7 meters tall. You may think it is weak because it cannot fly, but <strong class="hl-g">what it lacks in</strong> flight, it <strong class="hl-g">makes up for in</strong> speed: 70 kilometers per hour!
+        </div>
+        <div class="reader-zh">
+          想像你正近距離站在一隻鴕鳥旁邊，這種獨一無二的鳥可以長到 2.7 公尺高。你可能以為牠不會飛就很弱，但牠在飛行上的不足，全用速度補了回來：時速 70 公里！
+        </div>
+        <div class="para-audio"><button onclick="speakPara(0)">🔊 朗讀本段</button></div>
+      </div>
+      <div class="reader-para">
+        <div class="reader-en">
+          Look at its legs, and you will notice a <strong class="hl-v">unique</strong> <strong class="hl-v">structure</strong>: two <strong class="hl-v">kneecaps</strong> on each one. Now check its feet: You will see two toes, <strong class="hl-g">one of which</strong> has a powerful claw, and the shape <strong class="hl-v">resembles</strong> a horse's <strong class="hl-v">hoof</strong>, <strong class="hl-g">which</strong> <strong class="hl-v">enables</strong> the bird to run across sand. Keep your distance, though, because those legs have the <strong class="hl-v">strength</strong> to <strong class="hl-g">deliver a kick</strong> <strong class="hl-g">strong enough to</strong> kill a lion!
+        </div>
+        <div class="reader-zh">
+          看看牠的腿，你會發現一種獨特的構造：每條腿都有兩個膝蓋骨。再看看牠的腳：你會看到兩根腳趾，其中一根長著有力的爪子，整體形狀很像馬蹄，讓牠能在沙地上奔跑。不過，可別靠太近，因為那雙腿有力氣踢出足以踢死獅子的一擊！
+        </div>
+        <div class="para-audio"><button onclick="speakPara(1)">🔊 朗讀本段</button></div>
+      </div>
+      <div class="reader-para">
+        <div class="reader-en">
+          Then look into its eyes, <strong class="hl-g">which</strong> measure about <strong class="hl-g">five centimeters across</strong>; with such sharp <strong class="hl-v">eyesight</strong>, it will spot you from far away. <strong class="hl-g">Together with</strong> its strong legs, those eyes make it perfectly <strong class="hl-g">adapted to</strong> life on the open plains.
+        </div>
+        <div class="reader-zh">
+          然後看看牠的眼睛，直徑約五公分；憑這麼敏銳的視力，牠從遠處就能發現你。那雙眼睛加上強壯的雙腿，讓牠完美適應開闊平原上的生活。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(2)">🔊 朗讀本段</button></div>
+      </div>
+      <div class="reader-para">
+        <div class="reader-en">
+          <strong class="hl-g">If</strong> you lived in ancient Egypt, you would see an ostrich <strong class="hl-v">feather</strong> as a symbol of truth, and <strong class="hl-g">according to</strong> myth, your heart would be weighed against it <strong class="hl-g">before</strong> you could enter the <strong class="hl-v">afterlife</strong>. You might wonder <strong class="hl-g">why</strong> this feather was chosen; the answer is simple: It was <strong class="hl-v">symmetrical</strong>. You have probably heard the famous <strong class="hl-v">legend</strong> <strong class="hl-g">that</strong> ostriches bury their heads when they are scared, but if you believe it, you have <strong class="hl-v">misunderstood</strong> them. <strong class="hl-g">If</strong> you watch closely, you will see <strong class="hl-g">that</strong> they are just eating, drinking, or turning their eggs, <strong class="hl-g">going about</strong> their daily lives.
+        </div>
+        <div class="reader-zh">
+          如果你住在古埃及，就會把鴕鳥羽毛視為真理的象徵，而且根據神話，在進入來世之前，你的心臟會和它一起秤重。你可能好奇為什麼選這根羽毛；答案很簡單：它是對稱的。你大概聽過鴕鳥害怕時會把頭埋起來的著名傳說，但如果你相信，你就誤解牠們了。如果你仔細看，就會看到牠們只是在進食、喝水或翻蛋，過著日常生活。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(3)">🔊 朗讀本段</button></div>
+      </div>
+      <div class="reader-para" style="margin-bottom:0;">
+        <div class="reader-en">
+          Next time a myth <strong class="hl-g">captures</strong> your imagination, remember <strong class="hl-g">that</strong> the ostrich is <strong class="hl-g">not only</strong> one of a kind <strong class="hl-g">but also</strong> <strong class="hl-v">incredibly</strong> well suited to its environment, and it needs no myth to be <strong class="hl-v">remarkable</strong>.
+        </div>
+        <div class="reader-zh">
+          下次有神話激發你的想像力時，請記得，鴕鳥不僅獨一無二，也非常適應環境，不需要神話也足以令人讚嘆。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(4)">🔊 朗讀本段</button></div>
+      </div>
+    </div>
+
+    <div id="sec-reading" class="section-title">🧩 三、課文「積木拆句」＋ 逐句名師翻譯拆解</div>
+    <div class="card">
+      <div class="control-bar">
+        <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
+        <button class="toggle-btn active" id="btn-zh" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
+        <button class="toggle-btn" id="btn-cloze" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式（遮住黃底考點）</button>
+        <button id="toggle-conj-btn" class="toggle-btn" onclick="toggleAllConj()">🔗 一鍵展開所有連接詞解析</button>
+        <button id="btn-toggle-master-trans" class="toggle-btn" onclick="toggleAllMasterTrans()">👨‍🏫 一鍵展開名師翻譯拆解</button>
+        <span style="font-size:0.82rem;color:var(--muted);margin-left:auto;">💡 積木顏色：<strong style="color:#1e40af;">藍=主詞</strong>｜<strong style="color:#be123c;">紅=動詞</strong>｜<strong style="color:#047857;">綠=受詞/補語</strong>｜<strong style="color:#6d28d9;">紫=修飾/介片</strong>｜<strong style="color:#b45309;">黃=連接詞/子句</strong></span>
+      </div>
+
+      <details class="master-trans-details concept-banner-details" style="margin-bottom: 1.2rem;">
+        <summary class="master-trans-summary" style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border: 1.5px solid #a855f7;">
+          <span style="display: flex; align-items: center; gap: 0.5rem; flex: 1;">
+            <span style="font-size: 1.1rem;">🎓</span>
+            <span style="font-weight: 800; color: #6b21a8;">補教名師觀念大打通：</span>
+            <span style="color: #4c1d95; font-weight: 700;">為什麼有時候用「名詞子句」，有時候用「關代（形容詞子句）」？</span>
+          </span>
+          <span class="master-arrow">▼</span>
+        </summary>
+        <div class="concept-banner-body">
+          <p style="margin: 0 0 0.8rem 0; font-size: 0.95rem; font-weight: 700; color: #4c1d95;">
+            💡 判斷口訣：<strong>「左邊看有沒有先行詞名詞，右邊看子句缺不缺成分」</strong>
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+            <div style="background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 10px; padding: 0.9rem;">
+              <div style="font-weight: 800; color: #1e40af; margin-bottom: 0.4rem; font-size: 0.95rem;">📘 1. 名詞子句（Noun Clause）</div>
+              <ul style="margin: 0; padding-left: 1.2rem; color: #1e3a8a; font-size: 0.88rem; line-height: 1.6;">
+                <li><strong>左邊：</strong>動詞（say／find／believe），沒有先行詞名詞。</li>
+                <li><strong>右邊：</strong>that 後面是主詞動詞齊全的完整句。</li>
+                <li><strong>本篇：</strong><code>You may think it is weak ...</code>（think 後省略 that）／<code>you will see that they are just eating ...</code></li>
+              </ul>
+            </div>
+            <div style="background: #fdf2f8; border: 1.5px solid #f472b6; border-radius: 10px; padding: 0.9rem;">
+              <div style="font-weight: 800; color: #9d174d; margin-bottom: 0.4rem; font-size: 0.95rem;">📕 2. 關係代名詞（形容詞子句）</div>
+              <ul style="margin: 0; padding-left: 1.2rem; color: #831843; font-size: 0.88rem; line-height: 1.6;">
+                <li><strong>左邊：</strong>一定有被修飾的名詞（先行詞）。</li>
+                <li><strong>右邊：</strong>缺主詞／受詞，或用 whose 接名詞表所有。</li>
+                <li><strong>本篇：</strong><code>an ostrich, a bird like no other that can grow ...</code>（缺主詞）／<code>its eyes, which measure ...</code>（缺主詞）／<code>two toes, one of which has a powerful claw</code></li>
+              </ul>
+            </div>
+          </div>
+          <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px; padding: 0.7rem 0.9rem; font-size: 0.88rem; color: #166534;">
+            <strong>⚡ 三秒判定：</strong>動詞後面接「一件事」➔ 名詞子句 that＋完整句；名詞後面補充「哪一個、什麼樣的」➔ 關代＋不完整句。
+          </div>
+        </div>
+      </details>
+
+      <div class="para-badge">第一段：想像站在牠面前</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S01</span>
+          <div class="sent-en">
+            Imagine you are standing <span class="gram-term">up close</span> to an <span class="key-term">ostrich</span>, a bird <span class="gram-term">like no other</span> <span class="gram-term">that</span> can grow <span class="gram-term">up to</span> 2.7 meters tall.
+            <div class="sent-zh">想像你正近距離站在一隻鴕鳥旁邊，這種獨一無二的鳥可以長到 2.7 公尺高。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Imagine you are standing up close to an ostrich, a bird like no other that can grow up to 2.7 meters tall.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Imagine you are standing up close to an ostrich, a bird like no other that can grow up to 2.7 meters tall.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是祈使句 <code>Imagine (V) + you are standing ... (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>祈使句現在式；受詞子句用現在進行式，把讀者放進當下畫面。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>Imagine</code> 後省略 that；<code>a bird like no other</code> 是同位語；<code>that</code> 主格關代修飾 bird。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>同位語和關代都順翻成補充說明。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>up close to＋N.</code>＝靠近；<code>up to＋數值</code>＝高達，兩個 up 意思不同。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「想像你正站著靠近地到一隻鴕鳥，一隻鳥像沒有其他那能長到高達 2.7 公尺」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Imagine you are standing up close to an ostrich,</code>（祈使句＋受詞子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「想像你正近距離站在一隻鴕鳥旁邊」。up close 譯「近距離」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>a bird like no other</code>（同位語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「這種獨一無二的鳥」。like no other 戴到「鳥」前。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>that can grow up to 2.7 meters tall.</code>（關代子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「可以長到 2.7 公尺高」。順翻。up to 譯「可達」也可以，這裡用「長到」更口語。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：想像你正近距離站在一隻鴕鳥旁邊，這種【獨一無二的】鳥可以長到 2.7 公尺高。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：Imagine 開頭直接翻「想像」，同位語補「這種」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這篇是對你說話，直接從「想像」開始。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到逗號＋同位語時，先補一個「這種」，把它接回前面：</strong>「這種獨一無二的鳥」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：up close 和 up to 長得很像，前者「近距離」，後者「高達」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：想像你正近距離站在一隻鴕鳥旁邊，這種獨一無二的鳥可以長到 2.7 公尺高。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">(that)（省略名詞子句）</span><span class="conj-word-preview">that（主格關代）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：祈使句＋受詞子句，子句內有同位語與關代。</div>
+              <div>• 大考命題點：<code>imagine (that)</code>；同位語。</div>
+            </div>
+            <div class="conj-title-main">兩個 that，一個隱形，一個現身</div>
+            <div class="conj-desc">
+              👉 隱形 that：<code>Imagine</code> 是動詞，後面接完整句，that 省略。<br/>👉 現身 that：往左看是名詞 bird，往右 <code>can grow</code> 缺主詞，是主格關代。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：動詞後的 that 可省；當主詞的關代不能省。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">Imagine</span><span class="c-zh">想像</span></div>
+          <div class="chunk c"><span class="c-role">[O] 受詞子句</span><span class="c-en">you are standing up close to an ostrich,</span><span class="c-zh">你正近距離站在一隻鴕鳥旁邊</span></div>
+          <div class="chunk m"><span class="c-role">[M] 同位語</span><span class="c-en">a bird like no other</span><span class="c-zh">這種獨一無二的鳥</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 關代子句</span><span class="c-en">that can grow up to 2.7 meters tall.</span><span class="c-zh">可以長到 2.7 公尺高</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>imagine＋(that)＋S＋V</code>；<code>like no other</code>＝獨一無二。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>科普文用 <code>Imagine ...</code> 開頭，馬上把讀者拉進場景。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S02</span>
+          <div class="sent-en">
+            You may think it is weak because it cannot fly, but <span class="gram-term">what it lacks in</span> flight, it <span class="gram-term">makes up for in</span> speed: 70 kilometers per hour!
+            <div class="sent-zh">你可能以為牠不會飛就很弱，但牠在飛行上的不足，全用速度補了回來：時速 70 公里！</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('You may think it is weak because it cannot fly, but what it lacks in flight, it makes up for in speed: 70 kilometers per hour!', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('You may think it is weak because it cannot fly, but what it lacks in flight, it makes up for in speed: 70 kilometers per hour!', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>第一子句 <code>You (S) + may think (V) + it is weak</code>；第二子句 <code>it makes up for what it lacks in flight in speed</code> 的受詞提前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在式 may think：對讀者猜測。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>because</code> 原因；<code>but</code> 轉折；<code>what</code> 名詞子句提前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>前後順翻；冒號後的數字前補「時速」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>make up for</code> 不可省 for。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「你也許想它是弱的因為它不能飛，但它在飛行中缺乏的」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>You may think it is weak because it cannot fly,</code>（第一子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你可能以為牠不會飛就很弱」。think 帶誤解語氣，譯「以為」；because 轉成「就」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>but what it lacks in flight,</code>（what 子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「但牠在飛行上的不足」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>it makes up for in speed:</code>（主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】譯「全用速度補了回來」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>70 kilometers per hour!</code>（冒號補充）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】譯「時速 70 公里！」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：你可能以為牠不會飛就很弱，但牠在飛行上的不足，全【用速度】補了回來：時速 70 公里！
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：may think 翻「以為」；what 句型對照翻。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">先講你的想法，再反駁。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 what … lacks in A, … makes up for in B 時，先翻 A 的不足，再翻用 B 補回來：</strong>「全用速度補了回來」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：because 不一定翻「因為」，「不會飛就很弱」更像真的在講話。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：你可能以為牠不會飛就很弱，但牠在飛行上的不足，全用速度補了回來：時速 70 公里！</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">(that)（省略）</span><span class="conj-word-preview">because（原因）</span><span class="conj-word-preview">but（轉折）</span><span class="conj-word-preview">what（名詞子句）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複合句，前後對照。</div>
+              <div>• 大考命題點：<code>What S lack in A, S make up for in B</code>。</div>
+            </div>
+            <div class="conj-title-main">連接詞很多，一個一個對</div>
+            <div class="conj-desc">
+              👉 <code>because</code>：說明你為什麼以為牠弱。<br/>👉 <code>but</code>：作者要反駁。<br/>👉 <code>what</code>：左邊沒有名詞，右邊 lacks 缺受詞，是名詞子句，也是 makes up for 提前的受詞。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：what＝the thing that，一字當兩用。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">You</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">may think</span><span class="c-zh">可能以為</span></div>
+          <div class="chunk c"><span class="c-role">[O] 受詞子句</span><span class="c-en">it is weak</span><span class="c-zh">牠很弱</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 原因子句</span><span class="c-en">because it cannot fly,</span><span class="c-zh">因為不會飛</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 轉折</span><span class="c-en">but</span><span class="c-zh">但</span></div>
+          <div class="chunk c"><span class="c-role">[O] what 子句提前</span><span class="c-en">what it lacks in flight,</span><span class="c-zh">牠在飛行上的不足</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">it</span><span class="c-zh">牠</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞片語</span><span class="c-en">makes up for</span><span class="c-zh">補了回來</span></div>
+          <div class="chunk m"><span class="c-role">[M] 方面</span><span class="c-en">in speed:</span><span class="c-zh">用速度</span></div>
+          <div class="chunk m"><span class="c-role">[M] 冒號補充</span><span class="c-en">70 kilometers per hour!</span><span class="c-zh">時速 70 公里</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>may think</code>＝可能以為，和後面的 but 配成「先讓步再反駁」。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div><code>You may think ..., but ...</code> 是開場破題最好用的句型。</div>
+        </div>
+      </div>
+      <div class="para-badge">第二段：細看牠的身體</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S03</span>
+          <div class="sent-en">
+            Look at its legs, and you will notice a <span class="key-term">unique</span> <span class="key-term">structure</span>: two <span class="key-term">kneecaps</span> on each one.
+            <div class="sent-zh">看看牠的腿，你會發現一種獨特的構造：每條腿都有兩個膝蓋骨。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Look at its legs, and you will notice a unique structure: two kneecaps on each one.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Look at its legs, and you will notice a unique structure: two kneecaps on each one.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>祈使句 <code>Look at (V) + its legs (O)</code>；再由 <code>and</code> 接 <code>you (S) + will notice (V) + a unique structure (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>祈使句＋未來式：做了這個動作，就會看到結果。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>祈使句, and S will V</code>＝如果……就會……。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>語序順翻；<code>on each one</code> 提前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>one</code> 代替 leg，避免重複。祈使句主詞 you 省略。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「看牠的腿，並且你會注意到一個獨特的結構：兩個膝蓋骨在每一個上」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Look at its legs,</code>（祈使句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「看看牠的腿」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>and you will notice a unique structure:</code>（結果子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你會發現一種獨特的構造」。and 不用譯，語意已包含條件。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>two kneecaps on each one.</code>（冒號補充）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】譯「每條腿都有兩個膝蓋骨」。one 代 leg。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3（on each one 提前）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：看看牠的腿，你會發現一種獨特的構造：【每條腿】都有兩個膝蓋骨。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：祈使句＋and：前面是條件，後面是結果。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">先對你下指令：「看看牠的腿」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到祈使句＋and＋結果時，先翻指令，再直接翻結果：</strong>「看看牠的腿，你會發現……」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：each one 的 one 就是 leg，翻回「每條腿」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：看看牠的腿，你會發現一種獨特的構造：每條腿都有兩個膝蓋骨。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">and（祈使句＋結果）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：祈使句＋and＋結果子句。</div>
+              <div>• 大考命題點：<code>祈使句, and S will V</code>。</div>
+            </div>
+            <div class="conj-title-main">祈使句後的 and 等於「就會」</div>
+            <div class="conj-desc">
+              👉 <code>Look at its legs, and you will notice ...</code>＝<code>If you look at its legs, you will notice ...</code>。<br/>👉 祈使句後接 <code>or</code> 是「否則」，接 <code>and</code> 是「就會」，克漏字很愛考。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：祈使句＋and＝就會；祈使句＋or＝否則。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">Look at</span><span class="c-zh">看看</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">its legs,</span><span class="c-zh">牠的腿</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 結果</span><span class="c-en">and</span><span class="c-zh">（就）</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">will notice</span><span class="c-zh">會發現</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">a unique structure:</span><span class="c-zh">一種獨特的構造</span></div>
+          <div class="chunk m"><span class="c-role">[M] 冒號補充</span><span class="c-en">two kneecaps on each one.</span><span class="c-zh">每條腿都有兩個膝蓋骨</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>notice</code>＝注意到；<code>one</code> 代替前面的單數名詞。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>用祈使句帶讀者「看」，就是第二人稱的特色。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S04</span>
+          <div class="sent-en">
+            Now check its feet: You will see two toes, <span class="gram-term">one of which</span> has a powerful claw, and the shape <span class="key-term">resembles</span> a horse's <span class="key-term">hoof</span>, <span class="gram-term">which</span> <span class="key-term">enables</span> the bird to run across sand.
+            <div class="sent-zh">再看看牠的腳：你會看到兩根腳趾，其中一根長著有力的爪子，整體形狀很像馬蹄，讓牠能在沙地上奔跑。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Now check its feet: You will see two toes, one of which has a powerful claw, and the shape resembles a horse\'s hoof, which enables the bird to run across sand.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Now check its feet: You will see two toes, one of which has a powerful claw, and the shape resembles a horse\'s hoof, which enables the bird to run across sand.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong><code>Now check (V) + its feet (O)</code>；冒號後 <code>You (S) + will see (V) + two toes (O)</code>；再接 <code>the shape (S) + resembles (V)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>祈使句＋未來式＋現在式：帶讀者一步一步看。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>one of which</code> 關代；<code>and</code> 對等；<code>, which</code> 非限定關代。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>全部斷句順翻。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>resemble</code> 不加 to；<code>enable＋O＋to V</code>。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「現在檢查它的腳：你會看到兩根腳趾，其中之一有一個有力的爪」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Now check its feet:</code>（祈使句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「再看看牠的腳：」。Now 接續上一句，譯「再」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>You will see two toes,</code>（主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你會看到兩根腳趾」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>one of which has a powerful claw,</code>（of which 關代）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「其中一根長著有力的爪子」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>and the shape resembles a horse's hoof,</code>（對等子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「整體形狀很像馬蹄」。補「整體」更清楚。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>which enables the bird to run across sand.</code>（非限定關代）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「讓牠能在沙地上奔跑」。順翻。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 4 ➔ 語塊 5</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：再看看牠的腳：你會看到兩根腳趾，其中一根長著有力的爪子，整體形狀很像馬蹄，讓牠能在沙地上奔跑。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：of which 翻「其中」；resemble 不加介系詞。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">接著帶你看腳：「再看看牠的腳」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到逗號＋one of which 時，先斷句，再從「其中一根」翻起：</strong>「其中一根長著有力的爪子」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到逗號＋which enables 時，先斷句，再翻「讓……能」：</strong>「讓牠能在沙地上奔跑」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：the bird 不用翻成「這隻鳥」，用「牠」更親切。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：再看看牠的腳：你會看到兩根腳趾，其中一根長著有力的爪子，整體形狀很像馬蹄，讓牠能在沙地上奔跑。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">one of which（關代）</span><span class="conj-word-preview">and（對等）</span><span class="conj-word-preview">, which（關代）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：祈使句＋冒號＋複合句。</div>
+              <div>• 大考命題點：<code>one of which</code>；<code>resemble</code>；<code>enable</code>。</div>
+            </div>
+            <div class="conj-title-main">of which 不是 of them</div>
+            <div class="conj-desc">
+              👉 <code>one of which</code>：which 指 two toes。如果寫 <code>one of them has ...</code>，就會變成沒有連接詞的兩句。<br/>👉 <code>which enables</code>：逗號後，動詞單數，指前面這種形狀。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：of them 不能連句子。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">Now check</span><span class="c-zh">再看看</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">its feet:</span><span class="c-zh">牠的腳</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">You</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">will see</span><span class="c-zh">會看到</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">two toes,</span><span class="c-zh">兩根腳趾</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 關代</span><span class="c-en">one of which has a powerful claw,</span><span class="c-zh">其中一根長著有力的爪子</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對等</span><span class="c-en">and</span><span class="c-zh">而</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">the shape</span><span class="c-zh">整體形狀</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">resembles</span><span class="c-zh">很像</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">a horse's hoof,</span><span class="c-zh">馬蹄</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 非限定關代</span><span class="c-en">which enables the bird to run across sand.</span><span class="c-zh">讓牠能在沙地上奔跑</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>check</code> 在此＝查看；<code>enable sb/sth to V</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>用 <code>Now check ...</code> 銜接，引導讀者視線。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S05</span>
+          <div class="sent-en">
+            Keep your distance, though, because those legs have the <span class="key-term">strength</span> to <span class="gram-term">deliver a kick</span> <span class="gram-term">strong enough to</span> kill a lion!
+            <div class="sent-zh">不過，可別靠太近，因為那雙腿有力氣踢出足以踢死獅子的一擊！</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Keep your distance, though, because those legs have the strength to deliver a kick strong enough to kill a lion!', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Keep your distance, though, because those legs have the strength to deliver a kick strong enough to kill a lion!', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>祈使句 <code>Keep (V) + your distance (O)</code>；<code>because</code> 子句主幹 <code>those legs (S) + have (V) + the strength (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>祈使句＋現在式：提醒與理由。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>though</code> 副詞，放句尾表「不過」；<code>because</code> 表原因；<code>to deliver</code> 修飾 strength。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong><code>strong enough to kill a lion</code> 戴到「一擊」前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>though</code> 句尾是副詞，前面加逗號；<code>keep one's distance</code> 固定搭配。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「保持你的距離，雖然，因為那些腿有力量去遞送一個踢」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Keep your distance, though,</code>（祈使句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「不過，可別靠太近」。though 提前，keep one's distance 用口語翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>because those legs have the strength</code>（原因子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「因為那雙腿的力量足以」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>to deliver a kick</code>（不定詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「踢出一擊」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>strong enough to kill a lion!</code>（後位修飾）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】放到「一擊」前，譯「足以踢死獅子的」。「足以」在這裡只用一次。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 4 提前 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：不過，可別靠太近，因為那雙腿有力氣踢出【足以踢死獅子的】一擊！
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：though 句尾翻「不過」，提到句首；enough to V 先翻。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這句是警告，先翻「不過，可別靠太近」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到句尾 though 時，先把它提到句首翻「不過」：</strong>語氣比較自然。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到名詞＋Adj. enough to V 時，先翻 enough 這段：</strong>「足以踢死獅子的一擊」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：keep your distance 不用翻「保持你的距離」，「別靠太近」更像真的在提醒你。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：不過，可別靠太近，因為那雙腿有力氣踢出足以踢死獅子的一擊！</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">though（副詞）</span><span class="conj-word-preview">because（原因）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：祈使句＋原因子句。</div>
+              <div>• 大考命題點：<code>though</code> 副詞用法；<code>Adj.＋enough＋to V</code>。</div>
+            </div>
+            <div class="conj-title-main">though 放句尾時不是連接詞</div>
+            <div class="conj-desc">
+              👉 <code>though</code>：後面沒有接句子，放句尾，是副詞「不過」。<br/>👉 <code>because</code>：右邊是完整句，才是真正的連接詞。<br/>克漏字如果考句尾這個字，選 though，不選 although。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：句尾只能用 though，不能用 although。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">Keep</span><span class="c-zh">保持</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">your distance,</span><span class="c-zh">距離（別靠太近）</span></div>
+          <div class="chunk m"><span class="c-role">[M] 副詞</span><span class="c-en">though,</span><span class="c-zh">不過</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 原因子句</span><span class="c-en">because those legs have the strength</span><span class="c-zh">因為那雙腿有力氣</span></div>
+          <div class="chunk m"><span class="c-role">[M] 不定詞</span><span class="c-en">to deliver a kick</span><span class="c-zh">踢出一擊</span></div>
+          <div class="chunk m"><span class="c-role">[M] 後位修飾</span><span class="c-en">strong enough to kill a lion!</span><span class="c-zh">足以踢死獅子的</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>keep one's distance</code>＝保持距離；<code>though</code> 句尾＝不過。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>第二人稱用提醒語氣，文章更有臨場感。</div>
+        </div>
+      </div>
+      <div class="para-badge">第三段：大眼睛與平原生活</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S06</span>
+          <div class="sent-en">
+            Then look into its eyes, <span class="gram-term">which</span> measure about <span class="gram-term">five centimeters across</span>; with such sharp <span class="key-term">eyesight</span>, it will spot you from far away.
+            <div class="sent-zh">然後看看牠的眼睛，直徑約五公分；憑這麼敏銳的視力，牠從遠處就能發現你。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Then look into its eyes, which measure about five centimeters across; with such sharp eyesight, it will spot you from far away.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Then look into its eyes, which measure about five centimeters across; with such sharp eyesight, it will spot you from far away.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>祈使句 <code>look into (V) + its eyes (O)</code>；分號後 <code>it (S) + will spot (V) + you (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>祈使句＋未來式：帶你想像接下來發生的事。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>Then</code> 副詞；<code>which</code> 非限定關代；<code>with such sharp eyesight</code> 介系詞片語；分號連接兩句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>關代斷句順翻；<code>from far away</code> 提前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>measure＋數字＋across</code>；<code>eyesight</code> 不可數。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「然後看進去它的眼睛，那些測量大約五公分橫過；有這樣銳利視力，它會發現你從遠遠地」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Then look into its eyes,</code>（祈使句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「然後看看牠的眼睛」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>which measure about five centimeters across;</code>（非限定關代）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「直徑約五公分」。斷句順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>with such sharp eyesight,</code>（介系詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「憑這麼敏銳的視力」。with 表憑藉，譯「憑」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>it will spot you from far away.</code>（主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】from far away 放動作前，譯「牠從遠處就能發現你」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 4（地點提前）</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：然後看看牠的眼睛，直徑約五公分；憑這麼敏銳的視力，牠【從遠處】就能發現你。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：with＋能力翻「憑」；地點片語先翻。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">先帶你看眼睛：「然後看看牠的眼睛」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到動作＋from far away 時，先翻地點，再翻動作：</strong>「從遠處就能發現你」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：with such sharp eyesight 翻「憑這麼敏銳的視力」，with 就是憑藉。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：然後看看牠的眼睛，直徑約五公分；憑這麼敏銳的視力，牠從遠處就能發現你。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">, which（非限定關代）</span><span class="conj-word-preview">分號（獨立句）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：祈使句＋非限定關代＋分號＋主要子句。</div>
+              <div>• 大考命題點：<code>five centimeters across</code>；<code>spot</code>。</div>
+            </div>
+            <div class="conj-title-main">which 指眼睛，動詞用複數</div>
+            <div class="conj-desc">
+              👉 <code>which measure</code>：動詞沒有 s，先行詞是複數的 eyes，不是整件事。這和前面 <code>which enables</code> 單數不同。<br/>👉 分號：左右都是完整句，不用連接詞。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：看 which 後動詞單複數，就能判斷先行詞。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 副詞</span><span class="c-en">Then</span><span class="c-zh">然後</span></div>
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">look into</span><span class="c-zh">看看</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">its eyes,</span><span class="c-zh">牠的眼睛</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 非限定關代</span><span class="c-en">which measure about five centimeters across;</span><span class="c-zh">直徑約五公分</span></div>
+          <div class="chunk m"><span class="c-role">[M] 憑藉</span><span class="c-en">with such sharp eyesight,</span><span class="c-zh">憑這麼敏銳的視力</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">it</span><span class="c-zh">牠</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">will spot</span><span class="c-zh">就能發現</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk m"><span class="c-role">[M] 地點</span><span class="c-en">from far away.</span><span class="c-zh">從遠處</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>look into</code>＝往裡看；也有「調查」之意。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>把數據放進你正在看的畫面，比純列數字生動。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S07</span>
+          <div class="sent-en">
+            <span class="gram-term">Together with</span> its strong legs, those eyes make it perfectly <span class="gram-term">adapted to</span> life on the open plains.
+            <div class="sent-zh">那雙眼睛加上強壯的雙腿，讓牠完美適應開闊平原上的生活。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Together with its strong legs, those eyes make it perfectly adapted to life on the open plains.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Together with its strong legs, those eyes make it perfectly adapted to life on the open plains.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>those eyes (S) + make (V) + it (O) + perfectly adapted (C)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在簡單式：解釋事實。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>無連接詞。<code>Together with</code> 片語介系詞；<code>adapted to＋N.</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>主詞提前，<code>on the open plains</code> 戴到「生活」前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>主詞 eyes 複數，動詞 make 不加 s。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「連同它強壯的腿，那些眼睛使它完美適應生活在開放平原」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Together with its strong legs,</code>（片語介系詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】接在主詞後，譯「加上強壯的雙腿」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>those eyes</code>（主詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「那雙眼睛」，提到句首。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>make it perfectly adapted</code>（動詞＋補語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「讓牠完美適應」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>to life on the open plains.</code>（介系詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「開闊平原上的生活」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 2 提前 ➔ 語塊 1 ➔ 語塊 3 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：【那雙眼睛加上強壯的雙腿】，讓牠完美適應開闊平原上的生活。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：A together with B：先翻 A。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">先翻主詞：「那雙眼睛」，再補「加上強壯的雙腿」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到句首 Together with B, A＋動詞時，先翻 A，再翻「加上 B」：</strong>「那雙眼睛加上強壯的雙腿」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：adapted to life 翻「適應……的生活」，to 是介系詞。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：那雙眼睛加上強壯的雙腿，讓牠完美適應開闊平原上的生活。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">無連接詞·單一主句</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：單一主要子句。</div>
+              <div>• 大考命題點：<code>together with</code>；<code>adapted to</code>。</div>
+            </div>
+            <div class="conj-title-main">主詞看 with 前面還是後面</div>
+            <div class="conj-desc">
+              這句雖然 together with 在句首，但它只是修飾語。<br/>👉 逗號後的 <code>those eyes</code> 才是主詞，動詞 make 是複數，對得上。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：together with 片語不算主詞。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 片語介系詞</span><span class="c-en">Together with its strong legs,</span><span class="c-zh">加上強壯的雙腿</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">those eyes</span><span class="c-zh">那雙眼睛</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">make</span><span class="c-zh">讓</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">it</span><span class="c-zh">牠</span></div>
+          <div class="chunk o"><span class="c-role">[C] 補語</span><span class="c-en">perfectly adapted</span><span class="c-zh">完美適應</span></div>
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語</span><span class="c-en">to life on the open plains.</span><span class="c-zh">開闊平原上的生活</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>make＋O＋Adj.</code>；<code>adapted to</code>＝適應。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>段尾收在 <code>adapted to life</code>，總結前面的細節。</div>
+        </div>
+      </div>
+      <div class="para-badge">第四段：如果你住在古埃及</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S08</span>
+          <div class="sent-en">
+            <span class="gram-term">If</span> you lived in ancient Egypt, you would see an ostrich <span class="key-term">feather</span> as a symbol of truth, and <span class="gram-term">according to</span> myth, your heart would be weighed against it <span class="gram-term">before</span> you could enter the <span class="key-term">afterlife</span>.
+            <div class="sent-zh">如果你住在古埃及，就會把鴕鳥羽毛視為真理的象徵，而且根據神話，在進入來世之前，你的心臟會和它一起秤重。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('If you lived in ancient Egypt, you would see an ostrich feather as a symbol of truth, and according to myth, your heart would be weighed against it before you could enter the afterlife.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('If you lived in ancient Egypt, you would see an ostrich feather as a symbol of truth, and according to myth, your heart would be weighed against it before you could enter the afterlife.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>條件子句 <code>If you lived ...</code>；主句 <code>you would see (V)</code>；再由 <code>and</code> 接 <code>your heart (S) + would be weighed (V)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>與現在事實相反的假設：If＋過去式，would＋V。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>If</code> 條件；<code>and</code> 對等；<code>according to myth</code> 來源；<code>before</code> 時間子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>條件順翻；<code>before</code> 子句提到動作前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>假設語氣 If 句用過去式 lived，不用 live。<code>see A as B</code>＝把 A 視為 B。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「如果你住在古埃及，你會看一根鴕鳥羽毛作為一個真理的象徵」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>If you lived in ancient Egypt,</code>（假設子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「如果你住在古埃及」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>you would see an ostrich feather as a symbol of truth,</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「就會把鴕鳥羽毛視為真理的象徵」。see A as B 譯「把 A 視為 B」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>and according to myth,</code>（資訊來源）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「而且根據神話」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>your heart would be weighed against it</code>（第二主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你的心臟會和它一起秤重」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 5：<code>before you could enter the afterlife.</code>（時間子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】放到「秤重」前，譯「在進入來世之前」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 5 提前 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：如果你住在古埃及，就會把鴕鳥羽毛視為真理的象徵，而且根據神話，【在進入來世之前】，你的心臟會和它一起秤重。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：If＋過去式＝假設；before 子句先翻。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這是假設，先翻「如果你住在古埃及」，再接「就會」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到動作＋before 子句時，先翻 before 子句，再翻動作：</strong>「在進入來世之前，你的心臟會……」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：see A as B 不是「看見」，要翻「視為」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：如果你住在古埃及，就會把鴕鳥羽毛視為真理的象徵，而且根據神話，在進入來世之前，你的心臟會和它一起秤重。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">If（假設）</span><span class="conj-word-preview">and（對等）</span><span class="conj-word-preview">According to（來源）</span><span class="conj-word-preview">before（時間）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：與現在事實相反的假設句。</div>
+              <div>• 大考命題點：假設語氣；<code>see A as B</code>。</div>
+            </div>
+            <div class="conj-title-main">If 後面用過去式，不是真的過去</div>
+            <div class="conj-desc">
+              👉 <code>If you lived</code>：你現在沒住在古埃及，這是假設，所以用過去式，主句配 would。<br/>👉 <code>before</code>：右邊是完整句，時間子句。<br/>👉 <code>according to</code>：只接名詞 myth。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：If＋過去式，主句 would＋V：與現在事實相反。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 假設子句</span><span class="c-en">If you lived in ancient Egypt,</span><span class="c-zh">如果你住在古埃及</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">would see</span><span class="c-zh">就會看待</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞＋補語</span><span class="c-en">an ostrich feather as a symbol of truth,</span><span class="c-zh">把鴕鳥羽毛視為真理的象徵</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對等</span><span class="c-en">and</span><span class="c-zh">而且</span></div>
+          <div class="chunk m"><span class="c-role">[M] 來源</span><span class="c-en">according to myth,</span><span class="c-zh">根據神話</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">your heart</span><span class="c-zh">你的心臟</span></div>
+          <div class="chunk v"><span class="c-role">[V] 被動動詞</span><span class="c-en">would be weighed</span><span class="c-zh">會秤重</span></div>
+          <div class="chunk m"><span class="c-role">[M] 對照</span><span class="c-en">against it</span><span class="c-zh">和它一起</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 時間子句</span><span class="c-en">before you could enter the afterlife.</span><span class="c-zh">在進入來世之前</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>If＋過去式, S would V</code>；<code>see A as B</code>＝<code>regard A as B</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>用假設句把歷史變成「你的經歷」，是第二人稱的高招。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S09</span>
+          <div class="sent-en">
+            You might wonder <span class="gram-term">why</span> this feather was chosen; the answer is simple: It was <span class="key-term">symmetrical</span>.
+            <div class="sent-zh">你可能好奇為什麼選這根羽毛；答案很簡單：它是對稱的。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('You might wonder why this feather was chosen; the answer is simple: It was symmetrical.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('You might wonder why this feather was chosen; the answer is simple: It was symmetrical.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>第一子句 <code>You (S) + might wonder (V) + why ... (O)</code>；分號後 <code>the answer (S) + is (V) + simple (C)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>might 表可能；was chosen 過去被動；is 現在；was 過去，描述羽毛。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>why</code> 間接問句；分號；冒號說明答案。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>全部順翻。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>間接問句語序：<code>why this feather was chosen</code>，不是 <code>why was this feather chosen</code>。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「你也許好奇為什麼這羽毛被選擇；答案是簡單的」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>You might wonder why this feather was chosen;</code>（主句＋間接問句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你可能好奇為什麼選這根羽毛」。被動換主動。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>the answer is simple:</code>（第二句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「答案很簡單：」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>It was symmetrical.</code>（冒號補充）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「它是對稱的」。順翻。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：你可能好奇為什麼選這根羽毛；答案很簡單：它是對稱的。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：間接問句語序不倒裝。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">短句，順著翻就好。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 wonder why＋子句時，先翻「好奇為什麼」，子句用主動講：</strong>「好奇為什麼選這根羽毛」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：冒號後的短句保持簡短，答案才有力道。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：你可能好奇為什麼選這根羽毛；答案很簡單：它是對稱的。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">why（間接問句）</span><span class="conj-word-preview">分號</span><span class="conj-word-preview">冒號</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：主句＋間接問句＋分號＋主句＋冒號。</div>
+              <div>• 大考命題點：間接問句語序。</div>
+            </div>
+            <div class="conj-title-main">why 在句中，語序要改回來</div>
+            <div class="conj-desc">
+              👉 <code>why</code>：左邊是 wonder，接一件事，是名詞子句。<br/>👉 右邊 <code>this feather was chosen</code> 是直述語序。問句放到句中就不能倒裝，這是中譯英超常見的扣分點。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：句中問句＝直述語序。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">You</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">might wonder</span><span class="c-zh">可能好奇</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 間接問句</span><span class="c-en">why this feather was chosen;</span><span class="c-zh">為什麼選這根羽毛</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">the answer</span><span class="c-zh">答案</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">is</span><span class="c-zh">是</span></div>
+          <div class="chunk o"><span class="c-role">[C] 補語</span><span class="c-en">simple:</span><span class="c-zh">很簡單</span></div>
+          <div class="chunk m"><span class="c-role">[S＋V＋C] 冒號補充</span><span class="c-en">It was symmetrical.</span><span class="c-zh">它是對稱的</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>wonder＋wh-</code>；<code>symmetrical</code>＝對稱的。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>用自問自答的方式，讓讀者想繼續讀。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S10</span>
+          <div class="sent-en">
+            You have probably heard the famous <span class="key-term">legend</span> <span class="gram-term">that</span> ostriches bury their heads when they are scared, but if you believe it, you have <span class="key-term">misunderstood</span> them.
+            <div class="sent-zh">你大概聽過鴕鳥害怕時會把頭埋起來的著名傳說，但如果你相信，你就誤解牠們了。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('You have probably heard the famous legend that ostriches bury their heads when they are scared, but if you believe it, you have misunderstood them.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('You have probably heard the famous legend that ostriches bury their heads when they are scared, but if you believe it, you have misunderstood them.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹一 <code>You (S) + have heard (V) + the famous legend (O)</code>；主幹二 <code>you (S) + have misunderstood (V) + them (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在完成式：到現在為止的經驗與結果。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>that</code> 同位語子句說明 legend；<code>when</code> 時間；<code>but</code> 轉折；<code>if</code> 條件。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>同位語 that 子句提前戴到「傳說」前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>probably</code> 放 have 和 p.p. 之間。<code>misunderstand</code> 三態不規則。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「你大概已經聽過那有名的傳說那鴕鳥埋牠們的頭當牠們害怕」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>You have probably heard the famous legend</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你大概聽過……的著名傳說」。留空待同位語插入。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>that ostriches bury their heads when they are scared,</code>（同位語子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】放到「傳說」前，譯「鴕鳥害怕時會把頭埋起來」。when 也提前。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>but if you believe it,</code>（條件子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「但如果你相信」。it 省略。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>you have misunderstood them.</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你就誤解牠們了」。順翻。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 提前 ➔ 語塊 3 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：你大概聽過【鴕鳥害怕時會把頭埋起來】的著名傳說，但如果你相信，你就誤解牠們了。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：legend that＋完整句＝同位語，要戴在名詞前。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">先翻「你大概聽過」，等一下把傳說內容塞進去。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到抽象名詞＋that＋完整句時，先翻 that 內容，再翻名詞：</strong>「鴕鳥害怕時會把頭埋起來的著名傳說」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：最後的 have misunderstood 翻「就誤解牠們了」，「了」就是完成語氣。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：你大概聽過鴕鳥害怕時會把頭埋起來的著名傳說，但如果你相信，你就誤解牠們了。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">that（同位語子句）</span><span class="conj-word-preview">when（時間）</span><span class="conj-word-preview">but（轉折）</span><span class="conj-word-preview">if（條件）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複合句。</div>
+              <div>• 大考命題點：同位語子句 vs. 關代。</div>
+            </div>
+            <div class="conj-title-main">that 後面是完整句，所以不是關代</div>
+            <div class="conj-desc">
+              👉 眼睛往左看——是名詞 legend，很像關代。<br/>👉 眼睛往右看——<code>ostriches bury their heads</code> 主詞受詞都有，不缺成分，所以是同位語子句，說明傳說的內容。<br/>左邊是名詞、右邊是完整句，就是同位語。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：名詞＋that＋完整句＝同位語。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">You</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">have probably heard</span><span class="c-zh">大概聽過</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">the famous legend</span><span class="c-zh">著名傳說</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 同位語子句</span><span class="c-en">that ostriches bury their heads when they are scared,</span><span class="c-zh">鴕鳥害怕時會把頭埋起來</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 轉折</span><span class="c-en">but</span><span class="c-zh">但</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 條件子句</span><span class="c-en">if you believe it,</span><span class="c-zh">如果你相信</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">have misunderstood</span><span class="c-zh">就誤解了</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">them.</span><span class="c-zh">牠們</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>the legend／fact／idea＋that＋完整句</code>＝同位語。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>用 <code>You have probably heard ...</code> 引入常見誤解，再反駁。</div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S11</span>
+          <div class="sent-en">
+            <span class="gram-term">If</span> you watch closely, you will see <span class="gram-term">that</span> they are just eating, drinking, or turning their eggs, <span class="gram-term">going about</span> their daily lives.
+            <div class="sent-zh">如果你仔細看，就會看到牠們只是在進食、喝水或翻蛋，過著日常生活。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('If you watch closely, you will see that they are just eating, drinking, or turning their eggs, going about their daily lives.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('If you watch closely, you will see that they are just eating, drinking, or turning their eggs, going about their daily lives.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>條件 <code>If you watch closely</code>；主句 <code>you (S) + will see (V) + that ... (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在式＋未來式：條件句（真實可能）。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>If</code> 條件；<code>that</code> 名詞子句；<code>or</code> 並列；<code>going about</code> 分詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>全部順翻。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>closely</code> 是仔細，<code>close</code> 當副詞是近。並列 V-ing 形式相同。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「如果你接近地看，你會看見那牠們只是正在吃」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>If you watch closely,</code>（條件子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「如果你仔細看」。closely＝仔細。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>you will see</code>（主句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「就會看到」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>that they are just eating, drinking, or turning their eggs,</code>（that 子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「牠們只是在進食、喝水或翻蛋」。just 譯「只是」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>going about their daily lives.</code>（分詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「過著日常生活」。順翻。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：如果你仔細看，就會看到牠們只是在進食、喝水或翻蛋，過著日常生活。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：closely 翻「仔細」；going about 翻「過著」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">順著翻：「如果你仔細看，就會看到」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 If＋現在式，主句 will 時，先翻條件，再用「就」接結果：</strong>「如果你仔細看，就會看到……」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：just 和 simply 都翻「只是」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：如果你仔細看，就會看到牠們只是在進食、喝水或翻蛋，過著日常生活。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">If（條件）</span><span class="conj-word-preview">that（名詞子句）</span><span class="conj-word-preview">or（並列）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：條件句＋that 子句＋分詞片語。</div>
+              <div>• 大考命題點：<code>go about</code>；<code>closely</code>。</div>
+            </div>
+            <div class="conj-title-main">條件句 if 用現在式</div>
+            <div class="conj-desc">
+              👉 <code>If you watch</code>：未來才發生，if 子句用現在式，主句才用 will。<br/>👉 <code>that</code>：動詞 see 後接完整句，是名詞子句。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：條件句：if＋現在式，主句 will。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 條件子句</span><span class="c-en">If you watch closely,</span><span class="c-zh">如果你仔細看</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">will see</span><span class="c-zh">就會看到</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] that 子句</span><span class="c-en">that they are just eating, drinking, or turning their eggs,</span><span class="c-zh">牠們只是在進食、喝水或翻蛋</span></div>
+          <div class="chunk m"><span class="c-role">[M] 分詞</span><span class="c-en">going about their daily lives.</span><span class="c-zh">過著日常生活</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>closely</code>＝仔細地；<code>go about one's daily life</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>用 if 條件句，讓讀者親自驗證真相。</div>
+        </div>
+      </div>
+      <div class="para-badge">第五段：下一次</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S12</span>
+          <div class="sent-en">
+            Next time a myth <span class="gram-term">captures</span> your imagination, remember <span class="gram-term">that</span> the ostrich is <span class="gram-term">not only</span> one of a kind <span class="gram-term">but also</span> <span class="key-term">incredibly</span> well suited to its environment, and it needs no myth to be <span class="key-term">remarkable</span>.
+            <div class="sent-zh">下次有神話激發你的想像力時，請記得，鴕鳥不僅獨一無二，也非常適應環境，不需要神話也足以令人讚嘆。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Next time a myth captures your imagination, remember that the ostrich is not only one of a kind but also incredibly well suited to its environment, and it needs no myth to be remarkable.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Next time a myth captures your imagination, remember that the ostrich is not only one of a kind but also incredibly well suited to its environment, and it needs no myth to be remarkable.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>時間子句 <code>Next time a myth captures your imagination</code>；祈使句 <code>remember (V) + that ... (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>時間子句用現在式代替未來；祈使句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>Next time</code> 當連接詞用；<code>that</code> 名詞子句；<code>not only ... but also</code>；<code>and</code> 對等。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>順翻。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>Next time</code> 後直接接子句，不用 when。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「下一次一個神話抓住你的想像，記得那鴕鳥不只是一種之一」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Next time a myth captures your imagination,</code>（時間子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「下次有神話激發你的想像力時」。Next time 當連接詞。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>remember that the ostrich is not only one of a kind</code>（祈使句＋that）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「請記得，鴕鳥不僅獨一無二」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>but also incredibly well suited to its environment,</code>（but also）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「也非常適應環境」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>and it needs no myth to be remarkable.</code>（對等子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「不需要神話也足以令人讚嘆」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：下次有神話激發你的想像力時，請記得，鴕鳥不僅獨一無二，也非常適應環境，不需要神話也足以令人讚嘆。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：Next time＋子句：下次……時。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這是最後一句，先翻時間：「下次有神話激發你的想像力時」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 Next time＋句子時，先翻「下次……時」，再翻要你做的事：</strong>「請記得」。</div>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 not only A but also B 時，先翻「不僅 A」，再翻「也 B」：</strong>「不僅獨一無二，也非常適應環境」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：remember 是祈使句，補「請」更禮貌。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：下次有神話激發你的想像力時，請記得，鴕鳥不僅獨一無二，也非常適應環境，不需要神話也足以令人讚嘆。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">Next time（連接詞）</span><span class="conj-word-preview">that（名詞子句）</span><span class="conj-word-preview">not only ... but also</span><span class="conj-word-preview">and（對等）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：時間子句＋祈使句＋that 子句。</div>
+              <div>• 大考命題點：<code>next time</code> 當連接詞；時間子句現在式代未來。</div>
+            </div>
+            <div class="conj-title-main">Next time 自己就能接句子</div>
+            <div class="conj-desc">
+              👉 <code>Next time a myth captures ...</code>：Next time 這裡功能等同 when，不用再加 when。<br/>👉 時間子句未來不用 will，所以是 captures。<br/>👉 <code>not only ... but also</code> 連接兩個形容詞片語。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：時間子句中不用 will。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] 時間子句</span><span class="c-en">Next time a myth captures your imagination,</span><span class="c-zh">下次有神話激發你的想像力時</span></div>
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">remember</span><span class="c-zh">請記得</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] that 子句</span><span class="c-en">that the ostrich is not only one of a kind</span><span class="c-zh">鴕鳥不僅獨一無二</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] but also</span><span class="c-en">but also incredibly well suited to its environment,</span><span class="c-zh">也非常適應環境</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對等</span><span class="c-en">and</span><span class="c-zh">而且</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">it</span><span class="c-zh">牠</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">needs</span><span class="c-zh">需要</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">no myth</span><span class="c-zh">不（需要）神話</span></div>
+          <div class="chunk m"><span class="c-role">[M] 不定詞</span><span class="c-en">to be remarkable.</span><span class="c-zh">也足以令人讚嘆</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>next time＋S＋V</code>；<code>suited to</code>＝<code>adapted to</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>文章結尾用祈使句給讀者一個帶走的提醒。</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-quiz" class="section-title">🎯 四、15 題大考實戰檢測（針對本篇第二人稱代入改寫版）</div>
+    <div class="card">
+
+      <div class="para-badge" style="background:var(--blue);margin-top:0;">Part A｜第一部分：克漏字綜合測驗 (Cloze Test, 第 1–5 題)</div>
+      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:1.2rem;font-size:1.02rem;line-height:1.85;">
+        Imagine you are walking through a forest when you see an owl. You may think it is slow, but <strong><u>(1)</u></strong> it lacks in size, it makes up for in hearing. Look at its wings, and you <strong><u>(2)</u></strong> notice soft feathers that make no sound. If you <strong><u>(3)</u></strong> a mouse, you would never hear an owl coming! <strong><u>(4)</u></strong> your distance, though, because an owl's claws can be sharp enough <strong><u>(5)</u></strong> hurt you.
+      </div>
+      <div class="quiz-q">
+        <p><strong>1. 請選出最適合填入 <u>(1)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(A) that</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 1)">(B) what</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(C) which</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(D) how</button>
+        <div id="q1-exp" class="quiz-exp">✅ <strong>正解 (B) what</strong>！<code>what S lack in A, S make up for in B</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>2. 請選出最適合填入 <u>(2)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(A) did</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(B) had</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(C) would have</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 2)">(D) will</button>
+        <div id="q2-exp" class="quiz-exp">✅ <strong>正解 (D) will</strong>！祈使句＋and＋<code>S will V</code>＝做了就會有結果。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>3. 請選出最適合填入 <u>(3)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 3)">(A) were</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(B) are</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(C) have been</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(D) will be</button>
+        <div id="q3-exp" class="quiz-exp">✅ <strong>正解 (A) were</strong>！與事實相反的假設：<code>If you were ..., you would ...</code>。你不是老鼠。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>4. 請選出最適合填入 <u>(4)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(A) Hold on</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(B) Take</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 4)">(C) Keep</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(D) Make</button>
+        <div id="q4-exp" class="quiz-exp">✅ <strong>正解 (C) Keep</strong>！固定搭配 <code>keep one's distance</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>5. 請選出最適合填入 <u>(5)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(A) of</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(B) for</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(C) that</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 5)">(D) to</button>
+        <div id="q5-exp" class="quiz-exp">✅ <strong>正解 (D) to</strong>！<code>Adj.＋enough＋to V</code>。</div>
+      </div>
+      <div class="para-badge" style="background:var(--purple);margin-top:2rem;">Part B｜第二部分：文意字彙與片語搭配 (第 6–9 題)</div>
+      <div class="quiz-q">
+        <p><strong>6. Your new haircut really ________ your sister's; people may think you are twins.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(A) enables</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 6)">(B) resembles</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(C) captures</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(D) delivers</button>
+        <div id="q6-exp" class="quiz-exp">✅ <strong>正解 (B) resembles</strong>！兩人相像 → <code>resemble</code>，不加介系詞。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>7. This app ________ you to check the bus schedule without logging in.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(A) misunderstands</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(B) resembles</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 7)">(C) enables</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(D) measures</button>
+        <div id="q7-exp" class="quiz-exp">✅ <strong>正解 (C) enables</strong>！<code>enable＋O＋to V</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>8. Don't be angry about her text. It's easy to ________ what someone means in a short message.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 8)">(A) misunderstand</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(B) resemble</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(C) enable</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(D) capture</button>
+        <div id="q8-exp" class="quiz-exp">✅ <strong>正解 (A) misunderstand</strong>！簡訊看不出語氣，容易「誤解」→ <code>misunderstand</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>9. The bird has a colorful ________ on its head that it shows off during mating season.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(A) afterlife</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(B) kneecap</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(C) hoof</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 9)">(D) feather</button>
+        <div id="q9-exp" class="quiz-exp">✅ <strong>正解 (D) feather</strong>！鳥頭上彩色的「羽毛」→ <code>feather</code>。</div>
+      </div>
+      <div class="para-badge" style="background:var(--orange);margin-top:2rem;">Part C｜第三部分：重要文法與中翻英除錯 (第 10–12 題)</div>
+      <div class="quiz-q">
+        <p><strong>10. 下列哪一句文法正確？</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 10)">(A) If you lived near the sea, you would swim every day.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(B) If you live near the sea, you would swim every day.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(C) If you lived near the sea, you will swim every day.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(D) If you lived near the sea, you swimming every day.</button>
+        <div id="q10-exp" class="quiz-exp">✅ <strong>正解 (A) If you lived near the sea, you would swim every day.</strong>！與現在事實相反：If＋過去式，主句 would＋V。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>11. 下列哪一句文法正確？</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(A) Do you know why does this bird not fly?</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(B) Do you know why can't this bird fly?</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 11)">(C) Do you know why this bird cannot fly?</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(D) Do you know why this bird not fly?</button>
+        <div id="q11-exp" class="quiz-exp">✅ <strong>正解 (C) Do you know why this bird cannot fly?</strong>！間接問句語序：why＋主詞＋動詞，不倒裝。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>12. 「下次你看到鴕鳥時，請記得牠的特別之處。」最佳英譯是：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(A) Next time when you will see an ostrich, remember what makes it special.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 12)">(B) Next time you see an ostrich, remember what makes it special.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(C) Next time you will see an ostrich, remember what makes it special.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(D) Next time you see an ostrich, remember what does it make special.</button>
+        <div id="q12-exp" class="quiz-exp">✅ <strong>正解 (B) Next time you see an ostrich, remember what makes it special.</strong>！<code>Next time＋S＋V</code>，時間子句不用 will；<code>what makes it special</code> 是名詞子句。</div>
+      </div>
+      <div class="para-badge" style="background:var(--green);margin-top:2rem;">Part D｜第四部分：大考閱讀測驗 (第 13–15 題)</div>
+      <div class="quiz-q">
+        <p><strong>13. According to the passage, what should you do when you are near an ostrich?</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 13)">(A) Stay at a safe distance.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(B) Touch its feathers.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(C) Feed it quickly.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(D) Run across the sand.</button>
+        <div id="q13-exp" class="quiz-exp">✅ <strong>正解 (A) Stay at a safe distance.</strong>！<em>Keep your distance, though, because those legs ...</em></div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>14. Why was the feather chosen, according to the passage?</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(A) It was the longest feather.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(B) It was colorful.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(C) It came from a god.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 14)">(D) It was symmetrical.</button>
+        <div id="q14-exp" class="quiz-exp">✅ <strong>正解 (D) It was symmetrical.</strong>！<em>the answer is simple: It was symmetrical.</em></div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>15. What does the passage want you to remember at the end?</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(A) Egyptian myths were all true.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(B) Ostriches should be kept away from people.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 15)">(C) The real ostrich is remarkable without any myth.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(D) Birds that cannot fly are weak.</button>
+        <div id="q15-exp" class="quiz-exp">✅ <strong>正解 (C) The real ostrich is remarkable without any myth.</strong>！結尾 <em>it needs no myth to be remarkable</em>。</div>
+      </div>
+
+      <div class="score-bar"><span id="score-text">得分：0 / 15</span><button onclick="resetQuiz()">🔄 重新作答</button></div>
+    </div>
+
+  </div>
+
+  <script>
+    const paras = [
+      "Imagine you are standing up close to an ostrich, a bird like no other that can grow up to 2.7 meters tall. You may think it is weak because it cannot fly, but what it lacks in flight, it makes up for in speed: 70 kilometers per hour!",
+      "Look at its legs, and you will notice a unique structure: two kneecaps on each one. Now check its feet: You will see two toes, one of which has a powerful claw, and the shape resembles a horse's hoof, which enables the bird to run across sand. Keep your distance, though, because those legs have the strength to deliver a kick strong enough to kill a lion!",
+      "Then look into its eyes, which measure about five centimeters across; with such sharp eyesight, it will spot you from far away. Together with its strong legs, those eyes make it perfectly adapted to life on the open plains.",
+      "If you lived in ancient Egypt, you would see an ostrich feather as a symbol of truth, and according to myth, your heart would be weighed against it before you could enter the afterlife. You might wonder why this feather was chosen; the answer is simple: It was symmetrical. You have probably heard the famous legend that ostriches bury their heads when they are scared, but if you believe it, you have misunderstood them. If you watch closely, you will see that they are just eating, drinking, or turning their eggs, going about their daily lives.",
+      "Next time a myth captures your imagination, remember that the ostrich is not only one of a kind but also incredibly well suited to its environment, and it needs no myth to be remarkable."
+    ];
+    let isFullAudioPlaying = false;
+    let currentFontSize = 1.14;
+
+    function toggleReaderZh() {
+      document.body.classList.toggle('hide-reader-zh');
+      document.getElementById('btn-reader-zh').classList.toggle('active');
+    }
+
+    function changeFontSize(delta) {
+      currentFontSize = Math.max(0.9, Math.min(1.6, currentFontSize + delta * 0.1));
+      document.documentElement.style.setProperty('--reader-font-size', currentFontSize + 'rem');
+    }
+
+    function resetFullBtn() {
+      isFullAudioPlaying = false;
+      const btn = document.getElementById('btn-full-audio');
+      if (btn) { btn.innerHTML = '🔊 播放全文朗讀'; btn.classList.remove('active'); }
+    }
+
+    function toggleFullAudio() {
+      if (!('speechSynthesis' in window)) return;
+      if (isFullAudioPlaying) { window.speechSynthesis.cancel(); resetFullBtn(); return; }
+      window.speechSynthesis.cancel();
+      paras.forEach((t, i) => {
+        const u = new SpeechSynthesisUtterance(t);
+        u.lang = 'en-US';
+        u.rate = 0.9;
+        if (i === paras.length - 1) { u.onend = resetFullBtn; }
+        u.onerror = resetFullBtn;
+        window.speechSynthesis.speak(u);
+      });
+      isFullAudioPlaying = true;
+      const btn = document.getElementById('btn-full-audio');
+      btn.innerHTML = '⏹️ 停止朗讀';
+      btn.classList.add('active');
+    }
+
+    function speak(text, rate) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      resetFullBtn();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.rate = rate || 0.95;
+      window.speechSynthesis.speak(u);
+    }
+
+    function speakPara(i) { speak(paras[i], 0.9); }
+
+    const answered = {};
+    let score = 0;
+    function checkAns(btn, isCorrect, qNum) {
+      if (answered[qNum]) return;
+      answered[qNum] = true;
+      const box = btn.closest('.quiz-q');
+      box.querySelectorAll('.quiz-btn').forEach(b => {
+        b.disabled = true;
+        if ((b.getAttribute('onclick') || '').includes('true')) b.classList.add('correct');
+      });
+      if (isCorrect) { score++; } else { btn.classList.add('wrong'); }
+      document.getElementById('q' + qNum + '-exp').style.display = 'block';
+      document.getElementById('score-text').textContent = '得分：' + score + ' / 15';
+    }
+
+    function resetQuiz() {
+      for (const k in answered) delete answered[k];
+      score = 0;
+      document.querySelectorAll('.quiz-btn').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+      document.querySelectorAll('.quiz-exp').forEach(e => { e.style.display = 'none'; });
+      document.getElementById('score-text').textContent = '得分：0 / 15';
+    }
+
+    let allMasterTransOpen = false;
+    function toggleAllMasterTrans() {
+      allMasterTransOpen = !allMasterTransOpen;
+      document.querySelectorAll('.sent-card .master-trans-details').forEach(d => { d.open = allMasterTransOpen; });
+      const btn = document.getElementById('btn-toggle-master-trans');
+      if (btn) {
+        btn.textContent = allMasterTransOpen ? '👨‍🏫 一鍵收合名師翻譯拆解' : '👨‍🏫 一鍵展開名師翻譯拆解';
+        btn.classList.toggle('active', allMasterTransOpen);
+      }
+    }
+    let allConjOpen = false;
+    function toggleAllConj() {
+      allConjOpen = !allConjOpen;
+      document.querySelectorAll('.conj-box').forEach(d => { d.open = allConjOpen; });
+      const btn = document.getElementById('toggle-conj-btn');
+      if (btn) {
+        btn.textContent = allConjOpen ? '🔗 一鍵收合所有連接詞解析' : '🔗 一鍵展開所有連接詞解析';
+        btn.classList.toggle('active', allConjOpen);
+      }
+    }
+  </script>
+</body>
+</html>
