@@ -1,0 +1,2822 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>202607 Unit 10｜改寫版2 第二人稱代入篇</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --ink: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --blue: #2563eb;
+      --blue-bg: #eff6ff;
+      --blue-border: #bfdbfe;
+      --orange: #ea580c;
+      --orange-bg: #fff7ed;
+      --orange-border: #fed7aa;
+      --green: #059669;
+      --green-bg: #ecfdf5;
+      --green-border: #a7f3d0;
+      --purple: #7c3aed;
+      --purple-bg: #f5f3ff;
+      --purple-border: #ddd6fe;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --yellow-hl: #fef08a;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      padding-bottom: 4rem;
+    }
+
+    /* HERO HEADER */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 60%, #6366f1 100%);
+      color: #fff;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+    .pill {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.25rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .pill.gold {
+      background: #fbbf24;
+      color: #1e293b;
+    }
+    .hero h1 {
+      margin: 0.2rem 0;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+    .hero h2 {
+      margin: 0.3rem 0 0;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 500;
+      color: #e0e7ff;
+    }
+
+    /* STICKY NAV */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 12px rgba(15,23,42,0.05);
+    }
+    .nav-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .nav-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      transform: translateY(-1px);
+    }
+    .nav-btn.primary {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.4rem;
+      font-weight: 900;
+      margin: 2.2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid var(--blue);
+      color: #0f172a;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+    }
+
+    /* 4-PANEL COMIC STORYBOARD */
+    .infographic-img {
+      width: 100%;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .storyboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .story-panel {
+      border-radius: 14px;
+      padding: 1.1rem;
+      position: relative;
+      border: 2px solid transparent;
+    }
+    .story-panel.p1 { background: var(--blue-bg); border-color: var(--blue-border); }
+    .story-panel.p2 { background: var(--orange-bg); border-color: var(--orange-border); }
+    .story-panel.p3 { background: var(--red-bg); border-color: #fecaca; }
+    .story-panel.p4 { background: var(--green-bg); border-color: var(--green-border); }
+    .panel-step {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.15rem 0.55rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+      background: rgba(255,255,255,0.8);
+    }
+    .panel-icon {
+      font-size: 2rem;
+      float: right;
+      line-height: 1;
+    }
+    .story-panel h4 {
+      margin: 0.2rem 0 0.4rem;
+      font-size: 1.08rem;
+      font-weight: 800;
+    }
+    .story-panel p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #334155;
+    }
+    .eng-tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: #fff;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      font-family: "Segoe UI", monospace;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--blue);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    /* SENTENCE CHUNKING & COLOR BLOCKS */
+    .control-bar {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: center;
+      background: #f8fafc;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      margin-bottom: 1.2rem;
+      border: 1px solid var(--border);
+    }
+    .toggle-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .toggle-btn.active {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .para-badge {
+      display: inline-block;
+      background: #1e293b;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.25rem 0.8rem;
+      border-radius: 8px;
+      margin: 1rem 0 0.8rem;
+    }
+
+    .sent-card {
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 1.2rem;
+      background: #fff;
+      transition: all 0.2s;
+    }
+    .sent-card:hover {
+      border-color: #93c5fd;
+    }
+    .sent-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+    .sent-num {
+      background: var(--blue-bg);
+      color: var(--blue);
+      font-weight: 900;
+      font-size: 0.85rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 8px;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+    .sent-en {
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: #0f172a;
+      flex: 1;
+      line-height: 1.6;
+    }
+    .sent-zh {
+      margin-top: 0.45rem;
+      font-size: 1rem;
+      color: #475569;
+      padding-left: 0.5rem;
+      border-left: 3px solid #cbd5e1;
+    }
+    body.hide-zh .sent-zh { display: none; }
+
+    /* Cloze Mask Mode */
+    .key-term {
+      background: var(--yellow-hl);
+      padding: 0 5px;
+      border-radius: 5px;
+      font-weight: 800;
+      color: #9a3412;
+      transition: all 0.2s;
+    }
+    body.cloze-mode .key-term {
+      background: #cbd5e1;
+      color: transparent;
+      cursor: pointer;
+      user-select: none;
+    }
+    body.cloze-mode .key-term:hover {
+      background: var(--yellow-hl);
+      color: #9a3412;
+    }
+
+    .audio-btn {
+      border: none;
+      background: var(--blue-bg);
+      color: var(--blue);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 1.05rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .audio-btn:hover {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    /* VISUAL SENTENCE BLOCKS (積木拆句) */
+    .chunk-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.9rem 0;
+      align-items: stretch;
+    }
+    .chunk {
+      border-radius: 10px;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid transparent;
+    }
+    .chunk .c-role {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 0.15rem;
+      opacity: 0.85;
+    }
+    .chunk .c-en {
+      font-weight: 800;
+      font-family: "Segoe UI", sans-serif;
+    }
+    .chunk .c-zh {
+      font-size: 0.8rem;
+      margin-top: 0.1rem;
+    }
+    .chunk.s { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .chunk.v { background: #fff1f2; border-color: #fecdd3; color: #be123c; }
+    .chunk.o { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .chunk.m { background: #f5f3ff; border-color: #ddd6fe; color: #6d28d9; }
+    .chunk.c { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+
+    /* GRAMMAR & TRANSLATION TIPS GRID */
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 0.85rem;
+      margin-top: 0.8rem;
+    }
+    .insight-box {
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.92rem;
+    }
+    .insight-box.grammar {
+      background: #f8fafc;
+      border-left: 4px solid var(--blue);
+    }
+    .insight-box.trans {
+      background: #fffbeb;
+      border-left: 4px solid var(--orange);
+    }
+    .insight-title {
+      font-weight: 800;
+      font-size: 0.88rem;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* VISUAL GRAMMAR DIAGRAMS */
+    .diagram-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.2rem;
+    }
+    .diagram-card {
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.3rem;
+      background: #fff;
+    }
+    .formula-box {
+      background: #1e293b;
+      color: #fff;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      font-family: "Segoe UI", monospace;
+      font-size: 0.95rem;
+      margin: 0.75rem 0;
+      text-align: center;
+      font-weight: 700;
+    }
+    .formula-box span.hi {
+      color: #fbbf24;
+    }
+    .vs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin-top: 0.6rem;
+    }
+    .vs-table th, .vs-table td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+    }
+    .vs-table th {
+      background: #f1f5f9;
+      font-weight: 800;
+    }
+
+    /* VOCABULARY VISUAL CARDS */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.2rem;
+    }
+    .v-card {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .v-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+    }
+    .v-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+    .v-word {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--blue);
+    }
+    .v-kk {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-family: "Lucida Sans Unicode", sans-serif;
+    }
+    .v-meaning {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+    }
+    .v-pos {
+      background: var(--purple-bg);
+      color: var(--purple);
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      margin-right: 0.4rem;
+    }
+    .v-hook {
+      background: var(--orange-bg);
+      border: 1px dashed var(--orange);
+      border-radius: 10px;
+      padding: 0.65rem 0.8rem;
+      font-size: 0.88rem;
+      margin: 0.6rem 0;
+    }
+    .v-colloc {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 0.65rem 0.8rem;
+      font-size: 0.86rem;
+    }
+
+    /* QUIZ */
+    .quiz-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.8rem 1rem;
+      margin: 0.45rem 0;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .quiz-btn:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .quiz-btn.correct { background: var(--green-bg); border-color: var(--green); color: #065f46; }
+    .quiz-btn.wrong { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
+    .quiz-exp {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      background: var(--green-bg);
+      color: #065f46;
+      font-size: 0.9rem;
+    }
+    /* FULL TEXT IMMERSIVE READER */
+    .reader-card {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 1.8rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+    }
+    .reader-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 1.4rem;
+    }
+    .reader-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: #f1f5f9;
+      padding: 0.35rem;
+      border-radius: 12px;
+    }
+    .reader-tab {
+      border: none;
+      background: transparent;
+      padding: 0.5rem 1rem;
+      border-radius: 9px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .reader-tab.active {
+      background: #fff;
+      color: var(--blue);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .reader-tools {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .reader-panel { display: none; }
+    .reader-panel.active { display: block; }
+    .reader-para {
+      margin-bottom: 1.4rem;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      background: #fafcff;
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s;
+    }
+    .reader-para:hover {
+      background: #f0f7ff;
+      border-color: #bfdbfe;
+    }
+    .reader-en {
+      font-size: var(--reader-font-size, 1.14rem);
+      line-height: 1.85;
+      color: #0f172a;
+      font-weight: 500;
+    }
+    .reader-zh {
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px dashed #cbd5e1;
+      color: #475569;
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+    body.hide-reader-zh .reader-zh { display: none; }
+  
+    /* CONJUNCTION / CLAUSE BOX (COLLAPSIBLE) */
+    details.conj-box {
+      margin-top: 0.75rem;
+      background: #faf5ff;
+      border: 1.5px solid #d8b4fe;
+      border-radius: 10px;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.88rem;
+    }
+    details.conj-box[open] {
+      padding-bottom: 0.85rem;
+    }
+    details.conj-box summary.conj-title {
+      font-weight: 800;
+      color: #6d28d9;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      list-style: none;
+      margin: 0;
+      padding: 0.1rem 0;
+    }
+    details.conj-box summary.conj-title::-webkit-details-marker {
+      display: none;
+    }
+    details.conj-box[open] summary.conj-title {
+      margin-bottom: 0.6rem;
+      border-bottom: 1px dashed #d8b4fe;
+      padding-bottom: 0.45rem;
+    }
+        details.conj-box .conj-arrow {
+      font-size: 0.82rem;
+      color: #7c3aed;
+      font-weight: 600;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    details.conj-box[open] .conj-arrow {
+      transform: rotate(180deg);
+    }
+    .conj-word-preview {
+      background: #7c3aed;
+      color: #fff;
+      font-size: 0.75rem;
+      font-family: Consolas, monospace;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .conj-item {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed #e9d5ff;
+    }
+    .conj-item:first-of-type {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+    .conj-word {
+      font-family: Consolas, monospace;
+      font-weight: 800;
+      color: #7c3aed;
+      background: #ede9fe;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      height: fit-content;
+    }
+    .conj-type {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #5b21b6;
+      background: #f3e8ff;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 0.25rem;
+    }
+    .conj-concept {
+      background: #ffffff;
+      border: 1px solid #c084fc;
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #4c1d95;
+      line-height: 1.55;
+      box-shadow: 0 2px 6px rgba(124, 58, 237, 0.06);
+    }
+    .conj-concept strong {
+      color: #6b21a8;
+    }
+
+    /* MASTER TEACHER TRANSLATION WALKTHROUGH */
+    .master-trans-details {
+      margin-top: 0.7rem;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .master-trans-details[open] {
+      border-color: #4ade80;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.08);
+    }
+    .master-trans-summary {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.9rem;
+      cursor: pointer;
+      background: #f0fdf4;
+      user-select: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #166534;
+    }
+    .master-trans-summary:hover {
+      background: #dcfce7;
+    }
+    .master-trans-summary::-webkit-details-marker {
+      display: none;
+    }
+    .master-badge {
+      background: #16a34a;
+      color: #ffffff;
+      padding: 0.12rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .master-summary-text {
+      flex: 1;
+    }
+        .master-arrow {
+      font-size: 0.75rem;
+      color: #16a34a;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    .master-trans-details[open] .master-arrow {
+      transform: rotate(180deg);
+    }
+    .master-trans-body {
+      padding: 0.85rem 1rem;
+      background: #ffffff;
+      border-top: 1px dashed #bbf7d0;
+      font-size: 0.87rem;
+      line-height: 1.65;
+      color: #1e293b;
+    }
+    .master-step {
+      margin-bottom: 0.65rem;
+      padding-left: 0.5rem;
+      border-left: 3px solid #22c55e;
+    }
+    .master-step:last-child {
+      margin-bottom: 0;
+    }
+    .m-step-tag {
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      margin-right: 0.35rem;
+      display: inline-block;
+    }
+    .m-step-tag.s1 { background: #dbeafe; color: #1e40af; }
+    .m-step-tag.s2 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s3 { background: #ede9fe; color: #5b21b6; }
+    .m-step-tag.s4 { background: #ffedd5; color: #9a3412; }
+    .m-step-tag.s5 { background: #dcfce7; color: #166534; }
+    .m-step-tag.s6 { background: #fee2e2; color: #991b1b; }
+
+    /* Concept Banner Details */
+    .concept-banner-details {
+      background: #f5f3ff !important;
+      border: 1.5px solid #c4b5fd !important;
+      border-radius: 12px !important;
+      margin-bottom: 1.2rem !important;
+    }
+    .concept-banner-details[open] {
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.12) !important;
+    }
+    .concept-banner-summary {
+      background: #ede9fe !important;
+      color: #5b21b6 !important;
+      font-size: 0.95rem !important;
+      font-weight: 800 !important;
+      padding: 0.75rem 1.1rem !important;
+    }
+    .concept-banner-body {
+      background: #ffffff !important;
+      border-top: 1px dashed #c4b5fd !important;
+      padding: 1.2rem !important;
+      font-size: 0.9rem !important;
+      line-height: 1.65 !important;
+    }
+
+  
+    /* CROSS-VERSION SWITCHER */
+    .rewrite-bar {
+      background: #fff;
+      border: 2px solid #bae6fd;
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      align-items: center;
+    }
+    .rewrite-pill {
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 700;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: #0f172a;
+      transition: all 0.15s;
+    }
+    .rewrite-pill:hover {
+      background: #2563eb;
+      color: #fff;
+      border-color: #2563eb;
+    }
+    @media print { .rewrite-bar { display: none !important; } }
+
+    /* V4：正常／慢速雙按鈕（覆蓋舊版 36px 圓形按鈕） */
+    .audio-group { display: flex; gap: 0.35rem; flex-shrink: 0; align-self: flex-start; }
+    .audio-group .audio-btn { width: auto; height: auto; border-radius: 999px; padding: 0.35rem 0.65rem; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+    .audio-group .audio-btn.slow { background: #f1f5f9; color: #475569; }
+      @media (max-width: 640px) { .sent-top { flex-wrap: wrap; } .audio-group { margin-left: auto; } }
+    @media (max-width: 640px) { .insight-grid { grid-template-columns: minmax(0, 1fr); } .insight-box { overflow-wrap: anywhere; } }
+  
+    /* V4：正常／慢速雙按鈕（覆蓋舊版 36px 圓形按鈕） */
+    .audio-group { display: flex; gap: 0.35rem; flex-shrink: 0; align-self: flex-start; }
+    .audio-group .audio-btn { width: auto; height: auto; border-radius: 999px; padding: 0.35rem 0.65rem; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+    .audio-group .audio-btn.slow { background: #f1f5f9; color: #475569; }
+    @media (max-width: 640px) { .sent-top { flex-wrap: wrap; } .audio-group { margin-left: auto; } }
+    @media (max-width: 640px) { .insight-grid { grid-template-columns: minmax(0, 1fr); } .insight-box { overflow-wrap: anywhere; } }
+    @media (max-width: 640px) { .diagram-grid, .vocab-grid, .ln-grid { grid-template-columns: minmax(0, 1fr); } [style*="minmax(280px"] { grid-template-columns: minmax(0, 1fr) !important; } a[style*="nowrap"], .toggle-btn { white-space: normal !important; } .diagram-card, .ln-card, .vocab-card, .v-card, .formula-box, .ln-formula, .vs-table th, .vs-table td, .compare-table th, .compare-table td { overflow-wrap: anywhere; } .vs-table th, .vs-table td { padding-left: 0.4rem; padding-right: 0.4rem; } }
+
+    /* ===== V4 句卡元件（名師拆解 Step 1~7／連接詞框） ===== */
+    .conj-box { margin-top: 0.75rem; background: #faf5ff; border: 1.5px solid #d8b4fe; border-radius: 10px; padding: 0.55rem 0.9rem; font-size: 0.88rem; }
+    details.conj-box[open] { padding-bottom: 0.85rem; }
+    details.conj-box summary.conj-title { font-weight: 800; color: #6d28d9; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; list-style: none; margin: 0; padding: 0.1rem 0; }
+    details.conj-box summary.conj-title::-webkit-details-marker { display: none; }
+    details.conj-box[open] summary.conj-title { margin-bottom: 0.6rem; border-bottom: 1px dashed #d8b4fe; padding-bottom: 0.45rem; }
+    details.conj-box .conj-arrow { font-size: 0.82rem; color: #7c3aed; display: inline-block; transition: transform 0.2s ease; }
+    details.conj-box[open] .conj-arrow { transform: rotate(180deg); }
+    .conj-word-preview { background: #7c3aed; color: #fff; font-size: 0.75rem; font-family: Consolas, monospace; padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700; }
+    .conj-concept { background: #fff; border: 1px solid #c084fc; border-radius: 8px; padding: 0.65rem 0.85rem; margin-top: 0.5rem; font-size: 0.85rem; color: #4c1d95; line-height: 1.55; box-shadow: 0 2px 6px rgba(124,58,237,0.06); }
+    .conj-concept strong { color: #6b21a8; }
+    .conj-meta-list { margin-bottom: 0.5rem; padding-bottom: 0.45rem; border-bottom: 1px dashed #d8b4fe; font-size: 0.85rem; color: #6b21a8; line-height: 1.6; }
+    .conj-title-main { font-weight: 800; color: #5b21b6; margin-bottom: 0.35rem; font-size: 0.9rem; }
+    .conj-desc { font-size: 0.86rem; color: #334155; line-height: 1.65; margin-bottom: 0.5rem; }
+    .conj-killer-tip { background: #faf5ff; border-left: 3px solid #9333ea; padding: 0.35rem 0.6rem; border-radius: 0 4px 4px 0; font-size: 0.84rem; color: #581c87; }
+    .master-trans-details { margin-top: 0.7rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; overflow: hidden; }
+    .master-trans-details[open] { border-color: #4ade80; box-shadow: 0 4px 12px rgba(34,197,94,0.08); }
+    .master-trans-summary { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem; cursor: pointer; background: #f0fdf4; user-select: none; font-size: 0.88rem; font-weight: 700; color: #166534; list-style: none; }
+    .master-trans-summary:hover { background: #dcfce7; }
+    .master-trans-summary::-webkit-details-marker { display: none; }
+    .master-badge { background: #16a34a; color: #fff; padding: 0.12rem 0.5rem; border-radius: 6px; font-size: 0.74rem; font-weight: 800; white-space: nowrap; }
+    .master-summary-text { flex: 1; }
+    .master-arrow { font-size: 0.75rem; color: #16a34a; display: inline-block; transition: transform 0.2s ease; }
+    .master-trans-details[open] > summary .master-arrow { transform: rotate(180deg); }
+    .master-trans-body { padding: 0.85rem 1rem; background: #fff; border-top: 1px dashed #bbf7d0; font-size: 0.87rem; line-height: 1.65; color: #1e293b; }
+    .master-step { margin-bottom: 0.65rem; padding-left: 0.5rem; border-left: 3px solid #22c55e; }
+    .master-step:last-child { margin-bottom: 0; }
+    .m-step-tag { font-weight: 800; font-size: 0.75rem; padding: 0.1rem 0.4rem; border-radius: 4px; margin-right: 0.35rem; display: inline-block; }
+    .m-step-tag.s1 { background: #dbeafe; color: #1e40af; }
+    .m-step-tag.s2 { background: #fef3c7; color: #92400e; }
+    .m-step-tag.s3 { background: #ede9fe; color: #5b21b6; }
+    .m-step-tag.s4 { background: #ffedd5; color: #9a3412; }
+    .m-step-tag.s5 { background: #dcfce7; color: #166534; }
+    @media print { .audio-group, .control-bar { display: none !important; } .sent-card { break-inside: avoid; } }
+
+    /* ===== Unit 1 新頁補充 ===== */
+    .gram-term { background: #ede9fe; color: #5b21b6; padding: 0 0.15rem; border-radius: 3px; font-weight: 700; }
+    .hl-v { background: #fef08a; padding: 0 0.15rem; border-radius: 3px; }
+    .hl-g { background: #ede9fe; padding: 0 0.15rem; border-radius: 3px; }
+    .img-placeholder { display: none; align-items: center; justify-content: center; aspect-ratio: 16 / 9; width: 100%; border: 2px dashed #cbd5e1; border-radius: 12px; background: #f8fafc; color: #64748b; font-weight: 800; font-size: 1.05rem; margin-bottom: 1rem; }
+    .para-audio { margin-top: 0.5rem; }
+    .para-audio button { font-size: 0.8rem; padding: 0.25rem 0.7rem; border-radius: 999px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer; font-weight: 700; color: #334155; }
+    .quiz-q { margin-bottom: 0.4rem; }
+    .quiz-btn:disabled { cursor: default; }
+    .score-bar { position: sticky; bottom: 0.8rem; display: flex; justify-content: center; gap: 0.8rem; align-items: center; margin-top: 1.5rem; padding: 0.7rem 1rem; background: #0f172a; color: #fff; border-radius: 999px; font-weight: 800; box-shadow: 0 6px 18px rgba(15,23,42,0.25); }
+    .score-bar button { background: #fff; color: #0f172a; border: none; border-radius: 999px; padding: 0.3rem 0.9rem; font-weight: 800; cursor: pointer; }
+    @media (max-width: 640px) { .sent-top { flex-wrap: wrap; } .audio-group { margin-left: auto; } }
+    @media (max-width: 640px) { .insight-grid { grid-template-columns: minmax(0, 1fr); } .insight-box { overflow-wrap: anywhere; } }
+    @media (max-width: 640px) { .diagram-grid, .vocab-grid, .ln-grid { grid-template-columns: minmax(0, 1fr); } [style*="minmax(280px"] { grid-template-columns: minmax(0, 1fr) !important; } a[style*="nowrap"], .toggle-btn { white-space: normal !important; } .diagram-card, .ln-card, .vocab-card, .v-card, .formula-box, .ln-formula, .vs-table th, .vs-table td, .compare-table th, .compare-table td { overflow-wrap: anywhere; } .vs-table th, .vs-table td { padding-left: 0.4rem; padding-right: 0.4rem; } }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badges">
+      <span class="pill gold">進階改寫版二｜you 對話視角</span>
+      <span class="pill">UNIT 10 讀者代入特訓</span>
+    </div>
+    <h1>You in Provence: A Purple Dream Trip</h1>
+    <h2>走進普羅旺斯：你的紫色夢幻之旅（第二人稱代入視角）</h2>
+  </header>
+
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../../index.html">🏠 首頁目錄</a>
+    <a class="nav-btn" href="./03_互動圖文學習講義.html">📖 原版主講義</a>
+    <a class="nav-btn" href="./04_改寫版1_客觀科普報導篇.html">📰 1. 客觀報導</a>
+    <a class="nav-btn" href="./05_改寫版2_第二人稱代入篇.html" style="background:#0f172a;color:#fff;border-color:#0f172a;">💬 2. 第二人稱</a>
+    <a class="nav-btn" href="./06_改寫版3_高中生故事記敘篇.html">🧑‍🎓 3. 高中生故事</a>
+    <a class="nav-btn" href="./07_改寫版4_正反論證議論文篇.html">⚖️ 4. 正反議論文</a>
+    <a class="nav-btn primary" href="#sec-story">🎨 1. 四格圖解</a>
+    <a class="nav-btn" href="#sec-fulltext">📖 2. 完整課文</a>
+    <a class="nav-btn" href="#sec-reading">🧩 3. 積木拆句</a>
+    <a class="nav-btn" href="#sec-quiz">🎯 4. 15題實戰</a>
+    <a class="nav-btn" href="./08_歷屆學測真題特訓.html" target="_blank" style="border-color:#f59e0b;color:#b45309;font-weight:800;background:#fffbeb;">🏛️ 學測15題特訓 ↗</a>
+  </nav>
+
+  <div class="container">
+
+    <div id="sec-story" class="section-title">🎨 一、30 秒看懂改寫架構：第二人稱代入四格圖解</div>
+    <div class="card">
+      <img src="./03_AI_視覺圖解講義.jpg" alt="You in Provence: A Purple Dream Trip 四格圖解" class="infographic-img" onerror="this.style.display='none'; document.getElementById('img-ph').style.display='flex';" />
+      <div id="img-ph" class="img-placeholder">🖼️ 四格分鏡圖解製作中</div>
+
+      <div class="storyboard">
+        <div class="story-panel p1">
+          <span class="panel-icon">🌅</span>
+          <span class="panel-step">開場 · 想像</span>
+          <h4>1. 想像你站在花海前</h4>
+          <p>作者請你想像法國東南部的紫色花田，並介紹普羅旺斯的山和小鎮。</p>
+          <span class="eng-tag">Imagine standing ...</span>
+        </div>
+        <div class="story-panel p2">
+          <span class="panel-icon">🍯</span>
+          <span class="panel-step">代入 · 花田與美食</span>
+          <h4>2. 你可以看、也可以嚐</h4>
+          <p>七月看花開、看農夫採收，再嚐嚐薰衣草冰淇淋和馬賽魚湯。</p>
+          <span class="eng-tag">You can try regional treats</span>
+        </div>
+        <div class="story-panel p3">
+          <span class="panel-icon">🚴</span>
+          <span class="panel-step">建議 · 自然與歷史</span>
+          <h4>3. 依興趣選行程</h4>
+          <p>愛自然就去峽谷和旺圖山；愛歷史就去亞爾、加爾橋和教皇宮。</p>
+          <span class="eng-tag">If you're a cyclist ...</span>
+        </div>
+        <div class="story-panel p4">
+          <span class="panel-icon">💜</span>
+          <span class="panel-step">收尾 · 鼓勵</span>
+          <h4>4. 你會一直記得</h4>
+          <p>普羅旺斯的暖意會留在你心中，回家後還是忘不了。</p>
+          <span class="eng-tag">a lasting impression</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-fulltext" class="section-title">📖 二、完整課文沉浸閱讀（You in Provence: A Purple Dream Trip）</div>
+    <div class="reader-card">
+      <div class="reader-header">
+        <div style="font-weight:800;color:var(--ink);font-size:1rem;">
+          💬 文體：第二人稱對話｜重點：想像開場、條件句代入、給建議、鼓勵收尾
+        </div>
+        <div class="reader-tools">
+          <button class="toggle-btn" id="btn-full-audio" onclick="toggleFullAudio()">🔊 播放全文朗讀</button>
+          <button class="toggle-btn active" id="btn-reader-zh" onclick="toggleReaderZh()">👁️ 顯示中文對照</button>
+          <button class="toggle-btn" onclick="changeFontSize(1)">A+ 放大</button>
+          <button class="toggle-btn" onclick="changeFontSize(-1)">A- 縮小</button>
+        </div>
+      </div>
+
+      <div class="reader-para">
+        <div class="reader-en">
+          Imagine standing in southeastern France, <strong class="hl-g">with</strong> fields of purple <strong class="hl-g">stretching</strong> <strong class="hl-g">as far as the eye can see</strong>. That's Provence, widely <strong class="hl-g">regarded as</strong> one of Europe's most beautiful areas, and you'll find <strong class="hl-v">towering</strong> mountains and <strong class="hl-v">charming</strong> towns waiting for you.
+        </div>
+        <div class="reader-zh">
+          想像你站在法國東南部，眼前的紫色花田一望無際。那就是普羅旺斯，公認是歐洲最美的地區之一，高聳的群山和迷人的小鎮都在等著你。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(0)">🔊 朗讀本段</button></div>
+      </div>
+      <div class="reader-para">
+        <div class="reader-en">
+          <strong class="hl-g">If</strong> you come in July, you can <strong class="hl-g">watch</strong> the <strong class="hl-v">lavender</strong> <strong class="hl-v">bloom</strong> on the <strong class="hl-v">Plateau</strong> of Valensole. You might even <strong class="hl-g">see</strong> farmers <strong class="hl-v">harvest</strong> the flowers, <strong class="hl-g">which</strong> are used to make <strong class="hl-v">perfumes</strong> and <strong class="hl-v">cosmetics</strong>. <strong class="hl-g">When</strong> you get hungry, try <strong class="hl-v">regional</strong> treats such as <strong class="hl-g">lavender-flavored</strong> ice cream. <strong class="hl-g">Outside of</strong> desserts, you should order bouillabaisse, the area's most <strong class="hl-v">celebrated</strong> fish stew.
+        </div>
+        <div class="reader-zh">
+          如果你七月來，可以在瓦朗索勒高原看薰衣草盛開。你甚至可能看到農夫採收花朵，這些花會用來製作香水和化妝品。肚子餓的時候，就嚐嚐當地特色點心，像是薰衣草風味的冰淇淋。除了甜點之外，你也該點一份馬賽魚湯，那是當地最著名的燉魚料理。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(1)">🔊 朗讀本段</button></div>
+      </div>
+      <div class="reader-para">
+        <div class="reader-en">
+          You'll love the <strong class="hl-v">turquoise</strong> waters of the Verdon Gorge, <strong class="hl-g">as will</strong> anyone traveling with you. <strong class="hl-g">If</strong> you're a <strong class="hl-v">cyclist</strong>, you can ride to the <strong class="hl-v">summit</strong> of Mont Ventoux, <strong class="hl-g">which</strong> rises <strong class="hl-v">dramatically</strong> against the sky. Are you a history fan? History <strong class="hl-g">runs deep</strong> here, and Roman ruins remain <strong class="hl-v">visible</strong> <strong class="hl-g">to this day</strong>. You can watch a show in the ancient <strong class="hl-v">amphitheater</strong> in Arles <strong class="hl-g">or</strong> admire the <strong class="hl-v">engineering</strong> of the Pont du Gard. In Avignon, the Palace of the <strong class="hl-v">Popes</strong>, once the seat of the <strong class="hl-v">papacy</strong>, will <strong class="hl-g">command your attention</strong> with its huge stone walls.
+        </div>
+        <div class="reader-zh">
+          你一定會愛上韋爾東峽谷碧綠的河水，和你同行的人也一樣。如果你是自行車手，可以騎上旺圖山山頂，山頂在天空的襯托下巍然聳立。你是歷史迷嗎？這裡歷史淵源深厚，羅馬遺跡至今仍清晰可見。你可以在亞爾的古代圓形劇場看一場表演，或是欣賞加爾橋的工程技術。亞維儂的教皇宮曾是教廷所在地，巨大的石牆一定會吸引你的目光。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(2)">🔊 朗讀本段</button></div>
+      </div>
+      <div class="reader-para" style="margin-bottom:0;">
+        <div class="reader-en">
+          Provence <strong class="hl-g">has a gift for</strong> leaving a lasting <strong class="hl-v">impression</strong>, <strong class="hl-g">so</strong> you'll remember its <strong class="hl-v">warmth</strong> long <strong class="hl-g">after</strong> you go home.
+        </div>
+        <div class="reader-zh">
+          普羅旺斯總有本事留下難忘的印象，所以回家很久以後，你還是會記得它的暖意。
+        </div>
+        <div class="para-audio"><button onclick="speakPara(3)">🔊 朗讀本段</button></div>
+      </div>
+    </div>
+
+    <div id="sec-reading" class="section-title">🧩 三、課文「積木拆句」＋ 逐句名師翻譯拆解</div>
+    <div class="card">
+      <div class="control-bar">
+        <span style="font-weight:800;font-size:0.9rem;">🛠️ 學習模式切換：</span>
+        <button class="toggle-btn active" id="btn-zh" onclick="document.body.classList.toggle('hide-zh'); this.classList.toggle('active');">👁️ 顯示中文翻譯</button>
+        <button class="toggle-btn" id="btn-cloze" onclick="document.body.classList.toggle('cloze-mode'); this.classList.toggle('active');">🙈 遮罩背誦模式（遮住黃底考點）</button>
+        <button id="toggle-conj-btn" class="toggle-btn" onclick="toggleAllConj()">🔗 一鍵展開所有連接詞解析</button>
+        <button id="btn-toggle-master-trans" class="toggle-btn" onclick="toggleAllMasterTrans()">👨‍🏫 一鍵展開名師翻譯拆解</button>
+        <span style="font-size:0.82rem;color:var(--muted);margin-left:auto;">💡 積木顏色：<strong style="color:#1e40af;">藍=主詞</strong>｜<strong style="color:#be123c;">紅=動詞</strong>｜<strong style="color:#047857;">綠=受詞/補語</strong>｜<strong style="color:#6d28d9;">紫=修飾/介片</strong>｜<strong style="color:#b45309;">黃=連接詞/子句</strong></span>
+      </div>
+
+      <details class="master-trans-details concept-banner-details" style="margin-bottom: 1.2rem;">
+        <summary class="master-trans-summary" style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border: 1.5px solid #a855f7;">
+          <span style="display: flex; align-items: center; gap: 0.5rem; flex: 1;">
+            <span style="font-size: 1.1rem;">🎓</span>
+            <span style="font-weight: 800; color: #6b21a8;">補教名師觀念大打通：</span>
+            <span style="color: #4c1d95; font-weight: 700;">為什麼有時候用「名詞子句」，有時候用「關代（形容詞子句）」？</span>
+          </span>
+          <span class="master-arrow">▼</span>
+        </summary>
+        <div class="concept-banner-body">
+          <p style="margin: 0 0 0.8rem 0; font-size: 0.95rem; font-weight: 700; color: #4c1d95;">
+            💡 判斷口訣：<strong>「左邊看有沒有先行詞名詞，右邊看子句缺不缺成分」</strong>
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+            <div style="background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 10px; padding: 0.9rem;">
+              <div style="font-weight: 800; color: #1e40af; margin-bottom: 0.4rem; font-size: 0.95rem;">📘 1. 名詞子句（Noun Clause）</div>
+              <ul style="margin: 0; padding-left: 1.2rem; color: #1e3a8a; font-size: 0.88rem; line-height: 1.6;">
+                <li><strong>左邊：</strong>動詞（say／find／believe），沒有先行詞名詞。</li>
+                <li><strong>右邊：</strong>that 後面是主詞動詞齊全的完整句。</li>
+                <li><strong>本篇：</strong>本篇較少名詞子句，看 <code>you might even see farmers harvest ...</code> 這種感官動詞＋受詞＋原形的結構，它不是子句</li>
+              </ul>
+            </div>
+            <div style="background: #fdf2f8; border: 1.5px solid #f472b6; border-radius: 10px; padding: 0.9rem;">
+              <div style="font-weight: 800; color: #9d174d; margin-bottom: 0.4rem; font-size: 0.95rem;">📕 2. 關係代名詞（形容詞子句）</div>
+              <ul style="margin: 0; padding-left: 1.2rem; color: #831843; font-size: 0.88rem; line-height: 1.6;">
+                <li><strong>左邊：</strong>一定有被修飾的名詞（先行詞）。</li>
+                <li><strong>右邊：</strong>缺主詞／受詞，或用 whose 接名詞表所有。</li>
+                <li><strong>本篇：</strong><code>the flowers, which are used to make ...</code>（缺主詞）／<code>Mont Ventoux, which rises ...</code>（缺主詞）</li>
+              </ul>
+            </div>
+          </div>
+          <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px; padding: 0.7rem 0.9rem; font-size: 0.88rem; color: #166534;">
+            <strong>⚡ 三秒判定：</strong>動詞後面接「一件事」➔ 名詞子句 that＋完整句；名詞後面補充「哪一個、什麼樣的」➔ 關代＋不完整句。
+          </div>
+        </div>
+      </details>
+
+      <div class="para-badge">第一段：想像開場</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S01</span>
+          <div class="sent-en">
+            Imagine standing in southeastern France, <span class="gram-term">with</span> fields of purple <span class="gram-term">stretching</span> <span class="gram-term">as far as the eye can see</span>.
+            <div class="sent-zh">想像你站在法國東南部，眼前的紫色花田一望無際。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Imagine standing in southeastern France, with fields of purple stretching as far as the eye can see.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Imagine standing in southeastern France, with fields of purple stretching as far as the eye can see.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是祈使句 <code>(You) + Imagine (V) + standing ... (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>原形動詞 Imagine：祈使句，直接對讀者說話。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>沒有連接詞；<code>with＋O＋V-ing</code> 是獨立片語，表附帶狀況。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>順翻；with 片語譯「眼前……」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>imagine＋V-ing</code>，不接 to V；with 後受詞接 stretching（主動）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「想像站在法國東南，帶著紫色的田伸展像遠像眼睛能看」，with 譯成「帶著」就壞了。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Imagine standing in southeastern France,</code>（祈使句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「想像你站在法國東南部」。補「你」，中文才有代入感。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>with fields of purple</code>（with 片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「眼前的紫色花田」。with 表情境，譯成「眼前」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>stretching as far as the eye can see.</code>（現在分詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「一望無際」。順翻。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：想像你站在法國東南部，眼前的紫色花田一望無際。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：with＋O＋V-ing 表附帶畫面，不翻「帶著」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">這是祈使句，直接跟你說「想像你站在法國東南部」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 with＋O＋V-ing 接在句尾時，先翻 O，再翻動作：</strong>「眼前的紫色花田一望無際」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：Imagine 後面補「你」，讀者才會把自己放進去。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：想像你站在法國東南部，眼前的紫色花田一望無際。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">無連接詞·單一主句</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：祈使句＋with 獨立片語。</div>
+              <div>• 大考命題點：imagine＋V-ing；with＋O＋V-ing。</div>
+            </div>
+            <div class="conj-title-main">沒有連接詞，靠 with 掛畫面</div>
+            <div class="conj-desc">
+              很多人會寫 <code>and there are fields ...</code>。作者用 with 把畫面掛上去，更精簡。<br/>👉 眼睛往右看——with 後面是 fields，再接 stretching。田自己延伸，主動用 V-ing。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：with＋O＋V-ing（主動）／p.p.（被動）。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">Imagine</span><span class="c-zh">想像</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">standing in southeastern France,</span><span class="c-zh">你站在法國東南部</span></div>
+          <div class="chunk m"><span class="c-role">[M] with 片語</span><span class="c-en">with fields of purple</span><span class="c-zh">眼前的紫色花田</span></div>
+          <div class="chunk m"><span class="c-role">[M] 現在分詞</span><span class="c-en">stretching as far as the eye can see.</span><span class="c-zh">一望無際</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>imagine＋V-ing</code>；<code>with＋O＋V-ing／p.p.</code> 表附帶狀況。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>第二人稱開場：<code>Imagine V-ing ...</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S02</span>
+          <div class="sent-en">
+            That's Provence, widely <span class="gram-term">regarded as</span> one of Europe's most beautiful areas, and you'll find <span class="key-term">towering</span> mountains and <span class="key-term">charming</span> towns waiting for you.
+            <div class="sent-zh">那就是普羅旺斯，公認是歐洲最美的地區之一，高聳的群山和迷人的小鎮都在等著你。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('That\'s Provence, widely regarded as one of Europe\'s most beautiful areas, and you\'ll find towering mountains and charming towns waiting for you.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('That\'s Provence, widely regarded as one of Europe\'s most beautiful areas, and you\'ll find towering mountains and charming towns waiting for you.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹一 <code>That (S) + 's (V) + Provence (C)</code>；主幹二 <code>you (S) + 'll find (V) + ... (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在式 is 指認地方；未來式 will find 對讀者預告。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>widely regarded as</code> 是省略 which is 的分詞片語；<code>and</code> 接第二句；<code>waiting</code> 修飾受詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>片語順翻，加「那裡」接下去。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>be regarded as</code>；find＋O＋V-ing（發現……正在）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「那是普羅旺斯，廣泛被認為作為歐洲最美地區之一，且你將發現高聳的山和迷人的鎮等你」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>That's Provence,</code>（主幹①）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「那就是普羅旺斯」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>widely regarded as one of Europe's most beautiful areas,</code>（分詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「公認是歐洲最美的地區之一」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>and you'll find towering mountains and charming towns</code>（主幹②）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「高聳的群山和迷人的小鎮」。you'll find 融進後面。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>waiting for you.</code>（現在分詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「都在等著你」。擬人，保留。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3 ➔ 語塊 4</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：那就是普羅旺斯，公認是歐洲最美的地區之一，高聳的群山和迷人的小鎮都在等著你。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：you'll find＋O＋V-ing 可直接說「O 在……」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">先指認「那就是普羅旺斯」，接著補充「公認是歐洲最美的地區之一」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 you'll find＋O＋V-ing 時，先翻 O，再翻動作，不用翻「你會發現」：</strong>「高聳的群山和迷人的小鎮都在等著你」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：加個「都」，語氣就熱情起來。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：那就是普羅旺斯，公認是歐洲最美的地區之一，高聳的群山和迷人的小鎮都在等著你。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">regarded（省略 which is）</span><span class="conj-word-preview">and（對等）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：and 連接兩個子句，前句帶分詞片語。</div>
+              <div>• 大考命題點：be regarded as；find＋O＋V-ing。</div>
+            </div>
+            <div class="conj-title-main">regarded 前面藏了 which is</div>
+            <div class="conj-desc">
+              👉 <code>regarded</code>：往左看是 Provence，是被公認，所以用 p.p.，等於 <code>which is widely regarded as</code>。<br/>👉 <code>and</code>：往右看 you'll find 有主詞動詞，連接兩個句子。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：名詞＋逗號＋p.p. ➔ 省略 which is。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞①</span><span class="c-en">That</span><span class="c-zh">那</span></div>
+          <div class="chunk v"><span class="c-role">[V] be 動詞</span><span class="c-en">'s</span><span class="c-zh">就是</span></div>
+          <div class="chunk o"><span class="c-role">[C] 補語</span><span class="c-en">Provence,</span><span class="c-zh">普羅旺斯</span></div>
+          <div class="chunk m"><span class="c-role">[M] 分詞片語</span><span class="c-en">widely regarded as one of Europe's most beautiful areas,</span><span class="c-zh">公認是歐洲最美的地區之一</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對等</span><span class="c-en">and</span><span class="c-zh">（連接）</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞②</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞②</span><span class="c-en">'ll find</span><span class="c-zh">會發現</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">towering mountains and charming towns</span><span class="c-zh">高聳的群山和迷人的小鎮</span></div>
+          <div class="chunk m"><span class="c-role">[M] 現在分詞</span><span class="c-en">waiting for you.</span><span class="c-zh">都在等著你</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>widely regarded as</code>＝公認是。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>代入句型：<code>You'll find ... waiting for you.</code></div>
+        </div>
+      </div>
+      <div class="para-badge">第二段：看花與美食</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S03</span>
+          <div class="sent-en">
+            <span class="gram-term">If</span> you come in July, you can <span class="gram-term">watch</span> the <span class="key-term">lavender</span> <span class="key-term">bloom</span> on the <span class="key-term">Plateau</span> of Valensole.
+            <div class="sent-zh">如果你七月來，可以在瓦朗索勒高原看薰衣草盛開。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('If you come in July, you can watch the lavender bloom on the Plateau of Valensole.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('If you come in July, you can watch the lavender bloom on the Plateau of Valensole.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>you (S) + can watch (V) + the lavender bloom (O＋原形)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在式 come 表未來條件；can 表可能。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>If</code> 條件句；watch＋O＋原形（感官動詞）。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>If 子句順翻；地點提到動作前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>條件句用現在式代未來；watch＋O＋原形動詞，不加 to。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「如果你七月來，你能看薰衣草開花在瓦朗索勒高原上」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>If you come in July,</code>（If 子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「如果你七月來」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>you can watch the lavender bloom</code>（主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「可以看薰衣草盛開」。watch＋O＋原形。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>on the Plateau of Valensole.</code>（地點）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】地點提前：「在瓦朗索勒高原」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 3 地點提前 ➔ 語塊 2</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：如果你七月來，可以【在瓦朗索勒高原】看薰衣草盛開。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：動作＋on＋地點：先翻地點。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">If 子句先翻，和中文同序。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到動詞＋on＋地點時，先翻地點：</strong>「在瓦朗索勒高原看薰衣草盛開」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：you can 不用每次都翻「你」，前面已經有了。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：如果你七月來，可以在瓦朗索勒高原看薰衣草盛開。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">If（條件）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複合句，If 副詞子句＋主句。</div>
+              <div>• 大考命題點：條件句時態；感官動詞＋O＋原形。</div>
+            </div>
+            <div class="conj-title-main">If 子句用現在式，感官動詞接原形</div>
+            <div class="conj-desc">
+              👉 <code>If</code>：七月還沒到，但子句用現在式 come，不寫 will come。<br/>👉 <code>watch</code>：往右看 the lavender bloom，bloom 是原形，感官動詞接原形，看全過程。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：If＋現在式；watch／see／hear＋O＋原形。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] If 子句</span><span class="c-en">If you come in July,</span><span class="c-zh">如果你七月來</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">can watch</span><span class="c-zh">可以看</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞＋原形</span><span class="c-en">the lavender bloom</span><span class="c-zh">薰衣草盛開</span></div>
+          <div class="chunk m"><span class="c-role">[M] 地點</span><span class="c-en">on the Plateau of Valensole.</span><span class="c-zh">在瓦朗索勒高原</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>bloom</code> 開花；<code>plateau</code> 高原。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>給建議：<code>If you come in ..., you can ...</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S04</span>
+          <div class="sent-en">
+            You might even <span class="gram-term">see</span> farmers <span class="key-term">harvest</span> the flowers, <span class="gram-term">which</span> are used to make <span class="key-term">perfumes</span> and <span class="key-term">cosmetics</span>.
+            <div class="sent-zh">你甚至可能看到農夫採收花朵，這些花會用來製作香水和化妝品。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('You might even see farmers harvest the flowers, which are used to make perfumes and cosmetics.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('You might even see farmers harvest the flowers, which are used to make perfumes and cosmetics.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>You (S) + might see (V) + farmers harvest ... (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>might 表可能性比較小，加 even 語氣更驚喜。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>感官動詞 see＋O＋原形；<code>which</code> 非限定關代，先行詞 the flowers。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>which 子句另起一句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>be used to V</code>（被用來）≠ <code>be used to V-ing</code>（習慣於）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「你可能甚至看農夫收割花，那被用來做香水」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>You might even see</code>（主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你甚至可能看到」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>farmers harvest the flowers,</code>（受詞＋原形）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「農夫採收花朵」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>which are used to make perfumes and cosmetics.</code>（which 子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「這些花會用來製作香水和化妝品」。被動改主動，另起一句。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：你甚至可能看到農夫採收花朵，這些花會用來製作香水和化妝品。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：be used to V＝用來做；別跟 be used to V-ing 混。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">前半照順序翻，「你甚至可能看到農夫採收花朵」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到逗號＋which＋被動時，先重複名詞，再用主動說：</strong>「這些花會用來製作香水和化妝品」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：might even 翻「甚至可能」，帶一點驚喜。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：你甚至可能看到農夫採收花朵，這些花會用來製作香水和化妝品。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">which（非限定關代）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複合句，主句＋which 形容詞子句。</div>
+              <div>• 大考命題點：be used to V；see＋O＋原形。</div>
+            </div>
+            <div class="conj-title-main">be used to 後面看原形或 V-ing</div>
+            <div class="conj-desc">
+              👉 <code>which</code>：左邊逗號＋名詞 the flowers，右邊 <code>___ are used</code> 缺主詞。<br/>👉 <code>used to make</code>：花是被拿來做，原形 make。如果是人「習慣」，才會用 be used to V-ing。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：物＋be used to＋原形（被用來）；人＋be used to＋V-ing（習慣）。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">You</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">might even see</span><span class="c-zh">甚至可能看到</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞＋原形</span><span class="c-en">farmers harvest the flowers,</span><span class="c-zh">農夫採收花朵</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] which 子句</span><span class="c-en">which are used to make perfumes and cosmetics.</span><span class="c-zh">這些花會用來製作香水和化妝品</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>be used to V</code>＝被用來；<code>be used to V-ing</code>＝習慣於。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>對讀者說：<code>You might even see ...</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S05</span>
+          <div class="sent-en">
+            <span class="gram-term">When</span> you get hungry, try <span class="key-term">regional</span> treats such as <span class="gram-term">lavender-flavored</span> ice cream.
+            <div class="sent-zh">肚子餓的時候，就嚐嚐當地特色點心，像是薰衣草風味的冰淇淋。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('When you get hungry, try regional treats such as lavender-flavored ice cream.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('When you get hungry, try regional treats such as lavender-flavored ice cream.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是祈使句 <code>(You) + try (V) + regional treats (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>祈使句表建議；get 用現在式。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>When</code> 時間子句；such as 舉例。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>When 子句順翻；such as 例子放到 treats 前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>When 子句用現在式代未來；<code>lavender-flavored</code> 連字號。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「當你變餓，嘗試區域的點心像薰衣草風味的冰淇淋」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>When you get hungry,</code>（When 子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「肚子餓的時候」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>try regional treats</code>（祈使句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「嚐嚐當地特色點心」。try 談食物譯「嚐嚐」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>such as lavender-flavored ice cream.</code>（舉例）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「像是薰衣草風味的冰淇淋」。可順翻，口語更自然。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：肚子餓的時候，就嚐嚐當地特色點心，像是薰衣草風味的冰淇淋。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：try＋食物＝嚐嚐；口語文體舉例可順翻。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">When 先翻「肚子餓的時候」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到祈使句 try＋食物時，先想「嚐嚐」：</strong>「就嚐嚐當地特色點心」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：加「就」，條件和建議就連起來了。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：肚子餓的時候，就嚐嚐當地特色點心，像是薰衣草風味的冰淇淋。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">When（副詞子句）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複合句，When 副詞子句＋祈使句。</div>
+              <div>• 大考命題點：祈使句；時間子句的時態。</div>
+            </div>
+            <div class="conj-title-main">主句沒有主詞，因為是祈使句</div>
+            <div class="conj-desc">
+              👉 <code>When</code>：接完整句，表時間。<br/>👉 逗號後 <code>try ...</code> 看起來少了主詞，其實省略 you，是祈使句。不要加 to 也不要加 s。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：逗號後原形動詞開頭 ➔ 祈使句。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] When 子句</span><span class="c-en">When you get hungry,</span><span class="c-zh">肚子餓的時候</span></div>
+          <div class="chunk v"><span class="c-role">[V] 祈使動詞</span><span class="c-en">try</span><span class="c-zh">就嚐嚐</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">regional treats</span><span class="c-zh">當地特色點心</span></div>
+          <div class="chunk m"><span class="c-role">[M] 舉例</span><span class="c-en">such as lavender-flavored ice cream.</span><span class="c-zh">像是薰衣草風味的冰淇淋</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>regional</code> 地區的；<code>treat</code> 點心；招待。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>給建議：<code>When you ..., try ...</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S06</span>
+          <div class="sent-en">
+            <span class="gram-term">Outside of</span> desserts, you should order bouillabaisse, the area's most <span class="key-term">celebrated</span> fish stew.
+            <div class="sent-zh">除了甜點之外，你也該點一份馬賽魚湯，那是當地最著名的燉魚料理。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Outside of desserts, you should order bouillabaisse, the area\'s most celebrated fish stew.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Outside of desserts, you should order bouillabaisse, the area\'s most celebrated fish stew.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>you (S) + should order (V) + bouillabaisse (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>should 表建議。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong>沒有子句；<code>the area's most celebrated fish stew</code> 是同位語。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>順翻。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>outside of</code> 接名詞；order 當「點餐」。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「在甜點外面，你應該命令馬賽魚湯」，order 不是命令。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Outside of desserts,</code>（介系詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「除了甜點之外」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>you should order bouillabaisse,</code>（主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你也該點一份馬賽魚湯」。order 餐點譯「點」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>the area's most celebrated fish stew.</code>（同位語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「那是當地最著名的燉魚料理」。補「那是」接上。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：除了甜點之外，你也該點一份馬賽魚湯，那是當地最著名的燉魚料理。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：同位語補「那是」，就順了。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">片語先翻「除了甜點之外」，然後給建議。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到人名或專有名詞後的同位語時，先翻專有名詞，再補「那是」：</strong>「馬賽魚湯，那是當地最著名的燉魚料理」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：order 在餐廳就是「點」。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：除了甜點之外，你也該點一份馬賽魚湯，那是當地最著名的燉魚料理。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">無連接詞·單一主句</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：單一主要子句＋同位語。</div>
+              <div>• 大考命題點：outside of；同位語。</div>
+            </div>
+            <div class="conj-title-main">逗號後的名詞片語不用 which is</div>
+            <div class="conj-desc">
+              👉 眼睛往左看——bouillabaisse。<br/>👉 眼睛往右看——the area's most celebrated fish stew，指同一樣東西，是同位語。寫作文時可以少一個 which is。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：N, the＋N ➔ 同位語。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 介系詞片語</span><span class="c-en">Outside of desserts,</span><span class="c-zh">除了甜點之外</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">should order</span><span class="c-zh">也該點</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">bouillabaisse,</span><span class="c-zh">一份馬賽魚湯</span></div>
+          <div class="chunk m"><span class="c-role">[M] 同位語</span><span class="c-en">the area's most celebrated fish stew.</span><span class="c-zh">那是當地最著名的燉魚料理</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>outside of</code>＝besides；<code>celebrated</code>＝famous。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>推薦菜色：<code>You should order A, the ... B.</code></div>
+        </div>
+      </div>
+      <div class="para-badge">第三段：自然與歷史</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S07</span>
+          <div class="sent-en">
+            You'll love the <span class="key-term">turquoise</span> waters of the Verdon Gorge, <span class="gram-term">as will</span> anyone traveling with you.
+            <div class="sent-zh">你一定會愛上韋爾東峽谷碧綠的河水，和你同行的人也一樣。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('You\'ll love the turquoise waters of the Verdon Gorge, as will anyone traveling with you.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('You\'ll love the turquoise waters of the Verdon Gorge, as will anyone traveling with you.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>You (S) + 'll love (V) + the turquoise waters (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>未來式 will：預測讀者的感受。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>as</code> 連接詞，後面倒裝 will＋S，助動詞跟前句；<code>traveling with you</code> 修飾 anyone。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>順翻；as will 譯「……也會」。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>as will S</code>：前句用 will，就接 will；anyone 單數。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「你將愛碧綠的水，像將任何人旅行和你」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>You'll love</code>（主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你一定會愛上」。love 加「一定」，比「將愛」自然。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>the turquoise waters of the Verdon Gorge,</code>（受詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】of 提前：「韋爾東峽谷碧綠的河水」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>as will anyone traveling with you.</code>（as 倒裝）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「和你同行的人也一樣」。traveling with you 提前。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 of 提前 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：你一定會愛上【韋爾東峽谷碧綠的】河水，【和你同行的】人也一樣。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：as＋助動詞＋S 譯「S 也一樣」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">主句先翻「你一定會愛上」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 as will＋S＋V-ing 時，先翻修飾語，再翻 S，最後說「也一樣」：</strong>「和你同行的人也一樣」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：turquoise 翻「碧綠」，水色才美。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：你一定會愛上韋爾東峽谷碧綠的河水，和你同行的人也一樣。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">as（連接詞＋倒裝）</span><span class="conj-word-preview">traveling（省略 who is）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複合句，主句＋as 倒裝子句。</div>
+              <div>• 大考命題點：as＋助動詞＋S；N＋V-ing。</div>
+            </div>
+            <div class="conj-title-main">as 後面的助動詞要跟前句</div>
+            <div class="conj-desc">
+              課文用 as does，這裡換成 as will。<br/>👉 眼睛往左看——'ll love 是未來式，所以助動詞用 will。<br/>👉 眼睛往右看——主詞 anyone。will 不分單複數，比 does 好判斷。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：前句助動詞是什麼，as 後面就接什麼。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">You</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">'ll love</span><span class="c-zh">一定會愛上</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">the turquoise waters of the Verdon Gorge,</span><span class="c-zh">韋爾東峽谷碧綠的河水</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] as 倒裝</span><span class="c-en">as will anyone traveling with you.</span><span class="c-zh">和你同行的人也一樣</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>as will S</code>：S 也會；助動詞看前句。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>說服讀者：<code>You'll love ..., as will ...</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S08</span>
+          <div class="sent-en">
+            <span class="gram-term">If</span> you're a <span class="key-term">cyclist</span>, you can ride to the <span class="key-term">summit</span> of Mont Ventoux, <span class="gram-term">which</span> rises <span class="key-term">dramatically</span> against the sky.
+            <div class="sent-zh">如果你是自行車手，可以騎上旺圖山山頂，山頂在天空的襯托下巍然聳立。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('If you\'re a cyclist, you can ride to the summit of Mont Ventoux, which rises dramatically against the sky.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('If you\'re a cyclist, you can ride to the summit of Mont Ventoux, which rises dramatically against the sky.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>you (S) + can ride (V)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在式 're；can 表可行。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>If</code> 條件；<code>which</code> 非限定關代，先行詞 Mont Ventoux 的 summit。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>If 順翻；which 子句另起一句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>ride to＋地點；rise 不及物；dramatically 修飾動詞。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「如果你是自行車手，你能騎到旺圖山的頂，那上升戲劇化地反對天空」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>If you're a cyclist,</code>（If 子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「如果你是自行車手」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>you can ride to the summit of Mont Ventoux,</code>（主幹）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「可以騎上旺圖山山頂」。of 提前。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>which rises dramatically against the sky.</code>（which 子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「山頂在天空的襯托下巍然聳立」。另起一句，against 提前。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：如果你是自行車手，可以騎上旺圖山山頂，山頂【在天空的襯托下】巍然聳立。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：against the sky 先翻；which 另起一句。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">If 先翻，給條件。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到動詞＋against the sky 時，先翻背景：</strong>「在天空的襯托下巍然聳立」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：summit 重複一次，讓 which 子句接得上。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：如果你是自行車手，可以騎上旺圖山山頂，山頂在天空的襯托下巍然聳立。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">If（條件）</span><span class="conj-word-preview">which（非限定關代）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：複合句，If 子句＋主句＋which 子句。</div>
+              <div>• 大考命題點：非限定 which；against 表背景。</div>
+            </div>
+            <div class="conj-title-main">which 指山頂，所以動詞用 rises</div>
+            <div class="conj-desc">
+              👉 <code>If</code>：條件先講。<br/>👉 <code>which</code>：左邊逗號，右邊缺主詞；它指 the summit，單數，動詞加 s。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：逗號＋which＋缺主詞。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk c"><span class="c-role">[Conj] If 子句</span><span class="c-en">If you're a cyclist,</span><span class="c-zh">如果你是自行車手</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">can ride</span><span class="c-zh">可以騎</span></div>
+          <div class="chunk m"><span class="c-role">[M] 地點</span><span class="c-en">to the summit of Mont Ventoux,</span><span class="c-zh">上旺圖山山頂</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] which 子句</span><span class="c-en">which rises dramatically against the sky.</span><span class="c-zh">山頂在天空的襯托下巍然聳立</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>cyclist</code> 自行車手；<code>summit</code> 山頂；<code>dramatically</code> 顯著地。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>分眾建議：<code>If you're a ..., you can ...</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S09</span>
+          <div class="sent-en">
+            Are you a history fan? History <span class="gram-term">runs deep</span> here, and Roman ruins remain <span class="key-term">visible</span> <span class="gram-term">to this day</span>.
+            <div class="sent-zh">你是歷史迷嗎？這裡歷史淵源深厚，羅馬遺跡至今仍清晰可見。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Are you a history fan? History runs deep here, and Roman ruins remain visible to this day.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Are you a history fan? History runs deep here, and Roman ruins remain visible to this day.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹一 <code>History (S) + runs (V)</code>；主幹二 <code>Roman ruins (S) + remain (V) + visible (C)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在式；問句吸引讀者。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>and</code> 連接兩個子句；前面是問句 Are you ...?
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>問句順翻；to this day 提前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>a history fan</code> 名詞修飾名詞，不寫 histories；remain＋Adj.。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「你是歷史迷嗎？歷史跑深在這裡，並且羅馬廢墟保持看得見到這一天。」
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Are you a history fan?</code>（問句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你是歷史迷嗎？」順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>History runs deep here,</code>（主幹①）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「這裡歷史淵源深厚」。here 提前。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>and Roman ruins remain visible</code>（主幹②）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「羅馬遺跡仍清晰可見」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>to this day.</code>（時間）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】譯「至今」。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 4 提前 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：你是歷史迷嗎？這裡歷史淵源深厚，羅馬遺跡【至今】仍清晰可見。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：先問再答，是第二人稱開段的好招。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">先問「你是歷史迷嗎？」，接著回答。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到句尾 to this day 時，先翻「至今」：</strong>「至今仍清晰可見」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：ruins 翻「遺跡」，比「廢墟」好聽。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：你是歷史迷嗎？這裡歷史淵源深厚，羅馬遺跡至今仍清晰可見。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">and（對等）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：問句＋and 連接的兩個子句。</div>
+              <div>• 大考命題點：run deep；remain＋Adj.。</div>
+            </div>
+            <div class="conj-title-main">and 連接兩個完整句</div>
+            <div class="conj-desc">
+              👉 <code>and</code>：往右看 Roman ruins remain ...，有主詞動詞。<br/>👉 <code>remain</code>：不接副詞，後面用形容詞 visible。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：and＋新主詞 ➔ 兩句並列。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 問句</span><span class="c-en">Are you a history fan?</span><span class="c-zh">你是歷史迷嗎？</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞①</span><span class="c-en">History</span><span class="c-zh">歷史</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞①</span><span class="c-en">runs deep here,</span><span class="c-zh">在這裡淵源深厚</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對等</span><span class="c-en">and</span><span class="c-zh">（連接）</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞②</span><span class="c-en">Roman ruins</span><span class="c-zh">羅馬遺跡</span></div>
+          <div class="chunk v"><span class="c-role">[V] 連綴</span><span class="c-en">remain</span><span class="c-zh">仍</span></div>
+          <div class="chunk o"><span class="c-role">[C] 補語</span><span class="c-en">visible</span><span class="c-zh">清晰可見</span></div>
+          <div class="chunk m"><span class="c-role">[M] 時間</span><span class="c-en">to this day.</span><span class="c-zh">至今</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>run deep</code>；<code>visible</code>；<code>to this day</code>。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>問句開段：<code>Are you a ... fan?</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S10</span>
+          <div class="sent-en">
+            You can watch a show in the ancient <span class="key-term">amphitheater</span> in Arles <span class="gram-term">or</span> admire the <span class="key-term">engineering</span> of the Pont du Gard.
+            <div class="sent-zh">你可以在亞爾的古代圓形劇場看一場表演，或是欣賞加爾橋的工程技術。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('You can watch a show in the ancient amphitheater in Arles or admire the engineering of the Pont du Gard.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('You can watch a show in the ancient amphitheater in Arles or admire the engineering of the Pont du Gard.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>You (S) + can watch ... or admire ... (V)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>can 表可行的選擇。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>or</code> 連接兩個原形動詞。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>in Arles 提前；of 片語提前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>can 後兩個動詞都用原形；engineering 不可數。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「你能看表演在古老圓形劇場在亞爾或欣賞工程的加爾橋」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>You can watch a show</code>（動詞①）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「你可以看一場表演」。放在地點後。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>in the ancient amphitheater in Arles</code>（地點）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】譯「在亞爾的古代圓形劇場」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>or admire the engineering of the Pont du Gard.</code>（動詞②）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「或是欣賞加爾橋的工程技術」。of 提前。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 2 地點提前 ➔ 語塊 1 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：你可以【在亞爾的古代圓形劇場】看一場表演，或是欣賞加爾橋的工程技術。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：兩個 in 連用：大地方先翻。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">主詞「你可以」先講。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到兩個 in 地點連用時，先翻大地點：</strong>「在亞爾的古代圓形劇場」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：engineering 這裡翻「工程技術」，比「工程」完整。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：你可以在亞爾的古代圓形劇場看一場表演，或是欣賞加爾橋的工程技術。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">or（對等）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：單一主句，兩個動詞以 or 連接。</div>
+              <div>• 大考命題點：can＋原形；A of B。</div>
+            </div>
+            <div class="conj-title-main">or 連接兩個原形動詞</div>
+            <div class="conj-desc">
+              👉 眼睛往左看——can watch。<br/>👉 眼睛往右看——admire，也是原形，跟 can 一組。寫成 admires 就錯了。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：助動詞後的並列動詞都用原形。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">You</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞①</span><span class="c-en">can watch</span><span class="c-zh">可以看</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">a show</span><span class="c-zh">一場表演</span></div>
+          <div class="chunk m"><span class="c-role">[M] 地點</span><span class="c-en">in the ancient amphitheater in Arles</span><span class="c-zh">在亞爾的古代圓形劇場</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 對等</span><span class="c-en">or</span><span class="c-zh">或是</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞②</span><span class="c-en">admire</span><span class="c-zh">欣賞</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">the engineering of the Pont du Gard.</span><span class="c-zh">加爾橋的工程技術</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>amphitheater</code> 圓形劇場；<code>engineering</code> 工程。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>列行程：<code>You can A or B.</code></div>
+        </div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S11</span>
+          <div class="sent-en">
+            In Avignon, the Palace of the <span class="key-term">Popes</span>, once the seat of the <span class="key-term">papacy</span>, will <span class="gram-term">command your attention</span> with its huge stone walls.
+            <div class="sent-zh">亞維儂的教皇宮曾是教廷所在地，巨大的石牆一定會吸引你的目光。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('In Avignon, the Palace of the Popes, once the seat of the papacy, will command your attention with its huge stone walls.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('In Avignon, the Palace of the Popes, once the seat of the papacy, will command your attention with its huge stone walls.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹是 <code>the Palace of the Popes (S) + will command (V) + your attention (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>未來式 will：預告讀者的體驗。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>once the seat of the papacy</code> 是同位語；with 片語表手段。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>同位語緊接主詞；with 提到動作前。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong><code>command one's attention</code>；once 當副詞「曾經」。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「在亞維儂，教皇宮，一次的座位的教廷，將命令你的注意力」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>In Avignon, the Palace of the Popes,</code>（主詞）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「亞維儂的教皇宮」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>once the seat of the papacy,</code>（同位語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「曾是教廷所在地」。once 譯「曾」，不譯「一次」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>will command your attention</code>（動詞片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「一定會吸引你的目光」。放最後。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>with its huge stone walls.</code>（with 片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】譯「巨大的石牆」，放動作前。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 4 手段提前 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：亞維儂的教皇宮曾是教廷所在地，【巨大的石牆】一定會吸引你的目光。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：once＋N 譯「曾是」；with 手段先翻。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">主詞和同位語一起翻：「亞維儂的教皇宮曾是教廷所在地」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到動詞＋with＋特色時，先翻特色，再翻效果：</strong>「巨大的石牆一定會吸引你的目光」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：will 翻「一定會」，對讀者更有說服力。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：亞維儂的教皇宮曾是教廷所在地，巨大的石牆一定會吸引你的目光。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">同位語（插入）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：單一主句，中間插入同位語。</div>
+              <div>• 大考命題點：command attention；同位語。</div>
+            </div>
+            <div class="conj-title-main">兩個逗號夾起來的是插入說明</div>
+            <div class="conj-desc">
+              👉 兩個逗號夾 <code>once the seat of the papacy</code>，拿掉也不影響主幹。<br/>👉 主幹就是 <code>Palace will command your attention</code>。找動詞時，先跳過夾起來的部分。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：逗號夾名詞片語 ➔ 同位語，先跳過找動詞。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk m"><span class="c-role">[M] 地點</span><span class="c-en">In Avignon,</span><span class="c-zh">亞維儂的</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞</span><span class="c-en">the Palace of the Popes,</span><span class="c-zh">教皇宮</span></div>
+          <div class="chunk m"><span class="c-role">[M] 同位語</span><span class="c-en">once the seat of the papacy,</span><span class="c-zh">曾是教廷所在地</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">will command</span><span class="c-zh">一定會吸引</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">your attention</span><span class="c-zh">你的目光</span></div>
+          <div class="chunk m"><span class="c-role">[M] 手段</span><span class="c-en">with its huge stone walls.</span><span class="c-zh">巨大的石牆</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>command attention</code>；<code>once</code> 曾經；<code>the seat of</code> 所在地。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>第二人稱：把 attention 換成 <code>your attention</code>。</div>
+        </div>
+      </div>
+      <div class="para-badge">第四段：鼓勵收尾</div>
+
+      <div class="sent-card">
+        <div class="sent-top">
+          <span class="sent-num">S12</span>
+          <div class="sent-en">
+            Provence <span class="gram-term">has a gift for</span> leaving a lasting <span class="key-term">impression</span>, <span class="gram-term">so</span> you'll remember its <span class="key-term">warmth</span> long <span class="gram-term">after</span> you go home.
+            <div class="sent-zh">普羅旺斯總有本事留下難忘的印象，所以回家很久以後，你還是會記得它的暖意。</div>
+          </div>
+          <div class="audio-group">
+            <button class="audio-btn" onclick="speak('Provence has a gift for leaving a lasting impression, so you\'ll remember its warmth long after you go home.', 0.95)">🔊 正常</button>
+            <button class="audio-btn slow" onclick="speak('Provence has a gift for leaving a lasting impression, so you\'ll remember its warmth long after you go home.', 0.75)">🐢 慢速</button>
+          </div>
+        </div>
+        <details class="master-trans-details">
+          <summary class="master-trans-summary">
+            <span class="master-badge">👨‍🏫 補教名師拆解</span>
+            <span class="master-summary-text">中翻英思維拆解 ＆ 考點剖析 ＆ 口說示範（Step 1～7）</span>
+            <span class="master-arrow">▼</span>
+          </summary>
+          <div class="master-trans-body">
+            <div class="master-step">
+              <span class="m-step-tag s1">Step 1</span><strong>【抓主幹骨架】：</strong>主幹一 <code>Provence (S) + has (V) + a gift (O)</code>；主幹二 <code>you (S) + 'll remember (V) + its warmth (O)</code>。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s2">Step 2</span><strong>【時態剖析】：</strong>現在式 has 講特質；未來式 will remember 預告日後。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s3">Step 3</span><strong>【子句與連接詞觀念打通】：</strong><code>so</code> 表結果；<code>after</code> 時間子句。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s4">Step 4</span><strong>【中英思維調序】：</strong>順翻。
+            </div>
+            <div class="master-step">
+              <span class="m-step-tag s5">Step 5</span><strong>【名師高分潤飾與避坑】：</strong>時間子句用現在式 go；<code>long after</code>（很久之後）。
+            </div>
+            <div class="master-step" style="background: #fff; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s6" style="background: #fee2e2; color: #991b1b;">Step 6</span><strong>【整句翻譯（逐語塊拆解 ＆ 考場動線教學）】：</strong>
+
+              <div class="step6-pain" style="font-size: 0.88rem; line-height: 1.6; color: #475569; margin: 0.45rem 0; background: #fff1f2; border-left: 3px solid #f43f5e; padding: 0.45rem 0.65rem; border-radius: 4px;">
+                ⚠️ <strong>【直譯盲點】</strong>：直翻「普羅旺斯有禮物為了留下持久的印象，所以你將記得它的溫暖很久在你回家之後」。
+              </div>
+
+              <div class="step6-chunks" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.65rem 0.85rem; margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.7; color: #1e293b;">
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.45rem;">🔍 【各語塊與片語翻譯詳解】：</div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 1：<code>Provence has a gift</code>（主幹①）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「普羅旺斯總有本事」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 2：<code>for leaving a lasting impression,</code>（for 片語）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「留下難忘的印象」。順翻。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 3：<code>so you'll remember its warmth</code>（so 子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        譯「所以你會一直記得它的暖意」。
+      </div>
+    </div>
+    <div style="margin-bottom: 0.55rem;">
+      <div style="font-weight: 700; color: #0f172a;">• <strong>語塊 4：<code>long after you go home.</code>（時間子句）</strong></div>
+      <div style="margin-left: 1.25rem; margin-top: 0.15rem; color: #334155; line-height: 1.65;">
+        【需調序超車】譯「回家很久以後」，放「記得」前。
+      </div>
+    </div>
+              </div>
+
+              <div class="step6-sequence" style="background: #f1f5f9; border-left: 3px solid #64748b; padding: 0.45rem 0.65rem; margin: 0.45rem 0; font-size: 0.86rem; color: #334155; line-height: 1.55;">
+                🧭 <strong>【全句組裝動線】</strong>：<code>語塊 1 ➔ 語塊 2 ➔ 語塊 4 時間提前 ➔ 語塊 3</code>
+              </div>
+
+              <div class="step6-target" style="background: #ecfdf5; border: 1px dashed #10b981; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0.45rem 0; font-size: 0.9rem; font-weight: 700; color: #047857; line-height: 1.65;">
+                🎯 <strong>滿分全句譯文</strong>：普羅旺斯總有本事留下難忘的印象，所以【回家很久以後】，你還是會記得它的暖意。
+              </div>
+
+              <div class="step6-motto" style="font-size: 0.85rem; font-weight: 700; color: #065f46; background: #f0fdf4; padding: 0.35rem 0.6rem; border-radius: 4px; border-left: 3px solid #059669;">
+                💡 <strong>考場心法</strong>：long after 先翻，再說「還是」。
+              </div>
+            </div>
+            <div class="master-step" style="background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.85rem; margin-top: 0.6rem;">
+              <span class="m-step-tag s7" style="background: #fef3c7; color: #92400e;">Step 7</span><strong>【🎙️ 名師口說示範：從頭到尾翻一次】：</strong>
+              <div class="step7-talk" style="font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-top: 0.5rem;">
+                <p style="margin: 0 0 0.5rem;">前半照順序翻，「普羅旺斯總有本事留下難忘的印象」。</p>
+                <div class="step7-rule" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">👉 <strong>遇到 long after＋子句時，先翻時間：</strong>「回家很久以後，你還是會記得」。</div>
+                <div class="step7-tip" style="margin: 0 0 0.5rem; padding: 0.4rem 0.65rem; background: #fdf4ff; border-left: 3px solid #c026d3; border-radius: 4px;">✨ <strong>順暢提醒</strong>：warmth 翻「暖意」，有人情味。</div>
+                <div class="step7-read" style="margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed #f59e0b; font-weight: 700; color: #92400e;">🗣️ 整句唸一次：普羅旺斯總有本事留下難忘的印象，所以回家很久以後，你還是會記得它的暖意。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="conj-box">
+          <summary class="conj-title">
+            <span style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+              <span style="font-size: 1rem;">🔗</span>
+              <span>連接詞／子句解析</span>
+              <span class="conj-word-preview">so（結果）</span><span class="conj-word-preview">after（時間）</span>
+            </span>
+            <span class="conj-arrow">▼</span>
+          </summary>
+          <div class="conj-concept">
+            <div class="conj-meta-list">
+              <div>• 語法地位：so 連接兩個子句，後句帶時間子句。</div>
+              <div>• 大考命題點：have a gift for；時間子句時態。</div>
+            </div>
+            <div class="conj-title-main">after 後面用現在式，不用 will</div>
+            <div class="conj-desc">
+              👉 <code>so</code>：前面是原因，後面是結果。<br/>👉 <code>after</code>：雖然是未來的事，時間子句一律用現在式 go，不寫 will go。
+            </div>
+            <div class="conj-killer-tip">
+              ⚡ <strong>考場三秒判斷手勢</strong>：時間子句以現在式代未來。
+            </div>
+          </div>
+        </details>
+        <div class="chunk-row">
+          <div class="chunk s"><span class="c-role">[S] 主詞①</span><span class="c-en">Provence</span><span class="c-zh">普羅旺斯</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞</span><span class="c-en">has</span><span class="c-zh">總有</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">a gift</span><span class="c-zh">本事</span></div>
+          <div class="chunk m"><span class="c-role">[M] for 片語</span><span class="c-en">for leaving a lasting impression,</span><span class="c-zh">留下難忘的印象</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 結果</span><span class="c-en">so</span><span class="c-zh">所以</span></div>
+          <div class="chunk s"><span class="c-role">[S] 主詞②</span><span class="c-en">you</span><span class="c-zh">你</span></div>
+          <div class="chunk v"><span class="c-role">[V] 動詞②</span><span class="c-en">'ll remember</span><span class="c-zh">會記得</span></div>
+          <div class="chunk o"><span class="c-role">[O] 受詞</span><span class="c-en">its warmth</span><span class="c-zh">它的暖意</span></div>
+          <div class="chunk c"><span class="c-role">[Conj] 時間</span><span class="c-en">long after you go home.</span><span class="c-zh">回家很久以後</span></div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-box grammar"><div class="insight-title">💡 文法與同義替換</div><code>leave a lasting impression</code>；<code>warmth</code> 不可數。</div>
+          <div class="insight-box trans"><div class="insight-title">✍️ 學測寫作秘訣</div>鼓勵收尾：<code>..., so you'll remember ... long after ...</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-quiz" class="section-title">🎯 四、15 題大考實戰檢測（針對本篇第二人稱代入改寫版）</div>
+    <div class="card">
+
+      <div class="para-badge" style="background:var(--blue);margin-top:0;">Part A｜第一部分：克漏字綜合測驗 (Cloze Test, 第 1–5 題)</div>
+      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:1.2rem;font-size:1.02rem;line-height:1.85;">
+        Planning a summer trip? <strong><u>(1)</u></strong> walking through rows of lavender in southern France. If you visit in July, you can see the flowers in full <strong><u>(2)</u></strong>. <strong><u>(3)</u></strong> of the fields, you can visit Roman ruins, which remain <strong><u>(4)</u></strong> to this day. You'll love the food, <strong><u>(5)</u></strong> will your friends.
+      </div>
+      <div class="quiz-q">
+        <p><strong>1. 請選出最適合填入 <u>(1)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(A) To imagining</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(B) Imagines</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 1)">(C) Imagining of</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 1)">(D) Imagine</button>
+        <div id="q1-exp" class="quiz-exp">✅ <strong>正解 (D) Imagine</strong>！祈使句用原形，<code>imagine＋V-ing</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>2. 請選出最適合填入 <u>(2)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(A) harvest</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 2)">(B) bloom</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(C) summit</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 2)">(D) warmth</button>
+        <div id="q2-exp" class="quiz-exp">✅ <strong>正解 (B) bloom</strong>！固定片語 <code>in full bloom</code>：盛開。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>3. 請選出最適合填入 <u>(3)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 3)">(A) Outside</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(B) Besides</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(C) Except</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 3)">(D) In spite</button>
+        <div id="q3-exp" class="quiz-exp">✅ <strong>正解 (A) Outside</strong>！<code>Outside of＋N</code>。Besides 不加 of。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>4. 請選出最適合填入 <u>(4)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(A) vision</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(B) visibly</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 4)">(C) visible</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 4)">(D) visit</button>
+        <div id="q4-exp" class="quiz-exp">✅ <strong>正解 (C) visible</strong>！連綴動詞 remain 後接形容詞 → <code>visible</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>5. 請選出最適合填入 <u>(5)</u> 的字：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(A) so that</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 5)">(B) as</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(C) or</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 5)">(D) but</button>
+        <div id="q5-exp" class="quiz-exp">✅ <strong>正解 (B) as</strong>！<code>as＋助動詞＋S</code>：你朋友也會。前句 'll love → as will。</div>
+      </div>
+      <div class="para-badge" style="background:var(--purple);margin-top:2rem;">Part B｜第二部分：文意字彙與片語搭配 (第 6–9 題)</div>
+      <div class="quiz-q">
+        <p><strong>6. If you climb to the ________, you can see the whole valley below.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(A) impression</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(B) perfume</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 6)">(C) warmth</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 6)">(D) summit</button>
+        <div id="q6-exp" class="quiz-exp">✅ <strong>正解 (D) summit</strong>！爬到「山頂」看整片山谷 → <code>summit</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>7. When you shop in the old town, look for ________ snacks you can't buy anywhere else.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 7)">(A) regional</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(B) towering</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(C) dramatic</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 7)">(D) visible</button>
+        <div id="q7-exp" class="quiz-exp">✅ <strong>正解 (A) regional</strong>！別處買不到的「地方」點心 → <code>regional</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>8. Smile when you meet people; it will leave a good ________ on them.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(A) harvest</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(B) engineering</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 8)">(C) impression</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 8)">(D) papacy</button>
+        <div id="q8-exp" class="quiz-exp">✅ <strong>正解 (C) impression</strong>！<code>leave a good impression on sb</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>9. You'll enjoy the ________ of the sun on your skin after a long winter.</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 9)">(A) warmth</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(B) summit</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(C) cyclist</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 9)">(D) cosmetic</button>
+        <div id="q9-exp" class="quiz-exp">✅ <strong>正解 (A) warmth</strong>！陽光的「溫暖」→ <code>warmth</code>。</div>
+      </div>
+      <div class="para-badge" style="background:var(--orange);margin-top:2rem;">Part C｜第三部分：重要文法與中翻英除錯 (第 10–12 題)</div>
+      <div class="quiz-q">
+        <p><strong>10. 下列哪一句文法正確？</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(A) You can watch the flowers bloomed by July it.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(B) You can watch the flowers to bloom in July.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 10)">(C) You can watching the flowers bloom in July.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 10)">(D) You can watch the flowers bloom in July.</button>
+        <div id="q10-exp" class="quiz-exp">✅ <strong>正解 (D) You can watch the flowers bloom in July.</strong>！感官動詞＋O＋原形；can 後接原形。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>11. 下列哪一句文法正確？</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(A) Imagine to lie on a beach, with waves touch your feet.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 11)">(B) Imagine lying on a beach, with waves touching your feet.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(C) Imagine lie on a beach, with waves touched your feet.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 11)">(D) Imagine lying on a beach, and with waves your feet touching it.</button>
+        <div id="q11-exp" class="quiz-exp">✅ <strong>正解 (B) Imagine lying on a beach, with waves touching your feet.</strong>！<code>imagine＋V-ing</code>；<code>with＋O＋V-ing</code>。</div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>12. 「你一定會愛上這道菜，你的家人也會。」最佳英譯是：</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(A) You'll love this dish, as is your family.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(B) You'll love this dish, as does your family.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 12)">(C) You'll love this dish, as will your family.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 12)">(D) You'll love this dish, as your family will do it.</button>
+        <div id="q12-exp" class="quiz-exp">✅ <strong>正解 (C) You'll love this dish, as will your family.</strong>！前句 will，as 後也接 will。</div>
+      </div>
+      <div class="para-badge" style="background:var(--green);margin-top:2rem;">Part D｜第四部分：大考閱讀測驗 (第 13–15 題)</div>
+      <div class="quiz-q">
+        <p><strong>13. What can you do if you are a cyclist?</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(A) Sail on the Verdon Gorge.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(B) Harvest lavender with farmers.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 13)">(C) Ride to the summit of Mont Ventoux.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 13)">(D) Race around the Palace of the Popes.</button>
+        <div id="q13-exp" class="quiz-exp">✅ <strong>正解 (C) Ride to the summit of Mont Ventoux.</strong>！<em>If you're a cyclist, you can ride to the summit of Mont Ventoux.</em></div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>14. Which food does the author suggest you order?</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, true, 14)">(A) Bouillabaisse</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(B) Sushi</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(C) Roast chicken</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 14)">(D) Pizza</button>
+        <div id="q14-exp" class="quiz-exp">✅ <strong>正解 (A) Bouillabaisse</strong>！<em>you should order bouillabaisse</em></div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;" />
+      <div class="quiz-q">
+        <p><strong>15. What is the writer's main purpose?</strong></p>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(A) To compare France with other countries.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(B) To warn you about the dangers of cycling.</button>
+        <button class="quiz-btn" onclick="checkAns(this, false, 15)">(C) To explain how perfumes are sold.</button>
+        <button class="quiz-btn" onclick="checkAns(this, true, 15)">(D) To encourage you to imagine a trip to Provence.</button>
+        <div id="q15-exp" class="quiz-exp">✅ <strong>正解 (D) To encourage you to imagine a trip to Provence.</strong>！全文都在用 you 邀請讀者想像並規劃旅程。</div>
+      </div>
+
+      <div class="score-bar"><span id="score-text">得分：0 / 15</span><button onclick="resetQuiz()">🔄 重新作答</button></div>
+    </div>
+
+  </div>
+
+  <script>
+    const paras = [
+      "Imagine standing in southeastern France, with fields of purple stretching as far as the eye can see. That's Provence, widely regarded as one of Europe's most beautiful areas, and you'll find towering mountains and charming towns waiting for you.",
+      "If you come in July, you can watch the lavender bloom on the Plateau of Valensole. You might even see farmers harvest the flowers, which are used to make perfumes and cosmetics. When you get hungry, try regional treats such as lavender-flavored ice cream. Outside of desserts, you should order bouillabaisse, the area's most celebrated fish stew.",
+      "You'll love the turquoise waters of the Verdon Gorge, as will anyone traveling with you. If you're a cyclist, you can ride to the summit of Mont Ventoux, which rises dramatically against the sky. Are you a history fan? History runs deep here, and Roman ruins remain visible to this day. You can watch a show in the ancient amphitheater in Arles or admire the engineering of the Pont du Gard. In Avignon, the Palace of the Popes, once the seat of the papacy, will command your attention with its huge stone walls.",
+      "Provence has a gift for leaving a lasting impression, so you'll remember its warmth long after you go home."
+    ];
+    let isFullAudioPlaying = false;
+    let currentFontSize = 1.14;
+
+    function toggleReaderZh() {
+      document.body.classList.toggle('hide-reader-zh');
+      document.getElementById('btn-reader-zh').classList.toggle('active');
+    }
+
+    function changeFontSize(delta) {
+      currentFontSize = Math.max(0.9, Math.min(1.6, currentFontSize + delta * 0.1));
+      document.documentElement.style.setProperty('--reader-font-size', currentFontSize + 'rem');
+    }
+
+    function resetFullBtn() {
+      isFullAudioPlaying = false;
+      const btn = document.getElementById('btn-full-audio');
+      if (btn) { btn.innerHTML = '🔊 播放全文朗讀'; btn.classList.remove('active'); }
+    }
+
+    function toggleFullAudio() {
+      if (!('speechSynthesis' in window)) return;
+      if (isFullAudioPlaying) { window.speechSynthesis.cancel(); resetFullBtn(); return; }
+      window.speechSynthesis.cancel();
+      paras.forEach((t, i) => {
+        const u = new SpeechSynthesisUtterance(t);
+        u.lang = 'en-US';
+        u.rate = 0.9;
+        if (i === paras.length - 1) { u.onend = resetFullBtn; }
+        u.onerror = resetFullBtn;
+        window.speechSynthesis.speak(u);
+      });
+      isFullAudioPlaying = true;
+      const btn = document.getElementById('btn-full-audio');
+      btn.innerHTML = '⏹️ 停止朗讀';
+      btn.classList.add('active');
+    }
+
+    function speak(text, rate) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      resetFullBtn();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.rate = rate || 0.95;
+      window.speechSynthesis.speak(u);
+    }
+
+    function speakPara(i) { speak(paras[i], 0.9); }
+
+    const answered = {};
+    let score = 0;
+    function checkAns(btn, isCorrect, qNum) {
+      if (answered[qNum]) return;
+      answered[qNum] = true;
+      const box = btn.closest('.quiz-q');
+      box.querySelectorAll('.quiz-btn').forEach(b => {
+        b.disabled = true;
+        if ((b.getAttribute('onclick') || '').includes('true')) b.classList.add('correct');
+      });
+      if (isCorrect) { score++; } else { btn.classList.add('wrong'); }
+      document.getElementById('q' + qNum + '-exp').style.display = 'block';
+      document.getElementById('score-text').textContent = '得分：' + score + ' / 15';
+    }
+
+    function resetQuiz() {
+      for (const k in answered) delete answered[k];
+      score = 0;
+      document.querySelectorAll('.quiz-btn').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+      document.querySelectorAll('.quiz-exp').forEach(e => { e.style.display = 'none'; });
+      document.getElementById('score-text').textContent = '得分：0 / 15';
+    }
+
+    let allMasterTransOpen = false;
+    function toggleAllMasterTrans() {
+      allMasterTransOpen = !allMasterTransOpen;
+      document.querySelectorAll('.sent-card .master-trans-details').forEach(d => { d.open = allMasterTransOpen; });
+      const btn = document.getElementById('btn-toggle-master-trans');
+      if (btn) {
+        btn.textContent = allMasterTransOpen ? '👨‍🏫 一鍵收合名師翻譯拆解' : '👨‍🏫 一鍵展開名師翻譯拆解';
+        btn.classList.toggle('active', allMasterTransOpen);
+      }
+    }
+    let allConjOpen = false;
+    function toggleAllConj() {
+      allConjOpen = !allConjOpen;
+      document.querySelectorAll('.conj-box').forEach(d => { d.open = allConjOpen; });
+      const btn = document.getElementById('toggle-conj-btn');
+      if (btn) {
+        btn.textContent = allConjOpen ? '🔗 一鍵收合所有連接詞解析' : '🔗 一鍵展開所有連接詞解析';
+        btn.classList.toggle('active', allConjOpen);
+      }
+    }
+  </script>
+</body>
+</html>
