@@ -1,0 +1,181 @@
+# Unit 14｜Measuring the World: The Imperial and Metric Systems
+### 丈量世界：英制與公制的淵源　｜原來如此 ★★★｜—Ami Barnes
+
+---
+
+## 一、四格大意（起承轉合）
+
+| 階段 | 重點 | 關鍵句 |
+|---|---|---|
+| 起 · 世界各量各的 | 公升、加侖，各有一套：這個國家用公升和公斤，那個國家用加侖和磅。作者問：我們怎麼會有這麼多種量法？ | *so many ways to measure* |
+| 承 · 英制成形 | 從各地不一到一部法案：英制起源於英國，長期因地區和產品而異；貿易與旅行增加後，1824 年的法案終於確立標準。 | *a universal system* |
+| 轉 · 公制崛起 | 法國大革命的新標準：公制源自法國大革命的理想，用十進位換算，因簡單易用而獲得廣泛支持。 | *science before tradition* |
+| 合 · 舊習難改 | 測量也是一段故事：美國、緬甸和賴比瑞亞尚未全面改用公制；英國酒吧仍賣品脫啤酒。測量方式反映歷史、文化和習慣。 | *old habits die hard* |
+
+---
+
+## 二、課文（中英對照）
+
+**¶1** Around the world, we measure things in different ways—from liters and kilograms in one country to gallons and pounds in another. But what's the story behind these different measurement systems, and how did we end up with so many ways to measure weight, volume, and length?
+> 在世界各地，我們用不同的方式測量事物：這個國家用公升和公斤，另一個國家卻用加侖和磅。但是，這些不同的測量系統背後有什麼故事？我們又是怎麼演變成用這麼多種方式來測量重量、容量和長度的呢？
+
+**¶2** The imperial system originated in Britain and was shaped by layers of Roman, Celtic, and Anglo-Saxon influence. Terms such as foot, pound, and gallon developed over centuries and became common throughout the land. Yet their meanings were far from consistent: A gallon could vary by region, and measurements often changed between industries and products. When trade was limited to exchanges with nearby neighbors, regional differences mattered little, but as travel increased, a universal system became necessary. Although earlier efforts had been made, the Weights and Measures Act of 1824 formally established a standard. The result was the imperial system, which spread throughout the British Empire.
+> 英制起源於英國，並受到羅馬、凱爾特和盎格魯－薩克遜文化層層影響而成形。英尺、磅和加侖這類用語，歷經數百年發展，逐漸在全國各地普及。然而，這些用語的含義遠遠談不上一致：一加侖的容量可能因地區而異，測量結果也常隨產業和產品而有所不同。當貿易僅限於和鄰近地區往來時，地區差異影響不大；但隨著人們往來日益頻繁，一套通用的系統就變得不可或缺。雖然先前已有人做過努力，但正式確立標準的，是一八二四年的《度量衡法》。其成果就是英制，這套制度後來傳遍了整個大英帝國。
+
+**¶3** Meanwhile, in France, another standard was taking shape: the metric system. Its key unit, the meter, emerged from the ideals of the French Revolution and reflected the belief that science and logic should come before tradition. In 1799, the system became the official standard in France.
+> 與此同時，在法國，另一套標準正逐漸成形，那就是公制。其核心單位「公尺」源自法國大革命的理想，反映出科學與邏輯應優先於傳統的信念。一七九九年，這套制度成為法國的官方標準。
+
+**¶4** While the imperial system was used within the British Empire, the metric system gained wide support thanks to its simplicity. Prefixes like "kilo-" (1,000) and "centi-" (1/100) scale units by powers of 10. For example, one kilometer equals 1,000 meters. By comparison, imperial conversions can seem irregular—12 inches in a foot, 3 feet in a yard, and 1,760 yards in a mile. Unsurprisingly, the user-friendly metric system became more popular.
+> 英制通行於大英帝國境內，公制則因簡單易行而獲得廣泛支持。像 kilo-（一千）和 centi-（百分之一）這樣的字首，以十的次方調整單位的大小。例如，一公里等於一千公尺。相較之下，英制的換算可能顯得毫無規律：一英尺有十二英寸，一碼有三英尺，一英里則有一千七百六十碼。不出所料，容易使用的公制變得更受歡迎。
+
+**¶5** Today, it is often noted that three countries have not yet fully switched to the metric system: the United States, Myanmar, and Liberia. Myanmar inherited non-metric units from Britain during colonial rule, while Liberia's system traces back to the United States. The US uses the US Customary System, which grew out of older English units and differs slightly from the British Imperial System. The UK has also held on to some imperial measures. In pubs, beer is sold in pint glasses, and street signs show miles, not kilometers. Why? Sometimes, old habits just die hard.
+> 如今，人們常指出有三個國家尚未全面改用公制：美國、緬甸和賴比瑞亞。緬甸在英國殖民統治期間沿襲了英國的非公制單位，而賴比瑞亞的制度則可追溯至美國。美國使用美國慣用單位制，這套制度由較舊的英格蘭單位演變而來，與英國的英制略有不同。英國也保留了一些英制單位。在酒吧裡，啤酒以品脫杯販售，路標上標示的也是英里，而不是公里。為什麼呢？有時候，舊習就是難改。
+
+**¶6** Measurement systems are more than just numbers—they reflect history, culture, and habits that endure over time. So the next time you pour a drink or check a map, remember: The way we measure the world tells a story all its own.
+> 測量系統不只是數字，它們反映出歷久不衰的歷史、文化和習慣。所以，下次你倒飲料或查看地圖時，請記得：我們丈量世界的方式，訴說著一段獨一無二的故事。
+
+---
+
+## 三、Vocabulary
+
+```
+【第一部分】
+*1. volume [ˋvɑljəm] n. 容量、體積
+    The volume of water increases when it freezes.
+*2. exchange [ɪksˋtʃendʒ] n. 交換、交流
+    Trade exchanges between the two countries grew quickly.
+*3. universal [͵junəˋvɝsl] adj. 普遍的、通用的
+    Music is often considered a universal language.
+*4. establish [ɪˋstæblɪʃ] v. 建立、設立
+    The organization was established in 1982.
+*5. emerge [ɪˋmɝdʒ] v. 形成、興起；出現（不及物）
+    A new leader emerged during the difficult period.
+*6. logic [ˋlɑdʒɪk] n. 邏輯、理性思維
+    Lauren's argument followed a clear logic.
+
+字彙小筆記（僅供參考）
+*・originate [əˋrɪdʒə͵net] v. 源自、源於（由 origin「起源」加上動詞字尾 -ate 而成）
+*・layer [ˋleɚ] n. 層、層次
+
+國家民族小辭典
+・Britain [ˋbrɪtn] n. 英國
+・Anglo-Saxon [͵æŋgloˋsæksn] n., adj. 盎格魯－薩克遜人（的）（源自北歐的日耳曼部落，西元五世紀後逐漸移入不列顛）
+
+【第二部分】
+*1. scale [skel] v. 按比例調整；（依某種標準或等級）衡量、判定；調整規模
+    The map scales distances so that one centimeter is one kilometer.
+*2. trace [tres] v. 追溯、追查（可作及物或不及物用；trace (sth) back to ... 指「追溯（某物）至其起源或原因」）
+    Anna traced her family history to 200 years ago.
+*3. differ [ˋdɪfɚ] v. 不同、相異、有區別（作不及物用，可接 from N. 表示「與……不同」）
+    The current results differ from the earlier test.
+ 4. pub [pʌb] n. 酒吧
+    Jennifer met her friends at their favorite pub.
+*5. endure [ɪnˋdʊr] v. 持續、持久（文中用法，不及物）；忍受、忍耐
+    The festival has endured for hundreds of years.
+*6. pour [pɔr] v. 倒出（液體）；傾注（可作及物或不及物用）
+    The waiter poured tea for all the guests.
+
+字彙小筆記（僅供參考）
+*・simplicity [sɪmˋplɪsətɪ] n. 簡單易行；簡樸
+・prefix [ˋpri͵fɪks] n. 字首（pre- 表示「在……之前；先於」）
+*・conversion [kənˋvɝʒən] n. 轉換、兌換
+*・inherit [ɪnˋhɛrɪt] v. 繼承、因襲
+
+國家小辭典
+・Myanmar [ˋmjɑn͵mɑr] n. 緬甸（曾為大英帝國的殖民地）
+・Liberia [laɪˋbɪrɪə] n. 賴比瑞亞（位於西非的國家，由美國廢除奴隸制後獲得自由的黑人建立，因此與美國淵源深厚）
+```
+
+---
+
+## 四、Language Notes
+
+```
+【1】end up with sth 結果得到……；最終落得……
+  end up 指「最終處於……；結果……」，後面可接 V-ing、Adj.、p.p. 或介系詞片語作補語，文中即接介系詞片語 with sth，表示「最後得到……」。
+  例：We walked around for hours and ended up getting lost.（我們走了好幾個小時，結果迷路了。）
+  例：His brilliant idea ended up ignored by everyone at the meeting.（他的絕妙點子最終卻被會議上的所有人忽略了。）
+  例：They argued for hours but ended up happy with the final decision.（他們爭論了好幾個小時，但最後對最終決定感到滿意。）
+  例：If you keep spending money like that, you will end up with nothing left.（如果你繼續那樣花錢，最終將會一無所有。）
+
+【2】A come before B A 比 B 優先、A 比 B 重要
+  come before 字面意思為「（順序、時間上）在……之前」，在文中則表示「優先程度或重要性比……高」。
+  例：Everyone agreed that safety should come before profit.（每個人都認同安全應該比獲利重要。）
+
+【3】連接詞 while 的用法
+  ⓐ 在文中指「而；然而」，相當於 whereas [wɛrˋæz]，用來說明對比的情況。
+     例：Beth finished the exam in 30 minutes, while most of her classmates needed the full hour.（貝絲在三十分鐘內就完成了考試，而她大多數的同學則需要一整個小時。）
+  ⓑ 還可指「在……期間；當……的時候」，相當於 when 或 during the time that。
+     例：He took notes while the teacher explained the concept.（他在老師解釋那個概念時一邊做筆記。）
+
+【4】it is noted that S＋V 的句型
+  it 在此為虛主詞，真正的主詞為 that 子句。此句型用被動語態來表示普遍的看法或公認的事實，note 在此指「提到、指出」。
+  例：It is noted that this tree is over 300 years old.（有人指出這棵樹樹齡已有三百多年了。）
+
+【5】grow out of ... 的不同意思
+  ⓐ 在文中指「由……衍生、發展而來」。
+     例：Simon's love of writing grew out of reading a lot growing up.（賽門對寫作的熱愛源於成長過程中大量的閱讀。）
+  ⓑ 還可指「隨著成長而戒除或改變（原有的習慣）」。
+     例：My big brother grew out of staying awake late to play video games.（我大哥長大後戒掉了熬夜打電動的習慣。）
+```
+
+---
+
+## 五、Info Box
+
+imperial [ɪmˋpɪrɪəl] 意為「帝國的」，尤指與大英帝國（British Empire [ˋɛmpaɪr]）相關的事物；後來引申指大英帝國所使用的度量衡制度，即「英制的」；metric [ˋmɛtrɪk] 則指「公制的」
+measurement 作不可數名詞，指「測量系統、計量」，亦可作可數名詞，指「測量結果、測量數據」；measure 作名詞時，則指「計量單位、衡量標準」
+Weights and Measures Act of 1824 為英國議會通過的《一八二四年度量衡法》，明確定義了各種長度、容量與重量單位，制定了全國統一的計量標準
+take shape「逐漸成形」
+French Revolution [͵rɛvəˋluʃən]「法國大革命」，當時法國人民推翻了傳統王室，建立新的實用計量標準單位
+1/100 指「百分之一」，可唸作 one over a hundred 或 one/a hundredth；powers of 10 為數學用語，表示「十的次方」
+副詞片語 by comparison 表示「相較之下；作為對比」
+irregular 由否定字首 ir- 加上 regular（有規則的、規律的）組成，指「不規則的、沒有規律的」
+複合形容詞 user-friendly 指「對使用者友善的、容易使用的」
+hold on to sth 表示「堅守、保留某事物」
+諺語 old habits die hard 表示「舊習難改」，其中 die hard 表示「不易消除、難以戒除」
+all one's own 置於所修飾的名詞之後，表示「完全屬於某人或某事物本身的、獨樹一格的」
+
+---
+
+## 六、圖表補充
+
+常見的英制與公制單位換算表
+長度：1 mile = 1.61 kilometers／1 yard = 0.91 meters／1 foot = 30.48 centimeters／1 inch = 2.54 centimeters
+重量：1 pound = 0.45 kilograms／1 ounce = 28.35 grams
+容量：1 gallon = 4.55 liters／1 pint = 568.26 milliliters
+
+US Customary System [ˋkʌstə͵mɛrɪ] 美國慣用單位制（簡稱「美制單位」）
+美國獨立之初，英國的度量衡制度尚未統一，因此沿用了英格蘭的傳統單位。兩者在長度和重量方面大致相同，但在液體容量方面則有明顯差異，以下為與公制的對比比較：
+1 加侖：英制 4.55 L／美制 3.79 L
+1 品脫：英制 568.26 mL／美制 473.18 mL
+1 液體盎司：英制 28.41 mL／美制 29.57 mL
+此外，美制另設有乾量標準（用於穀物與蔬果），如乾品脫（約 551 mL）與液體品脫容量不同。這一點不分乾、液的英制有所不同。
+
+圖片說明
+為了與國際接軌，美國政府曾於一九七五年通過《公制轉換法》（Metric Conversion Act），將公制訂為貿易與商務上的優先系統，並在部分聯邦事務中推廣使用。然而，由於未強制執行，美國民間日常生活仍以美制為主，食品與商品標示則常採雙軌並行。
+
+---
+
+## 七、課後練習
+
+```
+Reading Comprehension
+1. Why does the author mention the French Revolution?
+   A. To explain why France favored tradition over science
+   B. To show how its theories influenced the metric system  ➔ 答案 B
+   C. To compare measurement in France and Britain
+   D. To explain why France never used the imperial system
+
+Integrated Question
+1. Put the following in order from longest to shortest.
+   A. A tunnel that is 5,000 feet long
+   B. A river that is 150 miles long
+   C. A bridge that is 2,500 meters long
+   D. A road that is 200 kilometers long
+   ➔ 答案 B ➔ D ➔ C ➔ A
+
+What Do You Think?
+Why do you think some countries have still not fully switched to metric units?
+・I think if a country is used to using ..., then switching to metric could be ...
+```
