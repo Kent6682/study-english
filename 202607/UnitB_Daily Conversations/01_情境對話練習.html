@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unit B 日常情境對話｜2026 年 7 月號</title>
+<style>
+  :root {
+    --bg: #f8fafc; --card: #ffffff; --ink: #0f172a; --muted: #64748b; --border: #e2e8f0;
+    --primary: #2563eb; --primary-light: #eff6ff; --accent: #ea580c;
+    --gold: #b45309; --gold-bg: #fffbeb; --ok: #15803d; --ok-bg: #f0fdf4; --bad: #b91c1c; --bad-bg: #fef2f2;
+    --hl: #fef3c7; --hl-line: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", -apple-system, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6; padding-bottom: 4rem;
+  }
+  button { font: inherit; }
+  header {
+    background: linear-gradient(135deg, #134e4a 0%, #0f172a 100%); color: #fff;
+    padding: 2.2rem 1rem 2rem; text-align: center; position: relative;
+  }
+  header .back { position: absolute; left: 1rem; top: 1rem; color: #cbd5e1; text-decoration: none; font-size: 0.88rem; font-weight: 700; }
+  header .back:hover { color: #fff; }
+  header .tag { display: inline-block; background: #0d9488; padding: 0.1rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-weight: 800; }
+  header h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 900; margin-top: 0.5rem; }
+  header p { color: #94a3b8; margin-top: 0.4rem; }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 1rem; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.6rem; margin: 1.2rem 0; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.6rem 0.85rem; }
+  .stat b { display: block; font-size: 1.4rem; font-weight: 900; }
+  .stat span { color: var(--muted); font-size: 0.8rem; font-weight: 700; }
+
+  .toolbar {
+    position: sticky; top: 0; z-index: 20; background: rgba(248, 250, 252, 0.96); backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border); padding: 0.6rem 0; margin-bottom: 1rem;
+  }
+  .scene-chips { display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.15rem; scrollbar-width: thin; }
+  .chip {
+    border: 1.5px solid var(--border); background: #fff; color: var(--ink); border-radius: 999px;
+    padding: 0.3rem 0.8rem; font-size: 0.85rem; font-weight: 800; cursor: pointer; white-space: nowrap; flex: none;
+  }
+  .chip b { color: var(--primary); margin-right: 0.15rem; }
+  .chip:hover { border-color: var(--primary); }
+  .chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .chip.active b { color: #dbeafe; }
+
+  .scene-head { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem 1.1rem; }
+  .scene-num { font-size: 0.78rem; font-weight: 900; color: #0d9488; letter-spacing: 1px; }
+  .scene-head h2 { font-size: 1.35rem; font-weight: 900; line-height: 1.3; }
+  .scene-head h2 small { display: block; font-size: 0.95rem; color: var(--muted); font-weight: 700; }
+  .setting { color: #334155; margin-top: 0.4rem; font-size: 0.92rem; }
+  .cast { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); align-items: center; }
+  .cast-item { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--ink); font-weight: 700; }
+  .targets { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.7rem; align-items: center; }
+  .label { color: var(--muted); font-size: 0.8rem; font-weight: 800; margin-right: 0.2rem; }
+  .tchip {
+    border: 1px solid #fcd34d; background: var(--hl); color: #92400e; border-radius: 8px;
+    padding: 0.1rem 0.5rem; font-size: 0.82rem; font-weight: 800; cursor: pointer;
+  }
+  .tchip small { color: #b45309; font-weight: 700; margin-left: 0.2rem; }
+
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem; margin: 0.9rem 0 0.6rem; }
+  .mode-btn {
+    border: 2px solid var(--border); background: #fff; border-radius: 12px; padding: 0.55rem 0.3rem;
+    font-weight: 900; cursor: pointer; color: var(--ink); font-size: 0.92rem;
+  }
+  .mode-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
+  .controls { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin-bottom: 0.8rem; }
+  .ctl {
+    border: 1.5px solid var(--border); background: #fff; border-radius: 10px; padding: 0.35rem 0.7rem;
+    font-size: 0.85rem; font-weight: 800; cursor: pointer; color: #334155;
+  }
+  .ctl:hover { border-color: var(--primary); color: var(--primary); }
+  .ctl.on { background: var(--gold-bg); border-color: #f59e0b; color: var(--gold); }
+  .ctl.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .ctl.primary.on { background: #1e40af; border-color: #1e40af; color: #fff; }
+  .role-pick { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; width: 100%; }
+  .tip { font-size: 0.82rem; color: var(--muted); width: 100%; }
+
+  /* 對話泡泡 */
+  .lines { display: flex; flex-direction: column; gap: 0.7rem; }
+  .msg { display: flex; gap: 0.5rem; align-items: flex-start; }
+  .msg.side-r { flex-direction: row-reverse; }
+  .av {
+    flex: none; width: 34px; height: 34px; border-radius: 50%; color: #fff; font-weight: 900; font-style: normal;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem;
+  }
+  .cast .av { width: 22px; height: 22px; font-size: 0.7rem; }
+  .msg-main { max-width: min(85%, 620px); display: flex; flex-direction: column; }
+  .msg.side-r .msg-main { align-items: flex-end; }
+  .who { font-size: 0.75rem; font-weight: 800; color: var(--muted); margin: 0 0.3rem 0.1rem; }
+  .who span { font-weight: 700; }
+  .bubble {
+    background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 0.55rem 0.8rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04); transition: box-shadow 0.2s;
+  }
+  .msg.side-l .bubble { border-top-left-radius: 4px; }
+  .msg.side-r .bubble { background: var(--primary-light); border-color: #bfdbfe; border-top-right-radius: 4px; }
+  .en { font-size: 1.02rem; color: var(--ink); }
+  .zh { font-size: 0.86rem; color: var(--muted); margin-top: 0.2rem; }
+  .say {
+    border: none; background: transparent; cursor: pointer; font-size: 0.95rem; margin-left: 0.25rem;
+    padding: 0 0.15rem; vertical-align: baseline; opacity: 0.75;
+  }
+  .say:hover { opacity: 1; }
+  .tw {
+    border: none; border-bottom: 2px solid var(--hl-line); background: var(--hl); color: inherit; font-weight: 800;
+    border-radius: 4px; padding: 0 0.15rem; cursor: pointer; font-size: inherit; line-height: inherit;
+  }
+  .tw:hover { background: #fde68a; }
+  .note { text-align: center; color: var(--muted); font-size: 0.85rem; font-weight: 700; padding: 0.2rem 0; }
+  .msg.playing .bubble { box-shadow: 0 0 0 3px #93c5fd; }
+  .msg.your-turn .bubble { box-shadow: 0 0 0 3px var(--hl-line); }
+  .msg.flash .bubble { animation: flash 1.6s ease; }
+  @keyframes flash { 0%, 60% { box-shadow: 0 0 0 4px var(--hl-line); } 100% { box-shadow: none; } }
+
+  /* 角色扮演 */
+  .prompt { color: #92400e; font-weight: 700; font-size: 0.95rem; }
+  .reveal {
+    margin-top: 0.35rem; border: 1px dashed #f59e0b; background: #fff; color: var(--gold); border-radius: 8px;
+    padding: 0.15rem 0.6rem; font-size: 0.8rem; font-weight: 800; cursor: pointer;
+  }
+  .turn-badge { display: none; font-size: 0.75rem; font-weight: 900; color: var(--gold); margin: 0 0.3rem 0.15rem; }
+  .msg.your-turn .turn-badge { display: block; }
+
+  /* 克漏字 */
+  .blank {
+    min-width: 4.2em; border: none; border-bottom: 2px solid #94a3b8; background: #f1f5f9; border-radius: 4px;
+    padding: 0 0.35rem; font-weight: 800; cursor: pointer; color: var(--primary); font-size: inherit; line-height: inherit;
+  }
+  .blank.empty { color: #94a3b8; }
+  .blank.active { background: var(--hl); border-bottom-color: var(--hl-line); }
+  .blank.ok { background: var(--ok-bg); border-bottom-color: #22c55e; color: var(--ok); cursor: default; }
+  .blank.bad { background: var(--bad-bg); border-bottom-color: #f87171; color: var(--bad); text-decoration: line-through; cursor: default; }
+  .ans { color: var(--ok); font-weight: 900; margin-left: 0.2rem; }
+  .bank-box {
+    position: sticky; bottom: 0; z-index: 15; margin-top: 0.9rem; background: rgba(255, 255, 255, 0.97);
+    border: 1.5px solid #fcd34d; border-radius: 14px; padding: 0.6rem 0.75rem; box-shadow: 0 -4px 14px rgba(15, 23, 42, 0.08);
+  }
+  .bank-title { font-size: 0.8rem; font-weight: 800; color: var(--gold); margin-bottom: 0.35rem; }
+  .bank { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .bchip {
+    border: 1.5px solid var(--border); background: #fff; border-radius: 999px; padding: 0.2rem 0.7rem;
+    font-weight: 800; font-size: 0.9rem; cursor: pointer; color: var(--ink);
+  }
+  .bchip:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+  .bchip:disabled { opacity: 0.3; cursor: default; text-decoration: line-through; }
+  .cloze-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.7rem; }
+  .big-btn {
+    border: none; background: var(--primary); color: #fff; font-weight: 900; padding: 0.65rem; border-radius: 12px; cursor: pointer;
+  }
+  .big-btn.ghost { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
+  .big-btn:disabled { opacity: 0.45; cursor: default; }
+  .cloze-result { margin-top: 0.7rem; padding: 0.7rem 0.9rem; border-radius: 12px; font-weight: 800; text-align: center; }
+  .cloze-result.good { background: var(--ok-bg); color: var(--ok); }
+  .cloze-result.meh { background: var(--gold-bg); color: var(--gold); }
+
+  /* 句型、換頁 */
+  .expr { margin-top: 1.2rem; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 0.85rem 1rem; }
+  .expr h3 { font-size: 1rem; font-weight: 900; margin-bottom: 0.45rem; }
+  .expr ul { list-style: none; display: grid; gap: 0.35rem; }
+  .expr li { font-size: 0.92rem; }
+  .expr li b { color: #0f766e; margin-right: 0.4rem; }
+  .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1rem; }
+  .pager button { border: 1.5px solid var(--border); background: #fff; border-radius: 12px; padding: 0.6rem; font-weight: 800; cursor: pointer; color: #334155; }
+  .pager button:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+  .pager button:disabled { opacity: 0.35; cursor: default; }
+
+  /* 涵蓋表 */
+  .coverage { margin-top: 2rem; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem 1.1rem; }
+  .coverage h2 { font-size: 1.1rem; font-weight: 900; }
+  .coverage .hint { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.6rem; }
+  .cov-unit { padding: 0.55rem 0; border-top: 1px solid var(--border); }
+  .cov-title { font-size: 0.85rem; font-weight: 900; color: #334155; margin-bottom: 0.35rem; }
+  .cov-list { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .cov { border: 1px solid var(--border); background: #f8fafc; border-radius: 8px; padding: 0.15rem 0.5rem; font-weight: 700; font-size: 0.85rem; cursor: pointer; color: var(--ink); }
+  .cov:hover { border-color: var(--primary); color: var(--primary); }
+  .cov small { color: #0d9488; font-weight: 900; margin-left: 0.3rem; }
+
+  /* 單字小卡 */
+  .sheet { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.35); z-index: 50; display: flex; align-items: flex-end; justify-content: center; }
+  .sheet[hidden] { display: none; }
+  .sheet-card {
+    background: #fff; width: 100%; max-width: 560px; border-radius: 18px 18px 0 0; padding: 1.1rem 1.2rem 1.4rem;
+    position: relative; box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.2);
+  }
+  .sheet-close { position: absolute; right: 0.8rem; top: 0.6rem; border: none; background: transparent; font-size: 1.2rem; cursor: pointer; color: var(--muted); }
+  .sh-top { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; padding-right: 2rem; }
+  .sh-en { font-size: 1.6rem; font-weight: 900; color: #1e3a8a; }
+  .sh-ipa { color: var(--muted); }
+  .sh-pos { font-size: 0.78rem; font-weight: 800; background: #f1f5f9; color: #475569; padding: 0.05rem 0.45rem; border-radius: 6px; }
+  .sh-zh { font-size: 1.1rem; font-weight: 800; color: var(--accent); margin-top: 0.2rem; }
+  .sh-usage { margin-top: 0.5rem; background: var(--gold-bg); border: 1px solid #fcd34d; color: #92400e; border-radius: 10px; padding: 0.4rem 0.7rem; font-size: 0.9rem; }
+  .sh-src { margin-top: 0.5rem; color: var(--muted); font-size: 0.85rem; }
+  .sh-actions { display: flex; gap: 0.5rem; margin-top: 0.8rem; flex-wrap: wrap; }
+  .sh-actions .ctl { text-decoration: none; }
+
+  .no-tts { background: var(--bad-bg); color: var(--bad); border-radius: 10px; padding: 0.5rem 0.8rem; font-size: 0.85rem; margin-bottom: 0.6rem; }
+  @media (max-width: 520px) {
+    header .back { position: static; display: block; margin-bottom: 0.6rem; }
+    .msg-main { max-width: 88%; }
+    .mode-btn { font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html#202607">← 回講義列表</a>
+  <span class="tag">UNIT B</span>
+  <h1>日常情境對話・110 個單字全收錄</h1>
+  <p>12 個生活場景・本期 13 個單元的核心單字全部用上・聽對話、角色扮演、克漏字</p>
+</header>
+
+<main class="container">
+  <div class="stats" id="stats"></div>
+  <div class="toolbar"><div class="scene-chips" id="scene-chips" role="tablist" aria-label="情境"></div></div>
+  <section id="scene"></section>
+
+  <section class="coverage">
+    <h2>📋 110 字涵蓋表</h2>
+    <p class="hint">依原課單元排列，後面的 S 是出現的情境。點單字會跳到它出現的那一句。</p>
+    <div id="coverage"></div>
+  </section>
+</main>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-card" role="dialog" aria-modal="true" aria-label="單字小卡">
+    <button class="sheet-close" id="sheet-close" aria-label="關閉">✕</button>
+    <div id="sheet-body"></div>
+  </div>
+</div>
+
+<script>
+/* ===== 資料（由產生器寫入）===== */
+const SCENES = [{"id": 1, "en": "PE Class: Walking for Health", "zh": "體育課：健走的學問", "setting": "體育課上，教練要大家健走三十分鐘，順便說明走路的好處。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Coach", "zh": "教練", "g": "m", "p": 0.75, "side": "l", "color": "#15803d"}], "words": ["moderate", "research", "measure", "pace", "intensity", "calorie", "slightly", "strengthen", "flexible", "consistently"], "lines": [{"who": "Coach", "segs": ["Today we're walking for thirty minutes. Keep a ", {"w": "moderate", "l": "moderate"}, " speed—not too slow, not too fast."], "zh": "今天我們要走三十分鐘，保持適中的速度：不要太慢，也不要太快。"}, {"who": "Jason", "segs": ["Walking? That's too easy. Does it really count as exercise?"], "zh": "走路？太簡單了吧。這真的算運動嗎？"}, {"who": "Coach", "segs": ["It does. ", {"w": "Research", "l": "research"}, " shows that brisk walking is good for your heart."], "zh": "算。研究顯示快走對心臟很好。"}, {"who": "Lily", "segs": ["How do we know if we're walking fast enough?"], "zh": "我們要怎麼知道自己走得夠不夠快？"}, {"who": "Coach", "segs": ["A simple ", {"w": "measure", "l": "measure"}, " is the talk test. You should be able to talk, but not sing."], "zh": "有個簡單的衡量標準叫「說話測試」：你應該能說話，但沒辦法唱歌。"}, {"who": "Jason", "segs": ["Ha! So if I can sing, I need to pick up the ", {"w": "pace", "l": "pace"}, "."], "zh": "哈！所以如果我還能唱歌，就要加快腳步。"}, {"who": "Coach", "segs": ["Exactly. That's the right ", {"w": "intensity", "l": "intensity"}, " for most people."], "zh": "沒錯，這對大多數人來說是適當的強度。"}, {"who": "Lily", "segs": ["How many ", {"w": "calories", "l": "calorie"}, " can we burn in thirty minutes?"], "zh": "三十分鐘可以燃燒多少卡路里？"}, {"who": "Coach", "segs": ["About one hundred fifty, depending on your weight."], "zh": "大約一百五十卡，看你的體重而定。"}, {"who": "Jason", "segs": ["That's only ", {"w": "slightly", "l": "slightly"}, " more than a bubble tea!"], "zh": "那只比一杯珍奶多一點點耶！"}, {"who": "Coach", "segs": ["True, but walking also helps ", {"w": "strengthen", "l": "strengthen"}, " your legs and bones."], "zh": "沒錯，但走路也能幫助強化你的腿和骨頭。"}, {"who": "Lily", "segs": ["And it's ", {"w": "flexible", "l": "flexible"}, ". You can do it anytime, anywhere."], "zh": "而且很有彈性，隨時隨地都能做。"}, {"who": "Coach", "segs": ["Right. The key is to walk ", {"w": "consistently", "l": "consistently"}, "—a little every day is better than a lot once a week."], "zh": "對。關鍵是要規律地走：每天走一點，比一週走一次走很多更好。"}, {"who": "Jason", "segs": ["OK, Coach. Starting tomorrow, I'll walk to school."], "zh": "好的，教練。從明天開始，我要走路上學。"}], "expr": [["count as ...", "算是……"], ["pick up the pace", "加快腳步"], ["depending on ...", "看……而定"], ["Starting tomorrow, I'll ...", "從明天開始，我要……"]], "usage": {"research": "Research shows that... 研究顯示……（research 不可數）", "measure": "這裡是名詞「衡量標準、指標」", "pace": "pick up the pace 加快腳步"}}, {"id": 2, "en": "Booking a City Tour", "zh": "報名城市導覽", "setting": "莉莉和傑森要跟學校出國交流，自由活動那天想報名一日城市導覽，先到旅行社詢問。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Clerk", "zh": "店員", "g": "m", "p": 0.8, "side": "l", "color": "#0d9488"}], "words": ["agency", "monument", "departure", "site", "roughly", "authentic", "affordable", "exchange", "grateful"], "lines": [{"who": "Clerk", "segs": ["Welcome to Sunny Travel ", {"w": "Agency", "l": "agency"}, ". How can I help you?"], "zh": "歡迎光臨陽光旅行社，有什麼可以幫您的嗎？"}, {"who": "Lily", "segs": ["We're going abroad with our school, and we have one free day. Do you have any city tours?"], "zh": "我們要跟學校出國，有一天自由活動。你們有城市導覽行程嗎？"}, {"who": "Clerk", "segs": ["Yes. This one-day tour visits the old town and a famous war ", {"w": "monument", "l": "monument"}, "."], "zh": "有。這個一日遊會去老城區和一座著名的戰爭紀念碑。"}, {"who": "Jason", "segs": ["What time is the ", {"w": "departure", "l": "departure"}, "?"], "zh": "幾點出發？"}, {"who": "Clerk", "segs": ["The bus leaves the hotel at eight and stops at five historic ", {"w": "sites", "l": "site"}, "."], "zh": "巴士八點從飯店出發，會停五個歷史景點。"}, {"who": "Lily", "segs": ["How long does the whole tour take?"], "zh": "整個行程要多久？"}, {"who": "Clerk", "segs": [{"w": "Roughly", "l": "roughly"}, " seven hours, including lunch."], "zh": "大約七小時，含午餐。"}, {"who": "Jason", "segs": ["Is lunch at a tourist restaurant? I want to try ", {"w": "authentic", "l": "authentic"}, " local food."], "zh": "午餐是在觀光餐廳嗎？我想吃道地的當地美食。"}, {"who": "Clerk", "segs": ["Don't worry. It's a small family restaurant that locals love."], "zh": "別擔心，是一間當地人很愛的家庭小餐館。"}, {"who": "Lily", "segs": ["Sounds perfect. How much is it?"], "zh": "聽起來很完美。多少錢？"}, {"who": "Clerk", "segs": ["Forty dollars per person. It's one of our most ", {"w": "affordable", "l": "affordable"}, " tours."], "zh": "每人四十美元，這是我們最實惠的行程之一。"}, {"who": "Jason", "segs": ["Great. Should we ", {"w": "exchange", "l": "exchange"}, " money before we go?"], "zh": "太好了。我們出發前要先換錢嗎？"}, {"who": "Clerk", "segs": ["Yes, but only a little. Most shops there accept credit cards."], "zh": "要，不過換一點就好，那裡大部分商店都能刷卡。"}, {"who": "Lily", "segs": ["Thank you so much. We're really ", {"w": "grateful", "l": "grateful"}, " for your help."], "zh": "非常謝謝您，真的很感謝您的幫忙。"}], "expr": [["How can I help you?", "有什麼可以幫您的嗎？"], ["per person", "每人"], ["Sounds perfect.", "聽起來很完美"], ["We're grateful for your help.", "很感謝你的幫忙（be grateful for sth）"]], "usage": {"exchange": "exchange money 換錢、兌換貨幣", "roughly": "roughly = about 大約"}}, {"id": 3, "en": "A Fantasy Book in the Library", "zh": "圖書館聊奇幻小說", "setting": "午休時間，莉莉在圖書館讀一本關於精靈的奇幻小說，傑森好奇地湊過來。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}], "words": ["fantasy", "creation", "invisible", "bless", "disturb", "crop", "cruel", "drown", "behavior", "adopt"], "lines": [{"who": "Jason", "segs": ["What are you reading? You haven't looked up for twenty minutes."], "zh": "你在看什麼？你已經二十分鐘沒抬頭了。"}, {"who": "Lily", "segs": ["Sorry, I didn't mean to ignore you. It's a ", {"w": "fantasy", "l": "fantasy"}, " novel about elves."], "zh": "抱歉，我不是故意不理你。這是一本關於精靈的奇幻小說。"}, {"who": "Jason", "segs": ["Elves? Like the tall, beautiful archers in movies?"], "zh": "精靈？就像電影裡那些又高又美的弓箭手？"}, {"who": "Lily", "segs": ["That's a modern ", {"w": "creation", "l": "creation"}, ". In old stories, elves were very different."], "zh": "那是現代的創作。在古老的故事裡，精靈很不一樣。"}, {"who": "Jason", "segs": ["Different how?"], "zh": "怎麼個不一樣？"}, {"who": "Lily", "segs": ["Some were tiny and ", {"w": "invisible", "l": "invisible"}, ". People believed elves could ", {"w": "bless", "l": "bless"}, " a village with good luck."], "zh": "有些很小，而且看不見。人們相信精靈能為村莊帶來好運。"}, {"who": "Jason", "segs": ["So they were the good guys?"], "zh": "所以他們是好人？"}, {"who": "Lily", "segs": ["Not always. If you ", {"w": "disturbed", "l": "disturb"}, " them, your ", {"w": "crops", "l": "crop"}, " might fail."], "zh": "不一定。如果你打擾了他們，你的農作物可能會歉收。"}, {"who": "Jason", "segs": ["Wow. That sounds a bit ", {"w": "cruel", "l": "cruel"}, "."], "zh": "哇，聽起來有點殘忍。"}, {"who": "Lily", "segs": ["In some stories, they even tried to ", {"w": "drown", "l": "drown"}, " travelers in rivers."], "zh": "在某些故事裡，他們甚至會想把旅人淹死在河裡。"}, {"who": "Jason", "segs": ["Scary! Why is their ", {"w": "behavior", "l": "behavior"}, " so different in each story?"], "zh": "好可怕！為什麼每個故事裡他們的行為差這麼多？"}, {"who": "Lily", "segs": ["Each culture ", {"w": "adopted", "l": "adopt"}, " the idea of elves and changed it to fit its own beliefs."], "zh": "每個文化都採用了精靈的概念，再依自己的信仰改編。"}, {"who": "Jason", "segs": ["Interesting. Can I borrow the book after you finish?"], "zh": "真有趣。你看完可以借我嗎？"}, {"who": "Lily", "segs": ["Sure, but you'll have to wait. I'm only on chapter three!"], "zh": "可以，不過你得等一下，我才看到第三章！"}], "expr": [["I didn't mean to ...", "我不是故意要……"], ["Different how?", "怎麼個不一樣？（口語追問）"], ["the good guys", "好人、正派角色"], ["I'm only on chapter three.", "我才看到第三章"]], "usage": {"bless": "bless A with B 使 A 獲得 B（賜福）", "crop": "crops fail 農作物歉收"}}, {"id": 4, "en": "After the Movie", "zh": "看完電影", "setting": "週末看完一部超級英雄電影，莉莉和傑森邊走邊聊片中的男主角。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}], "words": ["generation", "status", "expand", "reflect", "craft", "frustrating", "creativity", "dynamic", "charity", "inspiration"], "lines": [{"who": "Jason", "segs": ["That movie was so good! The lead actor was perfect."], "zh": "那部電影太好看了！男主角超完美。"}, {"who": "Lily", "segs": ["He's one of the best young actors of his ", {"w": "generation", "l": "generation"}, "."], "zh": "他是他那一代最優秀的年輕演員之一。"}, {"who": "Jason", "segs": ["Five years ago, nobody knew him. Now he's a superstar."], "zh": "五年前根本沒人認識他，現在他是超級巨星。"}, {"who": "Lily", "segs": ["His ", {"w": "status", "l": "status"}, " changed overnight after his first superhero movie."], "zh": "演完第一部超級英雄電影後，他的地位一夕之間改變了。"}, {"who": "Jason", "segs": ["But he didn't just play heroes. He ", {"w": "expanded", "l": "expand"}, " into comedies and dramas too."], "zh": "但他不只演英雄，他還拓展到喜劇和劇情片。"}, {"who": "Lily", "segs": ["Right. That ", {"w": "reflects", "l": "reflect"}, " how seriously he takes his ", {"w": "craft", "l": "craft"}, "."], "zh": "對，這反映出他有多認真看待演戲這門技藝。"}, {"who": "Jason", "segs": ["I read that reading was really hard for him when he was a kid."], "zh": "我看到報導說，他小時候讀書很吃力。"}, {"who": "Lily", "segs": ["That must have been really ", {"w": "frustrating", "l": "frustrating"}, "."], "zh": "那一定很讓人沮喪。"}, {"who": "Jason", "segs": ["But he used his ", {"w": "creativity", "l": "creativity"}, " and found his own way to learn lines."], "zh": "但他發揮創意，找到自己背台詞的方法。"}, {"who": "Lily", "segs": ["And on screen, he's so ", {"w": "dynamic", "l": "dynamic"}, ". He never stops moving!"], "zh": "而且在螢幕上，他超有活力，一刻都停不下來！"}, {"who": "Jason", "segs": ["He also does a lot of ", {"w": "charity", "l": "charity"}, " work for kids with learning problems."], "zh": "他也為有學習困難的孩子做很多慈善工作。"}, {"who": "Lily", "segs": ["No wonder so many fans see him as an ", {"w": "inspiration", "l": "inspiration"}, "."], "zh": "難怪這麼多粉絲把他當作激勵自己的榜樣。"}, {"who": "Jason", "segs": ["Me too. Maybe I'll try acting in the school play next year."], "zh": "我也是。也許明年我會試著參加學校話劇。"}, {"who": "Lily", "segs": ["Go for it! I'll be in the front row."], "zh": "去試試看吧！我會坐在第一排。"}], "expr": [["overnight", "一夕之間"], ["take ... seriously", "認真看待……"], ["No wonder ...", "難怪……"], ["Go for it!", "放手去做吧！"]], "usage": {"craft": "這裡指演員的「演戲技藝」", "reflect": "reflect how... 反映出……"}}, {"id": 5, "en": "Career Day: Unusual Jobs", "zh": "生涯講座：奇特職業", "setting": "學校生涯講座，一位講者分享幾種真實存在的奇特職業。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Speaker", "zh": "講者", "g": "f", "p": 0.9, "side": "l", "color": "#0891b2"}], "words": ["laboratory", "assign", "specific", "collection", "numerous", "claw", "rusty", "container", "appealing", "anxiety"], "lines": [{"who": "Speaker", "segs": ["Good morning! I used to work in a ", {"w": "laboratory", "l": "laboratory"}, " that studies snake venom."], "zh": "早安！我以前在一間研究蛇毒的實驗室工作。"}, {"who": "Lily", "segs": ["Snake venom? Wasn't that dangerous?"], "zh": "蛇毒？那不危險嗎？"}, {"who": "Speaker", "segs": ["Very. Each worker was ", {"w": "assigned", "l": "assign"}, " one ", {"w": "specific", "l": "specific"}, " type of snake to take care of."], "zh": "非常危險。每位員工都被分配照顧一種特定的蛇。"}, {"who": "Jason", "segs": ["What did you do with the venom?"], "zh": "你們拿蛇毒做什麼？"}, {"who": "Speaker", "segs": ["The ", {"w": "collection", "l": "collection"}, " of venom is the first step in making medicine for snake bites."], "zh": "收集蛇毒是製作蛇咬解毒藥的第一步。"}, {"who": "Jason", "segs": ["Do you know any other strange jobs?"], "zh": "你還知道其他奇怪的工作嗎？"}, {"who": "Speaker", "segs": [{"w": "Numerous", "l": "numerous"}, " ones! In Amsterdam, some people fish bikes out of the canals."], "zh": "多得是！在阿姆斯特丹，有人專門從運河裡把腳踏車撈上來。"}, {"who": "Lily", "segs": ["How do they do that?"], "zh": "他們怎麼撈？"}, {"who": "Speaker", "segs": ["They use a boat with a giant ", {"w": "claw", "l": "claw"}, ". Most of the bikes are old and ", {"w": "rusty", "l": "rusty"}, "."], "zh": "他們用裝有巨大機械爪的船，撈上來的腳踏車大多又舊又生鏽。"}, {"who": "Jason", "segs": ["Then what? Do they throw them away?"], "zh": "然後呢？丟掉嗎？"}, {"who": "Speaker", "segs": ["No, they put them into a big ", {"w": "container", "l": "container"}, " and send them to be recycled."], "zh": "不，他們把車放進大貨櫃，送去回收。"}, {"who": "Lily", "segs": ["These jobs are cool, but are they ", {"w": "appealing", "l": "appealing"}, " to young people?"], "zh": "這些工作很酷，但對年輕人有吸引力嗎？"}, {"who": "Speaker", "segs": ["More than you think! Some jobs even help people with stress or ", {"w": "anxiety", "l": "anxiety"}, ", like professional huggers."], "zh": "比你想的更有吸引力！有些工作甚至能幫助壓力大或焦慮的人，例如專業擁抱師。"}, {"who": "Jason", "segs": ["A professional hugger? I'd be great at that job!"], "zh": "專業擁抱師？我一定很適合這份工作！"}], "expr": [["You've probably never heard of ...", "你可能從沒聽過……"], ["fish ... out of ...", "從……撈出……"], ["More than you think!", "比你想的還多！"], ["I'd be great at that job!", "我一定很適合這份工作！"]], "usage": {"assign": "be assigned + N. 被分配到……", "numerous": "Numerous ones! 多得是！"}}, {"id": 6, "en": "Applying for a Science Camp", "zh": "申請科學營", "setting": "莉莉想申請大學辦的暑期科學營，請林老師幫忙看申請資料。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Teacher", "zh": "老師", "g": "f", "p": 1.0, "side": "l", "color": "#9333ea"}], "words": ["application", "researcher", "opportunity", "experiment", "code", "eager", "deepen", "response"], "lines": [{"who": "Lily", "segs": ["Ms. Lin, could you look at my ", {"w": "application", "l": "application"}, " for the summer science camp?"], "zh": "林老師，可以幫我看一下暑期科學營的申請資料嗎？"}, {"who": "Teacher", "segs": ["Of course. Which camp is it?"], "zh": "當然。是哪個營隊？"}, {"who": "Lily", "segs": ["It's run by a university. Students work with real ", {"w": "researchers", "l": "researcher"}, " for two weeks."], "zh": "是一所大學辦的，學生可以跟真正的研究人員一起工作兩週。"}, {"who": "Teacher", "segs": ["What a great ", {"w": "opportunity", "l": "opportunity"}, "! What will you do there?"], "zh": "真是好機會！你們在那裡要做什麼？"}, {"who": "Lily", "segs": ["We'll design an ", {"w": "experiment", "l": "experiment"}, " and learn to write ", {"w": "code", "l": "code"}, " to study the results."], "zh": "我們要設計一個實驗，還要學寫程式來分析結果。"}, {"who": "Jason", "segs": ["Programming? That sounds hard."], "zh": "寫程式？聽起來好難。"}, {"who": "Lily", "segs": ["That's why I want to go. I'm ", {"w": "eager", "l": "eager"}, " to learn something new."], "zh": "所以我才想去，我很渴望學新東西。"}, {"who": "Teacher", "segs": ["Good. Write that in your letter. Explain how the camp will ", {"w": "deepen", "l": "deepen"}, " your interest in science."], "zh": "很好，把這點寫進你的信裡。說明這個營隊會怎麼加深你對科學的興趣。"}, {"who": "Lily", "segs": ["OK. When will they send a ", {"w": "response", "l": "response"}, "?"], "zh": "好的。他們什麼時候會回覆？"}, {"who": "Teacher", "segs": ["Usually within a month. Don't forget to check your email."], "zh": "通常一個月內。別忘了收信。"}, {"who": "Jason", "segs": ["If you get in, can you teach me some programming?"], "zh": "如果你錄取了，可以教我一些程式嗎？"}, {"who": "Lily", "segs": ["Deal! But first, I need to get in."], "zh": "成交！不過我得先錄取才行。"}, {"who": "Teacher", "segs": ["You will. Your grades and your passion speak for themselves."], "zh": "你會的。你的成績和熱情就是最好的證明。"}], "expr": [["What a great opportunity!", "真是好機會！"], ["get in", "（申請）錄取、獲准加入"], ["Deal!", "成交！"], ["speak for themselves", "不言自明；本身就是最好的證明"]], "usage": {"deepen": "deepen your interest in... 加深你對……的興趣", "eager": "be eager to V. 渴望做……"}}, {"id": 7, "en": "World Cup Night", "zh": "世界盃之夜", "setting": "世界盃決賽深夜開打，傑森和爸爸邀莉莉一起在家看球。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Dad", "zh": "爸爸", "g": "m", "p": 0.75, "side": "l", "color": "#b45309"}], "words": ["tension", "competition", "previous", "panic", "incredibly", "amazing", "dramatically", "universal"], "lines": [{"who": "Dad", "segs": ["Kids, the final is starting! Grab some snacks."], "zh": "孩子們，決賽要開始了！快拿點零食。"}, {"who": "Lily", "segs": ["I can already feel the ", {"w": "tension", "l": "tension"}, ". Both teams look so serious."], "zh": "我已經感受到緊張的氣氛了，兩隊看起來都好嚴肅。"}, {"who": "Jason", "segs": ["Of course. It's the biggest ", {"w": "competition", "l": "competition"}, " in the world!"], "zh": "當然，這可是全世界最大的賽事！"}, {"who": "Dad", "segs": ["This team lost in the ", {"w": "previous", "l": "previous"}, " World Cup final. They really want to win this time."], "zh": "這支隊伍在上一屆世界盃決賽輸了，這次他們非常想贏。"}, {"who": null, "segs": ["(Fifteen minutes later)"], "zh": "（十五分鐘後）"}, {"who": "Jason", "segs": ["Oh no! The other team scored first!"], "zh": "糟了！對手先進球了！"}, {"who": "Dad", "segs": ["Don't ", {"w": "panic", "l": "panic"}, ". There's still plenty of time."], "zh": "別慌，時間還很多。"}, {"who": null, "segs": ["(In the second half)"], "zh": "（下半場）"}, {"who": "Lily", "segs": ["Look at number ten! He's ", {"w": "incredibly", "l": "incredibly"}, " fast."], "zh": "你看十號！他快得不可思議。"}, {"who": "Jason", "segs": ["Goal! What an ", {"w": "amazing", "l": "amazing"}, " shot!"], "zh": "進球了！好驚人的一腳！"}, {"who": "Dad", "segs": ["The game has changed ", {"w": "dramatically", "l": "dramatically"}, " since he came on."], "zh": "他上場之後，比賽局勢大幅改變了。"}, {"who": "Lily", "segs": ["Look at the fans. People from all over the world are cheering together."], "zh": "你看那些球迷，全世界的人一起在歡呼。"}, {"who": "Dad", "segs": ["That's why people call football a ", {"w": "universal", "l": "universal"}, " language."], "zh": "這就是為什麼大家說足球是世界共通的語言。"}, {"who": "Jason", "segs": ["Five more minutes... I can't watch!"], "zh": "再五分鐘……我不敢看了！"}, {"who": "Lily", "segs": ["It's over! They won!"], "zh": "結束了！他們贏了！"}, {"who": "Dad", "segs": ["What a night! OK, it's two a.m. Everyone, go to bed."], "zh": "真是精彩的一夜！好了，現在凌晨兩點，大家快去睡覺。"}], "expr": [["Grab some snacks.", "去拿點零食"], ["What an amazing shot!", "好驚人的一腳！What a/an + 形容詞 + 名詞 表示感嘆"], ["I can't watch!", "我不敢看了！"], ["What a night!", "真是精彩的一夜！"]], "usage": {"universal": "a universal language 世界共通的語言", "dramatically": "change dramatically 大幅改變"}}, {"id": 8, "en": "Mom's Photos from Provence", "zh": "媽媽的普羅旺斯照片", "setting": "莉莉的媽媽剛從法國普羅旺斯旅行回來，拿照片給莉莉和傑森看。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Mom", "zh": "媽媽", "g": "f", "p": 0.9, "side": "l", "color": "#db2777"}], "words": ["towering", "charming", "bloom", "harvest", "perfume", "regional", "summit", "visible", "engineering", "impression", "warmth"], "lines": [{"who": "Lily", "segs": ["Mom, show us your photos from Provence!"], "zh": "媽，給我們看你在普羅旺斯拍的照片！"}, {"who": "Mom", "segs": ["Here's the first one. Look at these ", {"w": "towering", "l": "towering"}, " trees along the road."], "zh": "這是第一張。你看路邊這些高聳的樹。"}, {"who": "Jason", "segs": ["And what a ", {"w": "charming", "l": "charming"}, " little village behind them!"], "zh": "後面那個小村莊好迷人！"}, {"who": "Mom", "segs": ["Now look at this purple field. The lavender was in full ", {"w": "bloom", "l": "bloom"}, "."], "zh": "再看這片紫色的田，那時薰衣草正盛開。"}, {"who": "Lily", "segs": ["Wow! Did you see the farmers ", {"w": "harvest", "l": "harvest"}, " it?"], "zh": "哇！你有看到農夫採收嗎？"}, {"who": "Mom", "segs": ["Yes! Much of the lavender is used to make ", {"w": "perfume", "l": "perfume"}, " and soap."], "zh": "有！很多薰衣草會被拿去做香水和肥皂。"}, {"who": "Jason", "segs": ["Did you try any special food there?"], "zh": "你在那裡有吃什麼特別的嗎？"}, {"who": "Mom", "segs": ["Lavender ice cream! It's a ", {"w": "regional", "l": "regional"}, " dessert you can't find in Taiwan."], "zh": "薰衣草冰淇淋！那是當地特有的甜點，在台灣吃不到。"}, {"who": "Lily", "segs": ["What's this mountain?"], "zh": "這座是什麼山？"}, {"who": "Mom", "segs": ["We drove to the ", {"w": "summit", "l": "summit"}, ". On a clear day, the sea is ", {"w": "visible", "l": "visible"}, " from the top."], "zh": "我們開車上到山頂，天氣晴朗時，從山頂看得到海。"}, {"who": "Jason", "segs": ["And this old stone bridge looks huge."], "zh": "這座古老的石橋看起來好大。"}, {"who": "Mom", "segs": ["It's two thousand years old. Roman ", {"w": "engineering", "l": "engineering"}, " was amazing."], "zh": "它有兩千年歷史了，古羅馬的工程技術真的很驚人。"}, {"who": "Lily", "segs": ["What left the strongest ", {"w": "impression", "l": "impression"}, " on you?"], "zh": "哪一點讓你印象最深刻？"}, {"who": "Mom", "segs": ["Honestly, the people. Everyone welcomed us with such ", {"w": "warmth", "l": "warmth"}, "."], "zh": "老實說，是那裡的人，每個人都好熱情地歡迎我們。"}], "expr": [["in full bloom", "盛開"], ["on a clear day", "天氣晴朗的時候"], ["What left the strongest impression on you?", "哪一點讓你印象最深刻？"], ["Honestly, ...", "老實說……"]], "usage": {"bloom": "in full bloom 盛開", "visible": "be visible from... 從……看得見"}}, {"id": 9, "en": "The Escape Room", "zh": "密室逃脫", "setting": "週末莉莉和傑森去玩一場「鑽石城堡」主題的密室逃脫。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Staff", "zh": "工作人員", "g": "m", "p": 0.85, "side": "l", "color": "#475569"}], "words": ["mysterious", "journey", "magnificent", "precious", "bomb", "horrify", "breath", "confess", "destroy", "explosion"], "lines": [{"who": "Staff", "segs": ["Welcome to the Diamond Castle. You have sixty minutes to escape."], "zh": "歡迎來到鑽石城堡，你們有六十分鐘可以逃出去。"}, {"who": "Lily", "segs": ["This room feels so ", {"w": "mysterious", "l": "mysterious"}, ". Why is it so dark?"], "zh": "這個房間感覺好神祕，為什麼這麼暗？"}, {"who": "Staff", "segs": ["Your ", {"w": "journey", "l": "journey"}, " begins now. Find the key before the timer ends. Good luck!"], "zh": "你們的旅程現在開始，在倒數結束前找到鑰匙。祝好運！"}, {"who": "Jason", "segs": ["Whoa, look at this ", {"w": "magnificent", "l": "magnificent"}, " gold door!"], "zh": "哇，你看這扇宏偉的金色大門！"}, {"who": "Lily", "segs": ["And there's a box full of ", {"w": "precious", "l": "precious"}, " stones. Maybe the key is inside."], "zh": "這裡還有一箱珍貴的寶石，鑰匙說不定在裡面。"}, {"who": "Jason", "segs": ["Wait, what's that beeping sound?"], "zh": "等等，那個嗶嗶聲是什麼？"}, {"who": "Lily", "segs": ["It's a fake ", {"w": "bomb", "l": "bomb"}, "! The sign says it will 'explode' in ten minutes."], "zh": "是一顆假炸彈！上面寫說十分鐘後會「爆炸」。"}, {"who": "Jason", "segs": ["This is ", {"w": "horrifying", "l": "horrify"}, "! I can't think under pressure!"], "zh": "太可怕了！我壓力一大就沒辦法思考！"}, {"who": "Lily", "segs": ["Take a deep ", {"w": "breath", "l": "breath"}, ". Let's read the clue together."], "zh": "深呼吸，我們一起看提示。"}, {"who": "Jason", "segs": ["OK... 'The owner must ", {"w": "confess", "l": "confess"}, " his secret.' What does that mean?"], "zh": "好……「主人必須坦承他的祕密。」這是什麼意思？"}, {"who": "Lily", "segs": ["Look at the diary! The owner planned to ", {"w": "destroy", "l": "destroy"}, " the castle to hide the diamond."], "zh": "你看日記！主人打算摧毀城堡來藏住鑽石。"}, {"who": "Jason", "segs": ["The last page has a number: one, nine, two, two. Try it on the lock!"], "zh": "最後一頁有個數字：1922，在鎖上試試看！"}, {"who": null, "segs": ["(Click!)"], "zh": "（喀！）"}, {"who": "Staff", "segs": ["Congratulations! You stopped the ", {"w": "explosion", "l": "explosion"}, " with forty seconds left."], "zh": "恭喜！你們在剩下四十秒時阻止了爆炸。"}, {"who": "Lily", "segs": ["That was so much fun. Let's try a harder room next time!"], "zh": "太好玩了，下次我們挑戰更難的房間吧！"}], "expr": [["Good luck!", "祝好運！"], ["under pressure", "在壓力下"], ["Take a deep breath.", "深呼吸"], ["with forty seconds left", "還剩四十秒的時候"]], "usage": {"horrify": "horrifying 令人驚恐的（現在分詞當形容詞）", "breath": "take a deep breath 深呼吸"}}, {"id": 10, "en": "Ostriches at the Zoo", "zh": "動物園看鴕鳥", "setting": "生物課校外教學，莉莉和傑森在動物園聽導覽員介紹鴕鳥。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Guide", "zh": "導覽員", "g": "f", "p": 0.95, "side": "l", "color": "#7c3aed"}], "words": ["strength", "unique", "structure", "enable", "remarkable", "resemble", "legend", "misunderstand", "feather"], "lines": [{"who": "Guide", "segs": ["Here we are at the ostrich area. These are the largest birds on Earth."], "zh": "我們來到鴕鳥區了，牠們是地球上最大的鳥。"}, {"who": "Jason", "segs": ["They're huge! But they can't fly, right?"], "zh": "好大！不過牠們不會飛，對吧？"}, {"who": "Guide", "segs": ["Right. Instead, they have amazing ", {"w": "strength", "l": "strength"}, " in their legs."], "zh": "沒錯。不過牠們的腿非常有力。"}, {"who": "Lily", "segs": ["Their feet look strange. They only have two toes."], "zh": "牠們的腳看起來好奇怪，只有兩根腳趾。"}, {"who": "Guide", "segs": ["Good eye! That's ", {"w": "unique", "l": "unique"}, " among birds."], "zh": "眼力真好！這在鳥類中是獨一無二的。"}, {"who": "Jason", "segs": ["Is that why they're so fast?"], "zh": "這就是牠們跑那麼快的原因嗎？"}, {"who": "Guide", "segs": ["Yes. The ", {"w": "structure", "l": "structure"}, " of their feet ", {"w": "enables", "l": "enable"}, " them to run at seventy kilometers an hour."], "zh": "對。牠們腳的構造讓牠們能以時速七十公里奔跑。"}, {"who": "Lily", "segs": ["That's ", {"w": "remarkable", "l": "remarkable"}, "! Their legs almost ", {"w": "resemble", "l": "resemble"}, " a dinosaur's."], "zh": "太驚人了！牠們的腿幾乎跟恐龍的很像。"}, {"who": "Jason", "segs": ["Is it true that ostriches hide their heads in the sand when they're scared?"], "zh": "鴕鳥害怕時真的會把頭埋進沙裡嗎？"}, {"who": "Guide", "segs": ["That's a famous ", {"w": "legend", "l": "legend"}, ", but it's not true. People ", {"w": "misunderstood", "l": "misunderstand"}, " what they saw."], "zh": "這是很有名的傳說，但不是真的，是人們誤解了他們看到的景象。"}, {"who": "Lily", "segs": ["So what are they really doing?"], "zh": "那牠們其實在做什麼？"}, {"who": "Guide", "segs": ["They're turning their eggs in the nest. From far away, it looks like their heads are underground."], "zh": "牠們是在巢裡翻動蛋，從遠處看，就像頭埋在地下一樣。"}, {"who": "Jason", "segs": ["Ha! Poor ostriches. And what about those soft ", {"w": "feathers", "l": "feather"}, "?"], "zh": "哈！可憐的鴕鳥。那那些柔軟的羽毛呢？"}, {"who": "Guide", "segs": ["Ostriches use them to keep their eggs warm and to show off to each other."], "zh": "鴕鳥會用羽毛替蛋保暖，也會用來互相炫耀。"}, {"who": "Lily", "segs": ["I'll never look at ostriches the same way again."], "zh": "以後我看鴕鳥的眼光再也不一樣了。"}], "expr": [["Here we are.", "我們到了"], ["Good eye!", "眼力真好！"], ["from far away", "從遠處"], ["I'll never look at ... the same way again.", "我再也不會用同樣的眼光看……"]], "usage": {"enable": "enable sb/sth to V. 使……能夠……", "resemble": "及物動詞，直接接受詞，不加 to 或 like"}}, {"id": 11, "en": "Baking from a British Recipe", "zh": "照英國食譜烤司康", "setting": "媽媽的英國朋友寄來一份司康食譜，莉莉和媽媽在廚房研究上面奇怪的單位。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Mom", "zh": "媽媽", "g": "f", "p": 0.9, "side": "l", "color": "#db2777"}], "words": ["volume", "differ", "logic", "trace", "pub", "scale", "pour"], "lines": [{"who": "Lily", "segs": ["Mom, this recipe says eight ounces of flour. How much is that?"], "zh": "媽，這份食譜寫八盎司麵粉，那是多少？"}, {"who": "Mom", "segs": ["About two hundred twenty-five grams. Britain still uses a mix of old and new units."], "zh": "大約兩百二十五克。英國到現在還混用新舊兩種單位。"}, {"who": "Lily", "segs": ["And it says one cup of milk. Is a cup a weight?"], "zh": "還寫了一杯牛奶。杯是重量單位嗎？"}, {"who": "Mom", "segs": ["No, a cup measures ", {"w": "volume", "l": "volume"}, ", not weight."], "zh": "不是，杯是用來量容量的，不是重量。"}, {"who": "Lily", "segs": ["Wait, do British and American cups ", {"w": "differ", "l": "differ"}, "?"], "zh": "等等，英式和美式的杯子不一樣嗎？"}, {"who": "Mom", "segs": ["Slightly. That's why I prefer grams."], "zh": "有一點點不同，所以我比較喜歡用克。"}, {"who": "Lily", "segs": ["Why do these old units still exist? What's the ", {"w": "logic", "l": "logic"}, "?"], "zh": "這些舊單位為什麼還存在？有什麼道理？"}, {"who": "Mom", "segs": ["Habit, mostly. You can ", {"w": "trace", "l": "trace"}, " many of them back to ancient times."], "zh": "主要是習慣。很多單位都可以追溯到古代。"}, {"who": "Lily", "segs": ["My English teacher said people in a British ", {"w": "pub", "l": "pub"}, " still order drinks by the pint."], "zh": "我英文老師說，在英國酒館大家還是用品脫點飲料。"}, {"who": "Mom", "segs": ["That's true. OK, this recipe makes twenty scones. Let's ", {"w": "scale", "l": "scale"}, " it down by half."], "zh": "沒錯。好了，這份食譜可以做二十個司康，我們把份量減半吧。"}, {"who": "Lily", "segs": ["So four ounces of flour and half a cup of milk."], "zh": "所以是四盎司麵粉和半杯牛奶。"}, {"who": "Mom", "segs": ["Perfect. Now ", {"w": "pour", "l": "pour"}, " the milk in slowly while I stir."], "zh": "完美。現在我攪拌的時候，你把牛奶慢慢倒進去。"}, {"who": "Lily", "segs": ["This is like a math class and a cooking class at the same time!"], "zh": "這簡直同時在上數學課和烹飪課！"}, {"who": "Mom", "segs": ["And the best part is, we get to eat our homework."], "zh": "而且最棒的是，我們的作業可以吃。"}], "expr": [["by the pint", "以品脫為單位"], ["scale it down by half", "把份量減半"], ["at the same time", "同時"], ["The best part is ...", "最棒的是……"]], "usage": {"scale": "scale sth down 按比例縮小", "trace": "trace A back to B 把 A 追溯到 B"}}, {"id": 12, "en": "A Presentation on Iceland", "zh": "冰島報告", "setting": "地理課要上台報告，莉莉和傑森在準備關於冰島的簡報。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}], "words": ["emerge", "establish", "harsh", "endure", "preserve", "cliff", "drift", "overcome"], "lines": [{"who": "Jason", "segs": ["Our presentation on Iceland is tomorrow. Where should we start?"], "zh": "我們的冰島報告是明天，要從哪裡開始？"}, {"who": "Lily", "segs": ["Let's start with how the island was born. It ", {"w": "emerged", "l": "emerge"}, " from the sea because of volcanoes."], "zh": "從這座島怎麼誕生開始吧。它是因為火山活動從海裡冒出來的。"}, {"who": "Jason", "segs": ["Cool. And who were the first people to live there?"], "zh": "酷。那最早住在那裡的是誰？"}, {"who": "Lily", "segs": ["Vikings. They ", {"w": "established", "l": "establish"}, " the first farms about eleven hundred years ago."], "zh": "維京人。他們大約在一千一百年前建立了最早的農場。"}, {"who": "Jason", "segs": ["Life must have been hard. The weather there is so ", {"w": "harsh", "l": "harsh"}, "."], "zh": "生活一定很辛苦，那裡的天氣那麼惡劣。"}, {"who": "Lily", "segs": ["Yes, but they ", {"w": "endured", "l": "endure"}, ". They learned to ", {"w": "preserve", "l": "preserve"}, " fish and meat for the long winters."], "zh": "是啊，但他們撐過來了。他們學會保存魚和肉，度過漫長的冬天。"}, {"who": "Jason", "segs": ["Like that famous fermented shark? I heard it smells terrible."], "zh": "像那個有名的發酵鯊魚肉嗎？聽說超臭的。"}, {"who": "Lily", "segs": ["Ha, yes! Let's put a photo of it on one slide."], "zh": "哈，對！我們放一張它的照片在投影片上。"}, {"who": "Jason", "segs": ["What about the nature part? I found a great picture of the sea ", {"w": "cliffs", "l": "cliff"}, "."], "zh": "那自然的部分呢？我找到一張很棒的海崖照片。"}, {"who": "Lily", "segs": ["Nice. Thousands of birds live there in summer."], "zh": "很好。夏天有成千上萬隻鳥住在那裡。"}, {"who": "Jason", "segs": ["And look at this video. Ice ", {"w": "drifts", "l": "drift"}, " slowly across a lake near a glacier."], "zh": "你看這段影片，冰塊在冰河旁的湖上緩緩漂流。"}, {"who": "Lily", "segs": ["Beautiful. Let's end with how Icelanders ", {"w": "overcome", "l": "overcome"}, " the dark winters—with books and music!"], "zh": "好美。最後就講冰島人怎麼度過黑暗的冬天：靠書和音樂！"}, {"who": "Jason", "segs": ["Perfect. I'm actually excited about this presentation now."], "zh": "完美。我現在居然有點期待這個報告了。"}], "expr": [["Where should we start?", "我們要從哪裡開始？"], ["must have been ...", "當時一定很……（對過去的推測）"], ["put ... on a slide", "把……放進投影片"], ["Let's end with ...", "我們以……作結"]], "usage": {"emerge": "emerge from... 從……冒出來（不及物）", "endure": "這裡指「撐過去、存活下來」"}}];
+const WORDS = {"mysterious": {"en": "mysterious", "ipa": "[mɪsˋtɪrɪəs]", "pos": "adj.", "zh": "神祕的；難以理解的", "unit": 1, "unitTitle": "The Diamond as Big as the Ritz", "unitDir": "Unit1_The Diamond as Big as the Ritz", "scene": 9}, "journey": {"en": "journey", "ipa": "[ˋdʒɝnɪ]", "pos": "n.", "zh": "旅程、旅行", "unit": 1, "unitTitle": "The Diamond as Big as the Ritz", "unitDir": "Unit1_The Diamond as Big as the Ritz", "scene": 9}, "magnificent": {"en": "magnificent", "ipa": "[mægˋnɪfəsənt]", "pos": "adj.", "zh": "宏偉壯麗的；極好的", "unit": 1, "unitTitle": "The Diamond as Big as the Ritz", "unitDir": "Unit1_The Diamond as Big as the Ritz", "scene": 9}, "breath": {"en": "breath", "ipa": "[brɛθ]", "pos": "n.", "zh": "呼吸、氣息", "unit": 1, "unitTitle": "The Diamond as Big as the Ritz", "unitDir": "Unit1_The Diamond as Big as the Ritz", "scene": 9}, "precious": {"en": "precious", "ipa": "[ˋprɛʃəs]", "pos": "adj.", "zh": "珍貴的、寶貴的", "unit": 1, "unitTitle": "The Diamond as Big as the Ritz", "unitDir": "Unit1_The Diamond as Big as the Ritz", "scene": 9}, "confess": {"en": "confess", "ipa": "[kənˋfɛs]", "pos": "v.", "zh": "坦承；承認", "unit": 1, "unitTitle": "The Diamond as Big as the Ritz", "unitDir": "Unit1_The Diamond as Big as the Ritz", "scene": 9}, "horrify": {"en": "horrify", "ipa": "[ˋhɔrə͵faɪ]", "pos": "v.", "zh": "使驚恐、使極為震驚", "unit": 1, "unitTitle": "The Diamond as Big as the Ritz", "unitDir": "Unit1_The Diamond as Big as the Ritz", "scene": 9}, "explosion": {"en": "explosion", "ipa": "[ɪkˋsploʒən]", "pos": "n.", "zh": "爆炸；爆發", "unit": 1, "unitTitle": "The Diamond as Big as the Ritz", "unitDir": "Unit1_The Diamond as Big as the Ritz", "scene": 9}, "bomb": {"en": "bomb", "ipa": "[bɑm]", "pos": "n./v.", "zh": "炸彈；轟炸", "unit": 1, "unitTitle": "The Diamond as Big as the Ritz", "unitDir": "Unit1_The Diamond as Big as the Ritz", "scene": 9}, "destroy": {"en": "destroy", "ipa": "[dɪˋstrɔɪ]", "pos": "v.", "zh": "摧毀、徹底破壞", "unit": 1, "unitTitle": "The Diamond as Big as the Ritz", "unitDir": "Unit1_The Diamond as Big as the Ritz", "scene": 9}, "moderate": {"en": "moderate", "ipa": "[ˋmɑdərət]", "pos": "adj.", "zh": "適度的、中等程度的", "unit": 2, "unitTitle": "Walking to Health: Four Common Myths", "unitDir": "Unit2_Walking to Health Four Common Myths", "scene": 1}, "intensity": {"en": "intensity", "ipa": "[ɪnˋtɛnsətɪ]", "pos": "n.", "zh": "強度；強烈程度", "unit": 2, "unitTitle": "Walking to Health: Four Common Myths", "unitDir": "Unit2_Walking to Health Four Common Myths", "scene": 1}, "measure": {"en": "measure", "ipa": "[ˋmɛʒɚ]", "pos": "n./v.", "zh": "衡量標準、指標；措施；測量", "unit": 2, "unitTitle": "Walking to Health: Four Common Myths", "unitDir": "Unit2_Walking to Health Four Common Myths", "scene": 1}, "flexible": {"en": "flexible", "ipa": "[ˋflɛksəbḷ]", "pos": "adj.", "zh": "靈活的；有彈性的", "unit": 2, "unitTitle": "Walking to Health: Four Common Myths", "unitDir": "Unit2_Walking to Health Four Common Myths", "scene": 1}, "consistently": {"en": "consistently", "ipa": "[kənˋsɪstəntlɪ]", "pos": "adv.", "zh": "持續地、規律地；一致地", "unit": 2, "unitTitle": "Walking to Health: Four Common Myths", "unitDir": "Unit2_Walking to Health Four Common Myths", "scene": 1}, "calorie": {"en": "calorie", "ipa": "[ˋkælərɪ]", "pos": "n.", "zh": "卡路里", "unit": 2, "unitTitle": "Walking to Health: Four Common Myths", "unitDir": "Unit2_Walking to Health Four Common Myths", "scene": 1}, "slightly": {"en": "slightly", "ipa": "[ˋslaɪtlɪ]", "pos": "adv.", "zh": "稍微地；輕微地", "unit": 2, "unitTitle": "Walking to Health: Four Common Myths", "unitDir": "Unit2_Walking to Health Four Common Myths", "scene": 1}, "pace": {"en": "pace", "ipa": "[pes]", "pos": "n.", "zh": "步伐；速度；節奏", "unit": 2, "unitTitle": "Walking to Health: Four Common Myths", "unitDir": "Unit2_Walking to Health Four Common Myths", "scene": 1}, "strengthen": {"en": "strengthen", "ipa": "[ˋstrɛŋθən]", "pos": "v.", "zh": "增強；鞏固、強化", "unit": 2, "unitTitle": "Walking to Health: Four Common Myths", "unitDir": "Unit2_Walking to Health Four Common Myths", "scene": 1}, "research": {"en": "research", "ipa": "[rɪˋsɝtʃ]", "pos": "n.", "zh": "研究", "unit": 2, "unitTitle": "Walking to Health: Four Common Myths", "unitDir": "Unit2_Walking to Health Four Common Myths", "scene": 1}, "agency": {"en": "agency", "ipa": "[ˋedʒənsɪ]", "pos": "n.", "zh": "代理機構；（政府）機關", "unit": 3, "unitTitle": "Going on a City Tour", "unitDir": "Unit3_Going on a City Tour", "scene": 2}, "monument": {"en": "monument", "ipa": "[ˋmɑnjəmənt]", "pos": "n.", "zh": "紀念碑；古蹟", "unit": 3, "unitTitle": "Going on a City Tour", "unitDir": "Unit3_Going on a City Tour", "scene": 2}, "departure": {"en": "departure", "ipa": "[dɪˋpɑrtʃɚ]", "pos": "n.", "zh": "出發、啟程；離開", "unit": 3, "unitTitle": "Going on a City Tour", "unitDir": "Unit3_Going on a City Tour", "scene": 2}, "site": {"en": "site", "ipa": "[saɪt]", "pos": "n.", "zh": "地點；場所；網站", "unit": 3, "unitTitle": "Going on a City Tour", "unitDir": "Unit3_Going on a City Tour", "scene": 2}, "roughly": {"en": "roughly", "ipa": "[ˋrʌflɪ]", "pos": "adv.", "zh": "大致上；約略地", "unit": 3, "unitTitle": "Going on a City Tour", "unitDir": "Unit3_Going on a City Tour", "scene": 2}, "grateful": {"en": "grateful", "ipa": "[ˋgretfəl]", "pos": "adj.", "zh": "感激的", "unit": 3, "unitTitle": "Going on a City Tour", "unitDir": "Unit3_Going on a City Tour", "scene": 2}, "affordable": {"en": "affordable", "ipa": "[əˋfɔrdəbḷ]", "pos": "adj.", "zh": "（價格）負擔得起的", "unit": 3, "unitTitle": "Going on a City Tour", "unitDir": "Unit3_Going on a City Tour", "scene": 2}, "authentic": {"en": "authentic", "ipa": "[ɔˋθɛntɪk]", "pos": "adj.", "zh": "道地的、正宗的；真正的", "unit": 3, "unitTitle": "Going on a City Tour", "unitDir": "Unit3_Going on a City Tour", "scene": 2}, "creation": {"en": "creation", "ipa": "[kriˋeʃən]", "pos": "n.", "zh": "作品；創作", "unit": 4, "unitTitle": "The Many Faces of Elves", "unitDir": "Unit4_The Many Faces of Elves", "scene": 3}, "fantasy": {"en": "fantasy", "ipa": "[ˋfæntəsɪ]", "pos": "n.", "zh": "奇幻作品；幻想", "unit": 4, "unitTitle": "The Many Faces of Elves", "unitDir": "Unit4_The Many Faces of Elves", "scene": 3}, "adopt": {"en": "adopt", "ipa": "[əˋdɑpt]", "pos": "v.", "zh": "採用、採納；收養", "unit": 4, "unitTitle": "The Many Faces of Elves", "unitDir": "Unit4_The Many Faces of Elves", "scene": 3}, "bless": {"en": "bless", "ipa": "[blɛs]", "pos": "v.", "zh": "賜福；祝福", "unit": 4, "unitTitle": "The Many Faces of Elves", "unitDir": "Unit4_The Many Faces of Elves", "scene": 3}, "disturb": {"en": "disturb", "ipa": "[dɪsˋtɝb]", "pos": "v.", "zh": "打擾、干擾；使不安", "unit": 4, "unitTitle": "The Many Faces of Elves", "unitDir": "Unit4_The Many Faces of Elves", "scene": 3}, "invisible": {"en": "invisible", "ipa": "[ɪnˋvɪzəbḷ]", "pos": "adj.", "zh": "看不見的；無形的", "unit": 4, "unitTitle": "The Many Faces of Elves", "unitDir": "Unit4_The Many Faces of Elves", "scene": 3}, "crop": {"en": "crop", "ipa": "[krɑp]", "pos": "n.", "zh": "農作物；收成", "unit": 4, "unitTitle": "The Many Faces of Elves", "unitDir": "Unit4_The Many Faces of Elves", "scene": 3}, "behavior": {"en": "behavior", "ipa": "[bɪˋhevjɚ]", "pos": "n.", "zh": "行為；舉止", "unit": 4, "unitTitle": "The Many Faces of Elves", "unitDir": "Unit4_The Many Faces of Elves", "scene": 3}, "cruel": {"en": "cruel", "ipa": "[ˋkruəl]", "pos": "adj.", "zh": "殘酷的、殘忍的", "unit": 4, "unitTitle": "The Many Faces of Elves", "unitDir": "Unit4_The Many Faces of Elves", "scene": 3}, "drown": {"en": "drown", "ipa": "[draʊn]", "pos": "v.", "zh": "（使）淹死；淹沒", "unit": 4, "unitTitle": "The Many Faces of Elves", "unitDir": "Unit4_The Many Faces of Elves", "scene": 3}, "generation": {"en": "generation", "ipa": "[͵dʒɛnəˋreʃən]", "pos": "n.", "zh": "世代；一代", "unit": 5, "unitTitle": "Tom Holland: Hollywood's Leading Man", "unitDir": "Unit5_Tom Holland Hollywood Leading Man", "scene": 4}, "status": {"en": "status", "ipa": "[ˋstætəs]", "pos": "n.", "zh": "地位、身分；聲譽", "unit": 5, "unitTitle": "Tom Holland: Hollywood's Leading Man", "unitDir": "Unit5_Tom Holland Hollywood Leading Man", "scene": 4}, "expand": {"en": "expand", "ipa": "[ɪkˋspænd]", "pos": "v.", "zh": "擴大；擴展", "unit": 5, "unitTitle": "Tom Holland: Hollywood's Leading Man", "unitDir": "Unit5_Tom Holland Hollywood Leading Man", "scene": 4}, "reflect": {"en": "reflect", "ipa": "[rɪˋflɛkt]", "pos": "v.", "zh": "反映、展現；反射", "unit": 5, "unitTitle": "Tom Holland: Hollywood's Leading Man", "unitDir": "Unit5_Tom Holland Hollywood Leading Man", "scene": 4}, "craft": {"en": "craft", "ipa": "[kræft]", "pos": "n.", "zh": "技藝；手藝、工藝", "unit": 5, "unitTitle": "Tom Holland: Hollywood's Leading Man", "unitDir": "Unit5_Tom Holland Hollywood Leading Man", "scene": 4}, "frustrating": {"en": "frustrating", "ipa": "[ˋfrʌs͵tretɪŋ]", "pos": "adj.", "zh": "令人挫折的", "unit": 5, "unitTitle": "Tom Holland: Hollywood's Leading Man", "unitDir": "Unit5_Tom Holland Hollywood Leading Man", "scene": 4}, "creativity": {"en": "creativity", "ipa": "[͵krieˋtɪvətɪ]", "pos": "n.", "zh": "創造力、創意", "unit": 5, "unitTitle": "Tom Holland: Hollywood's Leading Man", "unitDir": "Unit5_Tom Holland Hollywood Leading Man", "scene": 4}, "dynamic": {"en": "dynamic", "ipa": "[daɪˋnæmɪk]", "pos": "adj.", "zh": "充滿活力的；動態的", "unit": 5, "unitTitle": "Tom Holland: Hollywood's Leading Man", "unitDir": "Unit5_Tom Holland Hollywood Leading Man", "scene": 4}, "charity": {"en": "charity", "ipa": "[ˋtʃærətɪ]", "pos": "n.", "zh": "慈善；慈善團體", "unit": 5, "unitTitle": "Tom Holland: Hollywood's Leading Man", "unitDir": "Unit5_Tom Holland Hollywood Leading Man", "scene": 4}, "inspiration": {"en": "inspiration", "ipa": "[͵ɪnspəˋreʃən]", "pos": "n.", "zh": "靈感來源；啟發", "unit": 5, "unitTitle": "Tom Holland: Hollywood's Leading Man", "unitDir": "Unit5_Tom Holland Hollywood Leading Man", "scene": 4}, "laboratory": {"en": "laboratory", "ipa": "[ˋlæbrə͵torɪ]", "pos": "n.", "zh": "實驗室", "unit": 6, "unitTitle": "The Road Less Traveled: Unusual Jobs That Really Exist", "unitDir": "Unit6_The Road Less Traveled Unusual Jobs That Really Exist", "scene": 5}, "assign": {"en": "assign", "ipa": "[əˋsaɪn]", "pos": "v.", "zh": "指派、分配", "unit": 6, "unitTitle": "The Road Less Traveled: Unusual Jobs That Really Exist", "unitDir": "Unit6_The Road Less Traveled Unusual Jobs That Really Exist", "scene": 5}, "specific": {"en": "specific", "ipa": "[spɪˋsɪfɪk]", "pos": "adj.", "zh": "具體的；特定的", "unit": 6, "unitTitle": "The Road Less Traveled: Unusual Jobs That Really Exist", "unitDir": "Unit6_The Road Less Traveled Unusual Jobs That Really Exist", "scene": 5}, "collection": {"en": "collection", "ipa": "[kəˋlɛkʃən]", "pos": "n.", "zh": "收集；收藏品", "unit": 6, "unitTitle": "The Road Less Traveled: Unusual Jobs That Really Exist", "unitDir": "Unit6_The Road Less Traveled Unusual Jobs That Really Exist", "scene": 5}, "container": {"en": "container", "ipa": "[kənˋtenɚ]", "pos": "n.", "zh": "容器；貨櫃", "unit": 6, "unitTitle": "The Road Less Traveled: Unusual Jobs That Really Exist", "unitDir": "Unit6_The Road Less Traveled Unusual Jobs That Really Exist", "scene": 5}, "numerous": {"en": "numerous", "ipa": "[ˋnumərəs]", "pos": "adj.", "zh": "許多的、眾多的", "unit": 6, "unitTitle": "The Road Less Traveled: Unusual Jobs That Really Exist", "unitDir": "Unit6_The Road Less Traveled Unusual Jobs That Really Exist", "scene": 5}, "claw": {"en": "claw", "ipa": "[klɔ]", "pos": "n.", "zh": "機械爪；（動物）爪子", "unit": 6, "unitTitle": "The Road Less Traveled: Unusual Jobs That Really Exist", "unitDir": "Unit6_The Road Less Traveled Unusual Jobs That Really Exist", "scene": 5}, "rusty": {"en": "rusty", "ipa": "[ˋrʌstɪ]", "pos": "adj.", "zh": "生鏽的；技能生疏的", "unit": 6, "unitTitle": "The Road Less Traveled: Unusual Jobs That Really Exist", "unitDir": "Unit6_The Road Less Traveled Unusual Jobs That Really Exist", "scene": 5}, "appealing": {"en": "appealing", "ipa": "[əˋpilɪŋ]", "pos": "adj.", "zh": "有吸引力的", "unit": 6, "unitTitle": "The Road Less Traveled: Unusual Jobs That Really Exist", "unitDir": "Unit6_The Road Less Traveled Unusual Jobs That Really Exist", "scene": 5}, "anxiety": {"en": "anxiety", "ipa": "[æŋˋzaɪətɪ]", "pos": "n.", "zh": "焦慮；擔憂", "unit": 6, "unitTitle": "The Road Less Traveled: Unusual Jobs That Really Exist", "unitDir": "Unit6_The Road Less Traveled Unusual Jobs That Really Exist", "scene": 5}, "tension": {"en": "tension", "ipa": "[ˋtɛnʃən]", "pos": "n.", "zh": "緊張；緊張局勢", "unit": 7, "unitTitle": "The 2026 World Cup Heats Up", "unitDir": "Unit7_The 2026 World Cup Heats Up", "scene": 7}, "previous": {"en": "previous", "ipa": "[ˋprivɪəs]", "pos": "adj.", "zh": "之前的；早先的", "unit": 7, "unitTitle": "The 2026 World Cup Heats Up", "unitDir": "Unit7_The 2026 World Cup Heats Up", "scene": 7}, "competition": {"en": "competition", "ipa": "[͵kɑmpəˋtɪʃən]", "pos": "n.", "zh": "比賽、競賽；競爭", "unit": 7, "unitTitle": "The 2026 World Cup Heats Up", "unitDir": "Unit7_The 2026 World Cup Heats Up", "scene": 7}, "amazing": {"en": "amazing", "ipa": "[əˋmezɪŋ]", "pos": "adj.", "zh": "極好的；驚人的", "unit": 7, "unitTitle": "The 2026 World Cup Heats Up", "unitDir": "Unit7_The 2026 World Cup Heats Up", "scene": 7}, "researcher": {"en": "researcher", "ipa": "[ˋri͵sɝtʃɚ]", "pos": "n.", "zh": "研究員", "unit": 9, "unitTitle": "AI's Pokémon Battle", "unitDir": "Unit9_AI Pokemon Battle", "scene": 6}, "experiment": {"en": "experiment", "ipa": "[ɪkˋspɛrəmənt]", "pos": "n.", "zh": "實驗", "unit": 9, "unitTitle": "AI's Pokémon Battle", "unitDir": "Unit9_AI Pokemon Battle", "scene": 6}, "code": {"en": "code", "ipa": "[kod]", "pos": "n.", "zh": "程式碼；密碼", "unit": 9, "unitTitle": "AI's Pokémon Battle", "unitDir": "Unit9_AI Pokemon Battle", "scene": 6}, "panic": {"en": "panic", "ipa": "[ˋpænɪk]", "pos": "v.", "zh": "（使）恐慌", "unit": 9, "unitTitle": "AI's Pokémon Battle", "unitDir": "Unit9_AI Pokemon Battle", "scene": 7}, "towering": {"en": "towering", "ipa": "[ˋtaʊərɪŋ]", "pos": "adj.", "zh": "高聳的；傑出的", "unit": 10, "unitTitle": "Provence in Purple", "unitDir": "Unit10_Provence in Purple", "scene": 8}, "charming": {"en": "charming", "ipa": "[ˋtʃɑrmɪŋ]", "pos": "adj.", "zh": "迷人的；有魅力的", "unit": 10, "unitTitle": "Provence in Purple", "unitDir": "Unit10_Provence in Purple", "scene": 8}, "bloom": {"en": "bloom", "ipa": "[blum]", "pos": "v./n.", "zh": "開花；盛開", "unit": 10, "unitTitle": "Provence in Purple", "unitDir": "Unit10_Provence in Purple", "scene": 8}, "harvest": {"en": "harvest", "ipa": "[ˋhɑrvɪst]", "pos": "v.", "zh": "收割；採收", "unit": 10, "unitTitle": "Provence in Purple", "unitDir": "Unit10_Provence in Purple", "scene": 8}, "perfume": {"en": "perfume", "ipa": "[ˋpɝ͵fjum]", "pos": "n.", "zh": "香水；芳香", "unit": 10, "unitTitle": "Provence in Purple", "unitDir": "Unit10_Provence in Purple", "scene": 8}, "regional": {"en": "regional", "ipa": "[ˋridʒənḷ]", "pos": "adj.", "zh": "地區的；區域的", "unit": 10, "unitTitle": "Provence in Purple", "unitDir": "Unit10_Provence in Purple", "scene": 8}, "summit": {"en": "summit", "ipa": "[ˋsʌmɪt]", "pos": "n.", "zh": "山頂、頂峰", "unit": 10, "unitTitle": "Provence in Purple", "unitDir": "Unit10_Provence in Purple", "scene": 8}, "dramatically": {"en": "dramatically", "ipa": "[drəˋmætɪklɪ]", "pos": "adv.", "zh": "顯著地；大幅度地", "unit": 10, "unitTitle": "Provence in Purple", "unitDir": "Unit10_Provence in Purple", "scene": 7}, "visible": {"en": "visible", "ipa": "[ˋvɪzəbḷ]", "pos": "adj.", "zh": "明顯可見的；看得見的", "unit": 10, "unitTitle": "Provence in Purple", "unitDir": "Unit10_Provence in Purple", "scene": 8}, "engineering": {"en": "engineering", "ipa": "[͵ɛndʒəˋnɪrɪŋ]", "pos": "n.", "zh": "工程；工程學", "unit": 10, "unitTitle": "Provence in Purple", "unitDir": "Unit10_Provence in Purple", "scene": 8}, "impression": {"en": "impression", "ipa": "[ɪmˋprɛʃən]", "pos": "n.", "zh": "印象", "unit": 10, "unitTitle": "Provence in Purple", "unitDir": "Unit10_Provence in Purple", "scene": 8}, "warmth": {"en": "warmth", "ipa": "[wɔrmθ]", "pos": "n.", "zh": "溫暖；熱情", "unit": 10, "unitTitle": "Provence in Purple", "unitDir": "Unit10_Provence in Purple", "scene": 8}, "drift": {"en": "drift", "ipa": "[drɪft]", "pos": "v.", "zh": "飄；漂流", "unit": 11, "unitTitle": "Iceland: A Place of Ice and Fire", "unitDir": "Unit11_Iceland A Place of Ice and Fire", "scene": 12}, "cliff": {"en": "cliff", "ipa": "[klɪf]", "pos": "n.", "zh": "峭壁、懸崖", "unit": 11, "unitTitle": "Iceland: A Place of Ice and Fire", "unitDir": "Unit11_Iceland A Place of Ice and Fire", "scene": 12}, "overcome": {"en": "overcome", "ipa": "[͵ovɚˋkʌm]", "pos": "v.", "zh": "克服；戰勝", "unit": 11, "unitTitle": "Iceland: A Place of Ice and Fire", "unitDir": "Unit11_Iceland A Place of Ice and Fire", "scene": 12}, "harsh": {"en": "harsh", "ipa": "[hɑrʃ]", "pos": "adj.", "zh": "嚴酷的；惡劣的", "unit": 11, "unitTitle": "Iceland: A Place of Ice and Fire", "unitDir": "Unit11_Iceland A Place of Ice and Fire", "scene": 12}, "preserve": {"en": "preserve", "ipa": "[prɪˋzɝv]", "pos": "v.", "zh": "保存、保鮮；維護", "unit": 11, "unitTitle": "Iceland: A Place of Ice and Fire", "unitDir": "Unit11_Iceland A Place of Ice and Fire", "scene": 12}, "strength": {"en": "strength", "ipa": "[strɛŋθ]", "pos": "n.", "zh": "力量；體力；優勢", "unit": 12, "unitTitle": "Ostriches Up Close: Speed, Strength, and Surprising Stories", "unitDir": "Unit12_Ostriches Up Close Speed Strength and Surprising Stories", "scene": 10}, "unique": {"en": "unique", "ipa": "[juˋnik]", "pos": "adj.", "zh": "獨特的；獨一無二的", "unit": 12, "unitTitle": "Ostriches Up Close: Speed, Strength, and Surprising Stories", "unitDir": "Unit12_Ostriches Up Close Speed Strength and Surprising Stories", "scene": 10}, "structure": {"en": "structure", "ipa": "[ˋstrʌktʃɚ]", "pos": "n.", "zh": "構造、結構；組織架構", "unit": 12, "unitTitle": "Ostriches Up Close: Speed, Strength, and Surprising Stories", "unitDir": "Unit12_Ostriches Up Close Speed Strength and Surprising Stories", "scene": 10}, "resemble": {"en": "resemble", "ipa": "[rɪˋzɛmbḷ]", "pos": "v.", "zh": "與……相像", "unit": 12, "unitTitle": "Ostriches Up Close: Speed, Strength, and Surprising Stories", "unitDir": "Unit12_Ostriches Up Close Speed Strength and Surprising Stories", "scene": 10}, "enable": {"en": "enable", "ipa": "[ɪnˋebḷ]", "pos": "v.", "zh": "使能夠", "unit": 12, "unitTitle": "Ostriches Up Close: Speed, Strength, and Surprising Stories", "unitDir": "Unit12_Ostriches Up Close Speed Strength and Surprising Stories", "scene": 10}, "feather": {"en": "feather", "ipa": "[ˋfɛðɚ]", "pos": "n.", "zh": "羽毛", "unit": 12, "unitTitle": "Ostriches Up Close: Speed, Strength, and Surprising Stories", "unitDir": "Unit12_Ostriches Up Close Speed Strength and Surprising Stories", "scene": 10}, "misunderstand": {"en": "misunderstand", "ipa": "[͵mɪsʌndɚˋstænd]", "pos": "v.", "zh": "誤解、誤會", "unit": 12, "unitTitle": "Ostriches Up Close: Speed, Strength, and Surprising Stories", "unitDir": "Unit12_Ostriches Up Close Speed Strength and Surprising Stories", "scene": 10}, "legend": {"en": "legend", "ipa": "[ˋlɛdʒənd]", "pos": "n.", "zh": "傳說；傳奇人物", "unit": 12, "unitTitle": "Ostriches Up Close: Speed, Strength, and Surprising Stories", "unitDir": "Unit12_Ostriches Up Close Speed Strength and Surprising Stories", "scene": 10}, "incredibly": {"en": "incredibly", "ipa": "[ɪnˋkrɛdəblɪ]", "pos": "adv.", "zh": "極其；難以置信地", "unit": 12, "unitTitle": "Ostriches Up Close: Speed, Strength, and Surprising Stories", "unitDir": "Unit12_Ostriches Up Close Speed Strength and Surprising Stories", "scene": 7}, "remarkable": {"en": "remarkable", "ipa": "[rɪˋmɑrkəbḷ]", "pos": "adj.", "zh": "非凡的；顯著的", "unit": 12, "unitTitle": "Ostriches Up Close: Speed, Strength, and Surprising Stories", "unitDir": "Unit12_Ostriches Up Close Speed Strength and Surprising Stories", "scene": 10}, "application": {"en": "application", "ipa": "[͵æpləˋkeʃən]", "pos": "n.", "zh": "申請；申請書；應用程式", "unit": 13, "unitTitle": "Learning to Write: Letters of Application", "unitDir": "Unit13_Learning to Write Letters of Application", "scene": 6}, "response": {"en": "response", "ipa": "[rɪˋspɑns]", "pos": "n.", "zh": "回應、回覆；反應", "unit": 13, "unitTitle": "Learning to Write: Letters of Application", "unitDir": "Unit13_Learning to Write Letters of Application", "scene": 6}, "eager": {"en": "eager", "ipa": "[ˋigɚ]", "pos": "adj.", "zh": "渴望的；熱切的", "unit": 13, "unitTitle": "Learning to Write: Letters of Application", "unitDir": "Unit13_Learning to Write Letters of Application", "scene": 6}, "deepen": {"en": "deepen", "ipa": "[ˋdipən]", "pos": "v.", "zh": "加深", "unit": 13, "unitTitle": "Learning to Write: Letters of Application", "unitDir": "Unit13_Learning to Write Letters of Application", "scene": 6}, "opportunity": {"en": "opportunity", "ipa": "[͵ɑpɚˋtunətɪ]", "pos": "n.", "zh": "機會；時機", "unit": 13, "unitTitle": "Learning to Write: Letters of Application", "unitDir": "Unit13_Learning to Write Letters of Application", "scene": 6}, "volume": {"en": "volume", "ipa": "[ˋvɑljəm]", "pos": "n.", "zh": "容量、體積", "unit": 14, "unitTitle": "Measuring the World: The Imperial and Metric Systems", "unitDir": "Unit14_Measuring the World The Imperial and Metric Systems", "scene": 11}, "exchange": {"en": "exchange", "ipa": "[ɪksˋtʃendʒ]", "pos": "n.", "zh": "交換、交流", "unit": 14, "unitTitle": "Measuring the World: The Imperial and Metric Systems", "unitDir": "Unit14_Measuring the World The Imperial and Metric Systems", "scene": 2}, "universal": {"en": "universal", "ipa": "[͵junəˋvɝsḷ]", "pos": "adj.", "zh": "普遍的、通用的", "unit": 14, "unitTitle": "Measuring the World: The Imperial and Metric Systems", "unitDir": "Unit14_Measuring the World The Imperial and Metric Systems", "scene": 7}, "establish": {"en": "establish", "ipa": "[ɪˋstæblɪʃ]", "pos": "v.", "zh": "建立、設立", "unit": 14, "unitTitle": "Measuring the World: The Imperial and Metric Systems", "unitDir": "Unit14_Measuring the World The Imperial and Metric Systems", "scene": 12}, "emerge": {"en": "emerge", "ipa": "[ɪˋmɝdʒ]", "pos": "v.", "zh": "興起；出現", "unit": 14, "unitTitle": "Measuring the World: The Imperial and Metric Systems", "unitDir": "Unit14_Measuring the World The Imperial and Metric Systems", "scene": 12}, "logic": {"en": "logic", "ipa": "[ˋlɑdʒɪk]", "pos": "n.", "zh": "邏輯", "unit": 14, "unitTitle": "Measuring the World: The Imperial and Metric Systems", "unitDir": "Unit14_Measuring the World The Imperial and Metric Systems", "scene": 11}, "scale": {"en": "scale", "ipa": "[skel]", "pos": "v.", "zh": "按比例調整；衡量", "unit": 14, "unitTitle": "Measuring the World: The Imperial and Metric Systems", "unitDir": "Unit14_Measuring the World The Imperial and Metric Systems", "scene": 11}, "trace": {"en": "trace", "ipa": "[tres]", "pos": "v.", "zh": "追溯、追查", "unit": 14, "unitTitle": "Measuring the World: The Imperial and Metric Systems", "unitDir": "Unit14_Measuring the World The Imperial and Metric Systems", "scene": 11}, "differ": {"en": "differ", "ipa": "[ˋdɪfɚ]", "pos": "v.", "zh": "不同、相異", "unit": 14, "unitTitle": "Measuring the World: The Imperial and Metric Systems", "unitDir": "Unit14_Measuring the World The Imperial and Metric Systems", "scene": 11}, "pub": {"en": "pub", "ipa": "[pʌb]", "pos": "n.", "zh": "酒吧", "unit": 14, "unitTitle": "Measuring the World: The Imperial and Metric Systems", "unitDir": "Unit14_Measuring the World The Imperial and Metric Systems", "scene": 11}, "endure": {"en": "endure", "ipa": "[ɪnˋdʊr]", "pos": "v.", "zh": "持續；忍受", "unit": 14, "unitTitle": "Measuring the World: The Imperial and Metric Systems", "unitDir": "Unit14_Measuring the World The Imperial and Metric Systems", "scene": 12}, "pour": {"en": "pour", "ipa": "[pɔr]", "pos": "v.", "zh": "倒出（液體）；傾注", "unit": 14, "unitTitle": "Measuring the World: The Imperial and Metric Systems", "unitDir": "Unit14_Measuring the World The Imperial and Metric Systems", "scene": 11}};
+
+/* ===== 小工具 ===== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const plain = line => line.segs.map(s => typeof s === 'string' ? s : s.w).join('');
+const castOf = (scene, who) => scene.cast.find(c => c.name === who);
+
+const state = { cur: 0, mode: 'talk', zh: true, slow: false, role: 'Lily', revealed: new Set(), cloze: null };
+
+/* ===== 語音 ===== */
+const synth = 'speechSynthesis' in window ? window.speechSynthesis : null;
+const voices = { f: null, m: null };
+const F_HINT = /female|zira|samantha|aria|jenny|susan|hazel|karen|victoria|ava|allison|emma|libby|sonia|michelle|joanna|salli|kendra|kimberly|moira|tessa/i;
+const M_HINT = /\bmale|david|mark|guy|alex|daniel|fred|ryan|christopher|eric|tom|george|matthew|joey|justin|brian|aaron|oliver/i;
+function loadVoices() {
+  if (!synth) return;
+  const en = synth.getVoices().filter(v => /^en[-_]/i.test(v.lang));
+  if (!en.length) return;
+  const us = en.filter(v => /^en[-_]US/i.test(v.lang));
+  const pool = us.concat(en.filter(v => !us.includes(v)));
+  voices.f = pool.find(v => F_HINT.test(v.name)) || pool[0];
+  voices.m = pool.find(v => M_HINT.test(v.name) && !F_HINT.test(v.name)) || pool.find(v => v !== voices.f) || pool[0];
+}
+if (synth) { loadVoices(); synth.addEventListener && synth.addEventListener('voiceschanged', loadVoices); }
+
+function utter(text, c, rate) {
+  const u = new SpeechSynthesisUtterance(text);
+  const g = c ? c.g : 'f';
+  const v = g === 'm' ? voices.m : voices.f;
+  u.lang = v ? v.lang : 'en-US';
+  if (v) u.voice = v;
+  u.pitch = c && c.p ? c.p : 1;
+  u.rate = rate || (state.slow ? 0.72 : 0.95);
+  return u;
+}
+let playToken = 0, waitTimer = null;
+function stopAll() {
+  playToken++;
+  clearTimeout(waitTimer);
+  if (synth) synth.cancel();
+  document.querySelectorAll('.msg.playing, .msg.your-turn').forEach(el => el.classList.remove('playing', 'your-turn'));
+  const pb = $('play-btn');
+  if (pb) { pb.classList.remove('on'); pb.textContent = state.mode === 'role' ? '▶ 開始練習' : '▶ 播放整段'; }
+}
+function speakText(text, c, rate) {
+  if (!synth) return;
+  stopAll();
+  synth.speak(utter(text, c, rate));
+}
+function speakLine(line, scene, done) {
+  const text = plain(line);
+  let finished = false, safety = null;
+  const fin = () => { if (finished) return; finished = true; clearTimeout(safety); done(); };
+  const u = utter(text, castOf(scene, line.who));
+  u.onend = fin; u.onerror = fin;
+  safety = setTimeout(fin, 2500 + text.split(/\s+/).length * 650 * (state.slow ? 1.4 : 1));
+  synth.speak(u);
+}
+const lineEl = li => document.querySelector(`#lines .msg[data-li="${li}"]`);
+
+function playAll() {
+  if (!synth) return;
+  stopAll();
+  const token = playToken;
+  const scene = SCENES[state.cur];
+  const pb = $('play-btn');
+  if (pb) { pb.classList.add('on'); pb.textContent = '⏵ 播放中…'; }
+  let i = 0;
+  const next = () => {
+    if (token !== playToken) return;
+    document.querySelectorAll('.msg.playing').forEach(el => el.classList.remove('playing'));
+    while (i < scene.lines.length && !scene.lines[i].who) i++;
+    if (i >= scene.lines.length) { stopAll(); return; }
+    const li = i++, line = scene.lines[li];
+    const el = lineEl(li);
+    if (el) { el.classList.add('playing'); el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+    if (state.mode === 'role' && line.who === state.role && !state.revealed.has(li)) {
+      if (el) el.classList.add('your-turn');
+      const wait = (1200 + plain(line).split(/\s+/).length * 450) * (state.slow ? 1.3 : 1);
+      waitTimer = setTimeout(() => {
+        if (token !== playToken) return;
+        revealLine(li, true);
+        speakLine(line, scene, () => { waitTimer = setTimeout(next, 350); });
+      }, wait);
+    } else {
+      speakLine(line, scene, () => { waitTimer = setTimeout(next, 350); });
+    }
+  };
+  next();
+}
+
+/* ===== 統計、情境選單 ===== */
+function renderStats() {
+  const nLines = SCENES.reduce((s, sc) => s + sc.lines.filter(l => l.who).length, 0);
+  const nExpr = SCENES.reduce((s, sc) => s + sc.expr.length, 0);
+  $('stats').innerHTML = [[SCENES.length, '個生活情境'], [Object.keys(WORDS).length, '個本期單字'], [nLines, '句對話'], [nExpr, '個實用口語']]
+    .map(([n, t]) => `<div class="stat"><b>${n}</b><span>${t}</span></div>`).join('');
+}
+function renderChips() {
+  $('scene-chips').innerHTML = SCENES.map((s, i) =>
+    `<button class="chip${i === state.cur ? ' active' : ''}" role="tab" aria-selected="${i === state.cur}" data-scene="${i}"><b>S${s.id}</b>${esc(s.zh)}</button>`).join('');
+  const act = $('scene-chips').querySelector('.chip.active');
+  if (act) act.scrollIntoView({ block: 'nearest', inline: 'center' });
+}
+
+/* ===== 情境內容 ===== */
+function avatar(c) { return `<i class="av" style="background:${c.color}" aria-hidden="true">${esc(c.name[0])}</i>`; }
+function segsHTML(line) {
+  return line.segs.map(s => typeof s === 'string' ? esc(s) : `<button class="tw" data-word="${esc(s.l)}">${esc(s.w)}</button>`).join('');
+}
+function msgHTML(scene, line, li, inner) {
+  if (!line.who) return `<div class="note" data-li="${li}">${esc(plain(line))}${state.zh ? '　' + esc(line.zh) : ''}</div>`;
+  const c = castOf(scene, line.who);
+  return `<div class="msg side-${c.side}" data-li="${li}">${avatar(c)}
+    <div class="msg-main"><div class="who">${esc(c.name)} <span>${esc(c.zh)}</span></div>
+    <div class="turn-badge">🎤 輪到你說！</div>
+    <div class="bubble">${inner}</div></div></div>`;
+}
+function talkInner(line, li) {
+  return `<div class="en">${segsHTML(line)}<button class="say" data-li="${li}" aria-label="播放這句">🔊</button></div>` +
+    (state.zh ? `<div class="zh">${esc(line.zh)}</div>` : '');
+}
+function roleInner(line, li) {
+  if (line.who === state.role && !state.revealed.has(li)) {
+    return `<div class="prompt">🎤 ${esc(line.zh)}</div><button class="reveal" data-reveal="${li}">👀 看英文</button>`;
+  }
+  return talkInner(line, li);
+}
+function revealLine(li, fromPlay) {
+  state.revealed.add(li);
+  const el = lineEl(li);
+  if (!el) return;
+  const scene = SCENES[state.cur];
+  const wasPlaying = el.classList.contains('playing');
+  el.outerHTML = msgHTML(scene, scene.lines[li], li, roleInner(scene.lines[li], li));
+  if (fromPlay || wasPlaying) { const n = lineEl(li); if (n) n.classList.add('playing'); }
+}
+
+/* 克漏字狀態：blanks 依出現順序；bank 為打亂後的字庫 */
+function newCloze(scene) {
+  const blanks = [];
+  scene.lines.forEach((l, li) => l.segs.forEach(s => { if (typeof s !== 'string') blanks.push({ li, w: s.w, l: s.l }); }));
+  const bank = shuffle(blanks.map(b => ({ w: b.w.toLowerCase(), used: false })));
+  return { blanks, bank, fills: blanks.map(() => null), active: 0, checked: false };
+}
+function clozeInner(scene, line, li) {
+  const cz = state.cloze;
+  let html = '';
+  line.segs.forEach(s => {
+    if (typeof s === 'string') { html += esc(s); return; }
+    const bi = cz.blanks.findIndex(b => b.li === li && b.l === s.l);
+    const f = cz.fills[bi];
+    let cls = 'blank';
+    if (f === null) cls += ' empty';
+    if (!cz.checked && bi === cz.active) cls += ' active';
+    let ok = false;
+    if (cz.checked) { ok = f !== null && cz.bank[f].w === s.w.toLowerCase(); cls += ok ? ' ok' : ' bad'; }
+    const text = f === null ? `（${bi + 1}）` : cz.bank[f].w;
+    html += `<button class="${cls}" data-blank="${bi}" aria-label="第 ${bi + 1} 格">${esc(text)}</button>`;
+    if (cz.checked && !ok) html += `<span class="ans">${esc(s.w)}</span>`;
+  });
+  return `<div class="en">${html}</div>` + (state.zh ? `<div class="zh">${esc(line.zh)}</div>` : '');
+}
+function clozeExtras() {
+  const cz = state.cloze;
+  const filled = cz.fills.filter(f => f !== null).length;
+  const bank = `<div class="bank-box"><div class="bank-title">字庫：先點空格，再點單字填入（點已填的格子可清除）・已填 ${filled} / ${cz.blanks.length}</div>
+    <div class="bank">${cz.bank.map((b, i) => `<button class="bchip" data-chip="${i}"${b.used || cz.checked ? ' disabled' : ''}>${esc(b.w)}</button>`).join('')}</div></div>`;
+  let result = '';
+  if (cz.checked) {
+    const score = cz.blanks.filter((b, i) => cz.fills[i] !== null && cz.bank[cz.fills[i]].w === b.w.toLowerCase()).length;
+    const all = score === cz.blanks.length;
+    result = `<div class="cloze-result ${all ? 'good' : 'meh'}">${all ? '🎉 全對！' : '💪 再接再厲！'}答對 ${score} / ${cz.blanks.length}${all ? '' : '・綠字是正確答案'}</div>`;
+  }
+  return bank + `<div class="cloze-actions">
+      <button class="big-btn" data-act="check"${cz.checked || filled === 0 ? ' disabled' : ''}>✅ 檢查答案</button>
+      <button class="big-btn ghost" data-act="reset">🔁 重做（重新打亂字庫）</button>
+    </div>` + result;
+}
+
+function renderControls(scene) {
+  const ttsNote = synth ? '' : '<div class="no-tts">這個瀏覽器不支援語音朗讀，請改用 Chrome、Edge 或 Safari。</div>';
+  const zhBtn = `<button class="ctl${state.zh ? ' on' : ''}" data-act="zh">中文 ${state.zh ? '顯示中' : '已隱藏'}</button>`;
+  const slowBtn = `<button class="ctl${state.slow ? ' on' : ''}" data-act="slow">🐢 慢速</button>`;
+  if (state.mode === 'talk') {
+    return ttsNote + `<button class="ctl primary" id="play-btn" data-act="play">▶ 播放整段</button>
+      <button class="ctl" data-act="stop">⏹ 停止</button>${slowBtn}${zhBtn}
+      <div class="tip">點黃色單字看解釋，點 🔊 聽單句。</div>`;
+  }
+  if (state.mode === 'role') {
+    const picks = scene.cast.map(c => `<button class="chip${c.name === state.role ? ' active' : ''}" data-role="${esc(c.name)}">${esc(c.name)} ${esc(c.zh)}</button>`).join('');
+    return ttsNote + `<div class="role-pick"><span class="label">我要演</span>${picks}</div>
+      <button class="ctl primary" id="play-btn" data-act="play">▶ 開始練習</button>
+      <button class="ctl" data-act="stop">⏹ 停止</button>${slowBtn}${zhBtn}
+      <button class="ctl" data-act="hide-again">🙈 全部重新遮住</button>
+      <div class="tip">按「開始練習」後，其他角色會自動唸；輪到你時會停下來讓你開口，接著播放示範讓你對照。</div>`;
+  }
+  return `${zhBtn}<div class="tip">把本場的 ${scene.words.length} 個單字填回對話中，大小寫不影響判分。</div>`;
+}
+
+function renderScene() {
+  stopAll();
+  const scene = SCENES[state.cur];
+  if (!scene.cast.some(c => c.name === state.role)) state.role = scene.cast[0].name;
+  let body;
+  if (state.mode === 'cloze') {
+    if (!state.cloze) state.cloze = newCloze(scene);
+    body = scene.lines.map((l, li) => msgHTML(scene, l, li, l.who ? clozeInner(scene, l, li) : '')).join('');
+  } else if (state.mode === 'role') {
+    body = scene.lines.map((l, li) => msgHTML(scene, l, li, l.who ? roleInner(l, li) : '')).join('');
+  } else {
+    body = scene.lines.map((l, li) => msgHTML(scene, l, li, l.who ? talkInner(l, li) : '')).join('');
+  }
+  const targets = scene.words.map(w => `<button class="tchip" data-word="${esc(w)}">${esc(w)}<small>U${WORDS[w].unit}</small></button>`).join('');
+  $('scene').innerHTML = `
+    <div class="scene-head">
+      <div class="scene-num">SCENE ${scene.id} / ${SCENES.length}</div>
+      <h2>${esc(scene.zh)}<small>${esc(scene.en)}</small></h2>
+      <p class="setting">📍 ${esc(scene.setting)}</p>
+      <div class="cast"><span class="label">登場人物</span>${scene.cast.map(c => `<span class="cast-item">${avatar(c)}${esc(c.name)} ${esc(c.zh)}</span>`).join('')}</div>
+      <div class="targets"><span class="label">本場單字 ${scene.words.length}</span>${targets}</div>
+    </div>
+    <div class="modes" role="tablist" aria-label="練習模式">
+      ${[['talk', '💬 對話'], ['role', '🎭 角色扮演'], ['cloze', '✏️ 克漏字']].map(([m, t]) =>
+        `<button class="mode-btn${state.mode === m ? ' active' : ''}" role="tab" aria-selected="${state.mode === m}" data-mode="${m}">${t}</button>`).join('')}
+    </div>
+    <div class="controls">${renderControls(scene)}</div>
+    <div class="lines" id="lines">${body}</div>
+    ${state.mode === 'cloze' ? clozeExtras() : ''}
+    <div class="expr"><h3>🗣️ 實用口語句型</h3><ul>${scene.expr.map(([en, zh]) =>
+      `<li><button class="say" data-text="${esc(en)}" aria-label="播放">🔊</button><b>${esc(en)}</b>${esc(zh)}</li>`).join('')}</ul></div>
+    <div class="pager">
+      <button data-go="-1"${state.cur === 0 ? ' disabled' : ''}>← 上一個情境</button>
+      <button data-go="1"${state.cur === SCENES.length - 1 ? ' disabled' : ''}>下一個情境 →</button>
+    </div>`;
+}
+
+function goScene(i, keepMode) {
+  state.cur = Math.max(0, Math.min(SCENES.length - 1, i));
+  if (!keepMode) state.mode = 'talk';
+  state.revealed = new Set();
+  state.cloze = null;
+  try { history.replaceState(null, '', '#s' + SCENES[state.cur].id); } catch (e) {}
+  renderChips();
+  renderScene();
+}
+
+/* ===== 單字小卡 ===== */
+function openSheet(lemma) {
+  const w = WORDS[lemma];
+  if (!w) return;
+  const sc = SCENES.find(s => s.id === w.scene);
+  const usage = sc && sc.usage ? sc.usage[lemma] : '';
+  $('sheet-body').innerHTML = `
+    <div class="sh-top"><span class="sh-en">${esc(w.en)}</span><span class="sh-ipa">${esc(w.ipa)}</span><span class="sh-pos">${esc(w.pos)}</span></div>
+    <div class="sh-zh">${esc(w.zh)}</div>
+    ${usage ? `<div class="sh-usage">💡 本句用法：${esc(usage)}</div>` : ''}
+    <div class="sh-src">出自 Unit ${w.unit}｜${esc(w.unitTitle)}・用在 Scene ${w.scene}</div>
+    <div class="sh-actions">
+      <button class="ctl primary" data-say-word="${esc(w.en)}">🔊 發音</button>
+      <a class="ctl" href="../${encodeURI(w.unitDir)}/03_互動圖文學習講義.html">📖 回原課講義</a>
+    </div>`;
+  $('sheet').hidden = false;
+  speakText(w.en, null, 0.85);
+}
+function closeSheet() { $('sheet').hidden = true; }
+$('sheet-close').addEventListener('click', closeSheet);
+$('sheet').addEventListener('click', e => {
+  if (e.target.id === 'sheet') closeSheet();
+  const b = e.target.closest('[data-say-word]');
+  if (b) speakText(b.dataset.sayWord, null, 0.85);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+
+/* ===== 涵蓋表 ===== */
+function renderCoverage() {
+  const byUnit = {};
+  Object.values(WORDS).forEach(w => (byUnit[w.unit] = byUnit[w.unit] || []).push(w));
+  $('coverage').innerHTML = Object.keys(byUnit).sort((a, b) => a - b).map(u =>
+    `<div class="cov-unit"><div class="cov-title">Unit ${u}｜${esc(byUnit[u][0].unitTitle)}</div>
+     <div class="cov-list">${byUnit[u].map(w => `<button class="cov" data-jump="${esc(w.en)}">${esc(w.en)}<small>S${w.scene}</small></button>`).join('')}</div></div>`).join('');
+}
+function jumpTo(lemma) {
+  const w = WORDS[lemma];
+  goScene(w.scene - 1);
+  const scene = SCENES[state.cur];
+  const li = scene.lines.findIndex(l => l.segs.some(s => typeof s !== 'string' && s.l === lemma));
+  const el = lineEl(li);
+  if (el) {
+    el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    el.classList.add('flash');
+    setTimeout(() => el.classList.remove('flash'), 1700);
+  }
+}
+
+/* ===== 事件 ===== */
+$('scene-chips').addEventListener('click', e => {
+  const b = e.target.closest('[data-scene]');
+  if (b) goScene(Number(b.dataset.scene));
+});
+$('coverage').addEventListener('click', e => {
+  const b = e.target.closest('[data-jump]');
+  if (b) jumpTo(b.dataset.jump);
+});
+$('scene').addEventListener('click', e => {
+  const t = e.target;
+  const scene = SCENES[state.cur];
+  let b;
+  if ((b = t.closest('[data-word]'))) { openSheet(b.dataset.word); return; }
+  if ((b = t.closest('[data-mode]'))) {
+    if (state.mode !== b.dataset.mode) { state.mode = b.dataset.mode; state.revealed = new Set(); state.cloze = null; renderScene(); }
+    return;
+  }
+  if ((b = t.closest('[data-go]'))) { goScene(state.cur + Number(b.dataset.go), true); window.scrollTo({ top: $('scene').offsetTop - 70, behavior: 'smooth' }); return; }
+  if ((b = t.closest('[data-role]'))) { state.role = b.dataset.role; state.revealed = new Set(); renderScene(); return; }
+  if ((b = t.closest('[data-reveal]'))) { revealLine(Number(b.dataset.reveal)); return; }
+  if ((b = t.closest('.say[data-li]'))) { const l = scene.lines[Number(b.dataset.li)]; speakText(plain(l), castOf(scene, l.who)); return; }
+  if ((b = t.closest('.say[data-text]'))) { speakText(b.dataset.text.replace(/\.\.\.|…/g, ''), null); return; }
+  if ((b = t.closest('[data-blank]'))) {
+    const cz = state.cloze; if (cz.checked) return;
+    const bi = Number(b.dataset.blank);
+    if (cz.fills[bi] !== null) { cz.bank[cz.fills[bi]].used = false; cz.fills[bi] = null; }
+    cz.active = bi;
+    const y = window.scrollY; renderScene(); window.scrollTo(0, y);
+    return;
+  }
+  if ((b = t.closest('[data-chip]'))) {
+    const cz = state.cloze; if (cz.checked) return;
+    const ci = Number(b.dataset.chip);
+    let target = cz.fills[cz.active] === null ? cz.active : cz.fills.findIndex(f => f === null);
+    if (target < 0) return;
+    cz.fills[target] = ci; cz.bank[ci].used = true;
+    const after = cz.fills.findIndex((f, i) => f === null && i > target);
+    cz.active = after >= 0 ? after : cz.fills.findIndex(f => f === null);
+    if (cz.active < 0) cz.active = target;
+    const y = window.scrollY; renderScene(); window.scrollTo(0, y);
+    return;
+  }
+  if ((b = t.closest('[data-act]'))) {
+    const act = b.dataset.act;
+    if (act === 'play') playAll();
+    else if (act === 'stop') stopAll();
+    else if (act === 'slow') { state.slow = !state.slow; b.classList.toggle('on', state.slow); }
+    else if (act === 'zh') { state.zh = !state.zh; const y = window.scrollY; renderScene(); window.scrollTo(0, y); }
+    else if (act === 'hide-again') { state.revealed = new Set(); renderScene(); }
+    else if (act === 'check') { state.cloze.checked = true; const y = window.scrollY; renderScene(); window.scrollTo(0, y); }
+    else if (act === 'reset') { state.cloze = null; renderScene(); }
+  }
+});
+
+/* ===== 啟動 ===== */
+const m = location.hash.match(/^#s(\d+)$/);
+const start = m ? SCENES.findIndex(s => s.id === Number(m[1])) : 0;
+renderStats();
+renderCoverage();
+goScene(start >= 0 ? start : 0);
+</script>
+</body>
+</html>
