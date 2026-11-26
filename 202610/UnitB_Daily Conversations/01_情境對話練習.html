@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unit B 日常情境對話｜2026 年 10 月號</title>
+<style>
+  :root {
+    --bg: #f8fafc; --card: #ffffff; --ink: #0f172a; --muted: #64748b; --border: #e2e8f0;
+    --primary: #2563eb; --primary-light: #eff6ff; --accent: #ea580c;
+    --gold: #b45309; --gold-bg: #fffbeb; --ok: #15803d; --ok-bg: #f0fdf4; --bad: #b91c1c; --bad-bg: #fef2f2;
+    --hl: #fef3c7; --hl-line: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", -apple-system, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6; padding-bottom: 4rem;
+  }
+  button { font: inherit; }
+  header {
+    background: linear-gradient(135deg, #134e4a 0%, #0f172a 100%); color: #fff;
+    padding: 2.2rem 1rem 2rem; text-align: center; position: relative;
+  }
+  header .back { position: absolute; left: 1rem; top: 1rem; color: #cbd5e1; text-decoration: none; font-size: 0.88rem; font-weight: 700; }
+  header .back:hover { color: #fff; }
+  header .tag { display: inline-block; background: #0d9488; padding: 0.1rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-weight: 800; }
+  header h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 900; margin-top: 0.5rem; }
+  header p { color: #94a3b8; margin-top: 0.4rem; }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 1rem; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.6rem; margin: 1.2rem 0; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.6rem 0.85rem; }
+  .stat b { display: block; font-size: 1.4rem; font-weight: 900; }
+  .stat span { color: var(--muted); font-size: 0.8rem; font-weight: 700; }
+
+  .toolbar {
+    position: sticky; top: 0; z-index: 20; background: rgba(248, 250, 252, 0.96); backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border); padding: 0.6rem 0; margin-bottom: 1rem;
+  }
+  .scene-chips { display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.15rem; scrollbar-width: thin; }
+  .chip {
+    border: 1.5px solid var(--border); background: #fff; color: var(--ink); border-radius: 999px;
+    padding: 0.3rem 0.8rem; font-size: 0.85rem; font-weight: 800; cursor: pointer; white-space: nowrap; flex: none;
+  }
+  .chip b { color: var(--primary); margin-right: 0.15rem; }
+  .chip:hover { border-color: var(--primary); }
+  .chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .chip.active b { color: #dbeafe; }
+
+  .scene-head { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem 1.1rem; }
+  .scene-num { font-size: 0.78rem; font-weight: 900; color: #0d9488; letter-spacing: 1px; }
+  .scene-head h2 { font-size: 1.35rem; font-weight: 900; line-height: 1.3; }
+  .scene-head h2 small { display: block; font-size: 0.95rem; color: var(--muted); font-weight: 700; }
+  .setting { color: #334155; margin-top: 0.4rem; font-size: 0.92rem; }
+  .cast { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); align-items: center; }
+  .cast-item { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--ink); font-weight: 700; }
+  .targets { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.7rem; align-items: center; }
+  .label { color: var(--muted); font-size: 0.8rem; font-weight: 800; margin-right: 0.2rem; }
+  .tchip {
+    border: 1px solid #fcd34d; background: var(--hl); color: #92400e; border-radius: 8px;
+    padding: 0.1rem 0.5rem; font-size: 0.82rem; font-weight: 800; cursor: pointer;
+  }
+  .tchip small { color: #b45309; font-weight: 700; margin-left: 0.2rem; }
+
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem; margin: 0.9rem 0 0.6rem; }
+  .mode-btn {
+    border: 2px solid var(--border); background: #fff; border-radius: 12px; padding: 0.55rem 0.3rem;
+    font-weight: 900; cursor: pointer; color: var(--ink); font-size: 0.92rem;
+  }
+  .mode-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
+  .controls { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin-bottom: 0.8rem; }
+  .ctl {
+    border: 1.5px solid var(--border); background: #fff; border-radius: 10px; padding: 0.35rem 0.7rem;
+    font-size: 0.85rem; font-weight: 800; cursor: pointer; color: #334155;
+  }
+  .ctl:hover { border-color: var(--primary); color: var(--primary); }
+  .ctl.on { background: var(--gold-bg); border-color: #f59e0b; color: var(--gold); }
+  .ctl.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .ctl.primary.on { background: #1e40af; border-color: #1e40af; color: #fff; }
+  .role-pick { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; width: 100%; }
+  .tip { font-size: 0.82rem; color: var(--muted); width: 100%; }
+
+  /* 對話泡泡 */
+  .lines { display: flex; flex-direction: column; gap: 0.7rem; }
+  .msg { display: flex; gap: 0.5rem; align-items: flex-start; }
+  .msg.side-r { flex-direction: row-reverse; }
+  .av {
+    flex: none; width: 34px; height: 34px; border-radius: 50%; color: #fff; font-weight: 900; font-style: normal;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem;
+  }
+  .cast .av { width: 22px; height: 22px; font-size: 0.7rem; }
+  .msg-main { max-width: min(85%, 620px); display: flex; flex-direction: column; }
+  .msg.side-r .msg-main { align-items: flex-end; }
+  .who { font-size: 0.75rem; font-weight: 800; color: var(--muted); margin: 0 0.3rem 0.1rem; }
+  .who span { font-weight: 700; }
+  .bubble {
+    background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 0.55rem 0.8rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04); transition: box-shadow 0.2s;
+  }
+  .msg.side-l .bubble { border-top-left-radius: 4px; }
+  .msg.side-r .bubble { background: var(--primary-light); border-color: #bfdbfe; border-top-right-radius: 4px; }
+  .en { font-size: 1.02rem; color: var(--ink); }
+  .zh { font-size: 0.86rem; color: var(--muted); margin-top: 0.2rem; }
+  .say {
+    border: none; background: transparent; cursor: pointer; font-size: 0.95rem; margin-left: 0.25rem;
+    padding: 0 0.15rem; vertical-align: baseline; opacity: 0.75;
+  }
+  .say:hover { opacity: 1; }
+  .tw {
+    border: none; border-bottom: 2px solid var(--hl-line); background: var(--hl); color: inherit; font-weight: 800;
+    border-radius: 4px; padding: 0 0.15rem; cursor: pointer; font-size: inherit; line-height: inherit;
+  }
+  .tw:hover { background: #fde68a; }
+  .note { text-align: center; color: var(--muted); font-size: 0.85rem; font-weight: 700; padding: 0.2rem 0; }
+  .msg.playing .bubble { box-shadow: 0 0 0 3px #93c5fd; }
+  .msg.your-turn .bubble { box-shadow: 0 0 0 3px var(--hl-line); }
+  .msg.flash .bubble { animation: flash 1.6s ease; }
+  @keyframes flash { 0%, 60% { box-shadow: 0 0 0 4px var(--hl-line); } 100% { box-shadow: none; } }
+
+  /* 角色扮演 */
+  .prompt { color: #92400e; font-weight: 700; font-size: 0.95rem; }
+  .reveal {
+    margin-top: 0.35rem; border: 1px dashed #f59e0b; background: #fff; color: var(--gold); border-radius: 8px;
+    padding: 0.15rem 0.6rem; font-size: 0.8rem; font-weight: 800; cursor: pointer;
+  }
+  .turn-badge { display: none; font-size: 0.75rem; font-weight: 900; color: var(--gold); margin: 0 0.3rem 0.15rem; }
+  .msg.your-turn .turn-badge { display: block; }
+
+  /* 克漏字 */
+  .blank {
+    min-width: 4.2em; border: none; border-bottom: 2px solid #94a3b8; background: #f1f5f9; border-radius: 4px;
+    padding: 0 0.35rem; font-weight: 800; cursor: pointer; color: var(--primary); font-size: inherit; line-height: inherit;
+  }
+  .blank.empty { color: #94a3b8; }
+  .blank.active { background: var(--hl); border-bottom-color: var(--hl-line); }
+  .blank.ok { background: var(--ok-bg); border-bottom-color: #22c55e; color: var(--ok); cursor: default; }
+  .blank.bad { background: var(--bad-bg); border-bottom-color: #f87171; color: var(--bad); text-decoration: line-through; cursor: default; }
+  .ans { color: var(--ok); font-weight: 900; margin-left: 0.2rem; }
+  .bank-box {
+    position: sticky; bottom: 0; z-index: 15; margin-top: 0.9rem; background: rgba(255, 255, 255, 0.97);
+    border: 1.5px solid #fcd34d; border-radius: 14px; padding: 0.6rem 0.75rem; box-shadow: 0 -4px 14px rgba(15, 23, 42, 0.08);
+  }
+  .bank-title { font-size: 0.8rem; font-weight: 800; color: var(--gold); margin-bottom: 0.35rem; }
+  .bank { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .bchip {
+    border: 1.5px solid var(--border); background: #fff; border-radius: 999px; padding: 0.2rem 0.7rem;
+    font-weight: 800; font-size: 0.9rem; cursor: pointer; color: var(--ink);
+  }
+  .bchip:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+  .bchip:disabled { opacity: 0.3; cursor: default; text-decoration: line-through; }
+  .cloze-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.7rem; }
+  .big-btn {
+    border: none; background: var(--primary); color: #fff; font-weight: 900; padding: 0.65rem; border-radius: 12px; cursor: pointer;
+  }
+  .big-btn.ghost { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
+  .big-btn:disabled { opacity: 0.45; cursor: default; }
+  .cloze-result { margin-top: 0.7rem; padding: 0.7rem 0.9rem; border-radius: 12px; font-weight: 800; text-align: center; }
+  .cloze-result.good { background: var(--ok-bg); color: var(--ok); }
+  .cloze-result.meh { background: var(--gold-bg); color: var(--gold); }
+
+  /* 句型、換頁 */
+  .expr { margin-top: 1.2rem; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 0.85rem 1rem; }
+  .expr h3 { font-size: 1rem; font-weight: 900; margin-bottom: 0.45rem; }
+  .expr ul { list-style: none; display: grid; gap: 0.35rem; }
+  .expr li { font-size: 0.92rem; }
+  .expr li b { color: #0f766e; margin-right: 0.4rem; }
+  .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1rem; }
+  .pager button { border: 1.5px solid var(--border); background: #fff; border-radius: 12px; padding: 0.6rem; font-weight: 800; cursor: pointer; color: #334155; }
+  .pager button:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+  .pager button:disabled { opacity: 0.35; cursor: default; }
+
+  /* 涵蓋表 */
+  .coverage { margin-top: 2rem; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem 1.1rem; }
+  .coverage h2 { font-size: 1.1rem; font-weight: 900; }
+  .coverage .hint { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.6rem; }
+  .cov-unit { padding: 0.55rem 0; border-top: 1px solid var(--border); }
+  .cov-title { font-size: 0.85rem; font-weight: 900; color: #334155; margin-bottom: 0.35rem; }
+  .cov-list { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .cov { border: 1px solid var(--border); background: #f8fafc; border-radius: 8px; padding: 0.15rem 0.5rem; font-weight: 700; font-size: 0.85rem; cursor: pointer; color: var(--ink); }
+  .cov:hover { border-color: var(--primary); color: var(--primary); }
+  .cov small { color: #0d9488; font-weight: 900; margin-left: 0.3rem; }
+
+  /* 單字小卡 */
+  .sheet { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.35); z-index: 50; display: flex; align-items: flex-end; justify-content: center; }
+  .sheet[hidden] { display: none; }
+  .sheet-card {
+    background: #fff; width: 100%; max-width: 560px; border-radius: 18px 18px 0 0; padding: 1.1rem 1.2rem 1.4rem;
+    position: relative; box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.2);
+  }
+  .sheet-close { position: absolute; right: 0.8rem; top: 0.6rem; border: none; background: transparent; font-size: 1.2rem; cursor: pointer; color: var(--muted); }
+  .sh-top { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; padding-right: 2rem; }
+  .sh-en { font-size: 1.6rem; font-weight: 900; color: #1e3a8a; }
+  .sh-ipa { color: var(--muted); }
+  .sh-pos { font-size: 0.78rem; font-weight: 800; background: #f1f5f9; color: #475569; padding: 0.05rem 0.45rem; border-radius: 6px; }
+  .sh-zh { font-size: 1.1rem; font-weight: 800; color: var(--accent); margin-top: 0.2rem; }
+  .sh-usage { margin-top: 0.5rem; background: var(--gold-bg); border: 1px solid #fcd34d; color: #92400e; border-radius: 10px; padding: 0.4rem 0.7rem; font-size: 0.9rem; }
+  .sh-src { margin-top: 0.5rem; color: var(--muted); font-size: 0.85rem; }
+  .sh-actions { display: flex; gap: 0.5rem; margin-top: 0.8rem; flex-wrap: wrap; }
+  .sh-actions .ctl { text-decoration: none; }
+
+  .no-tts { background: var(--bad-bg); color: var(--bad); border-radius: 10px; padding: 0.5rem 0.8rem; font-size: 0.85rem; margin-bottom: 0.6rem; }
+  @media (max-width: 520px) {
+    header .back { position: static; display: block; margin-bottom: 0.6rem; }
+    .msg-main { max-width: 88%; }
+    .mode-btn { font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html#202610">← 回講義列表</a>
+  <span class="tag">UNIT B</span>
+  <h1>日常情境對話・80 個單字全收錄</h1>
+  <p>8 個生活場景・本期 9 個單元的核心單字全部用上・聽對話、角色扮演、克漏字</p>
+</header>
+
+<main class="container">
+  <div class="stats" id="stats"></div>
+  <div class="toolbar"><div class="scene-chips" id="scene-chips" role="tablist" aria-label="情境"></div></div>
+  <section id="scene"></section>
+
+  <section class="coverage">
+    <h2>📋 80 字涵蓋表</h2>
+    <p class="hint">依原課單元排列，後面的 S 是出現的情境。點單字會跳到它出現的那一句。</p>
+    <div id="coverage"></div>
+  </section>
+</main>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-card" role="dialog" aria-modal="true" aria-label="單字小卡">
+    <button class="sheet-close" id="sheet-close" aria-label="關閉">✕</button>
+    <div id="sheet-body"></div>
+  </div>
+</div>
+
+<script>
+/* ===== 資料（由產生器寫入）===== */
+const SCENES = [{"id": 1, "en": "A Field Trip to the Museum", "zh": "博物館校外教學", "setting": "高二校外教學，莉莉和傑森跟著導覽員參觀歷史博物館。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Guide", "zh": "導覽員", "g": "f", "p": 0.95, "side": "l", "color": "#7c3aed"}], "words": ["statue", "sword", "palace", "jewel", "precious", "military", "pilot", "navy", "originally", "represent", "visible", "shiny", "security"], "lines": [{"who": "Guide", "segs": ["Welcome, everyone. This hall shows how people lived in the old ", {"w": "palace", "l": "palace"}, " hundreds of years ago."], "zh": "歡迎大家。這個展廳展示了幾百年前人們在古老宮殿裡的生活。"}, {"who": "Lily", "segs": ["Jason, look at that ", {"w": "statue", "l": "statue"}, " by the door. He looks so serious."], "zh": "傑森，你看門邊那座雕像，他看起來好嚴肅。"}, {"who": "Jason", "segs": ["That's a general. See the ", {"w": "sword", "l": "sword"}, " in his hand?"], "zh": "那是一位將軍。有看到他手上的劍嗎？"}, {"who": "Guide", "segs": ["Good eye. He led the ", {"w": "military", "l": "military"}, " in the south, and that weapon ", {"w": "represents", "l": "represent"}, " his power."], "zh": "眼力真好。他曾率領南方的軍隊，那把武器象徵他的權力。"}, {"who": "Lily", "segs": ["Wow! And what's inside that glass case? Everything looks so ", {"w": "shiny", "l": "shiny"}, "."], "zh": "哇！那個玻璃櫃裡面是什麼？每樣東西看起來都好閃亮。"}, {"who": "Guide", "segs": ["Those are the queen's ", {"w": "jewels", "l": "jewel"}, ". They're the most ", {"w": "precious", "l": "precious"}, " items in the whole museum."], "zh": "那些是皇后的珠寶，是整座博物館裡最珍貴的收藏。"}, {"who": "Jason", "segs": ["No wonder there are two ", {"w": "security", "l": "security"}, " guards standing right next to them."], "zh": "難怪旁邊站著兩位保全人員。"}, {"who": "Guide", "segs": ["Exactly. Now, this room was ", {"w": "originally", "l": "originally"}, " a storeroom. Today it shows old uniforms."], "zh": "沒錯。這個房間原本是儲藏室，現在用來展示舊制服。"}, {"who": "Lily", "segs": ["That dark blue jacket must be from the ", {"w": "navy", "l": "navy"}, ", right?"], "zh": "那件深藍色外套一定是海軍的吧？"}, {"who": "Guide", "segs": ["Right. And the leather jacket next to it belonged to a ", {"w": "pilot", "l": "pilot"}, " in World War II."], "zh": "對。旁邊那件皮夾克屬於二戰時的一位飛行員。"}, {"who": "Jason", "segs": ["His name is still ", {"w": "visible", "l": "visible"}, " on the pocket. That's so cool."], "zh": "口袋上的名字還看得見，好酷。"}, {"who": "Lily", "segs": ["I want to take a picture. Are photos allowed here?"], "zh": "我想拍照。這裡可以拍照嗎？"}, {"who": "Guide", "segs": ["Yes, just turn off your flash, please."], "zh": "可以，請記得關掉閃光燈。"}, {"who": "Jason", "segs": ["Got it. Lily, stand next to that jacket. I'll take one for you."], "zh": "了解。莉莉，站到那件夾克旁邊，我幫你拍一張。"}], "expr": [["Good eye.", "眼力真好。稱讚對方觀察入微"], ["No wonder ...", "難怪……"], ["Are photos allowed here?", "這裡可以拍照嗎？"], ["Got it.", "了解、知道了"]], "usage": {"represent": "這裡指「象徵」"}}, {"id": 2, "en": "Shopping for Summer Clothes", "zh": "換季逛街買衣服", "setting": "放學後，莉莉和傑森到服飾店挑夏天的衣服。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Clerk", "zh": "店員", "g": "m", "p": 0.8, "side": "l", "color": "#0d9488"}], "words": ["sleeve", "loose", "extra", "introduce", "product", "release", "chain", "plastic", "bold", "daring"], "lines": [{"who": "Lily", "segs": ["It's getting hot. I need some new clothes for summer."], "zh": "天氣變熱了，我需要買幾件夏天的新衣服。"}, {"who": "Jason", "segs": ["This store is part of a big ", {"w": "chain", "l": "chain"}, ". They have shops all over Taiwan."], "zh": "這間店是大型連鎖店，全台灣都有分店。"}, {"who": "Clerk", "segs": ["Hi there! We just ", {"w": "released", "l": "release"}, " our summer collection this week."], "zh": "嗨！我們這週剛推出夏季新品。"}, {"who": "Lily", "segs": ["Great. Do you have this shirt with short ", {"w": "sleeves", "l": "sleeve"}, "?"], "zh": "太好了。這件襯衫有短袖的嗎？"}, {"who": "Clerk", "segs": ["Yes, and it's a bit ", {"w": "loose", "l": "loose"}, ", so it feels cool on hot days."], "zh": "有，而且版型有點寬鬆，大熱天穿起來很涼爽。"}, {"who": "Jason", "segs": ["What about this orange one? The color is really ", {"w": "bold", "l": "bold"}, "."], "zh": "那這件橘色的呢？顏色好大膽。"}, {"who": "Lily", "segs": ["Maybe too bright for me. But you should try that ", {"w": "daring", "l": "daring"}, " green jacket!"], "zh": "對我來說可能太亮了。不過你應該試試那件超敢的綠色外套！"}, {"who": "Jason", "segs": ["No way! People would stare at me all day."], "zh": "才不要！大家會一整天盯著我看。"}, {"who": "Clerk", "segs": ["By the way, we've ", {"w": "introduced", "l": "introduce"}, " a new rule. We don't give out ", {"w": "plastic", "l": "plastic"}, " bags anymore."], "zh": "對了，我們推出了一項新規定：不再提供塑膠袋。"}, {"who": "Lily", "segs": ["That's fine. I brought my own bag."], "zh": "沒關係，我有帶自己的袋子。"}, {"who": "Clerk", "segs": ["Thanks! And if you buy two items, you get an ", {"w": "extra", "l": "extra"}, " 10% off."], "zh": "謝謝！買兩件的話，再額外打九折。"}, {"who": "Jason", "segs": ["Then I'll get these socks too. Are they a new ", {"w": "product", "l": "product"}, "?"], "zh": "那我也買這雙襪子。這是新產品嗎？"}, {"who": "Clerk", "segs": ["Yes, they're made from recycled bottles."], "zh": "是的，是用回收寶特瓶做的。"}, {"who": "Lily", "segs": ["Cool. Saving money and helping the planet—perfect!"], "zh": "酷，省錢又愛地球，完美！"}], "expr": [["It's getting hot.", "天氣變熱了。get + 形容詞表示「變得……」"], ["No way!", "才不要！／不可能！"], ["By the way, ...", "對了、順帶一提"], ["10% off", "打九折（off 後面是「減掉」的百分比）"]], "usage": {"extra": "an extra 10% off 再額外打九折"}}, {"id": 3, "en": "The Great Coriander Debate", "zh": "晚餐的香菜之爭", "setting": "傑森到莉莉家做分組報告，留下來吃晚餐。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Mom", "zh": "媽媽", "g": "f", "p": 0.9, "side": "l", "color": "#db2777"}], "words": ["flavor", "debate", "specific", "reaction", "raw", "oven", "spread", "process", "hunger", "admit"], "lines": [{"who": "Mom", "segs": ["Dinner's ready! I made beef noodle soup, and the chicken is still in the ", {"w": "oven", "l": "oven"}, "."], "zh": "晚餐好了！我煮了牛肉麵，雞肉還在烤箱裡。"}, {"who": "Jason", "segs": ["It smells amazing. I could die of ", {"w": "hunger", "l": "hunger"}, " right now!"], "zh": "聞起來好香。我現在快餓死了！"}, {"who": "Mom", "segs": ["Help yourself. You can put some coriander on top."], "zh": "自己來，上面可以加點香菜。"}, {"who": "Lily", "segs": ["Oh no, here we go again. Mom and I ", {"w": "debate", "l": "debate"}, " this every week."], "zh": "喔不，又來了。我跟我媽每個禮拜都在爭論這件事。"}, {"who": "Jason", "segs": ["Wait, you don't like coriander? I love its fresh ", {"w": "flavor", "l": "flavor"}, "."], "zh": "等等，你不喜歡香菜？我很愛它清新的味道。"}, {"who": "Lily", "segs": ["To me, it tastes like soap. I can't stand it, especially when it's ", {"w": "raw", "l": "raw"}, "."], "zh": "對我來說它吃起來像肥皂，我受不了，尤其是生的時候。"}, {"who": "Mom", "segs": ["Actually, scientists found a ", {"w": "specific", "l": "specific"}, " gene that makes coriander taste like soap to some people."], "zh": "其實科學家找到一個特定的基因，會讓某些人覺得香菜吃起來像肥皂。"}, {"who": "Jason", "segs": ["Really? So it's about how your brain ", {"w": "processes", "l": "process"}, " the smell?"], "zh": "真的嗎？所以跟大腦怎麼處理那個氣味有關？"}, {"who": "Mom", "segs": ["Exactly. Everyone's ", {"w": "reaction", "l": "reaction"}, " is different. It's not just being picky."], "zh": "沒錯，每個人的反應都不一樣，不只是挑食而已。"}, {"who": "Lily", "segs": ["See, Mom? Science is on my side."], "zh": "看吧，媽？科學站在我這邊。"}, {"who": "Mom", "segs": ["Fine, I'll ", {"w": "admit", "l": "admit"}, " it. But you could still try a little."], "zh": "好啦，我承認。不過你還是可以試一點點。"}, {"who": "Jason", "segs": ["Coriander fans are everywhere now. The trend has even ", {"w": "spread", "l": "spread"}, " to snacks and ice cream!"], "zh": "現在到處都是香菜迷，這股風潮甚至擴散到零食和冰淇淋了！"}, {"who": "Lily", "segs": ["Coriander ice cream? That's my worst nightmare."], "zh": "香菜冰淇淋？那是我最可怕的惡夢。"}, {"who": "Mom", "segs": ["More for us, then. Jason, pass me your bowl."], "zh": "那我們就多吃一點。傑森，把你的碗給我。"}], "expr": [["Here we go again.", "又來了。對重複發生的事表示無奈"], ["I can't stand it.", "我受不了。stand 在此指「忍受」"], ["... is on my side.", "……站在我這邊"], ["More for us, then.", "那我們就多吃一點。對方不吃時的玩笑話"]], "usage": {"spread": "has spread to... 已經擴散到……（三態同形）"}}, {"id": 4, "en": "Making Up After a Fight", "zh": "吵架後和好", "setting": "午休時間，傑森和好朋友阿肯吵架了，跑來找莉莉商量。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}], "words": ["advice", "confident", "apologize", "situation", "replace", "significant", "angel", "forever", "courage"], "lines": [{"who": "Lily", "segs": ["Jason, you look down. What's wrong?"], "zh": "傑森，你看起來很沮喪，怎麼了？"}, {"who": "Jason", "segs": ["Ken and I had a fight yesterday. He hasn't talked to me since."], "zh": "我跟阿肯昨天吵架了，他到現在都沒跟我說話。"}, {"who": "Lily", "segs": ["About what?"], "zh": "為了什麼事？"}, {"who": "Jason", "segs": ["I made fun of his drawing in front of everyone. I thought it was just a joke."], "zh": "我在大家面前取笑他的畫，我以為只是開玩笑。"}, {"who": "Lily", "segs": ["Hmm. That drawing was for the art contest. It's ", {"w": "significant", "l": "significant"}, " to him."], "zh": "嗯……那幅畫是要參加美術比賽的，對他來說很重要。"}, {"who": "Jason", "segs": ["I know. Can I ask for your ", {"w": "advice", "l": "advice"}, "? I don't know how to fix this ", {"w": "situation", "l": "situation"}, "."], "zh": "我知道。可以給我一點建議嗎？我不知道該怎麼收拾這個局面。"}, {"who": "Lily", "segs": ["Just ", {"w": "apologize", "l": "apologize"}, " to him face-to-face. Don't do it by text."], "zh": "直接當面跟他道歉，不要用傳訊息的。"}, {"who": "Jason", "segs": ["But I'm not ", {"w": "confident", "l": "confident"}, " that he'll forgive me."], "zh": "可是我沒把握他會原諒我。"}, {"who": "Lily", "segs": ["It takes ", {"w": "courage", "l": "courage"}, ", but he'll see that you mean it."], "zh": "這需要勇氣，但他會看出你是真心的。"}, {"who": "Jason", "segs": ["Should I get him new markers to ", {"w": "replace", "l": "replace"}, " his old, dried-up ones?"], "zh": "要不要買新的麥克筆給他，換掉他那些乾掉的舊筆？"}, {"who": "Lily", "segs": ["That's a sweet idea. Just don't let the gift do all the talking."], "zh": "這主意很貼心，只是別讓禮物替你把話都說完。"}, {"who": "Jason", "segs": ["Got it. Thanks, Lily. You're an ", {"w": "angel", "l": "angel"}, "."], "zh": "懂了。謝謝你，莉莉，你人真好。"}, {"who": "Lily", "segs": ["Ha! Just go talk to him. Friends like Ken don't come along every day."], "zh": "哈！快去找他談吧。像阿肯這樣的朋友可不是天天都遇得到。"}, {"who": "Jason", "segs": ["You're right. I don't want to lose him ", {"w": "forever", "l": "forever"}, "."], "zh": "你說得對，我不想永遠失去這個朋友。"}], "expr": [["What's wrong?", "怎麼了？"], ["make fun of sb/sth", "取笑某人／某事"], ["face-to-face", "當面地"], ["mean it", "是認真的、是真心的"]], "usage": {"angel": "You're an angel. 你人真好（感謝對方時的口語）"}}, {"id": 5, "en": "A Night at the Concert", "zh": "演唱會那一晚", "setting": "莉莉和傑森到體育場看最喜歡的歌手開唱。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}], "words": ["award", "stadium", "engagement", "quit", "focus", "creative", "bomb", "firework", "classic", "unity", "toward"], "lines": [{"who": "Jason", "segs": ["I can't believe we're finally at the ", {"w": "stadium", "l": "stadium"}, "! There must be 40,000 people here."], "zh": "不敢相信我們終於到體育場了！這裡一定有四萬人。"}, {"who": "Lily", "segs": ["Let's walk ", {"w": "toward", "l": "toward"}, " the main gate. Our seats are on the left side."], "zh": "我們往大門走吧，我們的座位在左邊。"}, {"who": "Jason", "segs": ["Did you know she won another ", {"w": "award", "l": "award"}, " last month?"], "zh": "你知道她上個月又得了一個獎嗎？"}, {"who": "Lily", "segs": ["Of course! Her new album is so ", {"w": "creative", "l": "creative"}, ". Every song sounds different."], "zh": "當然！她的新專輯超有創意，每首歌聽起來都不一樣。"}, {"who": "Jason", "segs": ["I heard she almost ", {"w": "quit", "l": "quit"}, " music a few years ago."], "zh": "聽說她幾年前差點放棄音樂。"}, {"who": "Lily", "segs": ["Yeah, it was a hard time for her. Now her ", {"w": "focus", "l": "focus"}, " is on writing her own songs."], "zh": "對，那段時間她過得很辛苦。現在她的重心放在自己寫歌。"}, {"who": "Jason", "segs": ["And she just announced her ", {"w": "engagement", "l": "engagement"}, ", too! Everyone is so happy for her."], "zh": "而且她剛宣布訂婚！大家都替她開心。"}, {"who": "Lily", "segs": ["Shh, the lights are going down. It's starting!"], "zh": "噓，燈暗了，要開始了！"}, {"who": null, "segs": ["(After the show)"], "zh": "（散場後）"}, {"who": "Jason", "segs": ["Wow. That show was the ", {"w": "bomb", "l": "bomb"}, "!"], "zh": "哇，這場表演太讚了！"}, {"who": "Lily", "segs": ["The ", {"w": "fireworks", "l": "firework"}, " at the end were unbelievable."], "zh": "最後的煙火真是不可思議。"}, {"who": "Jason", "segs": ["My favorite part was when she sang that ", {"w": "classic", "l": "classic"}, " from her first album."], "zh": "我最喜歡她唱第一張專輯那首經典歌的時候。"}, {"who": "Lily", "segs": ["Me too! Forty thousand people singing together—I've never felt that much ", {"w": "unity", "l": "unity"}, "."], "zh": "我也是！四萬人一起合唱，我從來沒感受過這麼強的團結感。"}, {"who": "Jason", "segs": ["My voice is gone, but it was totally worth it."], "zh": "我的聲音都啞了，但完全值得。"}, {"who": "Lily", "segs": ["Let's hurry to the MRT before the crowd gets worse."], "zh": "我們趕快去捷運站，趁人潮還沒變得更擠。"}], "expr": [["There must be ...", "一定有……（有把握的推測）"], ["the bomb", "（俚語）超讚的。只用在口語，寫作和考試不要用"], ["It was totally worth it.", "完全值得"], ["before the crowd gets worse", "趁人潮變得更擠之前"]], "usage": {"bomb": "the bomb（俚語）超讚的，只用在口語。課本義是「炸彈」"}}, {"id": 6, "en": "Club Practice", "zh": "社團練習", "setting": "排球社練球，教練提醒大家注意安全，還宣布一個好消息。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Coach", "zh": "教練", "g": "m", "p": 0.75, "side": "l", "color": "#15803d"}], "words": ["stretch", "sweat", "strip", "suffering", "protect", "excellence", "promote", "bar"], "lines": [{"who": "Coach", "segs": ["OK, team. Before we start, I want everyone to ", {"w": "stretch", "l": "stretch"}, " for ten minutes."], "zh": "好，各位。開始之前，每個人先伸展十分鐘。"}, {"who": "Jason", "segs": ["Coach, my knee still hurts a little from last week."], "zh": "教練，我的膝蓋上週受的傷還有點痛。"}, {"who": "Coach", "segs": ["Then wear your knee pad. It will ", {"w": "protect", "l": "protect"}, " your knee when you dive for the ball."], "zh": "那就戴上護膝，你撲球的時候它能保護你的膝蓋。"}, {"who": "Jason", "segs": ["It's not that bad, though. I can still play."], "zh": "不過沒那麼嚴重啦，我還可以打。"}, {"who": "Coach", "segs": ["Jason, don't keep ", {"w": "suffering", "l": "suffering"}, " in silence. Tell me when something hurts, OK?"], "zh": "傑森，別一直默默忍著，哪裡痛就跟我說，好嗎？"}, {"who": "Jason", "segs": ["Yes, Coach. I will."], "zh": "是，教練，我會的。"}, {"who": null, "segs": ["(One hour later)"], "zh": "（一小時後）"}, {"who": "Lily", "segs": ["Phew, I'm covered in ", {"w": "sweat", "l": "sweat"}, ". It's so hot in this gym."], "zh": "呼，我全身都是汗，體育館裡好熱。"}, {"who": "Coach", "segs": ["Good work today. ", {"w": "Strip", "l": "strip"}, " off those wet jackets and put on something dry, or you'll catch a cold."], "zh": "今天表現很好。把濕掉的外套脫掉，換上乾的衣服，不然會感冒。"}, {"who": "Jason", "segs": ["Does anyone have a snack? I'm starving."], "zh": "有人有點心嗎？我快餓死了。"}, {"who": "Lily", "segs": ["Here, have a protein ", {"w": "bar", "l": "bar"}, ". I always bring a few."], "zh": "來，吃條蛋白棒。我都會帶幾條。"}, {"who": "Coach", "segs": ["By the way, the school wants to ", {"w": "promote", "l": "promote"}, " our club at the open house next month."], "zh": "對了，學校想在下個月的校園開放日宣傳我們社團。"}, {"who": "Lily", "segs": ["Really? That's great news!"], "zh": "真的嗎？太好了！"}, {"who": "Coach", "segs": ["They said our team shows ", {"w": "excellence", "l": "excellence"}, " in both sports and teamwork."], "zh": "他們說我們隊在運動和團隊合作上都表現卓越。"}, {"who": "Jason", "segs": ["Then we'd better win next week's game."], "zh": "那我們下週的比賽最好要贏。"}, {"who": "Coach", "segs": ["Exactly. Same time tomorrow. Don't be late!"], "zh": "沒錯。明天同一時間，不要遲到！"}], "expr": [["suffer in silence", "默默忍受、不說出來"], ["catch a cold", "感冒"], ["I'm starving.", "我快餓死了（口語誇飾）"], ["We'd better ...", "我們最好……（had better + 原形動詞）"]], "usage": {"strip": "strip off 脫掉（衣物）", "suffering": "suffer in silence 默默忍受", "bar": "protein bar 蛋白棒（bar 指條狀物）"}}, {"id": 7, "en": "Dreaming of Hawaii", "zh": "畢旅規劃夏威夷", "setting": "班上決定畢業旅行的目的地，莉莉和傑森負責規劃行程。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}], "words": ["relaxed", "appeal", "tunnel", "farther", "electricity", "native", "avenue", "shadow", "meanwhile"], "lines": [{"who": "Lily", "segs": ["Our class voted. If we can save enough money, our graduation trip will be to Hawaii!"], "zh": "全班投票了。如果存得到錢，我們的畢業旅行要去夏威夷！"}, {"who": "Jason", "segs": ["Nice! I want a ", {"w": "relaxed", "l": "relaxed"}, " trip—beaches, sunshine, and no homework."], "zh": "讚！我想要輕鬆的旅程：海灘、陽光，還有沒有作業。"}, {"who": "Lily", "segs": ["I get the ", {"w": "appeal", "l": "appeal"}, ", but I also want to learn something."], "zh": "我懂那種吸引力，但我也想學點東西。"}, {"who": "Jason", "segs": ["OK, what's on your list?"], "zh": "好吧，你的清單上有什麼？"}, {"who": "Lily", "segs": ["First, a show about ", {"w": "native", "l": "native"}, " Hawaiian culture, with music and dancing."], "zh": "首先，一場介紹夏威夷原住民文化的表演，有音樂和舞蹈。"}, {"who": "Jason", "segs": ["Sounds good. I also read about a hiking trail that goes through an old ", {"w": "tunnel", "l": "tunnel"}, "."], "zh": "聽起來不錯。我還看到一條健行步道會穿過一條舊隧道。"}, {"who": "Lily", "segs": ["Cool. If we drive ", {"w": "farther", "l": "farther"}, " north, there are beaches with sea turtles."], "zh": "酷。如果再往北開，有可以看到海龜的海灘。"}, {"who": "Jason", "segs": ["Sea turtles! Can we stay in a beach cabin up there?"], "zh": "海龜！我們可以住在那邊的海灘小木屋嗎？"}, {"who": "Lily", "segs": ["Some are really simple. One cabin doesn't even have ", {"w": "electricity", "l": "electricity"}, "!"], "zh": "有些非常簡陋，有一間小木屋甚至沒有電！"}, {"who": "Jason", "segs": ["No power means no phones. Maybe that's not so bad."], "zh": "沒電就不能滑手機，或許也沒那麼糟。"}, {"who": "Lily", "segs": ["Ha! For shopping, we can walk along Kalakaua ", {"w": "Avenue", "l": "avenue"}, " in Waikiki."], "zh": "哈！購物的話，我們可以去逛威基基的卡拉卡瓦大道。"}, {"who": "Jason", "segs": ["And let's take photos at sunset, when the palm trees cast long ", {"w": "shadows", "l": "shadow"}, "."], "zh": "還有我們在日落時拍照吧，那時棕櫚樹會拉出長長的影子。"}, {"who": "Lily", "segs": ["Love it. I'll make a budget plan. ", {"w": "Meanwhile", "l": "meanwhile"}, ", you check flight prices."], "zh": "好喜歡。我來做預算表，你同時去查機票價格。"}, {"who": "Jason", "segs": ["Deal. Let's start saving our lunch money!"], "zh": "成交。我們開始存午餐錢吧！"}], "expr": [["I get the appeal.", "我懂它吸引人的地方"], ["Sounds good.", "聽起來不錯"], ["cast long shadows", "拉出長長的影子"], ["Deal.", "成交、就這麼說定了"]], "usage": {"farther": "drive farther north 再往北開（farther 指距離）"}}, {"id": 8, "en": "A Study Plan for Finals", "zh": "期末讀書計畫", "setting": "期末考前三週，莉莉幫傑森擬定讀書計畫。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}], "words": ["goal", "maintain", "task", "skip", "achievement", "memory", "further", "brief", "track", "progress"], "lines": [{"who": "Jason", "segs": ["Finals are in three weeks, and I haven't started studying. I'm starting to panic."], "zh": "期末考剩三週，我還沒開始讀，我開始慌了。"}, {"who": "Lily", "segs": ["Don't worry. Let's set a ", {"w": "goal", "l": "goal"}, " together. What score do you want in math?"], "zh": "別擔心，我們一起訂個目標。你數學想考幾分？"}, {"who": "Jason", "segs": ["Seventy would be great. Last time I got fifty-five."], "zh": "七十分就很棒了，上次我考五十五。"}, {"who": "Lily", "segs": ["OK. Break the big job into small ", {"w": "tasks", "l": "task"}, ", like one chapter a day."], "zh": "好。把大工作拆成小任務，像是一天讀一章。"}, {"who": "Jason", "segs": ["But I can't study for hours. My ", {"w": "memory", "l": "memory"}, " is terrible."], "zh": "可是我沒辦法一次讀好幾個小時，我的記憶力超差。"}, {"who": "Lily", "segs": ["Then take ", {"w": "brief", "l": "brief"}, " breaks. Study for 25 minutes, then rest for 5."], "zh": "那就短暫休息一下。讀二十五分鐘，休息五分鐘。"}, {"who": "Jason", "segs": ["That sounds doable. But what if I get lazy?"], "zh": "聽起來做得到。可是如果我變懶怎麼辦？"}, {"who": "Lily", "segs": ["Use an app to ", {"w": "track", "l": "track"}, " your study time. Seeing the numbers will keep you going."], "zh": "用 app 記錄你的讀書時間，看到數字會讓你繼續下去。"}, {"who": "Jason", "segs": ["And what if I miss one day?"], "zh": "那如果我有一天沒讀呢？"}, {"who": "Lily", "segs": ["Just never ", {"w": "skip", "l": "skip"}, " two days in a row. That's the key to ", {"w": "maintaining", "l": "maintain"}, " a habit."], "zh": "只要別連續兩天沒讀就好，這是維持習慣的關鍵。"}, {"who": "Jason", "segs": ["Got it. Can we check each other's ", {"w": "progress", "l": "progress"}, " every Friday?"], "zh": "了解。我們每週五互相檢查進度好不好？"}, {"who": "Lily", "segs": ["Sure. And if you reach seventy, that's a real ", {"w": "achievement", "l": "achievement"}, ". We'll celebrate."], "zh": "當然。如果你考到七十分，那就是真正的成就，我們來慶祝。"}, {"who": "Jason", "segs": ["Bubble tea's on me! Maybe I can even take it ", {"w": "further", "l": "further"}, " and aim for eighty."], "zh": "珍奶我請！說不定我還能更進一步，挑戰八十分。"}, {"who": "Lily", "segs": ["That's the spirit! Now, open your book to chapter one."], "zh": "就是這個精神！現在，把書翻到第一章。"}], "expr": [["in a row", "連續地"], ["That sounds doable.", "聽起來做得到"], ["Bubble tea's on me!", "珍奶我請！X is on me 表示「X 我請客」"], ["That's the spirit!", "就是這個精神！"]], "usage": {"further": "take it further 更進一步（further 指程度）"}}];
+const WORDS = {"statue": {"en": "statue", "ipa": "[ˋstætʃʊ]", "pos": "n.", "zh": "雕像", "unit": 1, "unitTitle": "The Happy Prince", "unitDir": "Unit1_The Happy Prince", "scene": 1}, "sword": {"en": "sword", "ipa": "[sord]", "pos": "n.", "zh": "劍", "unit": 1, "unitTitle": "The Happy Prince", "unitDir": "Unit1_The Happy Prince", "scene": 1}, "palace": {"en": "palace", "ipa": "[ˋpælɪs]", "pos": "n.", "zh": "宮殿", "unit": 1, "unitTitle": "The Happy Prince", "unitDir": "Unit1_The Happy Prince", "scene": 1}, "hunger": {"en": "hunger", "ipa": "[ˋhʌŋgɚ]", "pos": "n.", "zh": "飢餓", "unit": 1, "unitTitle": "The Happy Prince", "unitDir": "Unit1_The Happy Prince", "scene": 3}, "suffering": {"en": "suffering", "ipa": "[ˋsʌfərɪŋ]", "pos": "n.", "zh": "苦難；痛苦", "unit": 1, "unitTitle": "The Happy Prince", "unitDir": "Unit1_The Happy Prince", "scene": 6}, "strip": {"en": "strip", "ipa": "[strɪp]", "pos": "v.", "zh": "剝除；剝去", "unit": 1, "unitTitle": "The Happy Prince", "unitDir": "Unit1_The Happy Prince", "scene": 6}, "jewel": {"en": "jewel", "ipa": "[ˋdʒuəl]", "pos": "n.", "zh": "寶石；珠寶", "unit": 1, "unitTitle": "The Happy Prince", "unitDir": "Unit1_The Happy Prince", "scene": 1}, "angel": {"en": "angel", "ipa": "[ˋendʒəl]", "pos": "n.", "zh": "天使", "unit": 1, "unitTitle": "The Happy Prince", "unitDir": "Unit1_The Happy Prince", "scene": 4}, "precious": {"en": "precious", "ipa": "[ˋprɛʃəs]", "pos": "adj.", "zh": "珍貴的；寶貴的", "unit": 1, "unitTitle": "The Happy Prince", "unitDir": "Unit1_The Happy Prince", "scene": 1}, "forever": {"en": "forever", "ipa": "[fɚˋɛvɚ]", "pos": "adv.", "zh": "永遠", "unit": 1, "unitTitle": "The Happy Prince", "unitDir": "Unit1_The Happy Prince", "scene": 4}, "military": {"en": "military", "ipa": "[ˋmɪlə͵tɛrɪ]", "pos": "adj./n.", "zh": "軍隊的、軍事的；軍隊", "unit": 2, "unitTitle": "From Military Uniforms to Everyday Style", "unitDir": "Unit2_From Military Uniforms to Everyday Style", "scene": 1}, "pilot": {"en": "pilot", "ipa": "[ˋpaɪlət]", "pos": "n.", "zh": "飛行員", "unit": 2, "unitTitle": "From Military Uniforms to Everyday Style", "unitDir": "Unit2_From Military Uniforms to Everyday Style", "scene": 1}, "introduce": {"en": "introduce", "ipa": "[͵ɪntrəˋdjus]", "pos": "v.", "zh": "推出；引進；介紹", "unit": 2, "unitTitle": "From Military Uniforms to Everyday Style", "unitDir": "Unit2_From Military Uniforms to Everyday Style", "scene": 2}, "originally": {"en": "originally", "ipa": "[əˋrɪdʒənḷɪ]", "pos": "adv.", "zh": "最初、原本", "unit": 2, "unitTitle": "From Military Uniforms to Everyday Style", "unitDir": "Unit2_From Military Uniforms to Everyday Style", "scene": 1}, "protect": {"en": "protect", "ipa": "[prəˋtɛkt]", "pos": "v.", "zh": "保護、防護", "unit": 2, "unitTitle": "From Military Uniforms to Everyday Style", "unitDir": "Unit2_From Military Uniforms to Everyday Style", "scene": 6}, "navy": {"en": "navy", "ipa": "[ˋnevɪ]", "pos": "n.", "zh": "海軍", "unit": 2, "unitTitle": "From Military Uniforms to Everyday Style", "unitDir": "Unit2_From Military Uniforms to Everyday Style", "scene": 1}, "sleeve": {"en": "sleeve", "ipa": "[sliv]", "pos": "n.", "zh": "袖子", "unit": 2, "unitTitle": "From Military Uniforms to Everyday Style", "unitDir": "Unit2_From Military Uniforms to Everyday Style", "scene": 2}, "extra": {"en": "extra", "ipa": "[ˋɛkstrə]", "pos": "adj.", "zh": "額外的、多出的", "unit": 2, "unitTitle": "From Military Uniforms to Everyday Style", "unitDir": "Unit2_From Military Uniforms to Everyday Style", "scene": 2}, "loose": {"en": "loose", "ipa": "[lus]", "pos": "adj.", "zh": "寬鬆的、不貼身的", "unit": 2, "unitTitle": "From Military Uniforms to Everyday Style", "unitDir": "Unit2_From Military Uniforms to Everyday Style", "scene": 2}, "significant": {"en": "significant", "ipa": "[sɪgˋnɪfəkənt]", "pos": "adj.", "zh": "重要的；顯著的", "unit": 2, "unitTitle": "From Military Uniforms to Everyday Style", "unitDir": "Unit2_From Military Uniforms to Everyday Style", "scene": 4}, "advice": {"en": "advice", "ipa": "[ədˈvaɪs]", "pos": "n.", "zh": "建議、忠告", "unit": 3, "unitTitle": "When AI Always Takes Your Side", "unitDir": "Unit3_When AI Always Takes Your Side", "scene": 4}, "confident": {"en": "confident", "ipa": "[ˈkɑnfədənt]", "pos": "adj.", "zh": "有信心的、自信的", "unit": 3, "unitTitle": "When AI Always Takes Your Side", "unitDir": "Unit3_When AI Always Takes Your Side", "scene": 4}, "apologize": {"en": "apologize", "ipa": "[əˈpɑləˌdʒaɪz]", "pos": "v.", "zh": "道歉、認錯", "unit": 3, "unitTitle": "When AI Always Takes Your Side", "unitDir": "Unit3_When AI Always Takes Your Side", "scene": 4}, "situation": {"en": "situation", "ipa": "[ˌsɪtʃəˈweʃən]", "pos": "n.", "zh": "情況、形勢；處境", "unit": 3, "unitTitle": "When AI Always Takes Your Side", "unitDir": "Unit3_When AI Always Takes Your Side", "scene": 4}, "replace": {"en": "replace", "ipa": "[rɪˈples]", "pos": "v.", "zh": "取代、代替", "unit": 3, "unitTitle": "When AI Always Takes Your Side", "unitDir": "Unit3_When AI Always Takes Your Side", "scene": 4}, "debate": {"en": "debate", "ipa": "[dɪˋbet]", "pos": "v./n.", "zh": "辯論、討論", "unit": 5, "unitTitle": "The Science and Culture of Coriander", "unitDir": "Unit5_The Science and Culture of Coriander", "scene": 3}, "flavor": {"en": "flavor", "ipa": "[ˋflevɚ]", "pos": "n./v.", "zh": "味道、風味；調味", "unit": 5, "unitTitle": "The Science and Culture of Coriander", "unitDir": "Unit5_The Science and Culture of Coriander", "scene": 3}, "specific": {"en": "specific", "ipa": "[spɪˋsɪfɪk]", "pos": "adj.", "zh": "特定的、特有的；明確的", "unit": 5, "unitTitle": "The Science and Culture of Coriander", "unitDir": "Unit5_The Science and Culture of Coriander", "scene": 3}, "process": {"en": "process", "ipa": "[ˋprɑsɛs]", "pos": "v./n.", "zh": "處理、解讀；加工；過程", "unit": 5, "unitTitle": "The Science and Culture of Coriander", "unitDir": "Unit5_The Science and Culture of Coriander", "scene": 3}, "reaction": {"en": "reaction", "ipa": "[rɪˋækʃən]", "pos": "n.", "zh": "反應；回應", "unit": 5, "unitTitle": "The Science and Culture of Coriander", "unitDir": "Unit5_The Science and Culture of Coriander", "scene": 3}, "stretch": {"en": "stretch", "ipa": "[strɛtʃ]", "pos": "v.", "zh": "延續、追溯；伸展", "unit": 5, "unitTitle": "The Science and Culture of Coriander", "unitDir": "Unit5_The Science and Culture of Coriander", "scene": 6}, "spread": {"en": "spread", "ipa": "[sprɛd]", "pos": "v.", "zh": "傳播、擴散、蔓延", "unit": 5, "unitTitle": "The Science and Culture of Coriander", "unitDir": "Unit5_The Science and Culture of Coriander", "scene": 3}, "product": {"en": "product", "ipa": "[ˋprɑdʌkt]", "pos": "n.", "zh": "產品", "unit": 5, "unitTitle": "The Science and Culture of Coriander", "unitDir": "Unit5_The Science and Culture of Coriander", "scene": 2}, "release": {"en": "release", "ipa": "[rɪˋlis]", "pos": "v.", "zh": "推出、發行", "unit": 5, "unitTitle": "The Science and Culture of Coriander", "unitDir": "Unit5_The Science and Culture of Coriander", "scene": 2}, "chain": {"en": "chain", "ipa": "[tʃen]", "pos": "n.", "zh": "連鎖店；連鎖企業", "unit": 5, "unitTitle": "The Science and Culture of Coriander", "unitDir": "Unit5_The Science and Culture of Coriander", "scene": 2}, "award": {"en": "award", "ipa": "[əˈwɔrd]", "pos": "n.", "zh": "獎項", "unit": 7, "unitTitle": "Ariana Grande: A Grand(e) Rebirth", "unitDir": "Unit7_Ariana Grande A Grande Rebirth", "scene": 5}, "quit": {"en": "quit", "ipa": "[kwɪt]", "pos": "v.", "zh": "放棄、退出；辭職", "unit": 7, "unitTitle": "Ariana Grande: A Grand(e) Rebirth", "unitDir": "Unit7_Ariana Grande A Grande Rebirth", "scene": 5}, "bomb": {"en": "bomb", "ipa": "[bɑm]", "pos": "n.", "zh": "炸彈", "unit": 7, "unitTitle": "Ariana Grande: A Grand(e) Rebirth", "unitDir": "Unit7_Ariana Grande A Grande Rebirth", "scene": 5}, "stadium": {"en": "stadium", "ipa": "[ˈstediəm]", "pos": "n.", "zh": "（露天）體育場", "unit": 7, "unitTitle": "Ariana Grande: A Grand(e) Rebirth", "unitDir": "Unit7_Ariana Grande A Grande Rebirth", "scene": 5}, "engagement": {"en": "engagement", "ipa": "[ɪnˈɡedʒmənt]", "pos": "n.", "zh": "婚約；訂婚", "unit": 7, "unitTitle": "Ariana Grande: A Grand(e) Rebirth", "unitDir": "Unit7_Ariana Grande A Grande Rebirth", "scene": 5}, "admit": {"en": "admit", "ipa": "[ədˈmɪt]", "pos": "v.", "zh": "承認；坦承", "unit": 7, "unitTitle": "Ariana Grande: A Grand(e) Rebirth", "unitDir": "Unit7_Ariana Grande A Grande Rebirth", "scene": 3}, "creative": {"en": "creative", "ipa": "[kriˈetɪv]", "pos": "adj.", "zh": "有創意的；創作的", "unit": 7, "unitTitle": "Ariana Grande: A Grand(e) Rebirth", "unitDir": "Unit7_Ariana Grande A Grande Rebirth", "scene": 5}, "focus": {"en": "focus", "ipa": "[ˈfokəs]", "pos": "n.", "zh": "重點；焦點", "unit": 7, "unitTitle": "Ariana Grande: A Grand(e) Rebirth", "unitDir": "Unit7_Ariana Grande A Grande Rebirth", "scene": 5}, "bold": {"en": "bold", "ipa": "[bold]", "pos": "adj.", "zh": "大膽的；勇敢的", "unit": 7, "unitTitle": "Ariana Grande: A Grand(e) Rebirth", "unitDir": "Unit7_Ariana Grande A Grande Rebirth", "scene": 2}, "daring": {"en": "daring", "ipa": "[ˈdɛrɪŋ]", "pos": "adj.", "zh": "大膽創新的；勇於冒險的", "unit": 7, "unitTitle": "Ariana Grande: A Grand(e) Rebirth", "unitDir": "Unit7_Ariana Grande A Grande Rebirth", "scene": 2}, "relaxed": {"en": "relaxed", "ipa": "[rɪˋlækst]", "pos": "adj.", "zh": "輕鬆的、悠閒的；放鬆的", "unit": 9, "unitTitle": "A Taste of Hawaii: Exploring Oahu", "unitDir": "Unit9_A Taste of Hawaii Exploring Oahu", "scene": 7}, "appeal": {"en": "appeal", "ipa": "[əˋpil]", "pos": "n.", "zh": "吸引力、魅力", "unit": 9, "unitTitle": "A Taste of Hawaii: Exploring Oahu", "unitDir": "Unit9_A Taste of Hawaii Exploring Oahu", "scene": 7}, "tunnel": {"en": "tunnel", "ipa": "[ˋtʌnl]", "pos": "n.", "zh": "隧道；地道", "unit": 9, "unitTitle": "A Taste of Hawaii: Exploring Oahu", "unitDir": "Unit9_A Taste of Hawaii Exploring Oahu", "scene": 7}, "farther": {"en": "farther", "ipa": "[ˋfɑrðɚ]", "pos": "adv.", "zh": "（空間距離）更遠地", "unit": 9, "unitTitle": "A Taste of Hawaii: Exploring Oahu", "unitDir": "Unit9_A Taste of Hawaii Exploring Oahu", "scene": 7}, "electricity": {"en": "electricity", "ipa": "[ɪ͵lɛkˋtrɪsətɪ]", "pos": "n.", "zh": "電力、電", "unit": 9, "unitTitle": "A Taste of Hawaii: Exploring Oahu", "unitDir": "Unit9_A Taste of Hawaii Exploring Oahu", "scene": 7}, "native": {"en": "native", "ipa": "[ˋnetɪv]", "pos": "adj.", "zh": "原住民的；土生土長的", "unit": 9, "unitTitle": "A Taste of Hawaii: Exploring Oahu", "unitDir": "Unit9_A Taste of Hawaii Exploring Oahu", "scene": 7}, "raw": {"en": "raw", "ipa": "[rɔ]", "pos": "adj.", "zh": "生的、未煮熟的；未加工的", "unit": 9, "unitTitle": "A Taste of Hawaii: Exploring Oahu", "unitDir": "Unit9_A Taste of Hawaii Exploring Oahu", "scene": 3}, "oven": {"en": "oven", "ipa": "[ˋʌvən]", "pos": "n.", "zh": "烤箱、烤爐", "unit": 9, "unitTitle": "A Taste of Hawaii: Exploring Oahu", "unitDir": "Unit9_A Taste of Hawaii Exploring Oahu", "scene": 3}, "avenue": {"en": "avenue", "ipa": "[ˋævə͵nu]", "pos": "n.", "zh": "大街、大道", "unit": 9, "unitTitle": "A Taste of Hawaii: Exploring Oahu", "unitDir": "Unit9_A Taste of Hawaii Exploring Oahu", "scene": 7}, "shadow": {"en": "shadow", "ipa": "[ˋʃædo]", "pos": "n.", "zh": "陰影、陰暗處；影子", "unit": 9, "unitTitle": "A Taste of Hawaii: Exploring Oahu", "unitDir": "Unit9_A Taste of Hawaii Exploring Oahu", "scene": 7}, "toward": {"en": "toward", "ipa": "[tɔrd]", "pos": "prep.", "zh": "朝、向", "unit": 11, "unitTitle": "A Day in Disneyland Paris", "unitDir": "Unit11_A Day in Disneyland Paris", "scene": 5}, "courage": {"en": "courage", "ipa": "[ˈkɝɪdʒ]", "pos": "n.", "zh": "勇氣、膽量", "unit": 11, "unitTitle": "A Day in Disneyland Paris", "unitDir": "Unit11_A Day in Disneyland Paris", "scene": 4}, "classic": {"en": "classic", "ipa": "[ˈklæsɪk]", "pos": "n.", "zh": "經典作品、名著", "unit": 11, "unitTitle": "A Day in Disneyland Paris", "unitDir": "Unit11_A Day in Disneyland Paris", "scene": 5}, "bar": {"en": "bar", "ipa": "[bɑr]", "pos": "n.", "zh": "條狀物；塊", "unit": 11, "unitTitle": "A Day in Disneyland Paris", "unitDir": "Unit11_A Day in Disneyland Paris", "scene": 6}, "firework": {"en": "firework", "ipa": "[ˈfaɪrˌwɝk]", "pos": "n.", "zh": "煙火", "unit": 11, "unitTitle": "A Day in Disneyland Paris", "unitDir": "Unit11_A Day in Disneyland Paris", "scene": 5}, "represent": {"en": "represent", "ipa": "[͵rɛprɪˋzɛnt]", "pos": "v.", "zh": "代表；象徵", "unit": 12, "unitTitle": "What Banknotes Tell Us About the Countries That Print Them", "unitDir": "Unit12_What Banknotes Tell Us About the Countries That Print Them", "scene": 1}, "meanwhile": {"en": "meanwhile", "ipa": "[ˋmin͵waɪl]", "pos": "adv.", "zh": "同時；在此期間", "unit": 12, "unitTitle": "What Banknotes Tell Us About the Countries That Print Them", "unitDir": "Unit12_What Banknotes Tell Us About the Countries That Print Them", "scene": 7}, "excellence": {"en": "excellence", "ipa": "[ˋɛksələns]", "pos": "n.", "zh": "卓越、傑出", "unit": 12, "unitTitle": "What Banknotes Tell Us About the Countries That Print Them", "unitDir": "Unit12_What Banknotes Tell Us About the Countries That Print Them", "scene": 6}, "visible": {"en": "visible", "ipa": "[ˋvɪzəbəl]", "pos": "adj.", "zh": "看得見的；清楚可見的", "unit": 12, "unitTitle": "What Banknotes Tell Us About the Countries That Print Them", "unitDir": "Unit12_What Banknotes Tell Us About the Countries That Print Them", "scene": 1}, "sweat": {"en": "sweat", "ipa": "[swɛt]", "pos": "n./v.", "zh": "汗水；流汗", "unit": 12, "unitTitle": "What Banknotes Tell Us About the Countries That Print Them", "unitDir": "Unit12_What Banknotes Tell Us About the Countries That Print Them", "scene": 6}, "promote": {"en": "promote", "ipa": "[prəˋmot]", "pos": "v.", "zh": "促進、提倡、推廣", "unit": 12, "unitTitle": "What Banknotes Tell Us About the Countries That Print Them", "unitDir": "Unit12_What Banknotes Tell Us About the Countries That Print Them", "scene": 6}, "unity": {"en": "unity", "ipa": "[ˋjunətɪ]", "pos": "n.", "zh": "團結；團結一致", "unit": 12, "unitTitle": "What Banknotes Tell Us About the Countries That Print Them", "unitDir": "Unit12_What Banknotes Tell Us About the Countries That Print Them", "scene": 5}, "plastic": {"en": "plastic", "ipa": "[ˋplæstɪk]", "pos": "n./adj.", "zh": "塑膠；塑膠製的", "unit": 12, "unitTitle": "What Banknotes Tell Us About the Countries That Print Them", "unitDir": "Unit12_What Banknotes Tell Us About the Countries That Print Them", "scene": 2}, "security": {"en": "security", "ipa": "[sɪˋkjʊrətɪ]", "pos": "n.", "zh": "安全、保護措施", "unit": 12, "unitTitle": "What Banknotes Tell Us About the Countries That Print Them", "unitDir": "Unit12_What Banknotes Tell Us About the Countries That Print Them", "scene": 1}, "shiny": {"en": "shiny", "ipa": "[ˋʃaɪnɪ]", "pos": "adj.", "zh": "閃亮的", "unit": 12, "unitTitle": "What Banknotes Tell Us About the Countries That Print Them", "unitDir": "Unit12_What Banknotes Tell Us About the Countries That Print Them", "scene": 1}, "goal": {"en": "goal", "ipa": "[ɡol]", "pos": "n.", "zh": "目標、目的", "unit": 14, "unitTitle": "Microhabits: Small Wins Keep You Moving", "unitDir": "Unit14_Microhabits Small Wins Keep You Moving", "scene": 8}, "maintain": {"en": "maintain", "ipa": "[menˈten]", "pos": "v.", "zh": "維持、保持；維護", "unit": 14, "unitTitle": "Microhabits: Small Wins Keep You Moving", "unitDir": "Unit14_Microhabits Small Wins Keep You Moving", "scene": 8}, "task": {"en": "task", "ipa": "[tæsk]", "pos": "n.", "zh": "任務；工作", "unit": 14, "unitTitle": "Microhabits: Small Wins Keep You Moving", "unitDir": "Unit14_Microhabits Small Wins Keep You Moving", "scene": 8}, "skip": {"en": "skip", "ipa": "[skɪp]", "pos": "v.", "zh": "不做（某事）；跳過", "unit": 14, "unitTitle": "Microhabits: Small Wins Keep You Moving", "unitDir": "Unit14_Microhabits Small Wins Keep You Moving", "scene": 8}, "achievement": {"en": "achievement", "ipa": "[əˈtʃivmənt]", "pos": "n.", "zh": "成就、成果；完成", "unit": 14, "unitTitle": "Microhabits: Small Wins Keep You Moving", "unitDir": "Unit14_Microhabits Small Wins Keep You Moving", "scene": 8}, "memory": {"en": "memory", "ipa": "[ˈmɛməri]", "pos": "n.", "zh": "記憶（力）；回憶", "unit": 14, "unitTitle": "Microhabits: Small Wins Keep You Moving", "unitDir": "Unit14_Microhabits Small Wins Keep You Moving", "scene": 8}, "further": {"en": "further", "ipa": "[ˈfɝðɚ]", "pos": "adv.", "zh": "進一步地；更深入地", "unit": 14, "unitTitle": "Microhabits: Small Wins Keep You Moving", "unitDir": "Unit14_Microhabits Small Wins Keep You Moving", "scene": 8}, "brief": {"en": "brief", "ipa": "[brif]", "pos": "adj.", "zh": "簡短的；短暫的", "unit": 14, "unitTitle": "Microhabits: Small Wins Keep You Moving", "unitDir": "Unit14_Microhabits Small Wins Keep You Moving", "scene": 8}, "track": {"en": "track", "ipa": "[træk]", "pos": "v.", "zh": "追蹤、記錄……的進展", "unit": 14, "unitTitle": "Microhabits: Small Wins Keep You Moving", "unitDir": "Unit14_Microhabits Small Wins Keep You Moving", "scene": 8}, "progress": {"en": "progress", "ipa": "[ˈprɑɡrɛs]", "pos": "n.", "zh": "進展；進步", "unit": 14, "unitTitle": "Microhabits: Small Wins Keep You Moving", "unitDir": "Unit14_Microhabits Small Wins Keep You Moving", "scene": 8}};
+
+/* ===== 小工具 ===== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const plain = line => line.segs.map(s => typeof s === 'string' ? s : s.w).join('');
+const castOf = (scene, who) => scene.cast.find(c => c.name === who);
+
+const state = { cur: 0, mode: 'talk', zh: true, slow: false, role: 'Lily', revealed: new Set(), cloze: null };
+
+/* ===== 語音 ===== */
+const synth = 'speechSynthesis' in window ? window.speechSynthesis : null;
+const voices = { f: null, m: null };
+const F_HINT = /female|zira|samantha|aria|jenny|susan|hazel|karen|victoria|ava|allison|emma|libby|sonia|michelle|joanna|salli|kendra|kimberly|moira|tessa/i;
+const M_HINT = /\bmale|david|mark|guy|alex|daniel|fred|ryan|christopher|eric|tom|george|matthew|joey|justin|brian|aaron|oliver/i;
+function loadVoices() {
+  if (!synth) return;
+  const en = synth.getVoices().filter(v => /^en[-_]/i.test(v.lang));
+  if (!en.length) return;
+  const us = en.filter(v => /^en[-_]US/i.test(v.lang));
+  const pool = us.concat(en.filter(v => !us.includes(v)));
+  voices.f = pool.find(v => F_HINT.test(v.name)) || pool[0];
+  voices.m = pool.find(v => M_HINT.test(v.name) && !F_HINT.test(v.name)) || pool.find(v => v !== voices.f) || pool[0];
+}
+if (synth) { loadVoices(); synth.addEventListener && synth.addEventListener('voiceschanged', loadVoices); }
+
+function utter(text, c, rate) {
+  const u = new SpeechSynthesisUtterance(text);
+  const g = c ? c.g : 'f';
+  const v = g === 'm' ? voices.m : voices.f;
+  u.lang = v ? v.lang : 'en-US';
+  if (v) u.voice = v;
+  u.pitch = c && c.p ? c.p : 1;
+  u.rate = rate || (state.slow ? 0.72 : 0.95);
+  return u;
+}
+let playToken = 0, waitTimer = null;
+function stopAll() {
+  playToken++;
+  clearTimeout(waitTimer);
+  if (synth) synth.cancel();
+  document.querySelectorAll('.msg.playing, .msg.your-turn').forEach(el => el.classList.remove('playing', 'your-turn'));
+  const pb = $('play-btn');
+  if (pb) { pb.classList.remove('on'); pb.textContent = state.mode === 'role' ? '▶ 開始練習' : '▶ 播放整段'; }
+}
+function speakText(text, c, rate) {
+  if (!synth) return;
+  stopAll();
+  synth.speak(utter(text, c, rate));
+}
+function speakLine(line, scene, done) {
+  const text = plain(line);
+  let finished = false, safety = null;
+  const fin = () => { if (finished) return; finished = true; clearTimeout(safety); done(); };
+  const u = utter(text, castOf(scene, line.who));
+  u.onend = fin; u.onerror = fin;
+  safety = setTimeout(fin, 2500 + text.split(/\s+/).length * 650 * (state.slow ? 1.4 : 1));
+  synth.speak(u);
+}
+const lineEl = li => document.querySelector(`#lines .msg[data-li="${li}"]`);
+
+function playAll() {
+  if (!synth) return;
+  stopAll();
+  const token = playToken;
+  const scene = SCENES[state.cur];
+  const pb = $('play-btn');
+  if (pb) { pb.classList.add('on'); pb.textContent = '⏵ 播放中…'; }
+  let i = 0;
+  const next = () => {
+    if (token !== playToken) return;
+    document.querySelectorAll('.msg.playing').forEach(el => el.classList.remove('playing'));
+    while (i < scene.lines.length && !scene.lines[i].who) i++;
+    if (i >= scene.lines.length) { stopAll(); return; }
+    const li = i++, line = scene.lines[li];
+    const el = lineEl(li);
+    if (el) { el.classList.add('playing'); el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+    if (state.mode === 'role' && line.who === state.role && !state.revealed.has(li)) {
+      if (el) el.classList.add('your-turn');
+      const wait = (1200 + plain(line).split(/\s+/).length * 450) * (state.slow ? 1.3 : 1);
+      waitTimer = setTimeout(() => {
+        if (token !== playToken) return;
+        revealLine(li, true);
+        speakLine(line, scene, () => { waitTimer = setTimeout(next, 350); });
+      }, wait);
+    } else {
+      speakLine(line, scene, () => { waitTimer = setTimeout(next, 350); });
+    }
+  };
+  next();
+}
+
+/* ===== 統計、情境選單 ===== */
+function renderStats() {
+  const nLines = SCENES.reduce((s, sc) => s + sc.lines.filter(l => l.who).length, 0);
+  const nExpr = SCENES.reduce((s, sc) => s + sc.expr.length, 0);
+  $('stats').innerHTML = [[SCENES.length, '個生活情境'], [Object.keys(WORDS).length, '個本期單字'], [nLines, '句對話'], [nExpr, '個實用口語']]
+    .map(([n, t]) => `<div class="stat"><b>${n}</b><span>${t}</span></div>`).join('');
+}
+function renderChips() {
+  $('scene-chips').innerHTML = SCENES.map((s, i) =>
+    `<button class="chip${i === state.cur ? ' active' : ''}" role="tab" aria-selected="${i === state.cur}" data-scene="${i}"><b>S${s.id}</b>${esc(s.zh)}</button>`).join('');
+  const act = $('scene-chips').querySelector('.chip.active');
+  if (act) act.scrollIntoView({ block: 'nearest', inline: 'center' });
+}
+
+/* ===== 情境內容 ===== */
+function avatar(c) { return `<i class="av" style="background:${c.color}" aria-hidden="true">${esc(c.name[0])}</i>`; }
+function segsHTML(line) {
+  return line.segs.map(s => typeof s === 'string' ? esc(s) : `<button class="tw" data-word="${esc(s.l)}">${esc(s.w)}</button>`).join('');
+}
+function msgHTML(scene, line, li, inner) {
+  if (!line.who) return `<div class="note" data-li="${li}">${esc(plain(line))}${state.zh ? '　' + esc(line.zh) : ''}</div>`;
+  const c = castOf(scene, line.who);
+  return `<div class="msg side-${c.side}" data-li="${li}">${avatar(c)}
+    <div class="msg-main"><div class="who">${esc(c.name)} <span>${esc(c.zh)}</span></div>
+    <div class="turn-badge">🎤 輪到你說！</div>
+    <div class="bubble">${inner}</div></div></div>`;
+}
+function talkInner(line, li) {
+  return `<div class="en">${segsHTML(line)}<button class="say" data-li="${li}" aria-label="播放這句">🔊</button></div>` +
+    (state.zh ? `<div class="zh">${esc(line.zh)}</div>` : '');
+}
+function roleInner(line, li) {
+  if (line.who === state.role && !state.revealed.has(li)) {
+    return `<div class="prompt">🎤 ${esc(line.zh)}</div><button class="reveal" data-reveal="${li}">👀 看英文</button>`;
+  }
+  return talkInner(line, li);
+}
+function revealLine(li, fromPlay) {
+  state.revealed.add(li);
+  const el = lineEl(li);
+  if (!el) return;
+  const scene = SCENES[state.cur];
+  const wasPlaying = el.classList.contains('playing');
+  el.outerHTML = msgHTML(scene, scene.lines[li], li, roleInner(scene.lines[li], li));
+  if (fromPlay || wasPlaying) { const n = lineEl(li); if (n) n.classList.add('playing'); }
+}
+
+/* 克漏字狀態：blanks 依出現順序；bank 為打亂後的字庫 */
+function newCloze(scene) {
+  const blanks = [];
+  scene.lines.forEach((l, li) => l.segs.forEach(s => { if (typeof s !== 'string') blanks.push({ li, w: s.w, l: s.l }); }));
+  const bank = shuffle(blanks.map(b => ({ w: b.w.toLowerCase(), used: false })));
+  return { blanks, bank, fills: blanks.map(() => null), active: 0, checked: false };
+}
+function clozeInner(scene, line, li) {
+  const cz = state.cloze;
+  let html = '';
+  line.segs.forEach(s => {
+    if (typeof s === 'string') { html += esc(s); return; }
+    const bi = cz.blanks.findIndex(b => b.li === li && b.l === s.l);
+    const f = cz.fills[bi];
+    let cls = 'blank';
+    if (f === null) cls += ' empty';
+    if (!cz.checked && bi === cz.active) cls += ' active';
+    let ok = false;
+    if (cz.checked) { ok = f !== null && cz.bank[f].w === s.w.toLowerCase(); cls += ok ? ' ok' : ' bad'; }
+    const text = f === null ? `（${bi + 1}）` : cz.bank[f].w;
+    html += `<button class="${cls}" data-blank="${bi}" aria-label="第 ${bi + 1} 格">${esc(text)}</button>`;
+    if (cz.checked && !ok) html += `<span class="ans">${esc(s.w)}</span>`;
+  });
+  return `<div class="en">${html}</div>` + (state.zh ? `<div class="zh">${esc(line.zh)}</div>` : '');
+}
+function clozeExtras() {
+  const cz = state.cloze;
+  const filled = cz.fills.filter(f => f !== null).length;
+  const bank = `<div class="bank-box"><div class="bank-title">字庫：先點空格，再點單字填入（點已填的格子可清除）・已填 ${filled} / ${cz.blanks.length}</div>
+    <div class="bank">${cz.bank.map((b, i) => `<button class="bchip" data-chip="${i}"${b.used || cz.checked ? ' disabled' : ''}>${esc(b.w)}</button>`).join('')}</div></div>`;
+  let result = '';
+  if (cz.checked) {
+    const score = cz.blanks.filter((b, i) => cz.fills[i] !== null && cz.bank[cz.fills[i]].w === b.w.toLowerCase()).length;
+    const all = score === cz.blanks.length;
+    result = `<div class="cloze-result ${all ? 'good' : 'meh'}">${all ? '🎉 全對！' : '💪 再接再厲！'}答對 ${score} / ${cz.blanks.length}${all ? '' : '・綠字是正確答案'}</div>`;
+  }
+  return bank + `<div class="cloze-actions">
+      <button class="big-btn" data-act="check"${cz.checked || filled === 0 ? ' disabled' : ''}>✅ 檢查答案</button>
+      <button class="big-btn ghost" data-act="reset">🔁 重做（重新打亂字庫）</button>
+    </div>` + result;
+}
+
+function renderControls(scene) {
+  const ttsNote = synth ? '' : '<div class="no-tts">這個瀏覽器不支援語音朗讀，請改用 Chrome、Edge 或 Safari。</div>';
+  const zhBtn = `<button class="ctl${state.zh ? ' on' : ''}" data-act="zh">中文 ${state.zh ? '顯示中' : '已隱藏'}</button>`;
+  const slowBtn = `<button class="ctl${state.slow ? ' on' : ''}" data-act="slow">🐢 慢速</button>`;
+  if (state.mode === 'talk') {
+    return ttsNote + `<button class="ctl primary" id="play-btn" data-act="play">▶ 播放整段</button>
+      <button class="ctl" data-act="stop">⏹ 停止</button>${slowBtn}${zhBtn}
+      <div class="tip">點黃色單字看解釋，點 🔊 聽單句。</div>`;
+  }
+  if (state.mode === 'role') {
+    const picks = scene.cast.map(c => `<button class="chip${c.name === state.role ? ' active' : ''}" data-role="${esc(c.name)}">${esc(c.name)} ${esc(c.zh)}</button>`).join('');
+    return ttsNote + `<div class="role-pick"><span class="label">我要演</span>${picks}</div>
+      <button class="ctl primary" id="play-btn" data-act="play">▶ 開始練習</button>
+      <button class="ctl" data-act="stop">⏹ 停止</button>${slowBtn}${zhBtn}
+      <button class="ctl" data-act="hide-again">🙈 全部重新遮住</button>
+      <div class="tip">按「開始練習」後，其他角色會自動唸；輪到你時會停下來讓你開口，接著播放示範讓你對照。</div>`;
+  }
+  return `${zhBtn}<div class="tip">把本場的 ${scene.words.length} 個單字填回對話中，大小寫不影響判分。</div>`;
+}
+
+function renderScene() {
+  stopAll();
+  const scene = SCENES[state.cur];
+  if (!scene.cast.some(c => c.name === state.role)) state.role = scene.cast[0].name;
+  let body;
+  if (state.mode === 'cloze') {
+    if (!state.cloze) state.cloze = newCloze(scene);
+    body = scene.lines.map((l, li) => msgHTML(scene, l, li, l.who ? clozeInner(scene, l, li) : '')).join('');
+  } else if (state.mode === 'role') {
+    body = scene.lines.map((l, li) => msgHTML(scene, l, li, l.who ? roleInner(l, li) : '')).join('');
+  } else {
+    body = scene.lines.map((l, li) => msgHTML(scene, l, li, l.who ? talkInner(l, li) : '')).join('');
+  }
+  const targets = scene.words.map(w => `<button class="tchip" data-word="${esc(w)}">${esc(w)}<small>U${WORDS[w].unit}</small></button>`).join('');
+  $('scene').innerHTML = `
+    <div class="scene-head">
+      <div class="scene-num">SCENE ${scene.id} / ${SCENES.length}</div>
+      <h2>${esc(scene.zh)}<small>${esc(scene.en)}</small></h2>
+      <p class="setting">📍 ${esc(scene.setting)}</p>
+      <div class="cast"><span class="label">登場人物</span>${scene.cast.map(c => `<span class="cast-item">${avatar(c)}${esc(c.name)} ${esc(c.zh)}</span>`).join('')}</div>
+      <div class="targets"><span class="label">本場單字 ${scene.words.length}</span>${targets}</div>
+    </div>
+    <div class="modes" role="tablist" aria-label="練習模式">
+      ${[['talk', '💬 對話'], ['role', '🎭 角色扮演'], ['cloze', '✏️ 克漏字']].map(([m, t]) =>
+        `<button class="mode-btn${state.mode === m ? ' active' : ''}" role="tab" aria-selected="${state.mode === m}" data-mode="${m}">${t}</button>`).join('')}
+    </div>
+    <div class="controls">${renderControls(scene)}</div>
+    <div class="lines" id="lines">${body}</div>
+    ${state.mode === 'cloze' ? clozeExtras() : ''}
+    <div class="expr"><h3>🗣️ 實用口語句型</h3><ul>${scene.expr.map(([en, zh]) =>
+      `<li><button class="say" data-text="${esc(en)}" aria-label="播放">🔊</button><b>${esc(en)}</b>${esc(zh)}</li>`).join('')}</ul></div>
+    <div class="pager">
+      <button data-go="-1"${state.cur === 0 ? ' disabled' : ''}>← 上一個情境</button>
+      <button data-go="1"${state.cur === SCENES.length - 1 ? ' disabled' : ''}>下一個情境 →</button>
+    </div>`;
+}
+
+function goScene(i, keepMode) {
+  state.cur = Math.max(0, Math.min(SCENES.length - 1, i));
+  if (!keepMode) state.mode = 'talk';
+  state.revealed = new Set();
+  state.cloze = null;
+  try { history.replaceState(null, '', '#s' + SCENES[state.cur].id); } catch (e) {}
+  renderChips();
+  renderScene();
+}
+
+/* ===== 單字小卡 ===== */
+function openSheet(lemma) {
+  const w = WORDS[lemma];
+  if (!w) return;
+  const sc = SCENES.find(s => s.id === w.scene);
+  const usage = sc && sc.usage ? sc.usage[lemma] : '';
+  $('sheet-body').innerHTML = `
+    <div class="sh-top"><span class="sh-en">${esc(w.en)}</span><span class="sh-ipa">${esc(w.ipa)}</span><span class="sh-pos">${esc(w.pos)}</span></div>
+    <div class="sh-zh">${esc(w.zh)}</div>
+    ${usage ? `<div class="sh-usage">💡 本句用法：${esc(usage)}</div>` : ''}
+    <div class="sh-src">出自 Unit ${w.unit}｜${esc(w.unitTitle)}・用在 Scene ${w.scene}</div>
+    <div class="sh-actions">
+      <button class="ctl primary" data-say-word="${esc(w.en)}">🔊 發音</button>
+      <a class="ctl" href="../${encodeURI(w.unitDir)}/03_互動圖文學習講義.html">📖 回原課講義</a>
+    </div>`;
+  $('sheet').hidden = false;
+  speakText(w.en, null, 0.85);
+}
+function closeSheet() { $('sheet').hidden = true; }
+$('sheet-close').addEventListener('click', closeSheet);
+$('sheet').addEventListener('click', e => {
+  if (e.target.id === 'sheet') closeSheet();
+  const b = e.target.closest('[data-say-word]');
+  if (b) speakText(b.dataset.sayWord, null, 0.85);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+
+/* ===== 涵蓋表 ===== */
+function renderCoverage() {
+  const byUnit = {};
+  Object.values(WORDS).forEach(w => (byUnit[w.unit] = byUnit[w.unit] || []).push(w));
+  $('coverage').innerHTML = Object.keys(byUnit).sort((a, b) => a - b).map(u =>
+    `<div class="cov-unit"><div class="cov-title">Unit ${u}｜${esc(byUnit[u][0].unitTitle)}</div>
+     <div class="cov-list">${byUnit[u].map(w => `<button class="cov" data-jump="${esc(w.en)}">${esc(w.en)}<small>S${w.scene}</small></button>`).join('')}</div></div>`).join('');
+}
+function jumpTo(lemma) {
+  const w = WORDS[lemma];
+  goScene(w.scene - 1);
+  const scene = SCENES[state.cur];
+  const li = scene.lines.findIndex(l => l.segs.some(s => typeof s !== 'string' && s.l === lemma));
+  const el = lineEl(li);
+  if (el) {
+    el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    el.classList.add('flash');
+    setTimeout(() => el.classList.remove('flash'), 1700);
+  }
+}
+
+/* ===== 事件 ===== */
+$('scene-chips').addEventListener('click', e => {
+  const b = e.target.closest('[data-scene]');
+  if (b) goScene(Number(b.dataset.scene));
+});
+$('coverage').addEventListener('click', e => {
+  const b = e.target.closest('[data-jump]');
+  if (b) jumpTo(b.dataset.jump);
+});
+$('scene').addEventListener('click', e => {
+  const t = e.target;
+  const scene = SCENES[state.cur];
+  let b;
+  if ((b = t.closest('[data-word]'))) { openSheet(b.dataset.word); return; }
+  if ((b = t.closest('[data-mode]'))) {
+    if (state.mode !== b.dataset.mode) { state.mode = b.dataset.mode; state.revealed = new Set(); state.cloze = null; renderScene(); }
+    return;
+  }
+  if ((b = t.closest('[data-go]'))) { goScene(state.cur + Number(b.dataset.go), true); window.scrollTo({ top: $('scene').offsetTop - 70, behavior: 'smooth' }); return; }
+  if ((b = t.closest('[data-role]'))) { state.role = b.dataset.role; state.revealed = new Set(); renderScene(); return; }
+  if ((b = t.closest('[data-reveal]'))) { revealLine(Number(b.dataset.reveal)); return; }
+  if ((b = t.closest('.say[data-li]'))) { const l = scene.lines[Number(b.dataset.li)]; speakText(plain(l), castOf(scene, l.who)); return; }
+  if ((b = t.closest('.say[data-text]'))) { speakText(b.dataset.text.replace(/\.\.\.|…/g, ''), null); return; }
+  if ((b = t.closest('[data-blank]'))) {
+    const cz = state.cloze; if (cz.checked) return;
+    const bi = Number(b.dataset.blank);
+    if (cz.fills[bi] !== null) { cz.bank[cz.fills[bi]].used = false; cz.fills[bi] = null; }
+    cz.active = bi;
+    const y = window.scrollY; renderScene(); window.scrollTo(0, y);
+    return;
+  }
+  if ((b = t.closest('[data-chip]'))) {
+    const cz = state.cloze; if (cz.checked) return;
+    const ci = Number(b.dataset.chip);
+    let target = cz.fills[cz.active] === null ? cz.active : cz.fills.findIndex(f => f === null);
+    if (target < 0) return;
+    cz.fills[target] = ci; cz.bank[ci].used = true;
+    const after = cz.fills.findIndex((f, i) => f === null && i > target);
+    cz.active = after >= 0 ? after : cz.fills.findIndex(f => f === null);
+    if (cz.active < 0) cz.active = target;
+    const y = window.scrollY; renderScene(); window.scrollTo(0, y);
+    return;
+  }
+  if ((b = t.closest('[data-act]'))) {
+    const act = b.dataset.act;
+    if (act === 'play') playAll();
+    else if (act === 'stop') stopAll();
+    else if (act === 'slow') { state.slow = !state.slow; b.classList.toggle('on', state.slow); }
+    else if (act === 'zh') { state.zh = !state.zh; const y = window.scrollY; renderScene(); window.scrollTo(0, y); }
+    else if (act === 'hide-again') { state.revealed = new Set(); renderScene(); }
+    else if (act === 'check') { state.cloze.checked = true; const y = window.scrollY; renderScene(); window.scrollTo(0, y); }
+    else if (act === 'reset') { state.cloze = null; renderScene(); }
+  }
+});
+
+/* ===== 啟動 ===== */
+const m = location.hash.match(/^#s(\d+)$/);
+const start = m ? SCENES.findIndex(s => s.id === Number(m[1])) : 0;
+renderStats();
+renderCoverage();
+goScene(start >= 0 ? start : 0);
+</script>
+</body>
+</html>
