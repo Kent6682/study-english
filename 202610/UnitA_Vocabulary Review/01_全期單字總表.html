@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unit A 全期單字總表｜2026 年 10 月號</title>
+<style>
+  :root {
+    --bg: #f8fafc; --card: #ffffff; --ink: #0f172a; --muted: #64748b; --border: #e2e8f0;
+    --primary: #2563eb; --primary-light: #eff6ff; --accent: #ea580c;
+    --gold: #b45309; --gold-bg: #fffbeb; --ok: #15803d; --ok-bg: #f0fdf4; --bad: #b91c1c; --bad-bg: #fef2f2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", -apple-system, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6; padding-bottom: 4rem;
+  }
+  header {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #fff;
+    padding: 2.2rem 1rem 2rem; text-align: center; position: relative;
+  }
+  header .back {
+    position: absolute; left: 1rem; top: 1rem; color: #cbd5e1; text-decoration: none;
+    font-size: 0.88rem; font-weight: 700;
+  }
+  header .back:hover { color: #fff; }
+  header .tag { display: inline-block; background: #2563eb; padding: 0.1rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-weight: 800; }
+  header h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); font-weight: 900; margin-top: 0.5rem; }
+  header p { color: #94a3b8; margin-top: 0.4rem; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.6rem; margin: 1.3rem 0; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.7rem 0.9rem; }
+  .stat b { display: block; font-size: 1.5rem; font-weight: 900; }
+  .stat span { color: var(--muted); font-size: 0.82rem; font-weight: 700; }
+
+  .modebar { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .mode-btn {
+    flex: 1; min-width: 140px; border: 2px solid var(--border); background: #fff; border-radius: 12px;
+    padding: 0.65rem; font: inherit; font-weight: 900; cursor: pointer; color: var(--ink);
+  }
+  .mode-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
+
+  .toolbar {
+    position: sticky; top: 0; z-index: 10; background: rgba(248, 250, 252, 0.96); backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border); padding: 0.7rem 0; margin-bottom: 1rem;
+  }
+  .row { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+  .row + .row { margin-top: 0.5rem; }
+  .chip {
+    border: 1.5px solid var(--border); background: #fff; color: var(--ink); border-radius: 999px;
+    padding: 0.3rem 0.8rem; font: inherit; font-size: 0.85rem; font-weight: 800; cursor: pointer; white-space: nowrap;
+  }
+  .chip:hover { border-color: var(--primary); }
+  .chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .chip.toggle.active { background: var(--gold-bg); border-color: #f59e0b; color: var(--gold); }
+  .search {
+    flex: 1 1 200px; min-width: 0; border: 1.5px solid var(--border); border-radius: 999px;
+    padding: 0.4rem 0.9rem; font: inherit; font-size: 0.9rem; background: #fff;
+  }
+  .search:focus { outline: none; border-color: var(--primary); }
+  .label { color: var(--muted); font-size: 0.8rem; font-weight: 800; margin-right: 0.2rem; }
+
+  .unit-head { margin: 1.6rem 0 0.7rem; display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+  .unit-head h2 { font-size: 1.15rem; font-weight: 900; }
+  .unit-head a { color: var(--primary); font-size: 0.82rem; font-weight: 700; text-decoration: none; }
+  .unit-head a:hover { text-decoration: underline; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.8rem; }
+  .word {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 0.85rem 0.95rem;
+    display: flex; flex-direction: column; gap: 0.35rem; position: relative;
+  }
+  .word.known { opacity: 0.55; }
+  .w-top { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .w-en { font-size: 1.25rem; font-weight: 900; color: #1e3a8a; }
+  .w-ipa { color: var(--muted); font-size: 0.88rem; }
+  .w-pos { font-size: 0.75rem; font-weight: 800; background: #f1f5f9; color: #475569; padding: 0.05rem 0.45rem; border-radius: 6px; }
+  .w-star { font-size: 0.72rem; font-weight: 800; background: var(--gold-bg); color: var(--gold); border: 1px solid #fcd34d; padding: 0 0.4rem; border-radius: 6px; }
+  .w-zh { font-weight: 800; color: var(--accent); }
+  .w-note { color: var(--muted); font-size: 0.85rem; }
+  .w-ex { font-size: 0.92rem; color: #334155; border-left: 3px solid #bfdbfe; padding-left: 0.6rem; }
+  .w-actions { display: flex; gap: 0.35rem; margin-top: auto; padding-top: 0.3rem; flex-wrap: wrap; }
+  .icon-btn {
+    border: 1px solid var(--border); background: #fff; border-radius: 8px; padding: 0.25rem 0.55rem;
+    font: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; color: #334155;
+  }
+  .icon-btn:hover { border-color: var(--primary); color: var(--primary); }
+  .icon-btn.on { background: var(--ok-bg); border-color: #86efac; color: var(--ok); }
+
+  /* 遮罩自我測驗 */
+  .hidden-part { background: #e2e8f0; color: transparent !important; border-radius: 6px; cursor: pointer; user-select: none; }
+  .hidden-part * { visibility: hidden; }
+
+  .supp { margin-top: 0.7rem; background: var(--card); border: 1px dashed #cbd5e1; border-radius: 12px; padding: 0.7rem 0.9rem; }
+  .supp-title { font-size: 0.85rem; font-weight: 900; color: var(--muted); margin-bottom: 0.4rem; }
+  .supp-list { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .supp-item {
+    border: 1px solid var(--border); border-radius: 8px; padding: 0.2rem 0.55rem; font-size: 0.85rem;
+    background: #f8fafc; cursor: pointer;
+  }
+  .supp-item:hover { border-color: var(--primary); }
+  .supp-item b { color: #1e3a8a; }
+  .supp-item i { font-style: normal; color: var(--muted); font-size: 0.78rem; margin: 0 0.2rem; }
+
+  .empty { color: var(--muted); text-align: center; padding: 2.5rem 0; }
+
+  /* 易混淆字 */
+  .confuse { margin-top: 2rem; background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .confuse h2 { font-size: 1.1rem; font-weight: 900; padding: 0.8rem 1rem; background: var(--primary-light); color: #1e3a8a; }
+  .confuse table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .confuse th, .confuse td { text-align: left; padding: 0.55rem 1rem; border-top: 1px solid var(--border); vertical-align: top; }
+  .confuse th { color: var(--muted); font-size: 0.8rem; }
+
+  /* 測驗 */
+  .quiz-setup, .quiz-box, .quiz-result { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.2rem; }
+  .quiz-setup h2, .quiz-result h2 { font-size: 1.15rem; font-weight: 900; margin-bottom: 0.6rem; }
+  .setup-grid { display: grid; gap: 0.8rem; }
+  .start-btn {
+    margin-top: 1rem; width: 100%; border: none; background: var(--primary); color: #fff; font: inherit;
+    font-weight: 900; font-size: 1rem; padding: 0.75rem; border-radius: 12px; cursor: pointer;
+  }
+  .start-btn:hover { background: #1d4ed8; }
+  .start-btn.ghost { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
+  .q-progress { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.85rem; font-weight: 800; }
+  .bar { height: 6px; background: #e2e8f0; border-radius: 99px; margin: 0.4rem 0 1rem; overflow: hidden; }
+  .bar div { height: 100%; background: var(--primary); transition: width 0.2s; }
+  .q-prompt { font-size: 1.6rem; font-weight: 900; text-align: center; margin: 0.6rem 0 0.3rem; color: #1e3a8a; }
+  .q-prompt.zh { color: var(--accent); font-size: 1.35rem; }
+  .q-hint { text-align: center; color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem; }
+  .q-listen { display: block; margin: 0.6rem auto 0.3rem; font-size: 2.2rem; background: var(--primary-light); border: 2px solid #bfdbfe; border-radius: 999px; width: 84px; height: 84px; cursor: pointer; }
+  .opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.55rem; }
+  .opt {
+    border: 2px solid var(--border); background: #fff; border-radius: 12px; padding: 0.7rem 0.8rem;
+    font: inherit; font-weight: 800; text-align: left; cursor: pointer; color: var(--ink);
+  }
+  .opt:hover:not(:disabled) { border-color: var(--primary); }
+  .opt.correct { border-color: #22c55e; background: var(--ok-bg); color: var(--ok); }
+  .opt.wrong { border-color: #f87171; background: var(--bad-bg); color: var(--bad); }
+  .opt:disabled { cursor: default; }
+  .feedback { margin-top: 0.9rem; padding: 0.7rem 0.9rem; border-radius: 10px; font-size: 0.92rem; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: var(--ok-bg); color: var(--ok); }
+  .feedback.bad { background: var(--bad-bg); color: var(--bad); }
+  .score-big { font-size: 2.6rem; font-weight: 900; color: var(--primary); text-align: center; }
+  .wrong-list { margin-top: 0.8rem; display: grid; gap: 0.4rem; }
+  .wrong-item { border: 1px solid #fecaca; background: var(--bad-bg); border-radius: 10px; padding: 0.5rem 0.75rem; font-size: 0.9rem; }
+  .wrong-item b { color: #1e3a8a; }
+  .result-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  @media (max-width: 520px) { .result-actions { grid-template-columns: 1fr; } header .back { position: static; display: block; margin-bottom: 0.6rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html#202610">← 回講義列表</a>
+  <span class="tag">UNIT A</span>
+  <h1>2026 年 10 月號・全期單字總表</h1>
+  <p>9 個單元・80 個核心單字・點 🔊 聽發音、遮住中英文自我檢測、隨機抽題測驗</p>
+</header>
+
+<main class="container">
+  <div class="stats" id="stats"></div>
+
+  <div class="modebar">
+    <button class="mode-btn active" data-mode="list">📚 單字瀏覽</button>
+    <button class="mode-btn" data-mode="quiz">🎯 隨機測驗</button>
+  </div>
+
+  <!-- ===== 瀏覽模式 ===== -->
+  <section id="list-view">
+    <div class="toolbar">
+      <div class="row" id="unit-chips"></div>
+      <div class="row">
+        <span class="label">遮罩</span>
+        <button class="chip toggle" data-mask="zh">遮中文</button>
+        <button class="chip toggle" data-mask="en">遮英文</button>
+        <span class="label" style="margin-left:0.4rem">篩選</span>
+        <button class="chip toggle" id="f-star">只看大考 *</button>
+        <button class="chip toggle" id="f-unknown">隱藏已熟記</button>
+        <button class="chip toggle" id="f-supp">顯示補充字彙</button>
+        <input class="search" id="search" type="search" placeholder="🔍 搜尋英文或中文" aria-label="搜尋單字" />
+      </div>
+    </div>
+    <div id="word-area"></div>
+
+    <div class="confuse">
+      <h2>⚠️ 易混淆字對照</h2>
+      <table>
+        <tr><th>對照</th><th>說明</th><th>單元</th></tr>
+        <tr><td><b>farther</b> vs. <b>further</b></td><td>farther 指空間距離「更遠地」；further 多指程度上「進一步地」（take sth further）</td><td>U9／U14</td></tr>
+        <tr><td><b>bold</b> vs. <b>daring</b></td><td>bold 強調有魄力、不畏風險；daring 強調勇於冒險、突破常規</td><td>U7</td></tr>
+        <tr><td><b>advice</b> vs. <b>advise</b></td><td>advice 是不可數名詞（a piece of advice）；advise 是動詞</td><td>U3</td></tr>
+        <tr><td><b>quit／spread／sweat</b></td><td>三態同形：quit-quit-quit、spread-spread-spread、sweat-sweat-sweat</td><td>U7／U5／U12</td></tr>
+        <tr><td><b>apologize</b> 的介系詞</td><td>apologize <b>to</b> sb <b>for</b> sth（不及物動詞，不可直接接受詞）</td><td>U3</td></tr>
+        <tr><td><b>replace A with B</b></td><td>「用 B 取代 A」，被換掉的 A 放前面</td><td>U3</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== 測驗模式 ===== -->
+  <section id="quiz-view" hidden>
+    <div class="quiz-setup" id="quiz-setup">
+      <h2>🎯 隨機測驗設定</h2>
+      <div class="setup-grid">
+        <div class="row"><span class="label">範圍</span><span id="q-units" class="row"></span></div>
+        <div class="row"><span class="label">題型</span>
+          <button class="chip active" data-qtype="en2zh">看英選中</button>
+          <button class="chip" data-qtype="zh2en">看中選英</button>
+          <button class="chip" data-qtype="listen">聽音選字</button>
+          <button class="chip" data-qtype="mix">混合</button>
+        </div>
+        <div class="row"><span class="label">題數</span>
+          <button class="chip" data-qnum="10">10 題</button>
+          <button class="chip active" data-qnum="20">20 題</button>
+          <button class="chip" data-qnum="0">全部</button>
+        </div>
+      </div>
+      <button class="start-btn" id="start-quiz">開始測驗</button>
+    </div>
+
+    <div class="quiz-box" id="quiz-box" hidden>
+      <div class="q-progress"><span id="q-count"></span><span id="q-score"></span></div>
+      <div class="bar"><div id="q-bar"></div></div>
+      <div id="q-body"></div>
+      <div class="feedback" id="q-feedback"></div>
+      <button class="start-btn" id="q-next" hidden>下一題 →</button>
+    </div>
+
+    <div class="quiz-result" id="quiz-result" hidden></div>
+  </section>
+</main>
+
+<script>
+/* ===== 資料：各單元核心單字與補充字彙 =====
+   核心：[英文, 音標, 詞性, 中文, 補充說明, 例句, 大考*]
+   補充：[英文, 詞性, 中文, 大考*] */
+const BASE = '../';
+const UNITS = [
+  { n: 1, en: 'The Happy Prince', zh: '快樂王子', dir: 'Unit1_The Happy Prince', words: [
+    ['statue', '[ˋstætʃʊ]', 'n.', '雕像', '', 'A statue of the Happy Prince stood high over the streets.', 0],
+    ['sword', '[sord]', 'n.', '劍', '', 'There was a large red ruby on the handle of his sword.', 0],
+    ['palace', '[ˋpælɪs]', 'n.', '宮殿', '', 'He lived in a beautiful palace.', 0],
+    ['hunger', '[ˋhʌŋgɚ]', 'n.', '飢餓', '', 'He could see hunger, sickness, and suffering everywhere.', 0],
+    ['suffering', '[ˋsʌfərɪŋ]', 'n.', '苦難；痛苦', '', 'He could see hunger, sickness, and suffering everywhere.', 0],
+    ['strip', '[strɪp]', 'v.', '剝除；剝去', 'strip away 剝掉', 'The prince told the swallow to strip away his gold.', 0],
+    ['jewel', '[ˋdʒuəl]', 'n.', '寶石；珠寶', '', 'Without its gold and jewels, the statue was removed.', 0],
+    ['angel', '[ˋendʒəl]', 'n.', '天使', '', 'God asked an angel to bring him the two most precious things.', 0],
+    ['precious', '[ˋprɛʃəs]', 'adj.', '珍貴的；寶貴的', '', 'God asked an angel to bring him the two most precious things there.', 0],
+    ['forever', '[fɚˋɛvɚ]', 'adv.', '永遠', '', 'They would live forever in heaven.', 0],
+  ], supp: [
+    ['seamstress', 'n.', '女裁縫', 0], ['crack', 'v.', '破裂（crack in two 裂成兩半）', 0], ['sapphire', 'n.', '藍寶石', 0],
+    ['ruby', 'n.', '紅寶石', 0], ['swallow', 'n.', '燕子', 0], ['lead', 'n.', '鉛', 0], ['settle', 'v.', '安頓下來', 0], ['handle', 'n.', '把手；柄', 0],
+  ]},
+  { n: 2, en: 'From Military Uniforms to Everyday Style', zh: '從軍服到日常穿搭', dir: 'Unit2_From Military Uniforms to Everyday Style', words: [
+    ['military', '[ˋmɪlə͵tɛrɪ]', 'adj./n.', '軍隊的、軍事的；軍隊', '', 'The country increased its military spending last year.', 1],
+    ['pilot', '[ˋpaɪlət]', 'n.', '飛行員', '', 'The pilot landed the plane safely in bad weather.', 1],
+    ['introduce', '[͵ɪntrəˋdjus]', 'v.', '推出；引進；介紹', '', 'The government introduced strict rules to improve worker safety.', 1],
+    ['originally', '[əˋrɪdʒənḷɪ]', 'adv.', '最初、原本', '衍 origin n. 起源（have its origins in... 起源於）', 'This popular song was originally sung in Spanish.', 1],
+    ['protect', '[prəˋtɛkt]', 'v.', '保護、防護', 'protect against N 防範……', 'Masks can help protect against certain illnesses.', 1],
+    ['navy', '[ˋnevɪ]', 'n.', '海軍', '', "The navy guards the country's seas and ports.", 1],
+    ['sleeve', '[sliv]', 'n.', '袖子', 'short-sleeved 短袖的', 'Toby rolled up his sleeves before washing the windows.', 1],
+    ['extra', '[ˋɛkstrə]', 'adj.', '額外的、多出的', '', 'I decided to pack extra clothes for the trip.', 1],
+    ['loose', '[lus]', 'adj.', '寬鬆的、不貼身的', '', 'Ellen bought a loose shirt for the summer heat.', 1],
+    ['significant', '[sɪgˋnɪfəkənt]', 'adj.', '重要的；顯著的', '', "We noticed a significant change in the dog's behavior.", 1],
+  ], supp: [
+    ['functional', 'adj.', '實用的、具功能性的', 0], ['cockpit', 'n.', '駕駛艙', 0], ['version', 'n.', '版本；型號', 0],
+    ['nylon', 'n.', '尼龍', 0], ['skateboarder', 'n.', '滑板運動玩家', 0], ['gear', 'n.', '（特定用途的）裝備（不可數）', 0],
+  ]},
+  { n: 3, en: 'When AI Always Takes Your Side', zh: '當 AI 只會當你的「應聲蟲」', dir: 'Unit3_When AI Always Takes Your Side', words: [
+    ['advice', '[ədˈvaɪs]', 'n.', '建議、忠告', '不可數；一項建議 a piece of advice', 'Daniela asked her dad for advice about making big decisions.', 1],
+    ['confident', '[ˈkɑnfədənt]', 'adj.', '有信心的、自信的', '', 'The runner looked confident while getting ready.', 1],
+    ['apologize', '[əˈpɑləˌdʒaɪz]', 'v.', '道歉、認錯', 'apologize to sb for sth', 'I apologized to my friend for arriving quite late.', 1],
+    ['situation', '[ˌsɪtʃəˈweʃən]', 'n.', '情況、形勢；處境', '', "It's important to understand a situation before taking action.", 1],
+    ['replace', '[rɪˈples]', 'v.', '取代、代替', 'replace A with B 用 B 取代 A', 'We need to replace the computer with a new one.', 1],
+  ], supp: [
+    ['chatbot', 'n.', '聊天機器人', 0], ['researcher', 'n.', '研究人員', 1], ['feedback', 'n.', '回饋意見', 1], ['counselor', 'n.', '輔導員；顧問', 0],
+  ]},
+  { n: 5, en: 'The Science and Culture of Coriander', zh: '香菜背後的科學與文化', dir: 'Unit5_The Science and Culture of Coriander', words: [
+    ['debate', '[dɪˋbet]', 'v./n.', '辯論、討論', '', 'We debated the idea for over an hour.', 0],
+    ['flavor', '[ˋflevɚ]', 'n./v.', '味道、風味；調味', 'flavored adj. 有……味道的', 'This ice cream has a rich chocolate flavor.', 0],
+    ['specific', '[spɪˋsɪfɪk]', 'adj.', '特定的、特有的；明確的', '', 'Judy has a specific reason for choosing that school.', 0],
+    ['process', '[ˋprɑsɛs]', 'v./n.', '處理、解讀；加工；過程', '', 'The computer can process information quickly.', 0],
+    ['reaction', '[rɪˋækʃən]', 'n.', '反應；回應', '', 'What was your reaction when you heard the news?', 0],
+    ['stretch', '[strɛtʃ]', 'v.', '延續、追溯；伸展', 'stretch back 追溯到', 'The history of Italy stretches back thousands of years.', 0],
+    ['spread', '[sprɛd]', 'v.', '傳播、擴散、蔓延', '三態同形 spread-spread-spread', 'Early explorers spread ideas and foods across the world.', 0],
+    ['product', '[ˋprɑdʌkt]', 'n.', '產品', '', 'This store sells higher quality products than that one.', 0],
+    ['release', '[rɪˋlis]', 'v.', '推出、發行', '', 'The company released a new smartphone last month.', 0],
+    ['chain', '[tʃen]', 'n.', '連鎖店；連鎖企業', '', 'There are many different chain coffee shops in the city.', 0],
+  ], supp: [
+    ['cuisine', 'n.', '料理、菜系', 0], ['dispute', 'n.', '爭論；爭議', 0], ['preference', 'n.', '偏好、喜好', 0], ['gene', 'n.', '基因', 0],
+    ['preserve', 'v.', '保存；維護', 0], ['explorer', 'n.', '探險家', 0], ['devoted', 'adj.', '忠實的；摯愛的', 0], ['perfume', 'n.', '香水', 0],
+  ]},
+  { n: 7, en: 'Ariana Grande: A Grand(e) Rebirth', zh: '亞莉安娜：天后的重生之路', dir: 'Unit7_Ariana Grande A Grande Rebirth', words: [
+    ['award', '[əˈwɔrd]', 'n.', '獎項', 'award-winning 獲獎的', 'Julie received an award for her science project.', 1],
+    ['quit', '[kwɪt]', 'v.', '放棄、退出；辭職', '三態同形 quit-quit-quit；進行式 quitting', 'The team quit the game after the first half.', 1],
+    ['bomb', '[bɑm]', 'n.', '炸彈', '字尾 b 不發音', 'The police and the army safely removed the bomb.', 1],
+    ['stadium', '[ˈstediəm]', 'n.', '（露天）體育場', '', 'We watched the football match in the big stadium.', 1],
+    ['engagement', '[ɪnˈɡedʒmənt]', 'n.', '婚約；訂婚', '', 'The couple celebrated their engagement with family.', 1],
+    ['admit', '[ədˈmɪt]', 'v.', '承認；坦承', 'admit-admitted-admitted', 'I must admit that I was wrong about the answer.', 1],
+    ['creative', '[kriˈetɪv]', 'adj.', '有創意的；創作的', '', 'Alexander is very creative and loves designing clothes.', 1],
+    ['focus', '[ˈfokəs]', 'n.', '重點；焦點', '', 'Fixing the rest of my essay is my main focus this week.', 1],
+    ['bold', '[bold]', 'adj.', '大膽的；勇敢的', '強調有魄力、不畏風險', 'It was a bold move to open our own coffee shop.', 1],
+    ['daring', '[ˈdɛrɪŋ]', 'adj.', '大膽創新的；勇於冒險的', '強調冒險精神、突破常規', 'After a daring climb, Sam reached the top of the mountain.', 1],
+  ], supp: [
+    ['unstoppable', 'adj.', '勢不可擋的', 0], ['witch', 'n.', '女巫', 0], ['popularity', 'n.', '人氣、受歡迎程度', 0], ['tragedy', 'n.', '悲劇；不幸事件', 0],
+    ['bounce', 'v.', '反彈（bounce back 振作起來）', 0], ['ironically', 'adv.', '諷刺的是', 0], ['era', 'n.', '時代、年代', 0], ['delight', 'v.', '使高興', 0],
+  ]},
+  { n: 9, en: 'A Taste of Hawaii: Exploring Oahu', zh: '夏威夷風情：漫遊歐胡島', dir: 'Unit9_A Taste of Hawaii Exploring Oahu', words: [
+    ['relaxed', '[rɪˋlækst]', 'adj.', '輕鬆的、悠閒的；放鬆的', '', 'Mia looked relaxed after the test.', 1],
+    ['appeal', '[əˋpil]', 'n.', '吸引力、魅力', '', "Seth doesn't understand the appeal of baseball.", 1],
+    ['tunnel', '[ˋtʌnl]', 'n.', '隧道；地道', '', 'Cars moved slowly in the tunnel.', 1],
+    ['farther', '[ˋfɑrðɚ]', 'adv.', '（空間距離）更遠地', 'farther north 更往北', 'Farther south, the river becomes wider.', 1],
+    ['electricity', '[ɪ͵lɛkˋtrɪsətɪ]', 'n.', '電力、電', '', 'Without electricity, the building was dark.', 1],
+    ['native', '[ˋnetɪv]', 'adj.', '原住民的；土生土長的', '族群名稱時 Native 大寫', 'Sienna studies Native American history.', 1],
+    ['raw', '[rɔ]', 'adj.', '生的、未煮熟的；未加工的', '', 'You should wash your hands after you touch raw meat.', 1],
+    ['oven', '[ˋʌvən]', 'n.', '烤箱、烤爐', '', 'The cookies smell good in the oven.', 0],
+    ['avenue', '[ˋævə͵nu]', 'n.', '大街、大道', '', 'The avenue was busy in the morning.', 1],
+    ['shadow', '[ˋʃædo]', 'n.', '陰影、陰暗處；影子', '', 'Long shadows covered the road.', 0],
+  ], supp: [
+    ['lookout', 'n.', '觀景點、瞭望臺', 0], ['snorkeling', 'n.', '浮潛', 0], ['scenery', 'n.', '風景（不可數）', 1], ['throne', 'n.', '王座；王位', 0],
+    ['immigrant', 'n.', '移民', 1], ['costume', 'n.', '服裝；戲服', 1], ['celebration', 'n.', '慶典；慶祝', 1], ['plantation', 'n.', '農場、種植園', 1],
+    ['haunt', 'v.', '（鬼魂）出沒（haunted 鬧鬼的）', 1], ['smoky', 'adj.', '帶煙燻味的', 0], ['tender', 'adj.', '（肉質）軟嫩的', 0],
+    ['syrup', 'n.', '糖漿', 0], ['fluffy', 'adj.', '蓬鬆的', 0], ['volcanic crater', 'n.', '火山口', 0],
+  ]},
+  { n: 11, en: 'A Day in Disneyland Paris', zh: '巴黎迪士尼夢幻一日遊', dir: 'Unit11_A Day in Disneyland Paris', words: [
+    ['toward', '[tɔrd]', 'prep.', '朝、向', '也可拼成 towards', "Let's walk toward the beach soon.", 1],
+    ['courage', '[ˈkɝɪdʒ]', 'n.', '勇氣、膽量', '不可數', 'Ella needed courage to try out a new haircut.', 1],
+    ['classic', '[ˈklæsɪk]', 'n.', '經典作品、名著', '', 'This novel is a classic that everyone should read.', 1],
+    ['bar', '[bɑr]', 'n.', '條狀物；塊', 'ice cream bar 雪糕', 'There are dried fruits and nuts in the chocolate bar.', 1],
+    ['firework', '[ˈfaɪrˌwɝk]', 'n.', '煙火', '常用複數 fireworks', 'A fireworks show will be held by the river next month.', 1],
+  ], supp: [
+    ['incredible', 'adj.', '驚人的、令人難以置信的', 0], ['fearsome', 'adj.', '可怕的、令人生畏的', 0], ['theme', 'n.', '主題（theme park 主題樂園）', 0],
+  ]},
+  { n: 12, en: 'What Banknotes Tell Us About the Countries That Print Them', zh: '紙鈔訴說著發行國家的故事', dir: 'Unit12_What Banknotes Tell Us About the Countries That Print Them', words: [
+    ['represent', '[͵rɛprɪˋzɛnt]', 'v.', '代表；象徵', '', 'The colors on the flag represent different values of the country.', 1],
+    ['meanwhile', '[ˋmin͵waɪl]', 'adv.', '同時；在此期間', '', 'I was cooking dinner; meanwhile, my brother was setting the table.', 1],
+    ['excellence', '[ˋɛksələns]', 'n.', '卓越、傑出', '', "Isabel's work showed true excellence.", 1],
+    ['visible', '[ˋvɪzəbəl]', 'adj.', '看得見的；清楚可見的', '', 'The stars were clearly visible in the night sky.', 1],
+    ['sweat', '[swɛt]', 'n./v.', '汗水；流汗', '三態同形 sweat-sweat-sweat', "Diego's shirt was wet with sweat after he ran in the heat.", 1],
+    ['promote', '[prəˋmot]', 'v.', '促進、提倡、推廣', '', 'The school wants to promote saving water.', 1],
+    ['unity', '[ˋjunətɪ]', 'n.', '團結；團結一致', '', 'The team showed unity during the difficult game.', 1],
+    ['plastic', '[ˋplæstɪk]', 'n./adj.', '塑膠；塑膠製的', '', 'We should limit the use of single-use plastic.', 1],
+    ['security', '[sɪˋkjʊrətɪ]', 'n.', '安全、保護措施', 'security feature 防偽特徵', 'The building has strict security checks at the entrance.', 1],
+    ['shiny', '[ˋʃaɪnɪ]', 'adj.', '閃亮的', '', 'The wooden floor became shiny after it was washed.', 1],
+  ], supp: [
+    ['banknote', 'n.', '紙鈔（英 note／美 bill）', 0], ['sloth', 'n.', '樹懶', 0], ['vertical', 'adj.', '直立式的；垂直的', 1], ['toil', 'n.', '辛勞', 1],
+    ['fictional', 'adj.', '虛構的', 1], ['polymer', 'n.', '聚合物', 0], ['counterfeiter', 'n.', '偽鈔製造者', 0], ['hologram', 'n.', '全像圖；雷射防偽圖案', 0],
+  ]},
+  { n: 14, en: 'Microhabits: Small Wins Keep You Moving', zh: '微習慣：小小成功推動你持續前進', dir: 'Unit14_Microhabits Small Wins Keep You Moving', words: [
+    ['goal', '[ɡol]', 'n.', '目標、目的', '', "Isaac's goal is to read one book every month.", 1],
+    ['maintain', '[menˈten]', 'v.', '維持、保持；維護', '', 'The team worked hard to maintain its lead.', 1],
+    ['task', '[tæsk]', 'n.', '任務；工作', '', 'Sadie wrote down each task on her list.', 1],
+    ['skip', '[skɪp]', 'v.', '不做（某事）；跳過', '', "Don't skip this step, or the cake may not turn out well.", 1],
+    ['achievement', '[əˈtʃivmənt]', 'n.', '成就、成果；完成', '', 'Building the shelf by myself was an achievement.', 1],
+    ['memory', '[ˈmɛməri]', 'n.', '記憶（力）；回憶', '', 'Arianna has a good memory for names.', 1],
+    ['further', '[ˈfɝðɚ]', 'adv.', '進一步地；更深入地', 'take sth further 使更上一層樓', 'We can take this idea further tomorrow.', 1],
+    ['brief', '[brif]', 'adj.', '簡短的；短暫的', '', 'Adam made a brief visit to his grandma.', 1],
+    ['track', '[træk]', 'v.', '追蹤、記錄……的進展', '', 'Tracking your money can help you save.', 1],
+    ['progress', '[ˈprɑɡrɛs]', 'n.', '進展；進步', '不可數', 'Rosalie felt proud of her progress.', 1],
+  ], supp: [
+    ['motivation', 'n.', '動力、動機', 1], ['self-discipline', 'n.', '自律、自制力', 0], ['trigger', 'n./v.', '誘因；引發', 1],
+    ['adjust', 'v.', '調整、調節', 1], ['microhabit', 'n.', '微習慣（micro- 微小的）', 0],
+  ]},
+];
+
+/* 攤平成單字清單 */
+const ALL = [];
+UNITS.forEach(u => u.words.forEach((w, i) => ALL.push({
+  id: u.n + ':' + w[0], unit: u.n, en: w[0], ipa: w[1], pos: w[2], zh: w[3], note: w[4], ex: w[5], star: !!w[6],
+})));
+
+/* ===== 小工具 ===== */
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const $ = id => document.getElementById(id);
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+function speak(text, rate) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = rate || 0.9;
+  const v = window.speechSynthesis.getVoices().find(v => /en-US/i.test(v.lang));
+  if (v) u.voice = v;
+  window.speechSynthesis.speak(u);
+}
+if ('speechSynthesis' in window) window.speechSynthesis.getVoices();
+
+/* 已熟記（存在瀏覽器，失敗也不影響使用） */
+const KNOWN_KEY = 'vocab-202610-known';
+let known = new Set();
+try { known = new Set(JSON.parse(localStorage.getItem(KNOWN_KEY) || '[]')); } catch (e) {}
+function saveKnown() { try { localStorage.setItem(KNOWN_KEY, JSON.stringify([...known])); } catch (e) {} }
+
+/* ===== 統計 ===== */
+function renderStats() {
+  const starN = ALL.filter(w => w.star).length;
+  const suppN = UNITS.reduce((s, u) => s + u.supp.length, 0);
+  $('stats').innerHTML = [
+    [UNITS.length, '個單元'], [ALL.length, '個核心單字'], [starN, '個大考 * 字彙'], [suppN, '個補充字彙'], [known.size, '個已熟記'],
+  ].map(([n, t]) => `<div class="stat"><b>${n}</b><span>${t}</span></div>`).join('');
+}
+
+/* ===== 瀏覽模式 ===== */
+const state = { unit: 'all', mask: null, star: false, hideKnown: false, supp: false, q: '' };
+
+function renderChips() {
+  const chips = [['all', `全部 ${ALL.length}`]].concat(UNITS.map(u => [String(u.n), `U${u.n}`]));
+  $('unit-chips').innerHTML = '<span class="label">單元</span>' + chips.map(([k, t]) =>
+    `<button class="chip${state.unit === k ? ' active' : ''}" data-unit="${k}">${t}</button>`).join('');
+}
+
+function wordCard(w) {
+  const isKnown = known.has(w.id);
+  const mZh = state.mask === 'zh' ? ' hidden-part' : '';
+  const mEn = state.mask === 'en' ? ' hidden-part' : '';
+  return `<div class="word${isKnown ? ' known' : ''}">
+    <div class="w-top">
+      <span class="w-en${mEn}" data-reveal>${esc(w.en)}</span>
+      <span class="w-ipa${mEn}" data-reveal>${esc(w.ipa)}</span>
+      <span class="w-pos">${esc(w.pos)}</span>
+      ${w.star ? '<span class="w-star" title="大考出現過的字彙">大考 *</span>' : ''}
+    </div>
+    <div class="w-zh${mZh}" data-reveal>${esc(w.zh)}</div>
+    ${w.note ? `<div class="w-note${mZh}" data-reveal>💡 ${esc(w.note)}</div>` : ''}
+    <div class="w-ex${mEn}" data-reveal>${esc(w.ex)}</div>
+    <div class="w-actions">
+      <button class="icon-btn" data-say="${esc(w.en)}" data-rate="0.85">🔊 單字</button>
+      <button class="icon-btn" data-say="${esc(w.ex)}" data-rate="0.95">🔊 例句</button>
+      <button class="icon-btn" data-say="${esc(w.ex)}" data-rate="0.7">🐢 慢速</button>
+      <button class="icon-btn${isKnown ? ' on' : ''}" data-known="${esc(w.id)}">${isKnown ? '✅ 已熟記' : '☐ 熟記'}</button>
+    </div>
+  </div>`;
+}
+
+function renderList() {
+  const q = state.q.trim().toLowerCase();
+  const html = UNITS.filter(u => state.unit === 'all' || String(u.n) === state.unit).map(u => {
+    const words = ALL.filter(w => w.unit === u.n)
+      .filter(w => !state.star || w.star)
+      .filter(w => !state.hideKnown || !known.has(w.id))
+      .filter(w => !q || (w.en + ' ' + w.zh + ' ' + w.note).toLowerCase().includes(q));
+    const supp = state.supp ? u.supp.filter(s => (!state.star || s[3]) && (!q || (s[0] + s[2]).toLowerCase().includes(q))) : [];
+    if (!words.length && !supp.length) return '';
+    return `<div class="unit-head">
+        <h2>Unit ${u.n}｜${esc(u.en)}</h2>
+        <a href="${BASE + encodeURI(u.dir)}/03_互動圖文學習講義.html">開啟講義 →</a>
+      </div>
+      <div class="grid">${words.map(wordCard).join('')}</div>
+      ${supp.length ? `<div class="supp"><div class="supp-title">📎 補充字彙（點一下聽發音）</div><div class="supp-list">${
+        supp.map(s => `<span class="supp-item" data-say="${esc(s[0])}" data-rate="0.85"><b>${esc(s[0])}</b><i>${esc(s[1])}</i>${esc(s[2])}${s[3] ? ' <i>*</i>' : ''}</span>`).join('')
+      }</div></div>` : ''}`;
+  }).join('');
+  $('word-area').innerHTML = html || '<div class="empty">沒有符合條件的單字</div>';
+}
+
+$('unit-chips').addEventListener('click', e => {
+  const b = e.target.closest('[data-unit]');
+  if (!b) return;
+  state.unit = b.dataset.unit;
+  renderChips(); renderList();
+});
+document.querySelectorAll('[data-mask]').forEach(b => b.addEventListener('click', () => {
+  state.mask = state.mask === b.dataset.mask ? null : b.dataset.mask;
+  document.querySelectorAll('[data-mask]').forEach(x => x.classList.toggle('active', x.dataset.mask === state.mask));
+  renderList();
+}));
+[['f-star', 'star'], ['f-unknown', 'hideKnown'], ['f-supp', 'supp']].forEach(([id, key]) => $(id).addEventListener('click', () => {
+  state[key] = !state[key];
+  $(id).classList.toggle('active', state[key]);
+  renderList();
+}));
+$('search').addEventListener('input', e => { state.q = e.target.value; renderList(); });
+
+$('word-area').addEventListener('click', e => {
+  const say = e.target.closest('[data-say]');
+  if (say) { speak(say.dataset.say, parseFloat(say.dataset.rate)); return; }
+  const kn = e.target.closest('[data-known]');
+  if (kn) {
+    const id = kn.dataset.known;
+    known.has(id) ? known.delete(id) : known.add(id);
+    saveKnown(); renderStats(); renderList();
+    return;
+  }
+  const hid = e.target.closest('.hidden-part');
+  if (hid) hid.classList.remove('hidden-part');
+});
+
+/* ===== 測驗模式 ===== */
+const qs = { units: new Set(UNITS.map(u => u.n)), type: 'en2zh', num: 20, list: [], i: 0, score: 0, wrong: [] };
+
+function renderQUnits() {
+  const allOn = qs.units.size === UNITS.length;
+  $('q-units').innerHTML = `<button class="chip${allOn ? ' active' : ''}" data-qunit="all">全部</button>` +
+    UNITS.map(u => `<button class="chip${!allOn && qs.units.has(u.n) ? ' active' : ''}" data-qunit="${u.n}">U${u.n}</button>`).join('');
+}
+$('q-units').addEventListener('click', e => {
+  const b = e.target.closest('[data-qunit]');
+  if (!b) return;
+  if (b.dataset.qunit === 'all') qs.units = new Set(UNITS.map(u => u.n));
+  else {
+    const n = Number(b.dataset.qunit);
+    if (qs.units.size === UNITS.length) qs.units = new Set([n]);
+    else if (qs.units.has(n)) { qs.units.delete(n); if (!qs.units.size) qs.units = new Set(UNITS.map(u => u.n)); }
+    else qs.units.add(n);
+  }
+  renderQUnits();
+});
+function chipGroup(attr, key, parse) {
+  document.querySelectorAll(`[data-${attr}]`).forEach(b => b.addEventListener('click', () => {
+    qs[key] = parse(b.dataset[attr.replace(/-./g, m => m[1].toUpperCase())]);
+    document.querySelectorAll(`[data-${attr}]`).forEach(x => x.classList.toggle('active', x === b));
+  }));
+}
+chipGroup('qtype', 'type', String);
+chipGroup('qnum', 'num', Number);
+
+function startQuiz(pool) {
+  let list = shuffle(pool || ALL.filter(w => qs.units.has(w.unit)));
+  if (!pool && qs.num) list = list.slice(0, qs.num);
+  qs.list = list.map(w => ({ w, type: qs.type === 'mix' ? ['en2zh', 'zh2en', 'listen'][Math.floor(Math.random() * 3)] : qs.type }));
+  qs.i = 0; qs.score = 0; qs.wrong = [];
+  $('quiz-setup').hidden = true; $('quiz-result').hidden = true; $('quiz-box').hidden = false;
+  renderQ();
+}
+$('start-quiz').addEventListener('click', () => startQuiz());
+
+function distractors(w, field) {
+  /* 優先抽同詞性，再補其他字，避免中文意思重複 */
+  const seen = new Set([w[field]]);
+  const same = shuffle(ALL.filter(x => x.id !== w.id && x.pos === w.pos));
+  const rest = shuffle(ALL.filter(x => x.id !== w.id && x.pos !== w.pos));
+  const out = [];
+  for (const x of same.concat(rest)) {
+    if (out.length === 3) break;
+    if (seen.has(x[field])) continue;
+    seen.add(x[field]); out.push(x);
+  }
+  return out;
+}
+
+function renderQ() {
+  const { w, type } = qs.list[qs.i];
+  const total = qs.list.length;
+  $('q-count').textContent = `第 ${qs.i + 1} / ${total} 題`;
+  $('q-score').textContent = `答對 ${qs.score}`;
+  $('q-bar').style.width = (qs.i / total * 100) + '%';
+  const field = type === 'en2zh' ? 'zh' : 'en';
+  const opts = shuffle([w].concat(distractors(w, field)));
+  let prompt;
+  if (type === 'en2zh') prompt = `<div class="q-prompt">${esc(w.en)} <button class="icon-btn" data-say="${esc(w.en)}">🔊</button></div><div class="q-hint">${esc(w.pos)}・選出正確的中文意思</div>`;
+  else if (type === 'zh2en') prompt = `<div class="q-prompt zh">${esc(w.zh)}</div><div class="q-hint">${esc(w.pos)}・選出對應的英文單字</div>`;
+  else prompt = `<button class="q-listen" data-say="${esc(w.en)}" aria-label="播放發音">🔊</button><div class="q-hint">點喇叭再聽一次・選出你聽到的單字</div>`;
+  $('q-body').innerHTML = prompt + `<div class="opts">${opts.map(o =>
+    `<button class="opt" data-ok="${o.id === w.id ? 1 : 0}">${esc(o[field])}</button>`).join('')}</div>`;
+  $('q-feedback').className = 'feedback';
+  $('q-next').hidden = true;
+  if (type === 'listen') setTimeout(() => speak(w.en, 0.85), 250);
+}
+
+$('q-body').addEventListener('click', e => {
+  const say = e.target.closest('[data-say]');
+  if (say) { speak(say.dataset.say, 0.85); return; }
+  const opt = e.target.closest('.opt');
+  if (!opt || opt.disabled) return;
+  const { w } = qs.list[qs.i];
+  const ok = opt.dataset.ok === '1';
+  document.querySelectorAll('#q-body .opt').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.ok === '1') b.classList.add('correct');
+  });
+  if (ok) qs.score++; else { opt.classList.add('wrong'); qs.wrong.push(w); }
+  const fb = $('q-feedback');
+  fb.className = 'feedback show ' + (ok ? 'ok' : 'bad');
+  fb.innerHTML = `${ok ? '✅ 答對了！' : '❌ 答錯了。'} <b>${esc(w.en)}</b> ${esc(w.ipa)} ${esc(w.pos)} ${esc(w.zh)}（Unit ${w.unit}）<br><span style="color:#334155">${esc(w.ex)}</span>`;
+  $('q-score').textContent = `答對 ${qs.score}`;
+  $('q-next').hidden = false;
+  $('q-next').textContent = qs.i + 1 < qs.list.length ? '下一題 →' : '看成績 →';
+  speak(w.en, 0.85);
+});
+
+$('q-next').addEventListener('click', () => {
+  qs.i++;
+  if (qs.i < qs.list.length) renderQ(); else showResult();
+});
+
+function showResult() {
+  const total = qs.list.length;
+  const pct = Math.round(qs.score / total * 100);
+  const msg = pct === 100 ? '🏆 全對！這期單字你已經掌握了。' : pct >= 80 ? '👍 很穩，把錯的字再看一次就好。' : pct >= 60 ? '💪 及格了，錯的字建議回講義看例句。' : '📖 建議先回「單字瀏覽」用遮罩模式複習一輪。';
+  $('quiz-box').hidden = true;
+  const r = $('quiz-result');
+  r.hidden = false;
+  r.innerHTML = `<h2>🎉 測驗完成</h2>
+    <div class="score-big">${qs.score} / ${total}</div>
+    <p style="text-align:center;color:var(--muted);margin-bottom:0.8rem">${msg}</p>
+    ${qs.wrong.length ? `<div class="supp-title">❌ 答錯的字（${qs.wrong.length}）</div><div class="wrong-list">${qs.wrong.map(w =>
+      `<div class="wrong-item"><b>${esc(w.en)}</b> ${esc(w.ipa)} ${esc(w.pos)} ${esc(w.zh)}　<span style="color:var(--muted)">Unit ${w.unit}</span>
+       <button class="icon-btn" data-say="${esc(w.en)}">🔊</button></div>`).join('')}</div>` : ''}
+    <div class="result-actions" style="margin-top:1rem">
+      ${qs.wrong.length ? '<button class="start-btn" id="retry-wrong">🔁 只重考答錯的字</button>' : ''}
+      <button class="start-btn ghost" id="back-setup">⚙️ 重新設定測驗</button>
+    </div>`;
+}
+$('quiz-result').addEventListener('click', e => {
+  const say = e.target.closest('[data-say]');
+  if (say) { speak(say.dataset.say, 0.85); return; }
+  if (e.target.id === 'retry-wrong') startQuiz(qs.wrong.slice());
+  if (e.target.id === 'back-setup') { $('quiz-result').hidden = true; $('quiz-setup').hidden = false; }
+});
+
+/* ===== 模式切換 ===== */
+document.querySelectorAll('.mode-btn').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.mode-btn').forEach(x => x.classList.toggle('active', x === b));
+  const quiz = b.dataset.mode === 'quiz';
+  $('list-view').hidden = quiz;
+  $('quiz-view').hidden = !quiz;
+  window.speechSynthesis && window.speechSynthesis.cancel();
+}));
+
+renderStats(); renderChips(); renderList(); renderQUnits();
+</script>
+</body>
+</html>

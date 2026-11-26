@@ -156,6 +156,11 @@
       { issue: '202610', n: 14, dir: 'Unit14_Microhabits Small Wins Keep You Moving', cover: '03_AI_視覺圖解講義.jpg', stars: '★★★', topic: '身心成長',
         en: 'Microhabits: Small Wins Keep You Moving', zh: '微習慣：小小成功推動你持續前進',
         docs: [['📖 課文原文 (MD)', '01_課文與字彙原文.md'], ['⚡ 文法詳解 (MD)', '02_深度文法與翻譯解析.md']] },
+      /* 單字總表單元：有 main 的單元只顯示一個主按鈕，不連 03–08 */
+      { issue: '202610', n: 'A', dir: 'UnitA_Vocabulary Review', cover: 'cover.svg', stars: '★★☆', topic: '全期單字總複習',
+        en: 'Vocabulary Review: All Units', zh: '全期單字總表（9 個單元・80 個核心單字）',
+        main: ['📚 開啟單字總表（發音＋遮罩自測＋隨機測驗）', '01_全期單字總表.html'],
+        docs: [['📖 單字總表 (MD)', '01_全期單字總表.md']] },
       { issue: '202607', n: 1, dir: 'Unit1_The Diamond as Big as the Ritz', cover: '03_AI_視覺圖解講義.jpg', stars: '★★★', topic: '大師名作選・美國文學',
         en: 'The Diamond as Big as the Ritz', zh: '大如麗池飯店的鑽石',
         docs: [['📖 學習講義 (MD)', 'Unit1_The Diamond as Big as the Ritz_學習講義.md'], ['⚡ 翻譯與解析 (TXT)', '02_中文翻譯與關鍵解析.txt']] },
@@ -246,6 +251,11 @@
       const rw = REWRITES.map(([label, file, title]) =>
         `<a class="btn-rewrite" href="${href(u, file)}" title="${esc(title)}" aria-label="${esc(title)}">${label}</a>`).join('');
       const docs = u.docs.map(([label, file]) => `<a href="${href(u, file)}">${esc(label)}</a>`).join('<span>·</span>');
+      const links = u.main
+        ? `<a class="btn-main" href="${href(u, u.main[1])}">${esc(u.main[0])}</a>`
+        : `<a class="btn-main" href="${href(u, '03_互動圖文學習講義.html')}">🚀 開啟圖文互動講義（原版課文＋15題檢測）</a>
+          <a class="btn-gsat" href="${href(u, '08_歷屆學測真題特訓.html')}" target="_blank">🏛️ 學測 15 題特訓 ↗</a>
+          <div class="rewrite-row">${rw}</div>`;
       return `<div class="unit-card">
         <img src="${href(u, u.cover)}" alt="Unit ${u.n} 封面" class="card-cover" loading="lazy" onerror="this.style.visibility='hidden';" />
         <div class="card-body">
@@ -256,9 +266,7 @@
           </div>
           <div class="unit-title-en">${esc(u.en)}</div>
           <div class="unit-title-zh">${esc(u.zh)}</div>
-          <a class="btn-main" href="${href(u, '03_互動圖文學習講義.html')}">🚀 開啟圖文互動講義（原版課文＋15題檢測）</a>
-          <a class="btn-gsat" href="${href(u, '08_歷屆學測真題特訓.html')}" target="_blank">🏛️ 學測 15 題特訓 ↗</a>
-          <div class="rewrite-row">${rw}</div>
+          ${links}
           <div class="sub-links">${docs}</div>
         </div>
       </div>`;
@@ -288,7 +296,9 @@
         list = UNITS.filter(u => u.issue === current);
         titleEl.innerHTML = `${issueLabel(current)}<small>共 ${list.length} 個單元</small>`;
       }
-      list = list.slice().sort((a, b) => b.issue.localeCompare(a.issue) || a.n - b.n);
+      /* 數字單元依序排在前，字母單元（如 Unit A）排在最後 */
+      const ord = n => typeof n === 'number' ? n : 1000 + String(n).charCodeAt(0);
+      list = list.slice().sort((a, b) => b.issue.localeCompare(a.issue) || ord(a.n) - ord(b.n));
       gridEl.innerHTML = list.length ? list.map(card).join('') : '<div class="empty">找不到符合的單元</div>';
       renderTabs();
     }
