@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unit B 日常情境對話｜2026 年 9 月號</title>
+<style>
+  :root {
+    --bg: #f8fafc; --card: #ffffff; --ink: #0f172a; --muted: #64748b; --border: #e2e8f0;
+    --primary: #2563eb; --primary-light: #eff6ff; --accent: #ea580c;
+    --gold: #b45309; --gold-bg: #fffbeb; --ok: #15803d; --ok-bg: #f0fdf4; --bad: #b91c1c; --bad-bg: #fef2f2;
+    --hl: #fef3c7; --hl-line: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", -apple-system, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6; padding-bottom: 4rem;
+  }
+  button { font: inherit; }
+  header {
+    background: linear-gradient(135deg, #134e4a 0%, #0f172a 100%); color: #fff;
+    padding: 2.2rem 1rem 2rem; text-align: center; position: relative;
+  }
+  header .back { position: absolute; left: 1rem; top: 1rem; color: #cbd5e1; text-decoration: none; font-size: 0.88rem; font-weight: 700; }
+  header .back:hover { color: #fff; }
+  header .tag { display: inline-block; background: #0d9488; padding: 0.1rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-weight: 800; }
+  header h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 900; margin-top: 0.5rem; }
+  header p { color: #94a3b8; margin-top: 0.4rem; }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 1rem; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.6rem; margin: 1.2rem 0; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.6rem 0.85rem; }
+  .stat b { display: block; font-size: 1.4rem; font-weight: 900; }
+  .stat span { color: var(--muted); font-size: 0.8rem; font-weight: 700; }
+
+  .toolbar {
+    position: sticky; top: 0; z-index: 20; background: rgba(248, 250, 252, 0.96); backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border); padding: 0.6rem 0; margin-bottom: 1rem;
+  }
+  .scene-chips { display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.15rem; scrollbar-width: thin; }
+  .chip {
+    border: 1.5px solid var(--border); background: #fff; color: var(--ink); border-radius: 999px;
+    padding: 0.3rem 0.8rem; font-size: 0.85rem; font-weight: 800; cursor: pointer; white-space: nowrap; flex: none;
+  }
+  .chip b { color: var(--primary); margin-right: 0.15rem; }
+  .chip:hover { border-color: var(--primary); }
+  .chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .chip.active b { color: #dbeafe; }
+
+  .scene-head { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem 1.1rem; }
+  .scene-num { font-size: 0.78rem; font-weight: 900; color: #0d9488; letter-spacing: 1px; }
+  .scene-head h2 { font-size: 1.35rem; font-weight: 900; line-height: 1.3; }
+  .scene-head h2 small { display: block; font-size: 0.95rem; color: var(--muted); font-weight: 700; }
+  .setting { color: #334155; margin-top: 0.4rem; font-size: 0.92rem; }
+  .cast { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); align-items: center; }
+  .cast-item { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--ink); font-weight: 700; }
+  .targets { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.7rem; align-items: center; }
+  .label { color: var(--muted); font-size: 0.8rem; font-weight: 800; margin-right: 0.2rem; }
+  .tchip {
+    border: 1px solid #fcd34d; background: var(--hl); color: #92400e; border-radius: 8px;
+    padding: 0.1rem 0.5rem; font-size: 0.82rem; font-weight: 800; cursor: pointer;
+  }
+  .tchip small { color: #b45309; font-weight: 700; margin-left: 0.2rem; }
+
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem; margin: 0.9rem 0 0.6rem; }
+  .mode-btn {
+    border: 2px solid var(--border); background: #fff; border-radius: 12px; padding: 0.55rem 0.3rem;
+    font-weight: 900; cursor: pointer; color: var(--ink); font-size: 0.92rem;
+  }
+  .mode-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
+  .controls { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin-bottom: 0.8rem; }
+  .ctl {
+    border: 1.5px solid var(--border); background: #fff; border-radius: 10px; padding: 0.35rem 0.7rem;
+    font-size: 0.85rem; font-weight: 800; cursor: pointer; color: #334155;
+  }
+  .ctl:hover { border-color: var(--primary); color: var(--primary); }
+  .ctl.on { background: var(--gold-bg); border-color: #f59e0b; color: var(--gold); }
+  .ctl.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .ctl.primary.on { background: #1e40af; border-color: #1e40af; color: #fff; }
+  .role-pick { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; width: 100%; }
+  .tip { font-size: 0.82rem; color: var(--muted); width: 100%; }
+
+  /* 對話泡泡 */
+  .lines { display: flex; flex-direction: column; gap: 0.7rem; }
+  .msg { display: flex; gap: 0.5rem; align-items: flex-start; }
+  .msg.side-r { flex-direction: row-reverse; }
+  .av {
+    flex: none; width: 34px; height: 34px; border-radius: 50%; color: #fff; font-weight: 900; font-style: normal;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem;
+  }
+  .cast .av { width: 22px; height: 22px; font-size: 0.7rem; }
+  .msg-main { max-width: min(85%, 620px); display: flex; flex-direction: column; }
+  .msg.side-r .msg-main { align-items: flex-end; }
+  .who { font-size: 0.75rem; font-weight: 800; color: var(--muted); margin: 0 0.3rem 0.1rem; }
+  .who span { font-weight: 700; }
+  .bubble {
+    background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 0.55rem 0.8rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04); transition: box-shadow 0.2s;
+  }
+  .msg.side-l .bubble { border-top-left-radius: 4px; }
+  .msg.side-r .bubble { background: var(--primary-light); border-color: #bfdbfe; border-top-right-radius: 4px; }
+  .en { font-size: 1.02rem; color: var(--ink); }
+  .zh { font-size: 0.86rem; color: var(--muted); margin-top: 0.2rem; }
+  .say {
+    border: none; background: transparent; cursor: pointer; font-size: 0.95rem; margin-left: 0.25rem;
+    padding: 0 0.15rem; vertical-align: baseline; opacity: 0.75;
+  }
+  .say:hover { opacity: 1; }
+  .tw {
+    border: none; border-bottom: 2px solid var(--hl-line); background: var(--hl); color: inherit; font-weight: 800;
+    border-radius: 4px; padding: 0 0.15rem; cursor: pointer; font-size: inherit; line-height: inherit;
+  }
+  .tw:hover { background: #fde68a; }
+  .note { text-align: center; color: var(--muted); font-size: 0.85rem; font-weight: 700; padding: 0.2rem 0; }
+  .msg.playing .bubble { box-shadow: 0 0 0 3px #93c5fd; }
+  .msg.your-turn .bubble { box-shadow: 0 0 0 3px var(--hl-line); }
+  .msg.flash .bubble { animation: flash 1.6s ease; }
+  @keyframes flash { 0%, 60% { box-shadow: 0 0 0 4px var(--hl-line); } 100% { box-shadow: none; } }
+
+  /* 角色扮演 */
+  .prompt { color: #92400e; font-weight: 700; font-size: 0.95rem; }
+  .reveal {
+    margin-top: 0.35rem; border: 1px dashed #f59e0b; background: #fff; color: var(--gold); border-radius: 8px;
+    padding: 0.15rem 0.6rem; font-size: 0.8rem; font-weight: 800; cursor: pointer;
+  }
+  .turn-badge { display: none; font-size: 0.75rem; font-weight: 900; color: var(--gold); margin: 0 0.3rem 0.15rem; }
+  .msg.your-turn .turn-badge { display: block; }
+
+  /* 克漏字 */
+  .blank {
+    min-width: 4.2em; border: none; border-bottom: 2px solid #94a3b8; background: #f1f5f9; border-radius: 4px;
+    padding: 0 0.35rem; font-weight: 800; cursor: pointer; color: var(--primary); font-size: inherit; line-height: inherit;
+  }
+  .blank.empty { color: #94a3b8; }
+  .blank.active { background: var(--hl); border-bottom-color: var(--hl-line); }
+  .blank.ok { background: var(--ok-bg); border-bottom-color: #22c55e; color: var(--ok); cursor: default; }
+  .blank.bad { background: var(--bad-bg); border-bottom-color: #f87171; color: var(--bad); text-decoration: line-through; cursor: default; }
+  .ans { color: var(--ok); font-weight: 900; margin-left: 0.2rem; }
+  .bank-box {
+    position: sticky; bottom: 0; z-index: 15; margin-top: 0.9rem; background: rgba(255, 255, 255, 0.97);
+    border: 1.5px solid #fcd34d; border-radius: 14px; padding: 0.6rem 0.75rem; box-shadow: 0 -4px 14px rgba(15, 23, 42, 0.08);
+  }
+  .bank-title { font-size: 0.8rem; font-weight: 800; color: var(--gold); margin-bottom: 0.35rem; }
+  .bank { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .bchip {
+    border: 1.5px solid var(--border); background: #fff; border-radius: 999px; padding: 0.2rem 0.7rem;
+    font-weight: 800; font-size: 0.9rem; cursor: pointer; color: var(--ink);
+  }
+  .bchip:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+  .bchip:disabled { opacity: 0.3; cursor: default; text-decoration: line-through; }
+  .cloze-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.7rem; }
+  .big-btn {
+    border: none; background: var(--primary); color: #fff; font-weight: 900; padding: 0.65rem; border-radius: 12px; cursor: pointer;
+  }
+  .big-btn.ghost { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
+  .big-btn:disabled { opacity: 0.45; cursor: default; }
+  .cloze-result { margin-top: 0.7rem; padding: 0.7rem 0.9rem; border-radius: 12px; font-weight: 800; text-align: center; }
+  .cloze-result.good { background: var(--ok-bg); color: var(--ok); }
+  .cloze-result.meh { background: var(--gold-bg); color: var(--gold); }
+
+  /* 句型、換頁 */
+  .expr { margin-top: 1.2rem; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 0.85rem 1rem; }
+  .expr h3 { font-size: 1rem; font-weight: 900; margin-bottom: 0.45rem; }
+  .expr ul { list-style: none; display: grid; gap: 0.35rem; }
+  .expr li { font-size: 0.92rem; }
+  .expr li b { color: #0f766e; margin-right: 0.4rem; }
+  .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1rem; }
+  .pager button { border: 1.5px solid var(--border); background: #fff; border-radius: 12px; padding: 0.6rem; font-weight: 800; cursor: pointer; color: #334155; }
+  .pager button:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+  .pager button:disabled { opacity: 0.35; cursor: default; }
+
+  /* 涵蓋表 */
+  .coverage { margin-top: 2rem; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem 1.1rem; }
+  .coverage h2 { font-size: 1.1rem; font-weight: 900; }
+  .coverage .hint { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.6rem; }
+  .cov-unit { padding: 0.55rem 0; border-top: 1px solid var(--border); }
+  .cov-title { font-size: 0.85rem; font-weight: 900; color: #334155; margin-bottom: 0.35rem; }
+  .cov-list { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .cov { border: 1px solid var(--border); background: #f8fafc; border-radius: 8px; padding: 0.15rem 0.5rem; font-weight: 700; font-size: 0.85rem; cursor: pointer; color: var(--ink); }
+  .cov:hover { border-color: var(--primary); color: var(--primary); }
+  .cov small { color: #0d9488; font-weight: 900; margin-left: 0.3rem; }
+
+  /* 單字小卡 */
+  .sheet { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.35); z-index: 50; display: flex; align-items: flex-end; justify-content: center; }
+  .sheet[hidden] { display: none; }
+  .sheet-card {
+    background: #fff; width: 100%; max-width: 560px; border-radius: 18px 18px 0 0; padding: 1.1rem 1.2rem 1.4rem;
+    position: relative; box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.2);
+  }
+  .sheet-close { position: absolute; right: 0.8rem; top: 0.6rem; border: none; background: transparent; font-size: 1.2rem; cursor: pointer; color: var(--muted); }
+  .sh-top { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; padding-right: 2rem; }
+  .sh-en { font-size: 1.6rem; font-weight: 900; color: #1e3a8a; }
+  .sh-ipa { color: var(--muted); }
+  .sh-pos { font-size: 0.78rem; font-weight: 800; background: #f1f5f9; color: #475569; padding: 0.05rem 0.45rem; border-radius: 6px; }
+  .sh-zh { font-size: 1.1rem; font-weight: 800; color: var(--accent); margin-top: 0.2rem; }
+  .sh-usage { margin-top: 0.5rem; background: var(--gold-bg); border: 1px solid #fcd34d; color: #92400e; border-radius: 10px; padding: 0.4rem 0.7rem; font-size: 0.9rem; }
+  .sh-src { margin-top: 0.5rem; color: var(--muted); font-size: 0.85rem; }
+  .sh-actions { display: flex; gap: 0.5rem; margin-top: 0.8rem; flex-wrap: wrap; }
+  .sh-actions .ctl { text-decoration: none; }
+
+  .no-tts { background: var(--bad-bg); color: var(--bad); border-radius: 10px; padding: 0.5rem 0.8rem; font-size: 0.85rem; margin-bottom: 0.6rem; }
+  @media (max-width: 520px) {
+    header .back { position: static; display: block; margin-bottom: 0.6rem; }
+    .msg-main { max-width: 88%; }
+    .mode-btn { font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html#202609">← 回講義列表</a>
+  <span class="tag">UNIT B</span>
+  <h1>日常情境對話・94 個單字全收錄</h1>
+  <p>9 個生活場景・本期 11 個單元的核心單字全部用上・聽對話、角色扮演、克漏字</p>
+</header>
+
+<main class="container">
+  <div class="stats" id="stats"></div>
+  <div class="toolbar"><div class="scene-chips" id="scene-chips" role="tablist" aria-label="情境"></div></div>
+  <section id="scene"></section>
+
+  <section class="coverage">
+    <h2>📋 94 字涵蓋表</h2>
+    <p class="hint">依原課單元排列，後面的 S 是出現的情境。點單字會跳到它出現的那一句。</p>
+    <div id="coverage"></div>
+  </section>
+</main>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-card" role="dialog" aria-modal="true" aria-label="單字小卡">
+    <button class="sheet-close" id="sheet-close" aria-label="關閉">✕</button>
+    <div id="sheet-body"></div>
+  </div>
+</div>
+
+<script>
+/* ===== 資料（由產生器寫入）===== */
+const SCENES = [{"id": 1, "en": "A New Classmate Arrives", "zh": "新同學報到", "setting": "開學第一週，加拿大來的交換學生艾瑪第一天到校，莉莉和傑森負責帶她認識環境。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Emma", "zh": "艾瑪", "g": "f", "p": 1.0, "side": "l", "color": "#c026d3"}], "words": ["entrance", "confirm", "campus", "supposed", "international", "environment", "familiar", "rent", "original"], "lines": [{"who": "Lily", "segs": ["Hi, you must be Emma! We were told to meet you at the main ", {"w": "entrance", "l": "entrance"}, "."], "zh": "嗨，你一定是艾瑪吧！老師要我們在大門口跟你碰面。"}, {"who": "Emma", "segs": ["Yes, that's me. Thanks for waiting. Can I just ", {"w": "confirm", "l": "confirm"}, " that this is Class 205?"], "zh": "對，是我，謝謝你們等我。我可以先確認一下這裡是 205 班嗎？"}, {"who": "Jason", "segs": ["That's right. Welcome! I'm Jason, and this is Lily."], "zh": "沒錯，歡迎！我是傑森，這位是莉莉。"}, {"who": "Emma", "segs": ["Nice to meet you both. Your ", {"w": "campus", "l": "campus"}, " is so big!"], "zh": "很高興認識你們。你們的校園好大！"}, {"who": "Lily", "segs": ["No problem. We're ", {"w": "supposed", "l": "supposed"}, " to show you around today."], "zh": "沒問題，我們今天應該要帶你四處逛逛。"}, {"who": "Jason", "segs": ["Are you the first ", {"w": "international", "l": "international"}, " student at our school?"], "zh": "你是我們學校第一位國際學生嗎？"}, {"who": "Emma", "segs": ["I think so. Everything is new to me—the language, the food, the whole ", {"w": "environment", "l": "environment"}, "."], "zh": "我想是吧。一切對我都很新鮮：語言、食物，整個環境都是。"}, {"who": "Lily", "segs": ["Don't worry. You'll get ", {"w": "familiar", "l": "familiar"}, " with everything in a few weeks."], "zh": "別擔心，幾個禮拜後你就會熟悉一切了。"}, {"who": "Jason", "segs": ["By the way, where are you living?"], "zh": "對了，你住在哪裡？"}, {"who": "Emma", "segs": ["My family decided to ", {"w": "rent", "l": "rent"}, " an apartment near the MRT station."], "zh": "我家人決定在捷運站附近租一間公寓。"}, {"who": "Lily", "segs": ["Nice! That's only ten minutes from here by bike."], "zh": "讚！騎腳踏車到這裡只要十分鐘。"}, {"who": "Emma", "segs": ["Really? My ", {"w": "original", "l": "original"}, " plan was to take the bus, but maybe I'll buy a bike."], "zh": "真的嗎？我原本打算搭公車，不過也許我會買台腳踏車。"}, {"who": "Jason", "segs": ["Good idea. Lots of students ride to school here."], "zh": "好主意，這裡很多學生騎車上學。"}, {"who": "Lily", "segs": ["Come on, let's go to class. The bell is about to ring!"], "zh": "走吧，去上課，鐘聲快響了！"}], "expr": [["You must be ...", "你一定是……吧（初次見面確認身分）"], ["show sb around", "帶某人四處參觀"], ["get familiar with ...", "熟悉……"], ["The bell is about to ring.", "鐘聲快響了。be about to V. 即將……"]], "usage": {"supposed": "be supposed to V. 應該……"}}, {"id": 2, "en": "Drama Club Rehearsal", "zh": "戲劇社排練", "setting": "戲劇社在排練《阿里巴巴與四十大盜》，傑森演阿里巴巴，莉莉演聰明的女僕瑪潔娜。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Director", "zh": "導演", "g": "m", "p": 0.85, "side": "l", "color": "#4f46e5"}], "words": ["cave", "jewel", "silk", "pretend", "greedy", "slave", "jar", "pour", "signal", "warn"], "lines": [{"who": "Director", "segs": ["OK, everyone, let's practice the scene in the ", {"w": "cave", "l": "cave"}, " one more time."], "zh": "好，各位，我們再排一次山洞那場戲。"}, {"who": "Jason", "segs": ["Wait, where are the ", {"w": "jewels", "l": "jewel"}, "? Ali Baba is supposed to find a pile of treasure."], "zh": "等等，珠寶在哪裡？阿里巴巴應該要發現一堆寶藏啊。"}, {"who": "Director", "segs": ["They're in that box, next to the ", {"w": "silk", "l": "silk"}, " cloth. Just ", {"w": "pretend", "l": "pretend"}, " they're real."], "zh": "在那個箱子裡，絲綢布旁邊。你就假裝它們是真的。"}, {"who": "Jason", "segs": ["Got it. And then my brother comes in, right?"], "zh": "了解。然後我哥哥會進來，對吧？"}, {"who": "Director", "segs": ["Yes. He's so ", {"w": "greedy", "l": "greedy"}, " that he wants all the treasure for himself."], "zh": "對。他貪心到想把寶藏全部占為己有。"}, {"who": "Lily", "segs": ["What about my part? When do I come on stage?"], "zh": "那我的部分呢？我什麼時候上台？"}, {"who": "Director", "segs": ["You're Morgiana, the clever ", {"w": "slave", "l": "slave"}, " girl. You enter after the thieves hide in the oil ", {"w": "jars", "l": "jar"}, "."], "zh": "你演瑪潔娜，那個聰明的女奴。你在盜賊躲進油罐之後上場。"}, {"who": "Lily", "segs": ["And then I ", {"w": "pour", "l": "pour"}, " hot oil into them, right? That part is a little scary."], "zh": "然後我把熱油倒進去，對吧？那段有點可怕。"}, {"who": "Director", "segs": ["Don't worry, it's only water on stage. But first, the leader gives a ", {"w": "signal", "l": "signal"}, " to his men."], "zh": "別擔心，台上只是水而已。不過在那之前，首領會先給手下一個暗號。"}, {"who": "Jason", "segs": ["What does he do exactly?"], "zh": "他具體要做什麼？"}, {"who": "Director", "segs": ["He knocks on the wall three times. Lily, that's when you turn and ", {"w": "warn", "l": "warn"}, " Ali Baba with your eyes."], "zh": "他會敲牆三下。莉莉，那時你要轉身用眼神警告阿里巴巴。"}, {"who": "Lily", "segs": ["Like this? Ali Baba, watch out!"], "zh": "像這樣嗎？阿里巴巴，小心！"}, {"who": "Director", "segs": ["Perfect! You two are going to be great."], "zh": "完美！你們倆一定會演得很棒。"}, {"who": "Jason", "segs": ["I hope so. The show is only two weeks away!"], "zh": "希望如此。距離演出只剩兩週了！"}], "expr": [["one more time", "再一次"], ["Just pretend they're real.", "就假裝它們是真的"], ["come on stage", "上台"], ["Watch out!", "小心！"]], "usage": {"slave": "slave girl 女奴（故事中的角色）", "warn": "warn sb with your eyes 用眼神警告某人"}}, {"id": 3, "en": "A Phone-Free Dinner", "zh": "英式餐館的無手機晚餐", "setting": "莉莉和傑森到一家英式餐館吃炸魚薯條，這家店有一條特別的規定。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Waiter", "zh": "服務生", "g": "m", "p": 0.8, "side": "l", "color": "#0d9488"}], "words": ["pub", "review", "dine", "owner", "constantly", "stare", "especially", "variety", "portion", "roughly", "limited", "suggest", "situation"], "lines": [{"who": "Jason", "segs": ["This British ", {"w": "pub", "l": "pub"}, " has great ", {"w": "reviews", "l": "review"}, " online. Everyone talks about the fish and chips."], "zh": "這家英式酒館在網路上評價很好，大家都在討論它的炸魚薯條。"}, {"who": "Lily", "segs": ["Look at the sign on the door. It says, 'Phone-free ", {"w": "dining", "l": "dine"}, ".'"], "zh": "你看門上的告示，寫著「無手機用餐」。"}, {"who": "Waiter", "segs": ["Welcome! Our ", {"w": "owner", "l": "owner"}, " started this rule last year. Please put your phones in this box."], "zh": "歡迎光臨！我們老闆去年開始實施這個規定，請把手機放進這個盒子裡。"}, {"who": "Jason", "segs": ["Seriously? But I ", {"w": "constantly", "l": "constantly"}, " check my messages."], "zh": "真的假的？可是我一直都在看訊息耶。"}, {"who": "Waiter", "segs": ["That's exactly why. People used to ", {"w": "stare", "l": "stare"}, " at their screens all through dinner."], "zh": "這正是原因。以前客人整頓晚餐都盯著螢幕看。"}, {"who": "Lily", "segs": ["I like the idea, ", {"w": "especially", "l": "especially"}, " for a meal with friends."], "zh": "我喜歡這個點子，尤其是跟朋友吃飯的時候。"}, {"who": "Waiter", "segs": ["Here's the menu. We have a wide ", {"w": "variety", "l": "variety"}, " of dishes, but the fish is our best seller."], "zh": "這是菜單。我們有各式各樣的料理，不過魚是我們最暢銷的。"}, {"who": "Jason", "segs": ["How big is one ", {"w": "portion", "l": "portion"}, "? I'm really hungry."], "zh": "一份有多大？我真的很餓。"}, {"who": "Waiter", "segs": ["It's ", {"w": "roughly", "l": "roughly"}, " the size of a plate, with lots of chips on the side."], "zh": "大約一個盤子那麼大，旁邊還附很多薯條。"}, {"who": "Lily", "segs": ["Wow. But the dessert menu looks ", {"w": "limited", "l": "limited"}, "—there are only two choices."], "zh": "哇。不過甜點菜單看起來選擇不多，只有兩種。"}, {"who": "Jason", "segs": ["Well, the long line outside ", {"w": "suggests", "l": "suggest"}, " this place is really good."], "zh": "嗯，外面排的長長人龍顯示這家店真的很好吃。"}, {"who": "Lily", "segs": ["True. And without phones, we'll actually have to talk to each other tonight."], "zh": "確實。而且沒有手機，我們今晚就真的得好好聊天了。"}, {"who": "Jason", "segs": ["OK, I'll accept the ", {"w": "situation", "l": "situation"}, ". No phones, just food and friends."], "zh": "好吧，我接受這個狀況。沒有手機，只有美食和朋友。"}, {"who": "Lily", "segs": ["Now you're talking! Let's order."], "zh": "這才對嘛！我們點餐吧。"}], "expr": [["Seriously?", "真的假的？"], ["best seller", "最暢銷的商品"], ["on the side", "（餐點）附在旁邊的"], ["Now you're talking!", "這才對嘛！對方終於說出你想聽的話"]], "usage": {"dine": "phone-free dining 無手機用餐（dining 是 dine 的動名詞）", "suggest": "這裡指「顯示、表明」，不是「建議」", "roughly": "roughly = about 大約"}}, {"id": 4, "en": "Watching a Nature Documentary", "zh": "看動物紀錄片", "setting": "週末晚上，莉莉和傑森在莉莉家看動物紀錄片，媽媽也一起看。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Mom", "zh": "媽媽", "g": "f", "p": 0.9, "side": "l", "color": "#db2777"}], "words": ["charming", "hug", "scientist", "threaten", "strategy", "freezing", "nest", "romantic", "practical", "icy"], "lines": [{"who": "Lily", "segs": ["Look at that red panda! It's so ", {"w": "charming", "l": "charming"}, "."], "zh": "你看那隻紅貓熊！好可愛。"}, {"who": "Jason", "segs": ["It's standing on two legs and opening its arms. Does it want a ", {"w": "hug", "l": "hug"}, "?"], "zh": "牠用兩隻腳站起來，還張開雙臂，是想要抱抱嗎？"}, {"who": "Mom", "segs": ["Actually, no. The ", {"w": "scientist", "l": "scientist"}, " on the show just explained it."], "zh": "其實不是。節目裡的科學家剛剛解釋過了。"}, {"who": "Lily", "segs": ["Wait, what did she say? I missed it."], "zh": "等等，她說了什麼？我沒聽到。"}, {"who": "Mom", "segs": ["It stands up when it feels ", {"w": "threatened", "l": "threaten"}, ". It's trying to look bigger."], "zh": "牠覺得受到威脅時就會站起來，是想讓自己看起來比較大。"}, {"who": "Jason", "segs": ["Oh! So it's a ", {"w": "strategy", "l": "strategy"}, " to scare away enemies."], "zh": "喔！所以那是嚇跑敵人的策略。"}, {"who": "Lily", "segs": ["Not so cute after all. What's next?"], "zh": "原來沒那麼可愛。接下來是什麼？"}, {"who": "Jason", "segs": ["Penguins in Antarctica. It looks ", {"w": "freezing", "l": "freezing"}, " cold there."], "zh": "南極的企鵝。那裡看起來超冷。"}, {"who": "Mom", "segs": ["Watch this. The male gives the female a small stone for her ", {"w": "nest", "l": "nest"}, "."], "zh": "看這段，公企鵝會送母企鵝一顆小石頭築巢。"}, {"who": "Lily", "segs": ["Aww, that's so ", {"w": "romantic", "l": "romantic"}, "! It's like a gift of love."], "zh": "哇，好浪漫！就像愛的禮物。"}, {"who": "Mom", "segs": ["Maybe, but it's also ", {"w": "practical", "l": "practical"}, ". The stones keep the eggs off the ", {"w": "icy", "l": "icy"}, " ground."], "zh": "也許吧，不過這也很實際，石頭能讓蛋不直接碰到冰冷的地面。"}, {"who": "Jason", "segs": ["Smart birds. I couldn't live in a place like that."], "zh": "聰明的鳥。我可沒辦法住在那種地方。"}, {"who": "Lily", "segs": ["Me neither. I'll stay here on the sofa with my snacks."], "zh": "我也是。我要待在沙發上配零食。"}, {"who": "Mom", "segs": ["Then pass me the chips, please."], "zh": "那請把洋芋片遞給我。"}], "expr": [["I missed it.", "我錯過了（沒聽到／沒看到）"], ["after all", "畢竟；到頭來"], ["Me neither.", "我也不。附和否定句時用"], ["Pass me ..., please.", "請把……遞給我"]], "usage": {"threaten": "feel threatened 感到受威脅（過去分詞當形容詞）", "freezing": "freezing cold 極度寒冷"}}, {"id": 5, "en": "A Weekend Walk", "zh": "週末散步", "setting": "週六早上，莉莉拉傑森出門散步，順便玩一款走路種花的手機遊戲。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}], "words": ["outdoors", "earn", "nearby", "trail", "colorful", "mushroom", "location", "adventure", "casual", "journey"], "lines": [{"who": "Lily", "segs": ["Come on, Jason! It's a sunny day. Let's spend some time ", {"w": "outdoors", "l": "outdoors"}, "."], "zh": "快點，傑森！今天天氣很好，我們去戶外走走吧。"}, {"who": "Jason", "segs": ["Fine. But only if we can play that walking game on our phones."], "zh": "好啦，不過要邊走邊玩那個走路手機遊戲。"}, {"who": "Lily", "segs": ["Deal. The more steps we take, the more points we ", {"w": "earn", "l": "earn"}, "."], "zh": "成交。走越多步，就能賺越多點數。"}, {"who": "Jason", "segs": ["Is there a park ", {"w": "nearby", "l": "nearby"}, "? I don't want to walk too far."], "zh": "附近有公園嗎？我不想走太遠。"}, {"who": "Lily", "segs": ["There's a hiking ", {"w": "trail", "l": "trail"}, " behind the library. It's only two kilometers long."], "zh": "圖書館後面有一條步道，才兩公里長。"}, {"who": "Jason", "segs": ["OK. Wow, look at the map. We're planting ", {"w": "colorful", "l": "colorful"}, " flowers everywhere we go!"], "zh": "好。哇，你看地圖，我們走到哪就種下五顏六色的花！"}, {"who": "Lily", "segs": ["And there's a giant ", {"w": "mushroom", "l": "mushroom"}, " at this ", {"w": "location", "l": "location"}, ". Let's team up and fight it."], "zh": "而且這個地點有一朵巨大的蘑菇，我們組隊去打它吧。"}, {"who": "Jason", "segs": ["Ha! This is turning into a real ", {"w": "adventure", "l": "adventure"}, "."], "zh": "哈！這變成一場真正的冒險了。"}, {"who": "Lily", "segs": ["I like this game because it's so ", {"w": "casual", "l": "casual"}, ". You don't need to be good at games."], "zh": "我喜歡這款遊戲是因為它很休閒，不需要很會打遊戲。"}, {"who": "Jason", "segs": ["True. And I've already walked 5,000 steps without noticing."], "zh": "對啊，而且我不知不覺已經走了五千步。"}, {"who": "Lily", "segs": ["See? Walking is more fun with a goal."], "zh": "看吧？有目標的話，走路更有趣。"}, {"who": "Jason", "segs": ["Next weekend, let's take a longer ", {"w": "journey", "l": "journey"}, "—maybe to the river park."], "zh": "下個週末我們走遠一點吧，也許去河濱公園。"}, {"who": "Lily", "segs": ["Sounds great. I'll bring water and sandwiches."], "zh": "聽起來很棒，我帶水和三明治。"}], "expr": [["The more ..., the more ...", "越……就越……"], ["team up", "組隊、合作"], ["without noticing", "不知不覺地"], ["Sounds great.", "聽起來很棒"]], "usage": {"earn": "earn points 賺取點數"}}, {"id": 6, "en": "The School Concert", "zh": "校園音樂會", "setting": "艾瑪在校園音樂會上表演自己寫的歌，莉莉和傑森在台下看。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}, {"name": "Emma", "zh": "艾瑪", "g": "f", "p": 1.0, "side": "l", "color": "#c026d3"}], "words": ["concert", "audience", "produce", "volume", "amazed", "mix", "unique", "amazingly", "talent", "career", "prove", "global"], "lines": [{"who": "Jason", "segs": ["The school ", {"w": "concert", "l": "concert"}, " is about to start. Look how many people are here!"], "zh": "校園音樂會快開始了，你看來了好多人！"}, {"who": "Lily", "segs": ["The ", {"w": "audience", "l": "audience"}, " is mostly students, but some parents came too."], "zh": "觀眾大多是學生，不過也有一些家長來。"}, {"who": "Jason", "segs": ["Emma is performing a song she wrote herself, right?"], "zh": "艾瑪要表演她自己寫的歌，對吧？"}, {"who": "Lily", "segs": ["Yes. She even ", {"w": "produced", "l": "produce"}, " the music on her laptop."], "zh": "對，她甚至用筆電自己製作音樂。"}, {"who": "Jason", "segs": ["Shh, here she comes. Can you turn down the ", {"w": "volume", "l": "volume"}, " on your phone?"], "zh": "噓，她出來了。你可以把手機音量調小嗎？"}, {"who": null, "segs": ["(After the song)"], "zh": "（表演結束後）"}, {"who": "Lily", "segs": ["Wow! I'm ", {"w": "amazed", "l": "amazed"}, ". Her voice was so clear."], "zh": "哇！我好驚訝，她的聲音好清澈。"}, {"who": "Jason", "segs": ["And the song was a ", {"w": "mix", "l": "mix"}, " of pop and Taiwanese folk music."], "zh": "而且那首歌混合了流行樂和台灣民謠。"}, {"who": "Lily", "segs": ["That's what makes her style so ", {"w": "unique", "l": "unique"}, "."], "zh": "這就是她的風格這麼獨特的原因。"}, {"who": "Emma", "segs": ["Hi, guys! Was I OK? My hands were shaking the whole time."], "zh": "嗨！我表現還可以嗎？我的手一直在發抖。"}, {"who": "Jason", "segs": ["You were great! ", {"w": "Amazingly", "l": "amazingly"}, ", nobody could tell you were nervous."], "zh": "你超棒的！神奇的是，完全看不出來你很緊張。"}, {"who": "Lily", "segs": ["You have real ", {"w": "talent", "l": "talent"}, ". Do you want a ", {"w": "career", "l": "career"}, " in music?"], "zh": "你真的很有天分。你想往音樂發展嗎？"}, {"who": "Emma", "segs": ["Maybe. I want to ", {"w": "prove", "l": "prove"}, " that a high school student can write good songs."], "zh": "也許吧。我想證明高中生也能寫出好歌。"}, {"who": "Jason", "segs": ["Who knows? Your song might become a ", {"w": "global", "l": "global"}, " hit someday!"], "zh": "誰知道呢？你的歌說不定哪天會紅遍全球！"}, {"who": "Emma", "segs": ["Ha! Thanks. For now, I just want some bubble tea."], "zh": "哈！謝謝。現在我只想喝杯珍奶。"}], "expr": [["Here she comes.", "她來了。（把 here 放句首強調）"], ["turn down the volume", "把音量調小"], ["nobody could tell ...", "沒人看得出……（tell 在此指「分辨」）"], ["Who knows?", "誰知道呢？"]], "usage": {"amazingly": "放句首修飾整句：「令人驚奇的是」", "global": "a global hit 紅遍全球的歌"}}, {"id": 7, "en": "Back from Nagoya", "zh": "名古屋旅遊分享", "setting": "連假結束，莉莉剛和家人去完日本名古屋，回來跟傑森分享。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}], "words": ["lively", "collection", "weapon", "remain", "studio", "magical", "design", "various", "plenty", "dip"], "lines": [{"who": "Jason", "segs": ["Welcome back! How was your trip to Nagoya?"], "zh": "歡迎回來！名古屋之旅好玩嗎？"}, {"who": "Lily", "segs": ["It was great! The city is so ", {"w": "lively", "l": "lively"}, ", especially at night."], "zh": "超棒的！那座城市好熱鬧，尤其是晚上。"}, {"who": "Jason", "segs": ["What did you see?"], "zh": "你看了些什麼？"}, {"who": "Lily", "segs": ["First, a history museum with a ", {"w": "collection", "l": "collection"}, " of samurai armor."], "zh": "首先是一間歷史博物館，裡面收藏了一批武士盔甲。"}, {"who": "Jason", "segs": ["Cool! Did they have any ", {"w": "weapons", "l": "weapon"}, " too?"], "zh": "酷！他們也有武器嗎？"}, {"who": "Lily", "segs": ["Yes, lots of swords. Some of them ", {"w": "remain", "l": "remain"}, " in perfect condition after 400 years."], "zh": "有，很多刀劍。有些過了四百年仍然保存得很完好。"}, {"who": "Jason", "segs": ["Amazing. What else?"], "zh": "太厲害了。還有呢？"}, {"who": "Lily", "segs": ["We visited a park based on the films of a famous animation ", {"w": "studio", "l": "studio"}, "."], "zh": "我們去了一座以知名動畫工作室的電影為主題的公園。"}, {"who": "Jason", "segs": ["That sounds ", {"w": "magical", "l": "magical"}, "! Was it like walking into a movie?"], "zh": "聽起來好夢幻！是不是像走進電影裡？"}, {"who": "Lily", "segs": ["Exactly. Every building was carefully ", {"w": "designed", "l": "design"}, ", down to the tiny details."], "zh": "沒錯，每棟建築都經過精心設計，連小細節都不放過。"}, {"who": "Jason", "segs": ["And I heard Nagoya has ", {"w": "various", "l": "various"}, " local dishes. Did you try any?"], "zh": "我還聽說名古屋有各式各樣的在地料理，你有吃嗎？"}, {"who": "Lily", "segs": ["I tried ", {"w": "plenty", "l": "plenty"}, " of them! My favorite was fried pork that you ", {"w": "dip", "l": "dip"}, " in sweet miso sauce."], "zh": "我吃了很多！我最愛的是沾甜味噌醬吃的炸豬排。"}, {"who": "Jason", "segs": ["Stop! You're making me hungry."], "zh": "別說了！你害我餓了。"}, {"who": "Lily", "segs": ["Ha! I brought you some snacks from Japan. Here you go."], "zh": "哈！我從日本帶了些零食給你，拿去吧。"}], "expr": [["Welcome back!", "歡迎回來！"], ["in perfect condition", "狀況完好"], ["down to the tiny details", "連小細節都……"], ["Here you go.", "拿去吧、給你"]], "usage": {"plenty": "plenty of + 名詞 很多的……", "dip": "dip A in B 把 A 沾 B"}}, {"id": 8, "en": "Is That Profile Real?", "zh": "這個帳號是真的嗎？", "setting": "傑森最近在網路上認識一個新朋友，莉莉覺得不太對勁。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}], "words": ["recently", "platform", "claim", "term", "fake", "develop", "request", "threat", "private", "detail", "identity", "avoid"], "lines": [{"who": "Jason", "segs": ["I ", {"w": "recently", "l": "recently"}, " met someone online. She's really nice, and we chat every day."], "zh": "我最近在網路上認識一個人，她人很好，我們每天聊天。"}, {"who": "Lily", "segs": ["Which ", {"w": "platform", "l": "platform"}, " did you meet her on?"], "zh": "你在哪個平台認識她的？"}, {"who": "Jason", "segs": ["A gaming app. She ", {"w": "claims", "l": "claim"}, " to be a model from Korea."], "zh": "一個遊戲 app。她說自己是韓國的模特兒。"}, {"who": "Lily", "segs": ["Hmm. Have you ever seen her face on a video call?"], "zh": "嗯……你有在視訊通話裡看過她的臉嗎？"}, {"who": "Jason", "segs": ["No. She always says her camera is broken. Why?"], "zh": "沒有，她總說她的鏡頭壞了。怎麼了？"}, {"who": "Lily", "segs": ["Have you heard the ", {"w": "term", "l": "term"}, " 'catfishing'? It's when someone uses a ", {"w": "fake", "l": "fake"}, " profile to fool people."], "zh": "你聽過 catfishing 這個說法嗎？就是有人用假帳號來騙人。"}, {"who": "Jason", "segs": ["You think she's not real? But we've ", {"w": "developed", "l": "develop"}, " a real friendship!"], "zh": "你覺得她不是真的？可是我們已經培養出真正的友誼了！"}, {"who": "Lily", "segs": ["That's exactly how it works. Has she ever asked for money?"], "zh": "這正是他們的手法。她有跟你要過錢嗎？"}, {"who": "Jason", "segs": ["Well... last night she ", {"w": "requested", "l": "request"}, " 1,000 dollars for a plane ticket to visit me."], "zh": "呃……昨晚她跟我要一千塊，說要買機票來看我。"}, {"who": "Lily", "segs": ["Jason, that's a big warning sign. This person could be a real ", {"w": "threat", "l": "threat"}, "."], "zh": "傑森，這是很大的警訊，這個人可能真的對你有威脅。"}, {"who": "Jason", "segs": ["Oh no. I also told her some ", {"w": "private", "l": "private"}, " things about my family."], "zh": "糟了，我還跟她說了一些家裡的私事。"}, {"who": "Lily", "segs": ["Don't share any more ", {"w": "details", "l": "detail"}, ", like your address or school."], "zh": "別再透露任何資料了，像是你的住址或學校。"}, {"who": "Jason", "segs": ["Should I just block her?"], "zh": "我是不是直接封鎖她就好？"}, {"who": "Lily", "segs": ["Yes, and report the account. Her real ", {"w": "identity", "l": "identity"}, " could be anyone."], "zh": "對，而且要檢舉這個帳號。她的真實身分可能是任何人。"}, {"who": "Jason", "segs": ["I feel so stupid."], "zh": "我覺得自己好蠢。"}, {"who": "Lily", "segs": ["Don't. Just remember to ", {"w": "avoid", "l": "avoid"}, " sending money to people you've never met."], "zh": "別這樣想。只要記得，避免把錢匯給沒見過面的人。"}], "expr": [["a warning sign", "警訊"], ["That's exactly how it works.", "這正是它的運作方式（手法）"], ["block / report an account", "封鎖／檢舉帳號"], ["I feel so stupid.", "我覺得自己好蠢"]], "usage": {"claim": "claim to be... 聲稱自己是……", "develop": "develop a friendship 培養友誼", "avoid": "avoid + V-ing 避免做……"}}, {"id": 9, "en": "An Unexpected Day", "zh": "意料之外的一天", "setting": "莉莉跟傑森分享她上週末那個「本來很普通」的一天。", "cast": [{"name": "Lily", "zh": "莉莉", "g": "f", "p": 1.15, "side": "r", "color": "#2563eb"}, {"name": "Jason", "zh": "傑森", "g": "m", "p": 0.95, "side": "l", "color": "#ea580c"}], "words": ["normal", "asleep", "dull", "chess", "curious", "champion", "proof", "honor"], "lines": [{"who": "Jason", "segs": ["How was your weekend?"], "zh": "你週末過得怎麼樣？"}, {"who": "Lily", "segs": ["It started as a totally ", {"w": "normal", "l": "normal"}, " Saturday. I almost fell ", {"w": "asleep", "l": "asleep"}, " on the bus."], "zh": "一開始是個再普通不過的星期六，我在公車上差點睡著。"}, {"who": "Jason", "segs": ["Sounds ", {"w": "dull", "l": "dull"}, "."], "zh": "聽起來好無聊。"}, {"who": "Lily", "segs": ["It was, until I got off at the park. An old man was playing ", {"w": "chess", "l": "chess"}, " alone."], "zh": "本來是啦，直到我在公園下車。有個老先生一個人在下西洋棋。"}, {"who": "Jason", "segs": ["Alone? That's strange."], "zh": "一個人？好奇怪。"}, {"who": "Lily", "segs": ["I was ", {"w": "curious", "l": "curious"}, ", so I asked if I could join him."], "zh": "我很好奇，所以問他我可不可以跟他下一盤。"}, {"who": "Jason", "segs": ["Did you win?"], "zh": "你贏了嗎？"}, {"who": "Lily", "segs": ["No way! He beat me in five minutes. Then he told me he was a national ", {"w": "champion", "l": "champion"}, " in the 1980s."], "zh": "怎麼可能！他五分鐘就打敗我了。然後他說他是一九八〇年代的全國冠軍。"}, {"who": "Jason", "segs": ["Really? Did you believe him?"], "zh": "真的嗎？你相信他嗎？"}, {"who": "Lily", "segs": ["Not at first. But he showed me an old newspaper photo as ", {"w": "proof", "l": "proof"}, "."], "zh": "一開始不信。但他拿了一張舊報紙照片給我看當作證明。"}, {"who": "Jason", "segs": ["Wow, that's so cool!"], "zh": "哇，好酷！"}, {"who": "Lily", "segs": ["He said it was an ", {"w": "honor", "l": "honor"}, " to teach a young player. Now he's going to teach me every Sunday."], "zh": "他說能教年輕棋手是他的榮幸，以後他每個星期天都要教我。"}, {"who": "Jason", "segs": ["So a boring day turned into the start of something new."], "zh": "所以無聊的一天變成了新事物的開始。"}, {"who": "Lily", "segs": ["Exactly. You never know what a day will bring."], "zh": "沒錯，你永遠不知道一天會帶來什麼。"}], "expr": [["No way!", "怎麼可能！"], ["at first", "起初"], ["turn into ...", "變成……"], ["You never know ...", "世事難料；你永遠不知道……"]], "usage": {"asleep": "fall asleep 睡著（asleep 只當補語）", "honor": "It's an honor to V. 能……是我的榮幸"}}];
+const WORDS = {"cave": {"en": "cave", "ipa": "[kev]", "pos": "n.", "zh": "洞穴、山洞", "unit": 1, "unitTitle": "Ali Baba and the 40 Thieves", "unitDir": "Unit1_Ali Baba and the 40 Thieves", "scene": 2}, "jewel": {"en": "jewel", "ipa": "[ˋdʒuəl]", "pos": "n.", "zh": "珠寶、寶石", "unit": 1, "unitTitle": "Ali Baba and the 40 Thieves", "unitDir": "Unit1_Ali Baba and the 40 Thieves", "scene": 2}, "silk": {"en": "silk", "ipa": "[sɪlk]", "pos": "n.", "zh": "絲綢；絲線、絲製品", "unit": 1, "unitTitle": "Ali Baba and the 40 Thieves", "unitDir": "Unit1_Ali Baba and the 40 Thieves", "scene": 2}, "warn": {"en": "warn", "ipa": "[wɔrn]", "pos": "v.", "zh": "警告、提醒；告誡", "unit": 1, "unitTitle": "Ali Baba and the 40 Thieves", "unitDir": "Unit1_Ali Baba and the 40 Thieves", "scene": 2}, "greedy": {"en": "greedy", "ipa": "[ˋgridɪ]", "pos": "adj.", "zh": "貪心的、貪婪的", "unit": 1, "unitTitle": "Ali Baba and the 40 Thieves", "unitDir": "Unit1_Ali Baba and the 40 Thieves", "scene": 2}, "signal": {"en": "signal", "ipa": "[ˋsɪgnḷ]", "pos": "n.", "zh": "信號、暗號", "unit": 1, "unitTitle": "Ali Baba and the 40 Thieves", "unitDir": "Unit1_Ali Baba and the 40 Thieves", "scene": 2}, "jar": {"en": "jar", "ipa": "[dʒɑr]", "pos": "n.", "zh": "罐子、罈；陶罐", "unit": 1, "unitTitle": "Ali Baba and the 40 Thieves", "unitDir": "Unit1_Ali Baba and the 40 Thieves", "scene": 2}, "slave": {"en": "slave", "ipa": "[slev]", "pos": "n.", "zh": "奴隸", "unit": 1, "unitTitle": "Ali Baba and the 40 Thieves", "unitDir": "Unit1_Ali Baba and the 40 Thieves", "scene": 2}, "pour": {"en": "pour", "ipa": "[pɔr]", "pos": "v.", "zh": "倒、傾倒（液體）；大量湧出", "unit": 1, "unitTitle": "Ali Baba and the 40 Thieves", "unitDir": "Unit1_Ali Baba and the 40 Thieves", "scene": 2}, "pretend": {"en": "pretend", "ipa": "[prɪˋtɛnd]", "pos": "v.", "zh": "假裝、佯裝", "unit": 1, "unitTitle": "Ali Baba and the 40 Thieves", "unitDir": "Unit1_Ali Baba and the 40 Thieves", "scene": 2}, "amazingly": {"en": "amazingly", "ipa": "[əˋmezɪŋlɪ]", "pos": "adv.", "zh": "令人驚奇地；出乎意料地", "unit": 2, "unitTitle": "From Market to Music: Meet Vienna's Vegetable Orchestra", "unitDir": "Unit2_From Market to Music", "scene": 6}, "concert": {"en": "concert", "ipa": "[ˋkɑnsɚt]", "pos": "n.", "zh": "音樂會；演唱會", "unit": 2, "unitTitle": "From Market to Music: Meet Vienna's Vegetable Orchestra", "unitDir": "Unit2_From Market to Music", "scene": 6}, "mix": {"en": "mix", "ipa": "[mɪks]", "pos": "n.", "zh": "混合、融合", "unit": 2, "unitTitle": "From Market to Music: Meet Vienna's Vegetable Orchestra", "unitDir": "Unit2_From Market to Music", "scene": 6}, "audience": {"en": "audience", "ipa": "[ˋɔdɪəns]", "pos": "n.", "zh": "觀眾", "unit": 2, "unitTitle": "From Market to Music: Meet Vienna's Vegetable Orchestra", "unitDir": "Unit2_From Market to Music", "scene": 6}, "prove": {"en": "prove", "ipa": "[pruv]", "pos": "v.", "zh": "證明、證實", "unit": 2, "unitTitle": "From Market to Music: Meet Vienna's Vegetable Orchestra", "unitDir": "Unit2_From Market to Music", "scene": 6}, "outdoors": {"en": "outdoors", "ipa": "[ˋaʊtˋdɔrz]", "pos": "adv.", "zh": "在戶外、在室外", "unit": 4, "unitTitle": "The Wonderful World of Pikmin Bloom", "unitDir": "Unit4_The Wonderful World of Pikmin Bloom", "scene": 5}, "colorful": {"en": "colorful", "ipa": "[ˋkʌlɚfəl]", "pos": "adj.", "zh": "色彩繽紛的", "unit": 4, "unitTitle": "The Wonderful World of Pikmin Bloom", "unitDir": "Unit4_The Wonderful World of Pikmin Bloom", "scene": 5}, "trail": {"en": "trail", "ipa": "[trel]", "pos": "n.", "zh": "痕跡、足跡；步道", "unit": 4, "unitTitle": "The Wonderful World of Pikmin Bloom", "unitDir": "Unit4_The Wonderful World of Pikmin Bloom", "scene": 5}, "earn": {"en": "earn", "ipa": "[ɝn]", "pos": "v.", "zh": "獲得、贏得；賺取", "unit": 4, "unitTitle": "The Wonderful World of Pikmin Bloom", "unitDir": "Unit4_The Wonderful World of Pikmin Bloom", "scene": 5}, "nearby": {"en": "nearby", "ipa": "[ˋnɪrˋbaɪ]", "pos": "adj.", "zh": "附近的；鄰近的", "unit": 4, "unitTitle": "The Wonderful World of Pikmin Bloom", "unitDir": "Unit4_The Wonderful World of Pikmin Bloom", "scene": 5}, "location": {"en": "location", "ipa": "[loˋkeʃən]", "pos": "n.", "zh": "地點、位置", "unit": 4, "unitTitle": "The Wonderful World of Pikmin Bloom", "unitDir": "Unit4_The Wonderful World of Pikmin Bloom", "scene": 5}, "mushroom": {"en": "mushroom", "ipa": "[ˋmʌʃ͵rum]", "pos": "n.", "zh": "蘑菇；蕈", "unit": 4, "unitTitle": "The Wonderful World of Pikmin Bloom", "unitDir": "Unit4_The Wonderful World of Pikmin Bloom", "scene": 5}, "adventure": {"en": "adventure", "ipa": "[ədˋvɛntʃɚ]", "pos": "n.", "zh": "冒險；刺激的經歷", "unit": 4, "unitTitle": "The Wonderful World of Pikmin Bloom", "unitDir": "Unit4_The Wonderful World of Pikmin Bloom", "scene": 5}, "casual": {"en": "casual", "ipa": "[ˋkæʒʊəl]", "pos": "adj.", "zh": "隨興的、休閒的、輕鬆的", "unit": 4, "unitTitle": "The Wonderful World of Pikmin Bloom", "unitDir": "Unit4_The Wonderful World of Pikmin Bloom", "scene": 5}, "journey": {"en": "journey", "ipa": "[ˋdʒɝnɪ]", "pos": "n.", "zh": "旅程、旅行", "unit": 4, "unitTitle": "The Wonderful World of Pikmin Bloom", "unitDir": "Unit4_The Wonderful World of Pikmin Bloom", "scene": 5}, "dine": {"en": "dine", "ipa": "[daɪn]", "pos": "v.", "zh": "用餐", "unit": 5, "unitTitle": "Phone-Free Dining: The War Over Phones at the Table", "unitDir": "Unit5_Phone-Free Dining", "scene": 3}, "international": {"en": "international", "ipa": "[͵ɪntɚˋnæʃənḷ]", "pos": "adj.", "zh": "國際的", "unit": 5, "unitTitle": "Phone-Free Dining: The War Over Phones at the Table", "unitDir": "Unit5_Phone-Free Dining", "scene": 1}, "owner": {"en": "owner", "ipa": "[ˋonɚ]", "pos": "n.", "zh": "所有人；店主、老闆", "unit": 5, "unitTitle": "Phone-Free Dining: The War Over Phones at the Table", "unitDir": "Unit5_Phone-Free Dining", "scene": 3}, "stare": {"en": "stare", "ipa": "[stɛr]", "pos": "v.", "zh": "盯著看", "unit": 5, "unitTitle": "Phone-Free Dining: The War Over Phones at the Table", "unitDir": "Unit5_Phone-Free Dining", "scene": 3}, "global": {"en": "global", "ipa": "[ˋglobḷ]", "pos": "adj.", "zh": "全球（性）的", "unit": 5, "unitTitle": "Phone-Free Dining: The War Over Phones at the Table", "unitDir": "Unit5_Phone-Free Dining", "scene": 6}, "review": {"en": "review", "ipa": "[rɪˋvju]", "pos": "n.", "zh": "評論、評價", "unit": 5, "unitTitle": "Phone-Free Dining: The War Over Phones at the Table", "unitDir": "Unit5_Phone-Free Dining", "scene": 3}, "especially": {"en": "especially", "ipa": "[əˋspɛʃəlɪ]", "pos": "adv.", "zh": "尤其、特別地", "unit": 5, "unitTitle": "Phone-Free Dining: The War Over Phones at the Table", "unitDir": "Unit5_Phone-Free Dining", "scene": 3}, "limited": {"en": "limited", "ipa": "[ˋlɪmɪtɪd]", "pos": "adj.", "zh": "有限的、不多的", "unit": 5, "unitTitle": "Phone-Free Dining: The War Over Phones at the Table", "unitDir": "Unit5_Phone-Free Dining", "scene": 3}, "constantly": {"en": "constantly", "ipa": "[ˋkɑnstəntlɪ]", "pos": "adv.", "zh": "持續不斷地、不停地", "unit": 5, "unitTitle": "Phone-Free Dining: The War Over Phones at the Table", "unitDir": "Unit5_Phone-Free Dining", "scene": 3}, "situation": {"en": "situation", "ipa": "[͵sɪtʃʊˋeʃən]", "pos": "n.", "zh": "情況、狀況、形勢", "unit": 5, "unitTitle": "Phone-Free Dining: The War Over Phones at the Table", "unitDir": "Unit5_Phone-Free Dining", "scene": 3}, "lively": {"en": "lively", "ipa": "[ˋlaɪvlɪ]", "pos": "adj.", "zh": "充滿活力的；熱鬧的", "unit": 8, "unitTitle": "The Sights of Nagoya", "unitDir": "Unit8_The Sights of Nagoya", "scene": 7}, "plenty": {"en": "plenty", "ipa": "[ˋplɛntɪ]", "pos": "pron.", "zh": "大量；充足", "unit": 8, "unitTitle": "The Sights of Nagoya", "unitDir": "Unit8_The Sights of Nagoya", "scene": 7}, "collection": {"en": "collection", "ipa": "[kəˋlɛkʃən]", "pos": "n.", "zh": "收藏品；收集", "unit": 8, "unitTitle": "The Sights of Nagoya", "unitDir": "Unit8_The Sights of Nagoya", "scene": 7}, "weapon": {"en": "weapon", "ipa": "[ˋwɛpən]", "pos": "n.", "zh": "武器、兵器", "unit": 8, "unitTitle": "The Sights of Nagoya", "unitDir": "Unit8_The Sights of Nagoya", "scene": 7}, "remain": {"en": "remain", "ipa": "[rɪˋmen]", "pos": "v.", "zh": "仍然是、保持", "unit": 8, "unitTitle": "The Sights of Nagoya", "unitDir": "Unit8_The Sights of Nagoya", "scene": 7}, "studio": {"en": "studio", "ipa": "[ˋstudɪ͵o]", "pos": "n.", "zh": "工作室；錄音室；製作公司", "unit": 8, "unitTitle": "The Sights of Nagoya", "unitDir": "Unit8_The Sights of Nagoya", "scene": 7}, "magical": {"en": "magical", "ipa": "[ˋmædʒɪkḷ]", "pos": "adj.", "zh": "神奇的、如魔法般的", "unit": 8, "unitTitle": "The Sights of Nagoya", "unitDir": "Unit8_The Sights of Nagoya", "scene": 7}, "design": {"en": "design", "ipa": "[dɪˋzaɪn]", "pos": "v.", "zh": "設計", "unit": 8, "unitTitle": "The Sights of Nagoya", "unitDir": "Unit8_The Sights of Nagoya", "scene": 7}, "dip": {"en": "dip", "ipa": "[dɪp]", "pos": "v.", "zh": "浸、蘸、泡", "unit": 8, "unitTitle": "The Sights of Nagoya", "unitDir": "Unit8_The Sights of Nagoya", "scene": 7}, "various": {"en": "various", "ipa": "[ˋvɛrɪəs]", "pos": "adj.", "zh": "各種不同的；各式各樣的", "unit": 8, "unitTitle": "The Sights of Nagoya", "unitDir": "Unit8_The Sights of Nagoya", "scene": 7}, "chess": {"en": "chess", "ipa": "[tʃɛs]", "pos": "n.", "zh": "西洋棋", "unit": 9, "unitTitle": "PinkPantheress: Queen of the Board and the Beat", "unitDir": "Unit9_PinkPantheress", "scene": 9}, "amazed": {"en": "amazed", "ipa": "[əˋmezd]", "pos": "adj.", "zh": "感到驚訝的", "unit": 9, "unitTitle": "PinkPantheress: Queen of the Board and the Beat", "unitDir": "Unit9_PinkPantheress", "scene": 6}, "unique": {"en": "unique", "ipa": "[juˋnik]", "pos": "adj.", "zh": "獨一無二的；獨特的", "unit": 9, "unitTitle": "PinkPantheress: Queen of the Board and the Beat", "unitDir": "Unit9_PinkPantheress", "scene": 6}, "champion": {"en": "champion", "ipa": "[ˋtʃæmpɪən]", "pos": "n.", "zh": "冠軍；優勝者", "unit": 9, "unitTitle": "PinkPantheress: Queen of the Board and the Beat", "unitDir": "Unit9_PinkPantheress", "scene": 9}, "career": {"en": "career", "ipa": "[kəˋrɪr]", "pos": "n.", "zh": "職業、事業；職業生涯", "unit": 9, "unitTitle": "PinkPantheress: Queen of the Board and the Beat", "unitDir": "Unit9_PinkPantheress", "scene": 6}, "produce": {"en": "produce", "ipa": "[prəˋdus]", "pos": "v.", "zh": "製作；生產", "unit": 9, "unitTitle": "PinkPantheress: Queen of the Board and the Beat", "unitDir": "Unit9_PinkPantheress", "scene": 6}, "proof": {"en": "proof", "ipa": "[pruf]", "pos": "n.", "zh": "證明；證據", "unit": 9, "unitTitle": "PinkPantheress: Queen of the Board and the Beat", "unitDir": "Unit9_PinkPantheress", "scene": 9}, "volume": {"en": "volume", "ipa": "[ˋvɑljəm]", "pos": "n.", "zh": "音量", "unit": 9, "unitTitle": "PinkPantheress: Queen of the Board and the Beat", "unitDir": "Unit9_PinkPantheress", "scene": 6}, "honor": {"en": "honor", "ipa": "[ˋɑnɚ]", "pos": "n.", "zh": "榮譽；榮幸、殊榮", "unit": 9, "unitTitle": "PinkPantheress: Queen of the Board and the Beat", "unitDir": "Unit9_PinkPantheress", "scene": 9}, "talent": {"en": "talent", "ipa": "[ˋtælənt]", "pos": "n.", "zh": "天賦；才能", "unit": 9, "unitTitle": "PinkPantheress: Queen of the Board and the Beat", "unitDir": "Unit9_PinkPantheress", "scene": 6}, "pub": {"en": "pub", "ipa": "[pʌb]", "pos": "n.", "zh": "英式酒館、酒吧", "unit": 10, "unitTitle": "Fish and Chips: Britain's Favorite Food", "unitDir": "Unit10_Fish and Chips", "scene": 3}, "roughly": {"en": "roughly", "ipa": "[ˋrʌflɪ]", "pos": "adv.", "zh": "大約、粗略地", "unit": 10, "unitTitle": "Fish and Chips: Britain's Favorite Food", "unitDir": "Unit10_Fish and Chips", "scene": 3}, "portion": {"en": "portion", "ipa": "[ˋpɔrʃən]", "pos": "n.", "zh": "（食物的）一份；部分", "unit": 10, "unitTitle": "Fish and Chips: Britain's Favorite Food", "unitDir": "Unit10_Fish and Chips", "scene": 3}, "suggest": {"en": "suggest", "ipa": "[səˋdʒɛst]", "pos": "v.", "zh": "顯示、表明；暗示", "unit": 10, "unitTitle": "Fish and Chips: Britain's Favorite Food", "unitDir": "Unit10_Fish and Chips", "scene": 3}, "variety": {"en": "variety", "ipa": "[vəˋraɪətɪ]", "pos": "n.", "zh": "種類；多樣性", "unit": 10, "unitTitle": "Fish and Chips: Britain's Favorite Food", "unitDir": "Unit10_Fish and Chips", "scene": 3}, "scientist": {"en": "scientist", "ipa": "[ˋsaɪəntɪst]", "pos": "n.", "zh": "科學家", "unit": 11, "unitTitle": "Not Just Cute: The Truth About Animal Behavior", "unitDir": "Unit11_Not Just Cute The Truth About Animal Behavior", "scene": 4}, "threaten": {"en": "threaten", "ipa": "[ˋθrɛtṇ]", "pos": "v.", "zh": "威脅、恐嚇；危及", "unit": 11, "unitTitle": "Not Just Cute: The Truth About Animal Behavior", "unitDir": "Unit11_Not Just Cute The Truth About Animal Behavior", "scene": 4}, "hug": {"en": "hug", "ipa": "[hʌg]", "pos": "n./v.", "zh": "擁抱", "unit": 11, "unitTitle": "Not Just Cute: The Truth About Animal Behavior", "unitDir": "Unit11_Not Just Cute The Truth About Animal Behavior", "scene": 4}, "charming": {"en": "charming", "ipa": "[ˋtʃɑrmɪŋ]", "pos": "adj.", "zh": "迷人的、討喜的", "unit": 11, "unitTitle": "Not Just Cute: The Truth About Animal Behavior", "unitDir": "Unit11_Not Just Cute The Truth About Animal Behavior", "scene": 4}, "strategy": {"en": "strategy", "ipa": "[ˋstrætədʒɪ]", "pos": "n.", "zh": "策略；戰略", "unit": 11, "unitTitle": "Not Just Cute: The Truth About Animal Behavior", "unitDir": "Unit11_Not Just Cute The Truth About Animal Behavior", "scene": 4}, "freezing": {"en": "freezing", "ipa": "[ˋfrizɪŋ]", "pos": "adv./adj.", "zh": "極寒地；極冷的", "unit": 11, "unitTitle": "Not Just Cute: The Truth About Animal Behavior", "unitDir": "Unit11_Not Just Cute The Truth About Animal Behavior", "scene": 4}, "romantic": {"en": "romantic", "ipa": "[roˋmæntɪk]", "pos": "adj.", "zh": "浪漫的", "unit": 11, "unitTitle": "Not Just Cute: The Truth About Animal Behavior", "unitDir": "Unit11_Not Just Cute The Truth About Animal Behavior", "scene": 4}, "practical": {"en": "practical", "ipa": "[ˋpræktɪkḷ]", "pos": "adj.", "zh": "實際的、實用的；務實的", "unit": 11, "unitTitle": "Not Just Cute: The Truth About Animal Behavior", "unitDir": "Unit11_Not Just Cute The Truth About Animal Behavior", "scene": 4}, "nest": {"en": "nest", "ipa": "[nɛst]", "pos": "n.", "zh": "巢、鳥巢", "unit": 11, "unitTitle": "Not Just Cute: The Truth About Animal Behavior", "unitDir": "Unit11_Not Just Cute The Truth About Animal Behavior", "scene": 4}, "icy": {"en": "icy", "ipa": "[ˋaɪsɪ]", "pos": "adj.", "zh": "冰冷的；結冰的", "unit": 11, "unitTitle": "Not Just Cute: The Truth About Animal Behavior", "unitDir": "Unit11_Not Just Cute The Truth About Animal Behavior", "scene": 4}, "entrance": {"en": "entrance", "ipa": "[ˋɛntrəns]", "pos": "n.", "zh": "入口；大門", "unit": 12, "unitTitle": "Introducing Yourself", "unitDir": "Unit12_Introducing Yourself", "scene": 1}, "confirm": {"en": "confirm", "ipa": "[kənˋfɝm]", "pos": "v.", "zh": "確認；證實", "unit": 12, "unitTitle": "Introducing Yourself", "unitDir": "Unit12_Introducing Yourself", "scene": 1}, "campus": {"en": "campus", "ipa": "[ˋkæmpəs]", "pos": "n.", "zh": "校園", "unit": 12, "unitTitle": "Introducing Yourself", "unitDir": "Unit12_Introducing Yourself", "scene": 1}, "supposed": {"en": "supposed", "ipa": "[səˋpozd]", "pos": "adj.", "zh": "應該的；被預期的", "unit": 12, "unitTitle": "Introducing Yourself", "unitDir": "Unit12_Introducing Yourself", "scene": 1}, "environment": {"en": "environment", "ipa": "[ɪnˋvaɪrənmənt]", "pos": "n.", "zh": "環境", "unit": 12, "unitTitle": "Introducing Yourself", "unitDir": "Unit12_Introducing Yourself", "scene": 1}, "familiar": {"en": "familiar", "ipa": "[fəˋmɪljɚ]", "pos": "adj.", "zh": "熟悉的", "unit": 12, "unitTitle": "Introducing Yourself", "unitDir": "Unit12_Introducing Yourself", "scene": 1}, "rent": {"en": "rent", "ipa": "[rɛnt]", "pos": "v.", "zh": "租借、租用；出租", "unit": 12, "unitTitle": "Introducing Yourself", "unitDir": "Unit12_Introducing Yourself", "scene": 1}, "original": {"en": "original", "ipa": "[əˋrɪdʒənḷ]", "pos": "adj.", "zh": "原本的、最初的；原始的", "unit": 12, "unitTitle": "Introducing Yourself", "unitDir": "Unit12_Introducing Yourself", "scene": 1}, "normal": {"en": "normal", "ipa": "[ˋnɔrmḷ]", "pos": "adj.", "zh": "普通的、正常的", "unit": 13, "unitTitle": "A Day in My Life: An Unexpected Day", "unitDir": "Unit13_A Day in My Life", "scene": 9}, "asleep": {"en": "asleep", "ipa": "[əˋslip]", "pos": "adj.", "zh": "睡著的", "unit": 13, "unitTitle": "A Day in My Life: An Unexpected Day", "unitDir": "Unit13_A Day in My Life", "scene": 9}, "dull": {"en": "dull", "ipa": "[dʌl]", "pos": "adj.", "zh": "沉悶的、無聊的", "unit": 13, "unitTitle": "A Day in My Life: An Unexpected Day", "unitDir": "Unit13_A Day in My Life", "scene": 9}, "curious": {"en": "curious", "ipa": "[ˋkjʊrɪəs]", "pos": "adj.", "zh": "好奇的", "unit": 13, "unitTitle": "A Day in My Life: An Unexpected Day", "unitDir": "Unit13_A Day in My Life", "scene": 9}, "term": {"en": "term", "ipa": "[tɝm]", "pos": "n.", "zh": "術語、專門名稱、措詞", "unit": 14, "unitTitle": "Catfishing: What to Watch Out For", "unitDir": "Unit14_Catfishing What to Watch Out For", "scene": 8}, "develop": {"en": "develop", "ipa": "[dɪˋvɛləp]", "pos": "v.", "zh": "培養、養成；開發", "unit": 14, "unitTitle": "Catfishing: What to Watch Out For", "unitDir": "Unit14_Catfishing What to Watch Out For", "scene": 8}, "threat": {"en": "threat", "ipa": "[θrɛt]", "pos": "n.", "zh": "威脅", "unit": 14, "unitTitle": "Catfishing: What to Watch Out For", "unitDir": "Unit14_Catfishing What to Watch Out For", "scene": 8}, "request": {"en": "request", "ipa": "[rɪˋkwɛst]", "pos": "v.", "zh": "正式要求；請求", "unit": 14, "unitTitle": "Catfishing: What to Watch Out For", "unitDir": "Unit14_Catfishing What to Watch Out For", "scene": 8}, "detail": {"en": "detail", "ipa": "[ˋditel]", "pos": "n.", "zh": "資料、細節", "unit": 14, "unitTitle": "Catfishing: What to Watch Out For", "unitDir": "Unit14_Catfishing What to Watch Out For", "scene": 8}, "private": {"en": "private", "ipa": "[ˋpraɪvət]", "pos": "adj.", "zh": "私密的；私人的", "unit": 14, "unitTitle": "Catfishing: What to Watch Out For", "unitDir": "Unit14_Catfishing What to Watch Out For", "scene": 8}, "fake": {"en": "fake", "ipa": "[fek]", "pos": "adj./v.", "zh": "偽造的、假的；偽造", "unit": 14, "unitTitle": "Catfishing: What to Watch Out For", "unitDir": "Unit14_Catfishing What to Watch Out For", "scene": 8}, "identity": {"en": "identity", "ipa": "[aɪˋdɛntətɪ]", "pos": "n.", "zh": "身分；認同", "unit": 14, "unitTitle": "Catfishing: What to Watch Out For", "unitDir": "Unit14_Catfishing What to Watch Out For", "scene": 8}, "recently": {"en": "recently", "ipa": "[ˋrisṇtlɪ]", "pos": "adv.", "zh": "最近；近來", "unit": 14, "unitTitle": "Catfishing: What to Watch Out For", "unitDir": "Unit14_Catfishing What to Watch Out For", "scene": 8}, "avoid": {"en": "avoid", "ipa": "[əˋvɔɪd]", "pos": "v.", "zh": "避免；迴避", "unit": 14, "unitTitle": "Catfishing: What to Watch Out For", "unitDir": "Unit14_Catfishing What to Watch Out For", "scene": 8}, "claim": {"en": "claim", "ipa": "[klem]", "pos": "v.", "zh": "聲稱；主張", "unit": 14, "unitTitle": "Catfishing: What to Watch Out For", "unitDir": "Unit14_Catfishing What to Watch Out For", "scene": 8}, "platform": {"en": "platform", "ipa": "[ˋplæt͵fɔrm]", "pos": "n.", "zh": "平台", "unit": 14, "unitTitle": "Catfishing: What to Watch Out For", "unitDir": "Unit14_Catfishing What to Watch Out For", "scene": 8}};
+
+/* ===== 小工具 ===== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const plain = line => line.segs.map(s => typeof s === 'string' ? s : s.w).join('');
+const castOf = (scene, who) => scene.cast.find(c => c.name === who);
+
+const state = { cur: 0, mode: 'talk', zh: true, slow: false, role: 'Lily', revealed: new Set(), cloze: null };
+
+/* ===== 語音 ===== */
+const synth = 'speechSynthesis' in window ? window.speechSynthesis : null;
+const voices = { f: null, m: null };
+const F_HINT = /female|zira|samantha|aria|jenny|susan|hazel|karen|victoria|ava|allison|emma|libby|sonia|michelle|joanna|salli|kendra|kimberly|moira|tessa/i;
+const M_HINT = /\bmale|david|mark|guy|alex|daniel|fred|ryan|christopher|eric|tom|george|matthew|joey|justin|brian|aaron|oliver/i;
+function loadVoices() {
+  if (!synth) return;
+  const en = synth.getVoices().filter(v => /^en[-_]/i.test(v.lang));
+  if (!en.length) return;
+  const us = en.filter(v => /^en[-_]US/i.test(v.lang));
+  const pool = us.concat(en.filter(v => !us.includes(v)));
+  voices.f = pool.find(v => F_HINT.test(v.name)) || pool[0];
+  voices.m = pool.find(v => M_HINT.test(v.name) && !F_HINT.test(v.name)) || pool.find(v => v !== voices.f) || pool[0];
+}
+if (synth) { loadVoices(); synth.addEventListener && synth.addEventListener('voiceschanged', loadVoices); }
+
+function utter(text, c, rate) {
+  const u = new SpeechSynthesisUtterance(text);
+  const g = c ? c.g : 'f';
+  const v = g === 'm' ? voices.m : voices.f;
+  u.lang = v ? v.lang : 'en-US';
+  if (v) u.voice = v;
+  u.pitch = c && c.p ? c.p : 1;
+  u.rate = rate || (state.slow ? 0.72 : 0.95);
+  return u;
+}
+let playToken = 0, waitTimer = null;
+function stopAll() {
+  playToken++;
+  clearTimeout(waitTimer);
+  if (synth) synth.cancel();
+  document.querySelectorAll('.msg.playing, .msg.your-turn').forEach(el => el.classList.remove('playing', 'your-turn'));
+  const pb = $('play-btn');
+  if (pb) { pb.classList.remove('on'); pb.textContent = state.mode === 'role' ? '▶ 開始練習' : '▶ 播放整段'; }
+}
+function speakText(text, c, rate) {
+  if (!synth) return;
+  stopAll();
+  synth.speak(utter(text, c, rate));
+}
+function speakLine(line, scene, done) {
+  const text = plain(line);
+  let finished = false, safety = null;
+  const fin = () => { if (finished) return; finished = true; clearTimeout(safety); done(); };
+  const u = utter(text, castOf(scene, line.who));
+  u.onend = fin; u.onerror = fin;
+  safety = setTimeout(fin, 2500 + text.split(/\s+/).length * 650 * (state.slow ? 1.4 : 1));
+  synth.speak(u);
+}
+const lineEl = li => document.querySelector(`#lines .msg[data-li="${li}"]`);
+
+function playAll() {
+  if (!synth) return;
+  stopAll();
+  const token = playToken;
+  const scene = SCENES[state.cur];
+  const pb = $('play-btn');
+  if (pb) { pb.classList.add('on'); pb.textContent = '⏵ 播放中…'; }
+  let i = 0;
+  const next = () => {
+    if (token !== playToken) return;
+    document.querySelectorAll('.msg.playing').forEach(el => el.classList.remove('playing'));
+    while (i < scene.lines.length && !scene.lines[i].who) i++;
+    if (i >= scene.lines.length) { stopAll(); return; }
+    const li = i++, line = scene.lines[li];
+    const el = lineEl(li);
+    if (el) { el.classList.add('playing'); el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+    if (state.mode === 'role' && line.who === state.role && !state.revealed.has(li)) {
+      if (el) el.classList.add('your-turn');
+      const wait = (1200 + plain(line).split(/\s+/).length * 450) * (state.slow ? 1.3 : 1);
+      waitTimer = setTimeout(() => {
+        if (token !== playToken) return;
+        revealLine(li, true);
+        speakLine(line, scene, () => { waitTimer = setTimeout(next, 350); });
+      }, wait);
+    } else {
+      speakLine(line, scene, () => { waitTimer = setTimeout(next, 350); });
+    }
+  };
+  next();
+}
+
+/* ===== 統計、情境選單 ===== */
+function renderStats() {
+  const nLines = SCENES.reduce((s, sc) => s + sc.lines.filter(l => l.who).length, 0);
+  const nExpr = SCENES.reduce((s, sc) => s + sc.expr.length, 0);
+  $('stats').innerHTML = [[SCENES.length, '個生活情境'], [Object.keys(WORDS).length, '個本期單字'], [nLines, '句對話'], [nExpr, '個實用口語']]
+    .map(([n, t]) => `<div class="stat"><b>${n}</b><span>${t}</span></div>`).join('');
+}
+function renderChips() {
+  $('scene-chips').innerHTML = SCENES.map((s, i) =>
+    `<button class="chip${i === state.cur ? ' active' : ''}" role="tab" aria-selected="${i === state.cur}" data-scene="${i}"><b>S${s.id}</b>${esc(s.zh)}</button>`).join('');
+  const act = $('scene-chips').querySelector('.chip.active');
+  if (act) act.scrollIntoView({ block: 'nearest', inline: 'center' });
+}
+
+/* ===== 情境內容 ===== */
+function avatar(c) { return `<i class="av" style="background:${c.color}" aria-hidden="true">${esc(c.name[0])}</i>`; }
+function segsHTML(line) {
+  return line.segs.map(s => typeof s === 'string' ? esc(s) : `<button class="tw" data-word="${esc(s.l)}">${esc(s.w)}</button>`).join('');
+}
+function msgHTML(scene, line, li, inner) {
+  if (!line.who) return `<div class="note" data-li="${li}">${esc(plain(line))}${state.zh ? '　' + esc(line.zh) : ''}</div>`;
+  const c = castOf(scene, line.who);
+  return `<div class="msg side-${c.side}" data-li="${li}">${avatar(c)}
+    <div class="msg-main"><div class="who">${esc(c.name)} <span>${esc(c.zh)}</span></div>
+    <div class="turn-badge">🎤 輪到你說！</div>
+    <div class="bubble">${inner}</div></div></div>`;
+}
+function talkInner(line, li) {
+  return `<div class="en">${segsHTML(line)}<button class="say" data-li="${li}" aria-label="播放這句">🔊</button></div>` +
+    (state.zh ? `<div class="zh">${esc(line.zh)}</div>` : '');
+}
+function roleInner(line, li) {
+  if (line.who === state.role && !state.revealed.has(li)) {
+    return `<div class="prompt">🎤 ${esc(line.zh)}</div><button class="reveal" data-reveal="${li}">👀 看英文</button>`;
+  }
+  return talkInner(line, li);
+}
+function revealLine(li, fromPlay) {
+  state.revealed.add(li);
+  const el = lineEl(li);
+  if (!el) return;
+  const scene = SCENES[state.cur];
+  const wasPlaying = el.classList.contains('playing');
+  el.outerHTML = msgHTML(scene, scene.lines[li], li, roleInner(scene.lines[li], li));
+  if (fromPlay || wasPlaying) { const n = lineEl(li); if (n) n.classList.add('playing'); }
+}
+
+/* 克漏字狀態：blanks 依出現順序；bank 為打亂後的字庫 */
+function newCloze(scene) {
+  const blanks = [];
+  scene.lines.forEach((l, li) => l.segs.forEach(s => { if (typeof s !== 'string') blanks.push({ li, w: s.w, l: s.l }); }));
+  const bank = shuffle(blanks.map(b => ({ w: b.w.toLowerCase(), used: false })));
+  return { blanks, bank, fills: blanks.map(() => null), active: 0, checked: false };
+}
+function clozeInner(scene, line, li) {
+  const cz = state.cloze;
+  let html = '';
+  line.segs.forEach(s => {
+    if (typeof s === 'string') { html += esc(s); return; }
+    const bi = cz.blanks.findIndex(b => b.li === li && b.l === s.l);
+    const f = cz.fills[bi];
+    let cls = 'blank';
+    if (f === null) cls += ' empty';
+    if (!cz.checked && bi === cz.active) cls += ' active';
+    let ok = false;
+    if (cz.checked) { ok = f !== null && cz.bank[f].w === s.w.toLowerCase(); cls += ok ? ' ok' : ' bad'; }
+    const text = f === null ? `（${bi + 1}）` : cz.bank[f].w;
+    html += `<button class="${cls}" data-blank="${bi}" aria-label="第 ${bi + 1} 格">${esc(text)}</button>`;
+    if (cz.checked && !ok) html += `<span class="ans">${esc(s.w)}</span>`;
+  });
+  return `<div class="en">${html}</div>` + (state.zh ? `<div class="zh">${esc(line.zh)}</div>` : '');
+}
+function clozeExtras() {
+  const cz = state.cloze;
+  const filled = cz.fills.filter(f => f !== null).length;
+  const bank = `<div class="bank-box"><div class="bank-title">字庫：先點空格，再點單字填入（點已填的格子可清除）・已填 ${filled} / ${cz.blanks.length}</div>
+    <div class="bank">${cz.bank.map((b, i) => `<button class="bchip" data-chip="${i}"${b.used || cz.checked ? ' disabled' : ''}>${esc(b.w)}</button>`).join('')}</div></div>`;
+  let result = '';
+  if (cz.checked) {
+    const score = cz.blanks.filter((b, i) => cz.fills[i] !== null && cz.bank[cz.fills[i]].w === b.w.toLowerCase()).length;
+    const all = score === cz.blanks.length;
+    result = `<div class="cloze-result ${all ? 'good' : 'meh'}">${all ? '🎉 全對！' : '💪 再接再厲！'}答對 ${score} / ${cz.blanks.length}${all ? '' : '・綠字是正確答案'}</div>`;
+  }
+  return bank + `<div class="cloze-actions">
+      <button class="big-btn" data-act="check"${cz.checked || filled === 0 ? ' disabled' : ''}>✅ 檢查答案</button>
+      <button class="big-btn ghost" data-act="reset">🔁 重做（重新打亂字庫）</button>
+    </div>` + result;
+}
+
+function renderControls(scene) {
+  const ttsNote = synth ? '' : '<div class="no-tts">這個瀏覽器不支援語音朗讀，請改用 Chrome、Edge 或 Safari。</div>';
+  const zhBtn = `<button class="ctl${state.zh ? ' on' : ''}" data-act="zh">中文 ${state.zh ? '顯示中' : '已隱藏'}</button>`;
+  const slowBtn = `<button class="ctl${state.slow ? ' on' : ''}" data-act="slow">🐢 慢速</button>`;
+  if (state.mode === 'talk') {
+    return ttsNote + `<button class="ctl primary" id="play-btn" data-act="play">▶ 播放整段</button>
+      <button class="ctl" data-act="stop">⏹ 停止</button>${slowBtn}${zhBtn}
+      <div class="tip">點黃色單字看解釋，點 🔊 聽單句。</div>`;
+  }
+  if (state.mode === 'role') {
+    const picks = scene.cast.map(c => `<button class="chip${c.name === state.role ? ' active' : ''}" data-role="${esc(c.name)}">${esc(c.name)} ${esc(c.zh)}</button>`).join('');
+    return ttsNote + `<div class="role-pick"><span class="label">我要演</span>${picks}</div>
+      <button class="ctl primary" id="play-btn" data-act="play">▶ 開始練習</button>
+      <button class="ctl" data-act="stop">⏹ 停止</button>${slowBtn}${zhBtn}
+      <button class="ctl" data-act="hide-again">🙈 全部重新遮住</button>
+      <div class="tip">按「開始練習」後，其他角色會自動唸；輪到你時會停下來讓你開口，接著播放示範讓你對照。</div>`;
+  }
+  return `${zhBtn}<div class="tip">把本場的 ${scene.words.length} 個單字填回對話中，大小寫不影響判分。</div>`;
+}
+
+function renderScene() {
+  stopAll();
+  const scene = SCENES[state.cur];
+  if (!scene.cast.some(c => c.name === state.role)) state.role = scene.cast[0].name;
+  let body;
+  if (state.mode === 'cloze') {
+    if (!state.cloze) state.cloze = newCloze(scene);
+    body = scene.lines.map((l, li) => msgHTML(scene, l, li, l.who ? clozeInner(scene, l, li) : '')).join('');
+  } else if (state.mode === 'role') {
+    body = scene.lines.map((l, li) => msgHTML(scene, l, li, l.who ? roleInner(l, li) : '')).join('');
+  } else {
+    body = scene.lines.map((l, li) => msgHTML(scene, l, li, l.who ? talkInner(l, li) : '')).join('');
+  }
+  const targets = scene.words.map(w => `<button class="tchip" data-word="${esc(w)}">${esc(w)}<small>U${WORDS[w].unit}</small></button>`).join('');
+  $('scene').innerHTML = `
+    <div class="scene-head">
+      <div class="scene-num">SCENE ${scene.id} / ${SCENES.length}</div>
+      <h2>${esc(scene.zh)}<small>${esc(scene.en)}</small></h2>
+      <p class="setting">📍 ${esc(scene.setting)}</p>
+      <div class="cast"><span class="label">登場人物</span>${scene.cast.map(c => `<span class="cast-item">${avatar(c)}${esc(c.name)} ${esc(c.zh)}</span>`).join('')}</div>
+      <div class="targets"><span class="label">本場單字 ${scene.words.length}</span>${targets}</div>
+    </div>
+    <div class="modes" role="tablist" aria-label="練習模式">
+      ${[['talk', '💬 對話'], ['role', '🎭 角色扮演'], ['cloze', '✏️ 克漏字']].map(([m, t]) =>
+        `<button class="mode-btn${state.mode === m ? ' active' : ''}" role="tab" aria-selected="${state.mode === m}" data-mode="${m}">${t}</button>`).join('')}
+    </div>
+    <div class="controls">${renderControls(scene)}</div>
+    <div class="lines" id="lines">${body}</div>
+    ${state.mode === 'cloze' ? clozeExtras() : ''}
+    <div class="expr"><h3>🗣️ 實用口語句型</h3><ul>${scene.expr.map(([en, zh]) =>
+      `<li><button class="say" data-text="${esc(en)}" aria-label="播放">🔊</button><b>${esc(en)}</b>${esc(zh)}</li>`).join('')}</ul></div>
+    <div class="pager">
+      <button data-go="-1"${state.cur === 0 ? ' disabled' : ''}>← 上一個情境</button>
+      <button data-go="1"${state.cur === SCENES.length - 1 ? ' disabled' : ''}>下一個情境 →</button>
+    </div>`;
+}
+
+function goScene(i, keepMode) {
+  state.cur = Math.max(0, Math.min(SCENES.length - 1, i));
+  if (!keepMode) state.mode = 'talk';
+  state.revealed = new Set();
+  state.cloze = null;
+  try { history.replaceState(null, '', '#s' + SCENES[state.cur].id); } catch (e) {}
+  renderChips();
+  renderScene();
+}
+
+/* ===== 單字小卡 ===== */
+function openSheet(lemma) {
+  const w = WORDS[lemma];
+  if (!w) return;
+  const sc = SCENES.find(s => s.id === w.scene);
+  const usage = sc && sc.usage ? sc.usage[lemma] : '';
+  $('sheet-body').innerHTML = `
+    <div class="sh-top"><span class="sh-en">${esc(w.en)}</span><span class="sh-ipa">${esc(w.ipa)}</span><span class="sh-pos">${esc(w.pos)}</span></div>
+    <div class="sh-zh">${esc(w.zh)}</div>
+    ${usage ? `<div class="sh-usage">💡 本句用法：${esc(usage)}</div>` : ''}
+    <div class="sh-src">出自 Unit ${w.unit}｜${esc(w.unitTitle)}・用在 Scene ${w.scene}</div>
+    <div class="sh-actions">
+      <button class="ctl primary" data-say-word="${esc(w.en)}">🔊 發音</button>
+      <a class="ctl" href="../${encodeURI(w.unitDir)}/03_互動圖文學習講義.html">📖 回原課講義</a>
+    </div>`;
+  $('sheet').hidden = false;
+  speakText(w.en, null, 0.85);
+}
+function closeSheet() { $('sheet').hidden = true; }
+$('sheet-close').addEventListener('click', closeSheet);
+$('sheet').addEventListener('click', e => {
+  if (e.target.id === 'sheet') closeSheet();
+  const b = e.target.closest('[data-say-word]');
+  if (b) speakText(b.dataset.sayWord, null, 0.85);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+
+/* ===== 涵蓋表 ===== */
+function renderCoverage() {
+  const byUnit = {};
+  Object.values(WORDS).forEach(w => (byUnit[w.unit] = byUnit[w.unit] || []).push(w));
+  $('coverage').innerHTML = Object.keys(byUnit).sort((a, b) => a - b).map(u =>
+    `<div class="cov-unit"><div class="cov-title">Unit ${u}｜${esc(byUnit[u][0].unitTitle)}</div>
+     <div class="cov-list">${byUnit[u].map(w => `<button class="cov" data-jump="${esc(w.en)}">${esc(w.en)}<small>S${w.scene}</small></button>`).join('')}</div></div>`).join('');
+}
+function jumpTo(lemma) {
+  const w = WORDS[lemma];
+  goScene(w.scene - 1);
+  const scene = SCENES[state.cur];
+  const li = scene.lines.findIndex(l => l.segs.some(s => typeof s !== 'string' && s.l === lemma));
+  const el = lineEl(li);
+  if (el) {
+    el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    el.classList.add('flash');
+    setTimeout(() => el.classList.remove('flash'), 1700);
+  }
+}
+
+/* ===== 事件 ===== */
+$('scene-chips').addEventListener('click', e => {
+  const b = e.target.closest('[data-scene]');
+  if (b) goScene(Number(b.dataset.scene));
+});
+$('coverage').addEventListener('click', e => {
+  const b = e.target.closest('[data-jump]');
+  if (b) jumpTo(b.dataset.jump);
+});
+$('scene').addEventListener('click', e => {
+  const t = e.target;
+  const scene = SCENES[state.cur];
+  let b;
+  if ((b = t.closest('[data-word]'))) { openSheet(b.dataset.word); return; }
+  if ((b = t.closest('[data-mode]'))) {
+    if (state.mode !== b.dataset.mode) { state.mode = b.dataset.mode; state.revealed = new Set(); state.cloze = null; renderScene(); }
+    return;
+  }
+  if ((b = t.closest('[data-go]'))) { goScene(state.cur + Number(b.dataset.go), true); window.scrollTo({ top: $('scene').offsetTop - 70, behavior: 'smooth' }); return; }
+  if ((b = t.closest('[data-role]'))) { state.role = b.dataset.role; state.revealed = new Set(); renderScene(); return; }
+  if ((b = t.closest('[data-reveal]'))) { revealLine(Number(b.dataset.reveal)); return; }
+  if ((b = t.closest('.say[data-li]'))) { const l = scene.lines[Number(b.dataset.li)]; speakText(plain(l), castOf(scene, l.who)); return; }
+  if ((b = t.closest('.say[data-text]'))) { speakText(b.dataset.text.replace(/\.\.\.|…/g, ''), null); return; }
+  if ((b = t.closest('[data-blank]'))) {
+    const cz = state.cloze; if (cz.checked) return;
+    const bi = Number(b.dataset.blank);
+    if (cz.fills[bi] !== null) { cz.bank[cz.fills[bi]].used = false; cz.fills[bi] = null; }
+    cz.active = bi;
+    const y = window.scrollY; renderScene(); window.scrollTo(0, y);
+    return;
+  }
+  if ((b = t.closest('[data-chip]'))) {
+    const cz = state.cloze; if (cz.checked) return;
+    const ci = Number(b.dataset.chip);
+    let target = cz.fills[cz.active] === null ? cz.active : cz.fills.findIndex(f => f === null);
+    if (target < 0) return;
+    cz.fills[target] = ci; cz.bank[ci].used = true;
+    const after = cz.fills.findIndex((f, i) => f === null && i > target);
+    cz.active = after >= 0 ? after : cz.fills.findIndex(f => f === null);
+    if (cz.active < 0) cz.active = target;
+    const y = window.scrollY; renderScene(); window.scrollTo(0, y);
+    return;
+  }
+  if ((b = t.closest('[data-act]'))) {
+    const act = b.dataset.act;
+    if (act === 'play') playAll();
+    else if (act === 'stop') stopAll();
+    else if (act === 'slow') { state.slow = !state.slow; b.classList.toggle('on', state.slow); }
+    else if (act === 'zh') { state.zh = !state.zh; const y = window.scrollY; renderScene(); window.scrollTo(0, y); }
+    else if (act === 'hide-again') { state.revealed = new Set(); renderScene(); }
+    else if (act === 'check') { state.cloze.checked = true; const y = window.scrollY; renderScene(); window.scrollTo(0, y); }
+    else if (act === 'reset') { state.cloze = null; renderScene(); }
+  }
+});
+
+/* ===== 啟動 ===== */
+const m = location.hash.match(/^#s(\d+)$/);
+const start = m ? SCENES.findIndex(s => s.id === Number(m[1])) : 0;
+renderStats();
+renderCoverage();
+goScene(start >= 0 ? start : 0);
+</script>
+</body>
+</html>
