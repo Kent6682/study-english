@@ -257,10 +257,12 @@
 
     const REWRITES = [
       ['📰 報導', '04_改寫版1_客觀科普報導篇.html', '改寫版 1：客觀科普報導篇（同義替換）'],
-      ['💬 你', '05_改寫版2_第二人稱代入篇.html', '改寫版 2：第二人稱代入篇（You 對話視角）'],
+      ['💬 對話', '05_改寫版2_日常生活對話篇.html', '改寫版 2：日常生活對話篇（用本課單字練口說）'],
       ['📝 故事', '06_改寫版3_高中生故事記敘篇.html', '改寫版 3：第一人稱高中生故事篇（練學測記敘文）'],
       ['⚖️ 議論', '07_改寫版4_正反論證議論文篇.html', '改寫版 4：正反論證議論文篇（練學測論說文）'],
     ];
+    // 2026-11 前的單元，05 仍是舊的第二人稱篇；新單元在 UNITS 加 r2: 'dialog' 才連到對話篇
+    const OLD_R2 = ['💬 你', '05_改寫版2_第二人稱代入篇.html', '改寫版 2：第二人稱代入篇（You 對話視角）'];
 
     const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const href = (u, file) => './' + u.issue + '/' + encodeURI(u.dir) + '/' + encodeURI(file);
@@ -268,7 +270,7 @@
     const issues = [...new Set(UNITS.map(u => u.issue))].sort().reverse();
 
     function card(u) {
-      const rw = REWRITES.map(([label, file, title]) =>
+      const rw = REWRITES.map(r => (r[1].startsWith('05_') && u.r2 !== 'dialog') ? OLD_R2 : r).map(([label, file, title]) =>
         `<a class="btn-rewrite" href="${href(u, file)}" title="${esc(title)}" aria-label="${esc(title)}">${label}</a>`).join('');
       const docs = u.docs.map(([label, file]) => `<a href="${href(u, file)}">${esc(label)}</a>`).join('<span>·</span>');
       const links = u.main
